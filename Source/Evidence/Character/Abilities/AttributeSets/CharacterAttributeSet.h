@@ -29,6 +29,10 @@ public:
 	FGameplayAttributeData MaxHealth;
 	ATTRIBUTE_ACCESSORS(UCharacterAttributeSet, MaxHealth)
 
+	UPROPERTY(BlueprintReadOnly, Category = "Damage")
+	FGameplayAttributeData Damage;
+	ATTRIBUTE_ACCESSORS(UCharacterAttributeSet, Damage)
+
 	UFUNCTION()
 	virtual void OnRep_Health(const FGameplayAttributeData& OldHealth);
 
