@@ -35,6 +35,8 @@ AEvidenceCharacter::AEvidenceCharacter()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("CharacterAbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
+
+	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 }
 
 void AEvidenceCharacter::BeginPlay()

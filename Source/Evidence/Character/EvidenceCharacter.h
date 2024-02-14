@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
 #include "Abilities/CharacterAbilitySystemComponent.h"
+#include "Abilities/AttributeSets/CharacterAttributeSet.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -30,6 +31,9 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UCharacterAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UCharacterAttributeSet* CharacterAttributeSet;
 
 	//Input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
