@@ -3,6 +3,8 @@
 
 #include "CharacterAttributeSet.h"
 #include "Net/UnrealNetwork.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectExtension.h"
 
 void UCharacterAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
@@ -10,6 +12,18 @@ void UCharacterAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty
 
 	DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSet, Health, COND_None, REPNOTIFY_Always);
 	DOREPLIFETIME_CONDITION_NOTIFY(UCharacterAttributeSet, MaxHealth, COND_None, REPNOTIFY_Always);
+}
+
+void UCharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
+{
+	Super::PostGameplayEffectExecute(Data);
+
+	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
+	{
+		// Apply the health change and then clamp it
+		const float NewHealth = GetHealth() - GetDamage();
+		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
+	}
 }
 
 void UCharacterAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)

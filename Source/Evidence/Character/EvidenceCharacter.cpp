@@ -10,8 +10,6 @@
 #include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
 
-DEFINE_LOG_CATEGORY(LogTemplateCharacter);
-
 //////////////////////////////////////////////////////////////////////////
 // AEvidenceCharacter
 
@@ -35,6 +33,10 @@ AEvidenceCharacter::AEvidenceCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("CharacterAbilitySystemComponent"));
+	AbilitySystemComponent->SetIsReplicated(true);
+
+	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 }
 
 void AEvidenceCharacter::BeginPlay()
@@ -70,9 +72,15 @@ void AEvidenceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEvidenceCharacter::Look);
 	}
-	else
+}
+
+void AEvidenceCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (AbilitySystemComponent)
 	{
-		UE_LOG(LogTemplateCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input Component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	}
 }
 
