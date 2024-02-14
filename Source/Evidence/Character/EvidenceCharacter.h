@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "AbilitySystemInterface.h"
-#include "AbilitySystemComponent.h"
+#include "Abilities/CharacterAbilitySystemComponent.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -29,7 +29,7 @@ private:
 	UCameraComponent* FirstPersonCameraComponent;
 
 	UPROPERTY(VisibleDefaultsOnly)
-	class UAbilitySystemComponent* AbilitySystemComponent;
+	UCharacterAbilitySystemComponent* AbilitySystemComponent;
 
 	//Input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
@@ -50,6 +50,7 @@ public:
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void PossessedBy(AController* NewController) override;
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);

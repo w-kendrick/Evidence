@@ -33,6 +33,8 @@ AEvidenceCharacter::AEvidenceCharacter()
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
+	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("CharacterAbilitySystemComponent"));
+	AbilitySystemComponent->SetIsReplicated(true);
 }
 
 void AEvidenceCharacter::BeginPlay()
@@ -67,6 +69,16 @@ void AEvidenceCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AEvidenceCharacter::Look);
+	}
+}
+
+void AEvidenceCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (AbilitySystemComponent)
+	{
+		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	}
 }
 
