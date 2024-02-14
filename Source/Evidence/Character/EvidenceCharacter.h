@@ -4,7 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Logging/LogMacros.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -14,10 +15,8 @@ class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
 
-DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
-
 UCLASS(config=Game)
-class AEvidenceCharacter : public ACharacter
+class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
@@ -28,6 +27,9 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	UCameraComponent* FirstPersonCameraComponent;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	class UAbilitySystemComponent* AbilitySystemComponent;
 
 	//Input
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
@@ -53,6 +55,7 @@ protected:
 	void Look(const FInputActionValue& Value);
 
 public:
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
