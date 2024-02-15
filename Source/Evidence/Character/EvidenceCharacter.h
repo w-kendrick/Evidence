@@ -51,6 +51,9 @@ private:
 public:
 	AEvidenceCharacter();
 
+	float GetHealth() const;
+	float GetMaxHealth() const;
+
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
@@ -58,6 +61,11 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+
+	void InitializeAttributes();
+
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TSubclassOf<class UGameplayEffect> DefaultAttributes;
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
