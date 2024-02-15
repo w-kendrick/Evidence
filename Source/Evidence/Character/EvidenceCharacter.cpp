@@ -141,3 +141,25 @@ void AEvidenceCharacter::InitializeAttributes()
 }
 
 #pragma endregion
+
+#pragma region Getters
+
+float AEvidenceCharacter::GetHealth() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetHealth();
+	}
+	return 0.0f;
+}
+
+float AEvidenceCharacter::GetMaxHealth() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetMaxHealth();
+	}
+	return 0.0f;
+}
+
+#pragma endregion

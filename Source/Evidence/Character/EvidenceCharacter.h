@@ -51,6 +51,9 @@ private:
 public:
 	AEvidenceCharacter();
 
+	float GetHealth() const;
+	float GetMaxHealth() const;
+
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
