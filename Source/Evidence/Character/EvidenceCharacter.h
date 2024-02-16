@@ -23,30 +23,11 @@ class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 
 private:
 	//Components
-	UPROPERTY(VisibleDefaultsOnly, Category=Mesh)
-	USkeletalMeshComponent* Mesh1P;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* FirstPersonCameraComponent;
-
 	UPROPERTY(VisibleDefaultsOnly)
 	UCharacterAbilitySystemComponent* AbilitySystemComponent;
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UCharacterAttributeSet* CharacterAttributeSet;
-
-	//Input
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputMappingContext* DefaultMappingContext;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category=Input, meta=(AllowPrivateAccess = "true"))
-	UInputAction* MoveAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;
 	
 public:
 	AEvidenceCharacter();
@@ -55,12 +36,7 @@ public:
 	float GetMaxHealth() const;
 
 protected:
-	virtual void BeginPlay();
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 	virtual void PossessedBy(AController* NewController) override;
-
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
 
 	void InitializeAttributes();
 
@@ -69,8 +45,6 @@ protected:
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
-	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
-	UCameraComponent* GetFirstPersonCameraComponent() const { return FirstPersonCameraComponent; }
 
 };
 
