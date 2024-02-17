@@ -9,5 +9,6 @@ enum class EAbilityInputID : uint8
 {
 	None    UMETA(DisplayName = "None"),
 	Jump    UMETA(DisplayName = "Jump"),
+	Sprint  UMETA(DisplayName = "Sprint"),
 	MAX     UMETA(DisplayName = "MAX")
 };

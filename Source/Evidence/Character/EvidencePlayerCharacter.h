@@ -6,9 +6,8 @@
 #include "EvidenceCharacter.h"
 #include "EvidencePlayerCharacter.generated.h"
 
-/**
- * 
- */
+class UInputAction;
+
 UCLASS()
 class EVIDENCE_API AEvidencePlayerCharacter : public AEvidenceCharacter
 {
@@ -26,13 +25,16 @@ private:
 	UInputMappingContext* DefaultMappingContext;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* JumpAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	class UInputAction* LookAction;
+	UInputAction* LookAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* JumpAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* SprintAction;
 
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
@@ -45,6 +47,8 @@ protected:
 	void Look(const FInputActionValue& Value);
 	void HandleJumpActionPressed();
 	void HandleJumpActionReleased();
+	void HandleSprintActionPressed();
+	void HandleSprintActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
