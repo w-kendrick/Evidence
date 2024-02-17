@@ -39,9 +39,13 @@ protected:
 	virtual void PossessedBy(AController* NewController) override;
 
 	void InitializeAttributes();
+	void AddCharacterAbilities();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TArray<TSubclassOf<class UEIGameplayAbility>> StartupAbilities;
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }

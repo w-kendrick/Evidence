@@ -5,8 +5,9 @@
 #include "CoreMinimal.h"
 
 UENUM(BlueprintType)
-enum class EAbilityID : uint8
+enum class EAbilityInputID : uint8
 {
+	None    UMETA(DisplayName = "None"),
 	Jump    UMETA(DisplayName = "Jump"),
 	MAX     UMETA(DisplayName = "MAX")
 };

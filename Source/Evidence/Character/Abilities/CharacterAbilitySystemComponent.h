@@ -13,5 +13,8 @@ UCLASS()
 class EVIDENCE_API UCharacterAbilitySystemComponent : public UAbilitySystemComponent
 {
 	GENERATED_BODY()
+
+public:
+	bool bAbilitiesGiven = false;
 	
 };

@@ -2,6 +2,7 @@
 
 #include "EvidenceCharacter.h"
 #include "Components/CapsuleComponent.h"
+#include "Abilities/EIGameplayAbility.h"
 
 #pragma region Class Essentials
 
@@ -28,6 +29,8 @@ void AEvidenceCharacter::PossessedBy(AController* NewController)
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 
 		InitializeAttributes();
+
+		AddCharacterAbilities();
 	}
 }
 
@@ -53,6 +56,21 @@ void AEvidenceCharacter::InitializeAttributes()
 	{
 		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
 	}
+}
+
+void AEvidenceCharacter::AddCharacterAbilities()
+{
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent)
+	{
+		return;
+	}
+
+	for (TSubclassOf<UEIGameplayAbility>& Ability : StartupAbilities)
+	{
+		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
+	}
+
+	AbilitySystemComponent->bAbilitiesGiven = true;
 }
 
 #pragma endregion
