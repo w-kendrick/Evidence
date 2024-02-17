@@ -43,6 +43,8 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void HandleJumpActionPressed();
+	void HandleJumpActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
