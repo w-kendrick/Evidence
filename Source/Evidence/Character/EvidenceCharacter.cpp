@@ -73,6 +73,20 @@ void AEvidenceCharacter::AddCharacterAbilities()
 	AbilitySystemComponent->bAbilitiesGiven = true;
 }
 
+void AEvidenceCharacter::SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID)
+{
+	if (!AbilitySystemComponent) return;
+
+	if (bIsPressed)
+	{
+		AbilitySystemComponent->AbilityLocalInputPressed(static_cast<int32>(AbilityID));
+	}
+	else
+	{
+		AbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(AbilityID));
+	}
+}
+
 #pragma endregion
 
 #pragma region Getters

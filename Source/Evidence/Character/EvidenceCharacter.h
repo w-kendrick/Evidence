@@ -7,6 +7,7 @@
 #include "AbilitySystemInterface.h"
 #include "Abilities/CharacterAbilitySystemComponent.h"
 #include "Abilities/AttributeSets/CharacterAttributeSet.h"
+#include "Evidence/Enums/AbilityInputID.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -40,6 +41,7 @@ protected:
 
 	void InitializeAttributes();
 	void AddCharacterAbilities();
+	void SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
 	TSubclassOf<class UGameplayEffect> DefaultAttributes;
