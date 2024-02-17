@@ -120,4 +120,9 @@ float AEvidenceCharacter::GetMoveSpeed() const
 	return 0.0f;
 }
 
+bool AEvidenceCharacter::IsAlive() const
+{
+	return GetHealth() > 0;
+}
+
 #pragma endregion

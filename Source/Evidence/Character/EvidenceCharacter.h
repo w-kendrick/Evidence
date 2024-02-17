@@ -29,6 +29,7 @@ public:
 	float GetHealth() const;
 	float GetMaxHealth() const;
 	float GetMoveSpeed() const;
+	bool IsAlive() const;
 
 protected:
 	//Components

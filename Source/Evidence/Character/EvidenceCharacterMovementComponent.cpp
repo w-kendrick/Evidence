@@ -108,9 +108,29 @@ bool UEvidenceCharacterMovementComponent::CanCrouchInCurrentState() const
 
 float UEvidenceCharacterMovementComponent::GetMaxSpeed() const
 {
-	if (Safe_bWantsToSprint && IsMovingForward() && !IsCrouching()) return MaxSprintSpeed;
+	AEvidenceCharacter* Owner = Cast<AEvidenceCharacter>(GetOwner());
+	if (!Owner)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s() No Owner"), *FString(__FUNCTION__));
+		return Super::GetMaxSpeed();
+	}
 
-	return Super::GetMaxSpeed();
+	if (!Owner->IsAlive())
+	{
+		return 0.0f;
+	}
+
+	if (Owner->GetAbilitySystemComponent()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"))))
+	{
+		return 0.0f;
+	}
+
+	if (Safe_bWantsToSprint)
+	{
+		return Owner->GetMoveSpeed() * SprintSpeedMultiplier;
+	}
+
+	return Owner->GetMoveSpeed();
 }
 
 bool UEvidenceCharacterMovementComponent::IsMovingForward() const

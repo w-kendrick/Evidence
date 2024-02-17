@@ -53,6 +53,8 @@ class EVIDENCE_API UEvidenceCharacterMovementComponent : public UCharacterMoveme
 	// Flags
 	bool Safe_bWantsToSprint;
 
+	float SprintSpeedMultiplier = 1.5f;
+
 public:
 	UEvidenceCharacterMovementComponent();
 	virtual FNetworkPredictionData_Client* GetPredictionData_Client() const override;
