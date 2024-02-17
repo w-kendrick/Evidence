@@ -35,7 +35,7 @@ private:
 	class UInputAction* LookAction;
 
 public:
-	AEvidencePlayerCharacter();
+	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
 protected:
 	virtual void BeginPlay();

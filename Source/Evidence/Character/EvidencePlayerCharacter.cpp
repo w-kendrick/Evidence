@@ -12,7 +12,8 @@
 
 #pragma region Class Essentials
 
-AEvidencePlayerCharacter::AEvidencePlayerCharacter()
+AEvidencePlayerCharacter::AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());

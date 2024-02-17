@@ -120,12 +120,7 @@ float UEvidenceCharacterMovementComponent::GetMaxSpeed() const
 		return 0.0f;
 	}
 
-	if (Owner->GetAbilitySystemComponent()->HasMatchingGameplayTag(FGameplayTag::RequestGameplayTag(FName("State.Debuff.Stun"))))
-	{
-		return 0.0f;
-	}
-
-	if (Safe_bWantsToSprint)
+	if (Safe_bWantsToSprint && IsMovingForward())
 	{
 		return Owner->GetMoveSpeed() * SprintSpeedMultiplier;
 	}
@@ -153,10 +148,10 @@ bool UEvidenceCharacterMovementComponent::IsMovingForward() const
 
 void UEvidenceCharacterMovementComponent::UpdateCharacterStateBeforeMovement(float DeltaSeconds)
 {
-	if (Safe_bWantsToSprint && IsCrouching())
+	/*if (Safe_bWantsToSprint && IsCrouching())
 	{
 		bWantsToCrouch = false;
-	}
+	}*/
 
 	Super::UpdateCharacterStateBeforeMovement(DeltaSeconds);
 }

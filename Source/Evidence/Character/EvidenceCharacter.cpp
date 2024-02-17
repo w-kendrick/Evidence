@@ -3,11 +3,15 @@
 #include "EvidenceCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Abilities/EIGameplayAbility.h"
+#include "EvidenceCharacterMovementComponent.h"
 
 #pragma region Class Essentials
 
-AEvidenceCharacter::AEvidenceCharacter()
+AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer.SetDefaultSubobjectClass<UEvidenceCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
+	EvidenceCMC = Cast<UEvidenceCharacterMovementComponent>(GetCharacterMovement());
+
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
 	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("CharacterAbilitySystemComponent"));

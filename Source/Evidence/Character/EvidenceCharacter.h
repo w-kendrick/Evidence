@@ -16,6 +16,7 @@ class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
+class UEvidenceCharacterMovementComponent;
 
 UCLASS(config=Game)
 class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
@@ -24,7 +25,7 @@ class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 	
 	
 public:
-	AEvidenceCharacter();
+	AEvidenceCharacter(const FObjectInitializer& ObjectInitializer);
 
 	float GetHealth() const;
 	float GetMaxHealth() const;
@@ -38,6 +39,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UCharacterAttributeSet* CharacterAttributeSet;
+
+	UPROPERTY(EditDefaultsOnly)
+	UEvidenceCharacterMovementComponent* EvidenceCMC;
 
 	virtual void PossessedBy(AController* NewController) override;
 
