@@ -111,4 +111,13 @@ float AEvidenceCharacter::GetMaxHealth() const
 	return 0.0f;
 }
 
+float AEvidenceCharacter::GetMoveSpeed() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetMoveSpeed();
+	}
+	return 0.0f;
+}
+
 #pragma endregion
