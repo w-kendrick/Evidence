@@ -14,6 +14,8 @@ AEvidenceCharacter::AEvidenceCharacter()
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
+
+	GetMesh()->bOwnerNoSee = true;
 }
 
 #pragma endregion
