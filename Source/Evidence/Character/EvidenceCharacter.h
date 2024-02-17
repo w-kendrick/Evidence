@@ -20,14 +20,7 @@ UCLASS(config=Game)
 class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-
-private:
-	//Components
-	UPROPERTY(VisibleDefaultsOnly)
-	UCharacterAbilitySystemComponent* AbilitySystemComponent;
-
-	UPROPERTY(VisibleDefaultsOnly)
-	UCharacterAttributeSet* CharacterAttributeSet;
+	
 	
 public:
 	AEvidenceCharacter();
@@ -36,6 +29,13 @@ public:
 	float GetMaxHealth() const;
 
 protected:
+	//Components
+	UPROPERTY(VisibleDefaultsOnly)
+	UCharacterAbilitySystemComponent* AbilitySystemComponent;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UCharacterAttributeSet* CharacterAttributeSet;
+
 	virtual void PossessedBy(AController* NewController) override;
 
 	void InitializeAttributes();
