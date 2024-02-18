@@ -75,6 +75,8 @@ protected:
 
 //Input
 public:
+	UFUNCTION(BlueprintCallable)
 	void StartSprinting();
+	UFUNCTION(BlueprintCallable)
 	void StopSprinting();
 };
