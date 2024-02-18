@@ -13,6 +13,8 @@ void UStaminaWidget::NativeConstruct()
 	Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
 	if (Char)
 	{
+		StaminaBar->SetPercent(1.f);
+		StaminaText->SetText(FText::FromString("100"));
 		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);
 	}
 }

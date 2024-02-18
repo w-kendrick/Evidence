@@ -22,6 +22,13 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 	GetMesh()->bOwnerNoSee = true;
 }
 
+void AEvidenceCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetupDelegates();
+}
+
 #pragma endregion
 
 #pragma region Abilities
@@ -37,7 +44,6 @@ void AEvidenceCharacter::PossessedBy(AController* NewController)
 		InitializeAttributes();
 		AddCharacterAbilities();
 		AddStartupEffects();
-		SetupDelegates();
 	}
 }
 

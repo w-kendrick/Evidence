@@ -50,6 +50,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	UEvidenceCharacterMovementComponent* EvidenceCMC;
 
+	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 
 	void InitializeAttributes();
