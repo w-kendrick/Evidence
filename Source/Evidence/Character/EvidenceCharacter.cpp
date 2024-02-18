@@ -101,6 +101,16 @@ void AEvidenceCharacter::AddStartupEffects()
 	AbilitySystemComponent->bStartupEffectsApplied = true;
 }
 
+void AEvidenceCharacter::SetupDelegates()
+{
+	if (!AbilitySystemComponent)
+	{
+		return;
+	}
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(CharacterAttributeSet->GetStaminaAttribute()).AddUObject(this, &ThisClass::OnStaminaChanged);
+}
+
 void AEvidenceCharacter::SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID)
 {
 	if (!AbilitySystemComponent) return;
@@ -113,6 +123,11 @@ void AEvidenceCharacter::SendASCLocalInput(const bool bIsPressed, const EAbility
 	{
 		AbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(AbilityID));
 	}
+}
+
+void AEvidenceCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	StaminaDelegate.Broadcast(Data.NewValue);
 }
 
 #pragma endregion
@@ -133,6 +148,24 @@ float AEvidenceCharacter::GetMaxHealth() const
 	if (CharacterAttributeSet)
 	{
 		return CharacterAttributeSet->GetMaxHealth();
+	}
+	return 0.0f;
+}
+
+float AEvidenceCharacter::GetStamina() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetStamina();
+	}
+	return 0.0f;
+}
+
+float AEvidenceCharacter::GetMaxStamina() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetMaxStamina();
 	}
 	return 0.0f;
 }
