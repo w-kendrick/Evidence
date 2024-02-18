@@ -47,6 +47,7 @@ protected:
 
 	void InitializeAttributes();
 	void AddCharacterAbilities();
+	void AddStartupEffects();
 	void SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
@@ -54,6 +55,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
 	TArray<TSubclassOf<class UEIGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
