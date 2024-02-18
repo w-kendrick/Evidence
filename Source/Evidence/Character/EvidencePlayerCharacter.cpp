@@ -12,7 +12,8 @@
 
 #pragma region Class Essentials
 
-AEvidencePlayerCharacter::AEvidencePlayerCharacter()
+AEvidencePlayerCharacter::AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
 {
 	FirstPersonCameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("FirstPersonCamera"));
 	FirstPersonCameraComponent->SetupAttachment(GetCapsuleComponent());
@@ -52,15 +53,19 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		// Jumping
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::HandleJumpActionPressed);
-		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::HandleJumpActionReleased);
-
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
+
+		// Jumping
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ThisClass::HandleJumpActionPressed);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::HandleJumpActionReleased);
+
+		// Sprinting
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &ThisClass::HandleSprintActionPressed);
+		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ThisClass::HandleSprintActionReleased);
 	}
 }
 
@@ -98,6 +103,16 @@ void AEvidencePlayerCharacter::HandleJumpActionPressed()
 void AEvidencePlayerCharacter::HandleJumpActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Jump);
+}
+
+void AEvidencePlayerCharacter::HandleSprintActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Sprint);
+}
+
+void AEvidencePlayerCharacter::HandleSprintActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Sprint);
 }
 
 #pragma endregion

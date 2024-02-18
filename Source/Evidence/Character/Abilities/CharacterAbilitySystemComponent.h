@@ -16,5 +16,6 @@ class EVIDENCE_API UCharacterAbilitySystemComponent : public UAbilitySystemCompo
 
 public:
 	bool bAbilitiesGiven = false;
+	bool bStartupEffectsApplied = false;
 	
 };

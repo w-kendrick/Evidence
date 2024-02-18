@@ -3,11 +3,15 @@
 #include "EvidenceCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Abilities/EIGameplayAbility.h"
+#include "EvidenceCharacterMovementComponent.h"
 
 #pragma region Class Essentials
 
-AEvidenceCharacter::AEvidenceCharacter()
+AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer.SetDefaultSubobjectClass<UEvidenceCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
+	EvidenceCMC = Cast<UEvidenceCharacterMovementComponent>(GetCharacterMovement());
+
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
 	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("CharacterAbilitySystemComponent"));
@@ -16,6 +20,13 @@ AEvidenceCharacter::AEvidenceCharacter()
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 
 	GetMesh()->bOwnerNoSee = true;
+}
+
+void AEvidenceCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	SetupDelegates();
 }
 
 #pragma endregion
@@ -31,8 +42,8 @@ void AEvidenceCharacter::PossessedBy(AController* NewController)
 		AbilitySystemComponent->InitAbilityActorInfo(this, this);
 
 		InitializeAttributes();
-
 		AddCharacterAbilities();
+		AddStartupEffects();
 	}
 }
 
@@ -75,6 +86,38 @@ void AEvidenceCharacter::AddCharacterAbilities()
 	AbilitySystemComponent->bAbilitiesGiven = true;
 }
 
+void AEvidenceCharacter::AddStartupEffects()
+{
+	if (GetLocalRole() != ROLE_Authority || !AbilitySystemComponent || AbilitySystemComponent->bStartupEffectsApplied)
+	{
+		return;
+	}
+
+	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
+	EffectContext.AddSourceObject(this);
+
+	for (TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
+	{
+		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, 0, EffectContext);
+		if (NewHandle.IsValid())
+		{
+			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
+		}
+	}
+
+	AbilitySystemComponent->bStartupEffectsApplied = true;
+}
+
+void AEvidenceCharacter::SetupDelegates()
+{
+	if (!AbilitySystemComponent)
+	{
+		return;
+	}
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(CharacterAttributeSet->GetStaminaAttribute()).AddUObject(this, &ThisClass::OnStaminaChanged);
+}
+
 void AEvidenceCharacter::SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID)
 {
 	if (!AbilitySystemComponent) return;
@@ -87,6 +130,11 @@ void AEvidenceCharacter::SendASCLocalInput(const bool bIsPressed, const EAbility
 	{
 		AbilitySystemComponent->AbilityLocalInputReleased(static_cast<int32>(AbilityID));
 	}
+}
+
+void AEvidenceCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	StaminaDelegate.Broadcast(Data.NewValue);
 }
 
 #pragma endregion
@@ -109,6 +157,38 @@ float AEvidenceCharacter::GetMaxHealth() const
 		return CharacterAttributeSet->GetMaxHealth();
 	}
 	return 0.0f;
+}
+
+float AEvidenceCharacter::GetStamina() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetStamina();
+	}
+	return 0.0f;
+}
+
+float AEvidenceCharacter::GetMaxStamina() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetMaxStamina();
+	}
+	return 0.0f;
+}
+
+float AEvidenceCharacter::GetMoveSpeed() const
+{
+	if (CharacterAttributeSet)
+	{
+		return CharacterAttributeSet->GetMoveSpeed();
+	}
+	return 0.0f;
+}
+
+bool AEvidenceCharacter::IsAlive() const
+{
+	return GetHealth() > 0;
 }
 
 #pragma endregion

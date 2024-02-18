@@ -8,6 +8,7 @@
 #include "Abilities/CharacterAbilitySystemComponent.h"
 #include "Abilities/AttributeSets/CharacterAttributeSet.h"
 #include "Evidence/Enums/AbilityInputID.h"
+#include "GameplayEffectTypes.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -16,6 +17,9 @@ class UCameraComponent;
 class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
+class UEvidenceCharacterMovementComponent;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
 
 UCLASS(config=Game)
 class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
@@ -24,10 +28,16 @@ class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 	
 	
 public:
-	AEvidenceCharacter();
+	AEvidenceCharacter(const FObjectInitializer& ObjectInitializer);
 
 	float GetHealth() const;
 	float GetMaxHealth() const;
+	float GetStamina() const;
+	float GetMaxStamina() const;
+	float GetMoveSpeed() const;
+	bool IsAlive() const;
+
+	FStaminaChange StaminaDelegate;
 
 protected:
 	//Components
@@ -37,10 +47,16 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	UCharacterAttributeSet* CharacterAttributeSet;
 
+	UPROPERTY(EditDefaultsOnly)
+	UEvidenceCharacterMovementComponent* EvidenceCMC;
+
+	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
 
 	void InitializeAttributes();
 	void AddCharacterAbilities();
+	void AddStartupEffects();
+	void SetupDelegates();
 	void SendASCLocalInput(const bool bIsPressed, const EAbilityInputID AbilityID);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
@@ -48,6 +64,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
 	TArray<TSubclassOf<class UEIGameplayAbility>> StartupAbilities;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Abilities")
+	TArray<TSubclassOf<class UGameplayEffect>> StartupEffects;
+
+	void OnStaminaChanged(const FOnAttributeChangeData& Data);
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
