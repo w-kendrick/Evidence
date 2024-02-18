@@ -73,6 +73,9 @@ protected:
 	//Sprint
 	UPROPERTY(EditDefaultsOnly) float SprintSpeedMultiplier = 1.5f;
 
+	//Crouch
+	UPROPERTY(EditDefaultsOnly) float CrouchSpeedMultiplier = 0.5f;
+
 //Input
 public:
 	UFUNCTION(BlueprintCallable)

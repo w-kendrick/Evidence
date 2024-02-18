@@ -36,6 +36,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* SprintAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* CrouchAction;
+
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
@@ -49,6 +52,8 @@ protected:
 	void HandleJumpActionReleased();
 	void HandleSprintActionPressed();
 	void HandleSprintActionReleased();
+	void HandleCrouchActionPressed();
+	void HandleCrouchActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }

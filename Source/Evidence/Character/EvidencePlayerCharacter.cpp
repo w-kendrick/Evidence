@@ -66,6 +66,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Sprinting
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Started, this, &ThisClass::HandleSprintActionPressed);
 		EnhancedInputComponent->BindAction(SprintAction, ETriggerEvent::Completed, this, &ThisClass::HandleSprintActionReleased);
+
+		// Crouching
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &ThisClass::HandleCrouchActionPressed);
+		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ThisClass::HandleCrouchActionReleased);
 	}
 }
 
@@ -113,6 +117,16 @@ void AEvidencePlayerCharacter::HandleSprintActionPressed()
 void AEvidencePlayerCharacter::HandleSprintActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Sprint);
+}
+
+void AEvidencePlayerCharacter::HandleCrouchActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Crouch);
+}
+
+void AEvidencePlayerCharacter::HandleCrouchActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Crouch);
 }
 
 #pragma endregion
