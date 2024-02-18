@@ -37,6 +37,7 @@ void AEvidenceCharacter::PossessedBy(AController* NewController)
 		InitializeAttributes();
 		AddCharacterAbilities();
 		AddStartupEffects();
+		SetupDelegates();
 	}
 }
 

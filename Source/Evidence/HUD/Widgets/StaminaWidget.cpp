@@ -22,4 +22,5 @@ void UStaminaWidget::OnStaminaChanged(float NewStamina)
 	if (!Char) return;
 
 	StaminaBar->SetPercent(NewStamina / Char->GetMaxStamina());
+	StaminaText->SetText(FText::FromString(FString::SanitizeFloat(NewStamina)));
 }
