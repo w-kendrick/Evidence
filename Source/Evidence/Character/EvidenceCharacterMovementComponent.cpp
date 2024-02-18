@@ -125,6 +125,11 @@ float UEvidenceCharacterMovementComponent::GetMaxSpeed() const
 		return Owner->GetMoveSpeed() * SprintSpeedMultiplier;
 	}
 
+	if (bWantsToCrouch)
+	{
+		return Owner->GetMoveSpeed() * CrouchSpeedMultiplier;
+	}
+
 	return Owner->GetMoveSpeed();
 }
 
