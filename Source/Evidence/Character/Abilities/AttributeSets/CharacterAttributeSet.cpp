@@ -43,6 +43,11 @@ void UCharacterAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModC
 		const float NewHealth = GetHealth() - GetDamage();
 		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 	}
+
+	if (Data.EvaluatedData.Attribute == GetStaminaAttribute())
+	{
+		SetStamina(FMath::Clamp(GetStamina(), 0.0f, GetMaxStamina()));
+	}
 }
 
 void UCharacterAttributeSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
