@@ -14,6 +14,11 @@ void UCharacterAttributeSet::PreAttributeChange(const FGameplayAttribute& Attrib
 	{
 		AdjustAttributeForMaxChange(Health, MaxHealth, NewValue, GetHealthAttribute());
 	}
+
+	if (Attribute == GetMaxStaminaAttribute())
+	{
+		AdjustAttributeForMaxChange(Stamina, MaxStamina, NewValue, GetStaminaAttribute());
+	}
 }
 
 void UCharacterAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
