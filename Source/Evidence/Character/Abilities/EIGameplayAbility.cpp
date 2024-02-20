@@ -3,3 +3,8 @@
 
 #include "EIGameplayAbility.h"
 
+bool UEIGameplayAbility::IsInputPressed() const
+{
+	FGameplayAbilitySpec* Spec = GetCurrentAbilitySpec();
+	return Spec && Spec->InputPressed;
+}

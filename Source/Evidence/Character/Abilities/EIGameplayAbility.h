@@ -21,4 +21,6 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Ability")
 	EAbilityInputID AbilityID = EAbilityInputID::None;
+
+	bool IsInputPressed() const;
 };
