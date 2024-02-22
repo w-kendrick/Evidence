@@ -46,7 +46,10 @@ public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
 	UFUNCTION(BlueprintCallable)
-	void SetInteractPrompt(const float Duration);
+	void ShowInteractPrompt(const float Duration);
+
+	UFUNCTION(BlueprintCallable)
+	void HideInteractPrompt();
 
 protected:
 	virtual void BeginPlay();

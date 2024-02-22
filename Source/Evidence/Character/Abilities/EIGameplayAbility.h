@@ -22,5 +22,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Ability")
 	EAbilityInputID AbilityID = EAbilityInputID::None;
 
+	UFUNCTION(BlueprintCallable)
 	bool IsInputPressed() const;
 };

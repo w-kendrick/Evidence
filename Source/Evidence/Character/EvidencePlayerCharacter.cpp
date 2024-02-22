@@ -147,7 +147,12 @@ void AEvidencePlayerCharacter::HandleInteractActionReleased()
 
 #pragma region Interaction
 
-void AEvidencePlayerCharacter::SetInteractPrompt(const float Duration)
+void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
+{
+
+}
+
+void AEvidencePlayerCharacter::HideInteractPrompt()
 {
 
 }
