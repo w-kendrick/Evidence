@@ -144,3 +144,12 @@ void AEvidencePlayerCharacter::HandleInteractActionReleased()
 }
 
 #pragma endregion
+
+#pragma region Interaction
+
+void AEvidencePlayerCharacter::SetInteractPrompt(const float Duration)
+{
+
+}
+
+#pragma endregion

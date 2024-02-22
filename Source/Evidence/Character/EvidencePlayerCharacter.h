@@ -45,6 +45,9 @@ private:
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
+	UFUNCTION(BlueprintCallable)
+	void SetInteractPrompt(const float Duration);
+
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
