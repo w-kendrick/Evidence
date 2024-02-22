@@ -4,4 +4,4 @@
 
 #include "CoreMinimal.h"
 
-#define COLLISION_INTERACTABLE ECC_GameTraceChannel2
+#define COLLISION_INTERACTABLE ECC_GameTraceChannel3
