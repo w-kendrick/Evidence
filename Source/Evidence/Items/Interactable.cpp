@@ -8,7 +8,7 @@
 
 bool IInteractable::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
 {
-	return false;
+	return true;
 }
 
 float IInteractable::GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const
