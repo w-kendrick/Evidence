@@ -4,6 +4,7 @@
 #include "EvidencePlayerController.h"
 #include "EnhancedInputSubsystems.h"
 #include "Character/EvidenceCharacter.h"
+#include "HUD/EvidenceHUD.h"
 
 void AEvidencePlayerController::BeginPlay()
 {
@@ -27,5 +28,23 @@ void AEvidencePlayerController::AcknowledgePossession(APawn* P)
 	if (Char)
 	{
 		Char->GetAbilitySystemComponent()->InitAbilityActorInfo(Char, Char);
+	}
+}
+
+void AEvidencePlayerController::ShowInteractPrompt(const float Duration)
+{
+	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	if (EHUD)
+	{
+		EHUD->ShowInteractPrompt(Duration);
+	}
+}
+
+void AEvidencePlayerController::HideInteractPrompt()
+{
+	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	if (EHUD)
+	{
+		EHUD->HideInteractPrompt();
 	}
 }

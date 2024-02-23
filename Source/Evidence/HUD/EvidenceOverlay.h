@@ -13,5 +13,9 @@ UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	void ShowInteractPrompt(const float Duration);
+	void HideInteractPrompt();
 	
 };

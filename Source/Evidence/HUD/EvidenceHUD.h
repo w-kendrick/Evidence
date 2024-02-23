@@ -20,7 +20,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UEvidenceOverlay> OverlayClass;
 
-private:
+	UPROPERTY()
+	UEvidenceOverlay* Overlay;
+
+public:
+	UEvidenceOverlay* GetOverlay() const;
 	void AddOverlay();
+
+	void ShowInteractPrompt(const float Duration);
+	void HideInteractPrompt();
 	
 };

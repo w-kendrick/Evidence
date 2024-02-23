@@ -13,9 +13,35 @@ void AEvidenceHUD::BeginPlay()
 
 void AEvidenceHUD::AddOverlay()
 {
-	UEvidenceOverlay* Overlay = CreateWidget<UEvidenceOverlay>(GetOwningPlayerController(), OverlayClass);
+	if (Overlay)
+	{
+		return;
+	}
+
+	Overlay = CreateWidget<UEvidenceOverlay>(GetOwningPlayerController(), OverlayClass);
 	if (Overlay)
 	{
 		Overlay->AddToViewport();
 	}
+}
+
+void AEvidenceHUD::ShowInteractPrompt(const float Duration)
+{
+	if (Overlay)
+	{
+		Overlay->ShowInteractPrompt(Duration);
+	}
+}
+
+void AEvidenceHUD::HideInteractPrompt()
+{
+	if (Overlay)
+	{
+		Overlay->HideInteractPrompt();
+	}
+}
+
+UEvidenceOverlay* AEvidenceHUD::GetOverlay() const
+{
+	return Overlay;
 }

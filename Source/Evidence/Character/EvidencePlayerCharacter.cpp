@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Evidence/EvidencePlayerController.h"
 
 #pragma region Class Essentials
 
@@ -149,12 +150,18 @@ void AEvidencePlayerCharacter::HandleInteractActionReleased()
 
 void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
 {
-
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->ShowInteractPrompt(Duration);
+	}
 }
 
 void AEvidencePlayerCharacter::HideInteractPrompt()
 {
-
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->HideInteractPrompt();
+	}
 }
 
 #pragma endregion

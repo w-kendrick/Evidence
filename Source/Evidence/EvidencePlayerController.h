@@ -15,6 +15,10 @@ UCLASS()
 class EVIDENCE_API AEvidencePlayerController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	void ShowInteractPrompt(const float Duration);
+	void HideInteractPrompt();
 	
 protected:
 
