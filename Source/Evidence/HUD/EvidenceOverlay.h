@@ -17,6 +17,8 @@ class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 public:
 	void ShowInteractPrompt(const float Duration);
 	void HideInteractPrompt();
+	void StartInteractionTimer(const float Duration);
+	void StopInteractionTimer();
 
 protected:
 	UPROPERTY(meta = (BindWidget))
@@ -27,5 +29,15 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* InteractBar;
+
+	float CurrentInteractionTime;
+	float InteractionDuration;
+
+	UPROPERTY(EditDefaultsOnly)
+	float InteractionTick;
+
+	FTimerHandle InteractionTimer;
+
+	void InteractionProgressTick();
 	
 };

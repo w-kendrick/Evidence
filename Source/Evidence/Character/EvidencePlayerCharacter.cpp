@@ -166,12 +166,18 @@ void AEvidencePlayerCharacter::HideInteractPrompt()
 
 void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)
 {
-
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->StartInteractionTimer(Duration);
+	}
 }
 
 void AEvidencePlayerCharacter::StopInteractionTimer()
 {
-
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->StopInteractionTimer();
+	}
 }
 
 #pragma endregion

@@ -29,5 +29,7 @@ public:
 
 	void ShowInteractPrompt(const float Duration);
 	void HideInteractPrompt();
+	void StartInteractionTimer(const float Duration);
+	void StopInteractionTimer();
 	
 };

@@ -19,6 +19,8 @@ class EVIDENCE_API AEvidencePlayerController : public APlayerController
 public:
 	void ShowInteractPrompt(const float Duration);
 	void HideInteractPrompt();
+	void StartInteractionTimer(const float Duration);
+	void StopInteractionTimer();
 	
 protected:
 

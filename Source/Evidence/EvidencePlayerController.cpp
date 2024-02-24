@@ -48,3 +48,21 @@ void AEvidencePlayerController::HideInteractPrompt()
 		EHUD->HideInteractPrompt();
 	}
 }
+
+void AEvidencePlayerController::StartInteractionTimer(const float Duration)
+{
+	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	if (EHUD)
+	{
+		EHUD->StartInteractionTimer(Duration);
+	}
+}
+
+void AEvidencePlayerController::StopInteractionTimer()
+{
+	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	if (EHUD)
+	{
+		EHUD->StopInteractionTimer();
+	}
+}
