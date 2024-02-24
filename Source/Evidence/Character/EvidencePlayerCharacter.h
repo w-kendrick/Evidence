@@ -51,6 +51,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void HideInteractPrompt();
 
+	UFUNCTION(BlueprintCallable)
+	void StartInteractionTimer(const float Duration);
+
+	UFUNCTION(BlueprintCallable)
+	void StopInteractionTimer();
+
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;

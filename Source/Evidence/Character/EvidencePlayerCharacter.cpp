@@ -164,4 +164,14 @@ void AEvidencePlayerCharacter::HideInteractPrompt()
 	}
 }
 
+void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)
+{
+
+}
+
+void AEvidencePlayerCharacter::StopInteractionTimer()
+{
+
+}
+
 #pragma endregion
