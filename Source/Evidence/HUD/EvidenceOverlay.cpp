@@ -8,6 +8,7 @@
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Show overlay");
 	if (Duration > 0)
 	{
 		InteractSwitcher->SetActiveWidgetIndex(1);
@@ -17,10 +18,11 @@ void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
 		InteractSwitcher->SetActiveWidgetIndex(0);
 	}
 
-	InteractCanvas->SetVisibility(ESlateVisibility::HitTestInvisible);
+	InteractCanvas->SetVisibility(ESlateVisibility::Visible);
 }
 
 void UEvidenceOverlay::HideInteractPrompt()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Hide overlay");
 	InteractCanvas->SetVisibility(ESlateVisibility::Hidden);
 }
