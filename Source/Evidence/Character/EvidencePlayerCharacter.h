@@ -39,8 +39,23 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* CrouchAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractAction;
+
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
+
+	UFUNCTION(BlueprintCallable)
+	void ShowInteractPrompt(const float Duration);
+
+	UFUNCTION(BlueprintCallable)
+	void HideInteractPrompt();
+
+	UFUNCTION(BlueprintCallable)
+	void StartInteractionTimer(const float Duration);
+
+	UFUNCTION(BlueprintCallable)
+	void StopInteractionTimer();
 
 protected:
 	virtual void BeginPlay();
@@ -54,6 +69,8 @@ protected:
 	void HandleSprintActionReleased();
 	void HandleCrouchActionPressed();
 	void HandleCrouchActionReleased();
+	void HandleInteractActionPressed();
+	void HandleInteractActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }

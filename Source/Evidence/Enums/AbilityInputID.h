@@ -7,9 +7,10 @@
 UENUM(BlueprintType)
 enum class EAbilityInputID : uint8
 {
-	None    UMETA(DisplayName = "None"),
-	Jump    UMETA(DisplayName = "Jump"),
-	Sprint  UMETA(DisplayName = "Sprint"),
-	Crouch  UMETA(DisplayName = "Crouch"),
-	MAX     UMETA(DisplayName = "MAX")
+	None     UMETA(DisplayName = "None"),
+	Jump     UMETA(DisplayName = "Jump"),
+	Sprint   UMETA(DisplayName = "Sprint"),
+	Crouch   UMETA(DisplayName = "Crouch"),
+	Interact UMETA(DisplayName = "Interact"),
+	MAX      UMETA(DisplayName = "MAX")
 };

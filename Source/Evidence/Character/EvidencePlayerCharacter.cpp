@@ -9,6 +9,7 @@
 #include "Camera/CameraComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "Evidence/EvidencePlayerController.h"
 
 #pragma region Class Essentials
 
@@ -70,6 +71,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Crouching
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &ThisClass::HandleCrouchActionPressed);
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Completed, this, &ThisClass::HandleCrouchActionReleased);
+
+		// Interacting
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::HandleInteractActionPressed);
+		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &ThisClass::HandleInteractActionReleased);
 	}
 }
 
@@ -127,6 +132,52 @@ void AEvidencePlayerCharacter::HandleCrouchActionPressed()
 void AEvidencePlayerCharacter::HandleCrouchActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Crouch);
+}
+
+void AEvidencePlayerCharacter::HandleInteractActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Interact);
+}
+
+void AEvidencePlayerCharacter::HandleInteractActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Interact);
+}
+
+#pragma endregion
+
+#pragma region Interaction
+
+void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
+{
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->ShowInteractPrompt(Duration);
+	}
+}
+
+void AEvidencePlayerCharacter::HideInteractPrompt()
+{
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->HideInteractPrompt();
+	}
+}
+
+void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)
+{
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->StartInteractionTimer(Duration);
+	}
+}
+
+void AEvidencePlayerCharacter::StopInteractionTimer()
+{
+	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	{
+		EPC->StopInteractionTimer();
+	}
 }
 
 #pragma endregion

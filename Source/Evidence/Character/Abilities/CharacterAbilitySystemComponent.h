@@ -17,5 +17,10 @@ class EVIDENCE_API UCharacterAbilitySystemComponent : public UAbilitySystemCompo
 public:
 	bool bAbilitiesGiven = false;
 	bool bStartupEffectsApplied = false;
+
+	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "GetTagCount", ScriptName = "GetTagCount"))
+	int32 K2_GetTagCount(FGameplayTag TagToCheck) const;
+
+	virtual void AbilityLocalInputPressed(int32 InputID) override;
 	
 };
