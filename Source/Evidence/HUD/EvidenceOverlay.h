@@ -34,7 +34,7 @@ protected:
 	float InteractionDuration;
 
 	UPROPERTY(EditDefaultsOnly)
-	float InteractionTick;
+	float InteractionTick = 0.01f;
 
 	FTimerHandle InteractionTimer;
 
