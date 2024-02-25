@@ -30,6 +30,11 @@ AEquipment::AEquipment()
 	LocalMesh->bOnlyOwnerSee = true;
 }
 
+bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	return !bIsPickedUp;
+}
+
 void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
 	AEvidencePlayerCharacter* Char = Cast<AEvidencePlayerCharacter>(InteractingActor);

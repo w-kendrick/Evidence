@@ -17,6 +17,7 @@ class EVIDENCE_API AEquipment : public AAbilityActor, public IInteractable
 public:
 	AEquipment();
 
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
 protected:
