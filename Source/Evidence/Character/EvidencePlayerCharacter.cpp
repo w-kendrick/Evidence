@@ -144,6 +144,16 @@ void AEvidencePlayerCharacter::HandleInteractActionReleased()
 	SendASCLocalInput(false, EAbilityInputID::Interact);
 }
 
+void AEvidencePlayerCharacter::HandleDropActionPressed()
+{
+
+}
+
+void AEvidencePlayerCharacter::HandleDropActionReleased()
+{
+
+}
+
 #pragma endregion
 
 #pragma region Interaction
