@@ -14,5 +14,17 @@ UCLASS()
 class EVIDENCE_API AEquipment : public AAbilityActor, public IInteractable
 {
 	GENERATED_BODY()
+
+public:
+	AEquipment();
+
+	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	USkeletalMeshComponent* WorldMesh;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Components")
+	USkeletalMeshComponent* LocalMesh;
 	
 };
