@@ -4,6 +4,8 @@
 #include "Equipment.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Evidence/Evidence.h"
+#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Kismet/KismetSystemLibrary.h"
 
 AEquipment::AEquipment()
 {
@@ -30,5 +32,50 @@ AEquipment::AEquipment()
 
 void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
+	AEvidencePlayerCharacter* Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+	if (Char)
+	{
+		Pickup(Char);
+	}
+}
+
+void AEquipment::HandlePickup(AEvidencePlayerCharacter* Char)
+{
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Pickup");
+	
+	if (UKismetSystemLibrary::IsServer(GetWorld()))
+	{
+		MulticastPickup(Char);
+	}
+	else
+	{
+		Pickup(Char);
+	}
+}
+
+void AEquipment::MulticastPickup_Implementation(AEvidencePlayerCharacter* Char)
+{
+	if (Char->IsLocallyControlled())
+	{
+		if (!bIsPickedUp)
+		{
+			Pickup(Char);
+		}
+	}
+	else
+	{
+		Pickup(Char);
+	}
+}
+
+void AEquipment::Pickup(AEvidencePlayerCharacter* Char)
+{
+	SetOwner(Char);
+	bIsPickedUp = true;
+
+	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
+	USkeletalMeshComponent* CharLocalMesh = Char->GetMesh1P();
+	FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
+	LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 }

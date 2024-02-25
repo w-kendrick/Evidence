@@ -7,9 +7,8 @@
 #include "Interactable.h"
 #include "Equipment.generated.h"
 
-/**
- * 
- */
+class AEvidencePlayerCharacter;
+
 UCLASS()
 class EVIDENCE_API AEquipment : public AAbilityActor, public IInteractable
 {
@@ -26,5 +25,18 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* LocalMesh;
+
+	//Pickup
+	void HandlePickup(AEvidencePlayerCharacter* Char);
+
+	UFUNCTION(NetMulticast, Unreliable)
+	virtual void MulticastPickup(AEvidencePlayerCharacter* Char);
+
+	void Pickup(AEvidencePlayerCharacter* Char);
+
+	bool bIsPickedUp = false;
+
+	UPROPERTY(EditDefaultsOnly)
+	FName EquipSocket;
 	
 };
