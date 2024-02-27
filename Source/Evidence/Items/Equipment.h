@@ -7,7 +7,7 @@
 #include "Interactable.h"
 #include "Equipment.generated.h"
 
-class AEvidencePlayerCharacter;
+class AEvidenceCharacter;
 
 UCLASS()
 class EVIDENCE_API AEquipment : public AAbilityActor, public IInteractable
@@ -20,20 +20,15 @@ public:
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
+	void Pickup(AEvidenceCharacter* Char);
+	void Drop();
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* WorldMesh;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* LocalMesh;
-
-	//Pickup
-	void HandlePickup(AEvidencePlayerCharacter* Char);
-
-	UFUNCTION(NetMulticast, Unreliable)
-	virtual void MulticastPickup(AEvidencePlayerCharacter* Char);
-
-	void Pickup(AEvidencePlayerCharacter* Char);
 
 	bool bIsPickedUp = false;
 

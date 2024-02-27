@@ -37,50 +37,36 @@ bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* I
 
 void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	AEvidencePlayerCharacter* Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(InteractingActor);
 	if (Char)
 	{
-		Pickup(Char);
+		
 	}
 }
 
-void AEquipment::HandlePickup(AEvidencePlayerCharacter* Char)
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Pickup");
-	
-	if (UKismetSystemLibrary::IsServer(GetWorld()))
-	{
-		MulticastPickup(Char);
-	}
-	else
-	{
-		Pickup(Char);
-	}
-}
-
-void AEquipment::MulticastPickup_Implementation(AEvidencePlayerCharacter* Char)
-{
-	if (Char->IsLocallyControlled())
-	{
-		if (!bIsPickedUp)
-		{
-			Pickup(Char);
-		}
-	}
-	else
-	{
-		Pickup(Char);
-	}
-}
-
-void AEquipment::Pickup(AEvidencePlayerCharacter* Char)
+void AEquipment::Pickup(AEvidenceCharacter* Char)
 {
 	SetOwner(Char);
 	bIsPickedUp = true;
 
 	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
-	USkeletalMeshComponent* CharLocalMesh = Char->GetMesh1P();
-	FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
 	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
-	LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
+
+	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
+	if (PlayerChar)
+	{
+		USkeletalMeshComponent* CharLocalMesh = PlayerChar->GetMesh1P();
+		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
+	}
+}
+
+void AEquipment::Drop()
+{
+	SetOwner(nullptr);
+	bIsPickedUp = false;
+
+	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+	WorldMesh->DetachFromComponent(Rule);
+	LocalMesh->DetachFromComponent(Rule);
 }

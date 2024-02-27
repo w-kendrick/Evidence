@@ -5,6 +5,7 @@
 #include "Abilities/EIGameplayAbility.h"
 #include "Components/EvidenceCharacterMovementComponent.h"
 #include "Components/InventoryComponent.h"
+#include "Evidence/Items/Equipment.h"
 
 #pragma region Class Essentials
 
@@ -192,6 +193,18 @@ float AEvidenceCharacter::GetMoveSpeed() const
 bool AEvidenceCharacter::IsAlive() const
 {
 	return GetHealth() > 0;
+}
+
+#pragma endregion
+
+#pragma region Equipment
+
+void AEvidenceCharacter::Pickup(AEquipment* Equipment)
+{
+	if (InventoryComponent && Equipment)
+	{
+		InventoryComponent->PickupToInventory(Equipment);
+	}
 }
 
 #pragma endregion

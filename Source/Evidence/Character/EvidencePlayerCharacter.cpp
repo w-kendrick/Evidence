@@ -10,6 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Evidence/EvidencePlayerController.h"
+#include "Components/InventoryComponent.h"
 
 #pragma region Class Essentials
 
@@ -187,6 +188,18 @@ void AEvidencePlayerCharacter::StopInteractionTimer()
 	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
 	{
 		EPC->StopInteractionTimer();
+	}
+}
+
+#pragma endregion
+
+#pragma region Equipment
+
+void AEvidencePlayerCharacter::Pickup(AEquipment* Equipment)
+{
+	if (InventoryComponent && Equipment)
+	{
+		InventoryComponent->PickupEquipped(Equipment);
 	}
 }
 

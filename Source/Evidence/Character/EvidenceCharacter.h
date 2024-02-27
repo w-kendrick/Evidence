@@ -19,6 +19,7 @@ class UInputMappingContext;
 struct FInputActionValue;
 class UEvidenceCharacterMovementComponent;
 class UInventoryComponent;
+class AEquipment;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
 
@@ -39,6 +40,8 @@ public:
 	bool IsAlive() const;
 
 	FStaminaChange StaminaDelegate;
+
+	virtual void Pickup(AEquipment* Equipment);
 
 protected:
 	//Components
