@@ -40,7 +40,7 @@ void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiv
 	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(InteractingActor);
 	if (Char)
 	{
-		
+		Char->Pickup(this);
 	}
 }
 

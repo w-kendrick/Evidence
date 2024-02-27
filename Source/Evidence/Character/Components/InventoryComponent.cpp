@@ -4,18 +4,21 @@
 #include "InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
 #include "Net/UnrealNetwork.h"
+#include "Evidence/Character/EvidenceCharacter.h"
 
 #pragma region Class Essentials
 
 UInventoryComponent::UInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
+	SetIsReplicatedByDefault(true);
 }
 
 void UInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	Char = Cast<AEvidenceCharacter>(GetOwner());
 }
 
 void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -34,7 +37,7 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 		PrevEquipped->Drop();
 	}
 
-	if (Equipped)
+	if (Equipped && Char)
 	{
 		Equipped->Pickup(Char);
 	}
@@ -42,7 +45,17 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 
 void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 {
+	if (Equipped)
+	{
+		Equipped->Drop();
+	}
+
 	Equipped = NewEquipped;
+
+	if (Equipped && Char)
+	{
+		Equipped->Pickup(Char);
+	}
 }
 
 void UInventoryComponent::DropEquipped()
