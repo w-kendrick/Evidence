@@ -18,6 +18,7 @@ class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
 class UEvidenceCharacterMovementComponent;
+class UInventoryComponent;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
 
@@ -49,6 +50,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	UEvidenceCharacterMovementComponent* EvidenceCMC;
+
+	UPROPERTY(EditDefaultsOnly)
+	UInventoryComponent* InventoryComponent;
 
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;

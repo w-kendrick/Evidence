@@ -3,7 +3,8 @@
 #include "EvidenceCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Abilities/EIGameplayAbility.h"
-#include "EvidenceCharacterMovementComponent.h"
+#include "Components/EvidenceCharacterMovementComponent.h"
+#include "Components/InventoryComponent.h"
 
 #pragma region Class Essentials
 
@@ -18,6 +19,8 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
 }
