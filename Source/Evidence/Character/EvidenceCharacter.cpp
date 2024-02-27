@@ -207,4 +207,12 @@ void AEvidenceCharacter::Pickup(AEquipment* Equipment)
 	}
 }
 
+void AEvidenceCharacter::Drop()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->DropEquipped();
+	}
+}
+
 #pragma endregion

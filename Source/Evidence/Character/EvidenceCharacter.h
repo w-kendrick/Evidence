@@ -42,6 +42,7 @@ public:
 	FStaminaChange StaminaDelegate;
 
 	virtual void Pickup(AEquipment* Equipment);
+	virtual void Drop();
 
 protected:
 	//Components
