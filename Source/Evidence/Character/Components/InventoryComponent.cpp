@@ -12,6 +12,9 @@ UInventoryComponent::UInventoryComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	SetIsReplicatedByDefault(true);
+
+	Inventory.SetNum(10);
+	InitializeInventory();
 }
 
 void UInventoryComponent::BeginPlay()
@@ -58,7 +61,16 @@ void UInventoryComponent::Pickup(AEquipment* Equipment)
 {
 	if (Equipped)
 	{
-
+		uint8 Index;
+		if (DetermineFreeSpot(Index))
+		{
+			PickupToInventory(Equipment, Index);
+		}
+		else
+		{
+			DropEquipped();
+			PickupEquipped(Equipment);
+		}
 	}
 	else
 	{
@@ -113,6 +125,33 @@ void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 I
 {
 	Inventory[Index] = ID;
 	Inventory = Inventory; //forces rep notify to be called
+}
+
+#pragma endregion
+
+#pragma region Helper Functions
+
+bool UInventoryComponent::DetermineFreeSpot(uint8& Index) const
+{
+	bool result = false;
+
+	for (uint8 i = 0; i < Inventory.Num(); ++i)
+	{
+		if (Inventory[i] == EEquipmentID::Empty)
+		{
+			Index = i;
+			return true;
+		}
+	}
+	return false;
+}
+
+void UInventoryComponent::InitializeInventory()
+{
+	for (uint8 i = 0; i < Inventory.Num(); ++i)
+	{
+		Inventory[i] = EEquipmentID::Empty;
+	}
 }
 
 #pragma endregion

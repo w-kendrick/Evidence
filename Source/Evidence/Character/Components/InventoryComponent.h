@@ -47,4 +47,7 @@ private:
 
 	UFUNCTION()
 	void OnRep_Inventory(TArray<EEquipmentID> NewInventory);
+
+	bool DetermineFreeSpot(uint8& Index) const;
+	void InitializeInventory();
 };
