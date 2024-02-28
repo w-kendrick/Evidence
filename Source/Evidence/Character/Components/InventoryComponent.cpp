@@ -30,6 +30,8 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 
 #pragma endregion
 
+#pragma region Rep Notifies
+
 void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 {
 	if (PrevEquipped)
@@ -42,6 +44,15 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 		Equipped->Pickup(Char);
 	}
 }
+
+void UInventoryComponent::OnRep_Inventory(TArray<EEquipmentID> NewInventory)
+{
+
+}
+
+#pragma endregion
+
+#pragma region Equipped
 
 void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 {
@@ -68,7 +79,20 @@ void UInventoryComponent::DropEquipped()
 	Equipped = nullptr;
 }
 
+#pragma endregion
+
+#pragma region Inventory
+
 void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Pickup to inventory");
+	SetInventoryIndex(EEquipmentID::Test1, 0);
 }
+
+void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 Index)
+{
+	Inventory[Index] = ID;
+	Inventory = Inventory; //forces rep notify to be called
+}
+
+#pragma endregion
