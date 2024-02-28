@@ -18,10 +18,13 @@ class EVIDENCE_API UInventoryComponent : public UActorComponent
 public:	
 	UInventoryComponent();
 
+	void Pickup(AEquipment* Equipment);
+
 	void PickupEquipped(AEquipment* NewEquipped);
 	void DropEquipped();
 
-	void PickupToInventory(AEquipment* NewEquipped);
+	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
+	void DropFromInventory(const uint8 Index);
 
 protected:
 	virtual void BeginPlay() override;

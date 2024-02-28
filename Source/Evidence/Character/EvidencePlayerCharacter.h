@@ -48,8 +48,6 @@ private:
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
-	virtual void Pickup(AEquipment* Equipment) override;
-
 	UFUNCTION(BlueprintCallable)
 	void ShowInteractPrompt(const float Duration);
 

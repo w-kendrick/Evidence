@@ -52,6 +52,22 @@ void UInventoryComponent::OnRep_Inventory(TArray<EEquipmentID> NewInventory)
 
 #pragma endregion
 
+#pragma region Pickup
+
+void UInventoryComponent::Pickup(AEquipment* Equipment)
+{
+	if (Equipped)
+	{
+
+	}
+	else
+	{
+		PickupEquipped(Equipment);
+	}
+}
+
+#pragma endregion
+
 #pragma region Equipped
 
 void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
@@ -83,10 +99,14 @@ void UInventoryComponent::DropEquipped()
 
 #pragma region Inventory
 
-void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped)
+void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped, const uint8 Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Pickup to inventory");
-	SetInventoryIndex(EEquipmentID::Test1, 0);
+}
+
+void UInventoryComponent::DropFromInventory(const uint8 Index)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }
 
 void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 Index)

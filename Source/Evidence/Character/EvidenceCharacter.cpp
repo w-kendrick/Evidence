@@ -203,7 +203,7 @@ void AEvidenceCharacter::Pickup(AEquipment* Equipment)
 {
 	if (InventoryComponent && Equipment)
 	{
-		InventoryComponent->PickupToInventory(Equipment);
+		InventoryComponent->Pickup(Equipment);
 	}
 }
 

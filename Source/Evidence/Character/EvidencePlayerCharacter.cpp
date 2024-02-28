@@ -196,15 +196,3 @@ void AEvidencePlayerCharacter::StopInteractionTimer()
 }
 
 #pragma endregion
-
-#pragma region Equipment
-
-void AEvidencePlayerCharacter::Pickup(AEquipment* Equipment)
-{
-	if (InventoryComponent && Equipment)
-	{
-		InventoryComponent->PickupEquipped(Equipment);
-	}
-}
-
-#pragma endregion
