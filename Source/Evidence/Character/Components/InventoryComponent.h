@@ -9,6 +9,7 @@
 
 class AEquipment;
 class AEvidenceCharacter;
+class UInventoryWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class EVIDENCE_API UInventoryComponent : public UActorComponent
@@ -26,6 +27,8 @@ public:
 	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
 	void DropFromInventory(const uint8 Index);
 
+	void ToggleInventoryWidget(const bool state);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -34,6 +37,12 @@ protected:
 
 	UPROPERTY()
 	AEvidenceCharacter* Char;
+
+	UPROPERTY()
+	UInventoryWidget* InventoryWidget;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UInventoryWidget> WidgetClass;
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Equipped)

@@ -80,6 +80,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Dropping
 		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Started, this, &ThisClass::HandleDropActionPressed);
 		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Completed, this, &ThisClass::HandleDropActionReleased);
+
+		// Inventory
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ThisClass::HandleInventoryActionPressed);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Completed, this, &ThisClass::HandleInventoryActionReleased);
 	}
 }
 
@@ -157,6 +161,22 @@ void AEvidencePlayerCharacter::HandleDropActionPressed()
 void AEvidencePlayerCharacter::HandleDropActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Drop);
+}
+
+void AEvidencePlayerCharacter::HandleInventoryActionPressed()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->ToggleInventoryWidget(true);
+	}
+}
+
+void AEvidencePlayerCharacter::HandleInventoryActionReleased()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->ToggleInventoryWidget(false);
+	}
 }
 
 #pragma endregion

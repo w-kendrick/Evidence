@@ -121,6 +121,18 @@ void UInventoryComponent::DropFromInventory(const uint8 Index)
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }
 
+void UInventoryComponent::ToggleInventoryWidget(const bool state)
+{
+	if (state)
+	{
+
+	}
+	else
+	{
+
+	}
+}
+
 void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 Index)
 {
 	Inventory[Index] = ID;
