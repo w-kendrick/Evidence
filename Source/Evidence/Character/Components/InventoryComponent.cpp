@@ -60,6 +60,11 @@ void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 
 void UInventoryComponent::DropEquipped()
 {
+	if (Equipped)
+	{
+		Equipped->Drop();
+	}
+
 	Equipped = nullptr;
 }
 

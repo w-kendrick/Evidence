@@ -76,6 +76,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Interacting
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::HandleInteractActionPressed);
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &ThisClass::HandleInteractActionReleased);
+
+		// Dropping
+		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Started, this, &ThisClass::HandleDropActionPressed);
+		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Completed, this, &ThisClass::HandleDropActionReleased);
 	}
 }
 
@@ -147,12 +151,12 @@ void AEvidencePlayerCharacter::HandleInteractActionReleased()
 
 void AEvidencePlayerCharacter::HandleDropActionPressed()
 {
-
+	SendASCLocalInput(true, EAbilityInputID::Drop);
 }
 
 void AEvidencePlayerCharacter::HandleDropActionReleased()
 {
-
+	SendASCLocalInput(false, EAbilityInputID::Drop);
 }
 
 #pragma endregion
