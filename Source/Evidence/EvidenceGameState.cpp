@@ -20,3 +20,12 @@ TSubclassOf<AEquipment> AEvidenceGameState::GetEquipmentClass(const EEquipmentID
 	}
 	return nullptr;
 }
+
+EEquipmentID AEvidenceGameState::GetEquipmentID(const TSubclassOf<AEquipment> Class)
+{
+	if (Class_To_ID.Contains(Class))
+	{
+		return Class_To_ID[Class];
+	}
+	return EEquipmentID::Empty;
+}
