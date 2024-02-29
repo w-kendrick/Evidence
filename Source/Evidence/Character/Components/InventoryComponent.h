@@ -29,6 +29,9 @@ public:
 
 	void ToggleInventoryWidget(const bool state);
 
+	EEquipmentID GetEquippedType() const;
+	const TArray<EEquipmentID>& GetInventory() const;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

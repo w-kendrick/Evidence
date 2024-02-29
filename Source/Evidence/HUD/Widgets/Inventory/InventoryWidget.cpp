@@ -49,7 +49,7 @@ void UInventoryWidget::Update()
 		InventoryBox->ClearChildren();
 		EquippedBox->ClearChildren();
 
-		/*TArray<EEquipmentID> Inventory = InventoryComp->GetInventory();
+		TArray<EEquipmentID> Inventory = InventoryComp->GetInventory();
 		EEquipmentID EquippedType = InventoryComp->GetEquippedType();
 
 		const uint8 Columns = FMath::CeilToInt(((float)Inventory.Num()) / Rows);
@@ -81,6 +81,6 @@ void UInventoryWidget::Update()
 				NewSlot->SpawnInitialize(InventoryComp, EquippedType);
 				EquippedBox->AddChild(NewSlot);
 			}
-		}*/
+		}
 	}
 }

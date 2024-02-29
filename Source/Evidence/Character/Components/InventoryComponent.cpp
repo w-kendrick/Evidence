@@ -107,6 +107,11 @@ void UInventoryComponent::DropEquipped()
 	Equipped = nullptr;
 }
 
+EEquipmentID UInventoryComponent::GetEquippedType() const
+{
+	return EEquipmentID::Empty;
+}
+
 #pragma endregion
 
 #pragma region Inventory
@@ -131,6 +136,11 @@ void UInventoryComponent::ToggleInventoryWidget(const bool state)
 	{
 
 	}
+}
+
+const TArray<EEquipmentID>& UInventoryComponent::GetInventory() const
+{
+	return Inventory;
 }
 
 void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 Index)
