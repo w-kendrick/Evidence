@@ -114,10 +114,12 @@ EEquipmentID UInventoryComponent::GetEquippedType() const
 {
 	if (Equipped)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Red, "Equipped valid");
 		return EGS->GetEquipmentID(Equipped->GetClass());
 	}
 	else
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Red, "Equipped invalid");
 		return EEquipmentID::Empty;
 	}
 }

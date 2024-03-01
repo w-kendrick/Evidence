@@ -66,4 +66,24 @@ void UEvidenceOverlay::InteractionProgressTick()
 void UEvidenceOverlay::OnInventoryRequest(bool state)
 {
 	InventoryWidget->SetVisibility(state ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	if (state)
+	{
+		APlayerController* PC = GetOwningPlayer();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeGameAndUI());
+			PC->bShowMouseCursor = true;
+		}
+		InventoryWidget->Update();
+	}
+	else
+	{
+		APlayerController* PC = GetOwningPlayer();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeGameOnly());
+			PC->bShowMouseCursor = false;
+		}
+	}
 }

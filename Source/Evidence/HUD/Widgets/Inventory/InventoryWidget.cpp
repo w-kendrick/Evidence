@@ -15,26 +15,7 @@ void UInventoryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	APlayerController* PC = GetOwningPlayer();
-	if (PC)
-	{
-		PC->SetInputMode(FInputModeGameAndUI());
-		PC->bShowMouseCursor = true;
-	}
-
 	Update();
-}
-
-void UInventoryWidget::NativeDestruct()
-{
-	APlayerController* PC = GetOwningPlayer();
-	if (PC)
-	{
-		PC->SetInputMode(FInputModeGameOnly());
-		PC->bShowMouseCursor = false;
-	}
-
-	Super::NativeDestruct();
 }
 
 void UInventoryWidget::SetInventoryComp(UInventoryComponent* Comp)

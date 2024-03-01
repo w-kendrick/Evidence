@@ -18,7 +18,6 @@ public:
 
 protected:
 	virtual void NativeConstruct() override;
-	virtual void NativeDestruct() override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<class UInventorySlotWidget> SlotClass;
