@@ -79,6 +79,7 @@ protected:
 	void OnStaminaChanged(const FOnAttributeChangeData& Data);
 
 public:
+	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 
 };

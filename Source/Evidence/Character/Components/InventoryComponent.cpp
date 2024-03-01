@@ -5,6 +5,8 @@
 #include "Evidence/Items/Equipment.h"
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/EvidenceGameState.h"
+#include "Kismet/GameplayStatics.h"
 
 #pragma region Class Essentials
 
@@ -22,6 +24,7 @@ void UInventoryComponent::BeginPlay()
 	Super::BeginPlay();
 
 	Char = Cast<AEvidenceCharacter>(GetOwner());
+	EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
 }
 
 void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -109,7 +112,14 @@ void UInventoryComponent::DropEquipped()
 
 EEquipmentID UInventoryComponent::GetEquippedType() const
 {
-	return EEquipmentID::Empty;
+	if (Equipped)
+	{
+		return EGS->GetEquipmentID(Equipped->GetClass());
+	}
+	else
+	{
+		return EEquipmentID::Empty;
+	}
 }
 
 #pragma endregion
@@ -128,14 +138,7 @@ void UInventoryComponent::DropFromInventory(const uint8 Index)
 
 void UInventoryComponent::ToggleInventoryWidget(const bool state)
 {
-	if (state)
-	{
-
-	}
-	else
-	{
-
-	}
+	InventoryRequest.Broadcast(state);
 }
 
 const TArray<EEquipmentID>& UInventoryComponent::GetInventory() const

@@ -7,9 +7,11 @@
 #include "Evidence/Enums/EquipmentID.h"
 #include "InventoryComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventoryRequest, bool);
+
 class AEquipment;
 class AEvidenceCharacter;
-class UInventoryWidget;
+class AEvidenceGameState;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class EVIDENCE_API UInventoryComponent : public UActorComponent
@@ -32,6 +34,9 @@ public:
 	EEquipmentID GetEquippedType() const;
 	const TArray<EEquipmentID>& GetInventory() const;
 
+	//Delegates
+	FOnInventoryRequest InventoryRequest;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
@@ -42,10 +47,7 @@ protected:
 	AEvidenceCharacter* Char;
 
 	UPROPERTY()
-	UInventoryWidget* InventoryWidget;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UInventoryWidget> WidgetClass;
+	AEvidenceGameState* EGS;
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Equipped)
