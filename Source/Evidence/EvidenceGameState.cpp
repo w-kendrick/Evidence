@@ -4,15 +4,7 @@
 #include "EvidenceGameState.h"
 #include "Items/Equipment.h"
 
-AEvidenceGameState::AEvidenceGameState()
-{
-	for (TPair<EEquipmentID, TSubclassOf<AEquipment>> Pair : ID_To_Class.Array())
-	{
-		Class_To_ID.Add(Pair.Value, Pair.Key);
-	}
-}
-
-TSubclassOf<AEquipment> AEvidenceGameState::GetEquipmentClass(const EEquipmentID ID)
+TSubclassOf<AEquipment> AEvidenceGameState::GetEquipmentClass(const EEquipmentID ID) const
 {
 	if (ID_To_Class.Contains(ID))
 	{
@@ -21,7 +13,7 @@ TSubclassOf<AEquipment> AEvidenceGameState::GetEquipmentClass(const EEquipmentID
 	return nullptr;
 }
 
-EEquipmentID AEvidenceGameState::GetEquipmentID(const TSubclassOf<AEquipment> Class)
+EEquipmentID AEvidenceGameState::GetEquipmentID(const TSubclassOf<AEquipment> Class) const
 {
 	if (Class_To_ID.Contains(Class))
 	{
