@@ -16,6 +16,8 @@ void UEvidenceOverlay::NativeConstruct()
 	if (PlayerChar)
 	{
 		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
+
+		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
 	}
 }
 

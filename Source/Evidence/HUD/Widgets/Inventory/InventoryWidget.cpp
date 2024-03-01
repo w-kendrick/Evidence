@@ -40,6 +40,7 @@ void UInventoryWidget::NativeDestruct()
 void UInventoryWidget::SetInventoryComp(UInventoryComponent* Comp)
 {
 	InventoryComp = Comp;
+	Update();
 }
 
 void UInventoryWidget::Update()
