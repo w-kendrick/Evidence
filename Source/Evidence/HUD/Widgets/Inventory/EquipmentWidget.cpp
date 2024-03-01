@@ -5,7 +5,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
-//#include "AlienEvidence/FunctionLibraries/EnumLibrary.h"
+#include "Evidence/Libraries/EnumLibrary.h"
 
 void UEquipmentWidget::NativeConstruct()
 {
@@ -70,7 +70,7 @@ void UEquipmentWidget::Display()
 {
 	if (ObjectName)
 	{
-		//FString Name = UEnumLibrary::To_String(Slot);
-		//ObjectName->SetText(FText::FromString(Name));
+		FString Name = UEnumLibrary::To_String(Slot);
+		ObjectName->SetText(FText::FromString(Name));
 	}
 }
