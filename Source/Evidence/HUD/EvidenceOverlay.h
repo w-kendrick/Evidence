@@ -44,6 +44,8 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UInventoryWidget* InventoryWidget;
 
-	void OnInventoryRequest(bool state);
+	bool bInventoryWidgetVisible = false;
+
+	void OnInventoryRequest();
 	
 };

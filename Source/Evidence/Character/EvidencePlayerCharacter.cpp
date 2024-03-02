@@ -167,16 +167,13 @@ void AEvidencePlayerCharacter::HandleInventoryActionPressed()
 {
 	if (InventoryComponent)
 	{
-		InventoryComponent->ToggleInventoryWidget(true);
+		InventoryComponent->ToggleInventoryWidget();
 	}
 }
 
 void AEvidencePlayerCharacter::HandleInventoryActionReleased()
 {
-	if (InventoryComponent)
-	{
-		InventoryComponent->ToggleInventoryWidget(false);
-	}
+
 }
 
 #pragma endregion

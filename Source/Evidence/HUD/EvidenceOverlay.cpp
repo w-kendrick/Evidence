@@ -63,11 +63,13 @@ void UEvidenceOverlay::InteractionProgressTick()
 	InteractBar->SetPercent(CurrentInteractionTime / InteractionDuration);
 }
 
-void UEvidenceOverlay::OnInventoryRequest(bool state)
+void UEvidenceOverlay::OnInventoryRequest()
 {
-	InventoryWidget->SetVisibility(state ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+	bInventoryWidgetVisible = !bInventoryWidgetVisible;
 
-	if (state)
+	InventoryWidget->SetVisibility(bInventoryWidgetVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	if (bInventoryWidgetVisible)
 	{
 		APlayerController* PC = GetOwningPlayer();
 		if (PC)

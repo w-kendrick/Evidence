@@ -141,9 +141,9 @@ void UInventoryComponent::DropFromInventory(const uint8 Index)
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }
 
-void UInventoryComponent::ToggleInventoryWidget(const bool state)
+void UInventoryComponent::ToggleInventoryWidget()
 {
-	InventoryRequest.Broadcast(state);
+	InventoryRequest.Broadcast();
 }
 
 const TArray<EEquipmentID>& UInventoryComponent::GetInventory() const

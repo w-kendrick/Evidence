@@ -7,7 +7,7 @@
 #include "Evidence/Enums/EquipmentID.h"
 #include "InventoryComponent.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventoryRequest, bool);
+DECLARE_MULTICAST_DELEGATE(FOnInventoryRequest);
 
 class AEquipment;
 class AEvidenceCharacter;
@@ -30,7 +30,7 @@ public:
 	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
 	void DropFromInventory(const uint8 Index);
 
-	void ToggleInventoryWidget(const bool state);
+	void ToggleInventoryWidget();
 
 	EEquipmentID GetEquippedType() const;
 	const TArray<EEquipmentID>& GetInventory() const;
