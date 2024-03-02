@@ -25,6 +25,7 @@ public:
 
 	void PickupEquipped(AEquipment* NewEquipped);
 	void DropEquipped();
+	void EquipFromInventory(const uint8 Index);
 
 	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
 	void DropFromInventory(const uint8 Index);

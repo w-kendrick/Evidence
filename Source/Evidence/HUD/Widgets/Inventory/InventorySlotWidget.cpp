@@ -16,7 +16,7 @@ void UInventorySlotWidget::ButtonLeftClicked()
 {
 	if (InventoryComp)
 	{
-		//InventoryComp->EquipFromInventory(Index);
+		InventoryComp->EquipFromInventory(Index);
 	}
 }
 

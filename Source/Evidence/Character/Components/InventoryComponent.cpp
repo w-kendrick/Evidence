@@ -110,16 +110,19 @@ void UInventoryComponent::DropEquipped()
 	Equipped = nullptr;
 }
 
+void UInventoryComponent::EquipFromInventory(const uint8 Index)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Equip from inventory");
+}
+
 EEquipmentID UInventoryComponent::GetEquippedType() const
 {
 	if (Equipped)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Red, "Equipped valid");
 		return EGS->GetEquipmentID(Equipped->GetClass());
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Red, "Equipped invalid");
 		return EEquipmentID::Empty;
 	}
 }
