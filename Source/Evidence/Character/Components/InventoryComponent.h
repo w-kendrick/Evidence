@@ -30,7 +30,7 @@ public:
 	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
 	void DropFromInventory(const uint8 Index);
 
-	void ToggleInventoryWidget();
+	void ToggleInventoryWidget() const;
 
 	EEquipmentID GetEquippedType() const;
 	const TArray<EEquipmentID>& GetInventory() const;

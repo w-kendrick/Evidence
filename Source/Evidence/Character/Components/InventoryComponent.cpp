@@ -141,7 +141,7 @@ void UInventoryComponent::DropFromInventory(const uint8 Index)
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }
 
-void UInventoryComponent::ToggleInventoryWidget()
+void UInventoryComponent::ToggleInventoryWidget() const
 {
 	InventoryRequest.Broadcast();
 }
