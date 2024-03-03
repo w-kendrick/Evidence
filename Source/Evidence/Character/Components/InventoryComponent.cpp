@@ -7,6 +7,8 @@
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/EvidenceGameState.h"
 #include "Kismet/GameplayStatics.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Abilities/GameplayAbilityTargetTypes.h"
 
 #pragma region Class Essentials
 
@@ -113,6 +115,15 @@ void UInventoryComponent::DropEquipped()
 void UInventoryComponent::EquipFromInventory(const uint8 Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Equip from inventory");
+
+	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	Data->HitResult.FaceIndex = Index;
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.EquipFromInventory")), Payload);
 }
 
 EEquipmentID UInventoryComponent::GetEquippedType() const

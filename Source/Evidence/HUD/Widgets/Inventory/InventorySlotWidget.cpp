@@ -14,7 +14,6 @@ void UInventorySlotWidget::NativeConstruct()
 
 void UInventorySlotWidget::ButtonLeftClicked()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Left click");
 	if (InventoryComp)
 	{
 		InventoryComp->EquipFromInventory(Index);
@@ -23,7 +22,6 @@ void UInventorySlotWidget::ButtonLeftClicked()
 
 void UInventorySlotWidget::ButtonRightClicked()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Right click");
 	if (InventoryComp)
 	{
 		InventoryComp->DropFromInventory(Index);
