@@ -114,8 +114,6 @@ void UInventoryComponent::DropEquipped()
 
 void UInventoryComponent::EquipFromInventory(const uint8 Index)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Equip from inventory");
-
 	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
 
@@ -123,6 +121,7 @@ void UInventoryComponent::EquipFromInventory(const uint8 Index)
 	Handle.Add(Data);
 
 	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.EquipFromInventory")), Payload);
 }
 
