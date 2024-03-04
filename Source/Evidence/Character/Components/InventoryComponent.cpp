@@ -112,7 +112,7 @@ void UInventoryComponent::DropEquipped()
 	Equipped = nullptr;
 }
 
-void UInventoryComponent::EquipFromInventory(const uint8 Index)
+void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
 {
 	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
@@ -146,7 +146,7 @@ void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped, const uint8
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Pickup to inventory");
 }
 
-void UInventoryComponent::DropFromInventory(const uint8 Index)
+void UInventoryComponent::TryDropFromInventory(const uint8 Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }

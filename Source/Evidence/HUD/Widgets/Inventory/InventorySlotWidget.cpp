@@ -16,7 +16,7 @@ void UInventorySlotWidget::ButtonLeftClicked()
 {
 	if (InventoryComp)
 	{
-		InventoryComp->EquipFromInventory(Index);
+		InventoryComp->TryEquipFromInventory(Index);
 	}
 }
 
@@ -24,7 +24,7 @@ void UInventorySlotWidget::ButtonRightClicked()
 {
 	if (InventoryComp)
 	{
-		InventoryComp->DropFromInventory(Index);
+		InventoryComp->TryDropFromInventory(Index);
 	}
 }
 
