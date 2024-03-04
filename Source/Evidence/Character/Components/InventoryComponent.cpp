@@ -128,25 +128,6 @@ void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
 void UInventoryComponent::EquipFromInventory(const int Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Equip from inventory - ") + FString::FromInt(Index));
-
-	const EEquipmentID EquippedID = EGS->GetEquipmentID(Equipped->GetClass());
-	const TSubclassOf<AEquipment> InventoryClass = EGS->GetEquipmentClass(Inventory[Index]);
-
-	if (InventoryClass)
-	{
-		FTransform NewTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation());
-		FActorSpawnParameters Params;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		AEquipment* NewEquipped = GetWorld()->SpawnActor<AEquipment>(InventoryClass, NewTransform, Params);
-
-		if (Equipped)
-		{
-			Equipped->Destroy();
-		}
-
-		Equipped = NewEquipped;
-		SetInventoryIndex(EquippedID, Index);
-	}
 }
 
 EEquipmentID UInventoryComponent::GetEquippedType() const
@@ -165,9 +146,16 @@ EEquipmentID UInventoryComponent::GetEquippedType() const
 
 #pragma region Inventory
 
-void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped, const uint8 Index)
+void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 Index)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Pickup to inventory");
+	if (Equipment)
+	{
+		const EEquipmentID EquipmentID = EGS->GetEquipmentID(Equipment->GetClass());
+
+		Equipment->Destroy();
+
+		SetInventoryIndex(EquipmentID, Index);
+	}
 }
 
 void UInventoryComponent::TryDropFromInventory(const uint8 Index)
