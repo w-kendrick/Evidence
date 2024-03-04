@@ -128,6 +128,25 @@ void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
 void UInventoryComponent::EquipFromInventory(const int Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Equip from inventory - ") + FString::FromInt(Index));
+
+	const EEquipmentID EquippedID = EGS->GetEquipmentID(Equipped->GetClass());
+	const TSubclassOf<AEquipment> InventoryClass = EGS->GetEquipmentClass(Inventory[Index]);
+
+	if (InventoryClass)
+	{
+		FTransform NewTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation());
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		AEquipment* NewEquipped = GetWorld()->SpawnActor<AEquipment>(InventoryClass, NewTransform, Params);
+
+		if (Equipped)
+		{
+			Equipped->Destroy();
+		}
+
+		Equipped = NewEquipped;
+		SetInventoryIndex(EquippedID, Index);
+	}
 }
 
 EEquipmentID UInventoryComponent::GetEquippedType() const
