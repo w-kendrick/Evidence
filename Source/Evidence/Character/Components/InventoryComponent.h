@@ -69,4 +69,6 @@ private:
 
 	bool DetermineFreeSpot(uint8& Index) const;
 	void InitializeInventory();
+
+	void DisplayInventory() const;
 };

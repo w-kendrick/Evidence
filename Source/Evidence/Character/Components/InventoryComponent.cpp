@@ -7,6 +7,7 @@
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/EvidenceGameState.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Abilities/GameplayAbilityTargetTypes.h"
 
@@ -34,6 +35,7 @@ void UInventoryComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UInventoryComponent, Equipped);
+	DOREPLIFETIME(UInventoryComponent, Inventory);
 }
 
 #pragma endregion
@@ -55,7 +57,7 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 
 void UInventoryComponent::OnRep_Inventory(TArray<EEquipmentID> NewInventory)
 {
-
+	DisplayInventory();
 }
 
 #pragma endregion
@@ -155,6 +157,7 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 		Equipment->Destroy();
 
 		SetInventoryIndex(EquipmentID, Index);
+		DisplayInventory();
 	}
 }
 
@@ -182,6 +185,16 @@ void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 I
 {
 	Inventory[Index] = ID;
 	Inventory = Inventory; //forces rep notify to be called
+}
+
+void UInventoryComponent::DisplayInventory() const
+{
+	FString Result;
+	for (EEquipmentID ID : Inventory)
+	{
+		Result += FString::FromInt((uint8)ID) + FString("-");
+	}
+	UKismetSystemLibrary::PrintString(GetWorld(), Result);
 }
 
 #pragma endregion
