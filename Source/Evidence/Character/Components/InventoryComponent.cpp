@@ -125,6 +125,11 @@ void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.EquipFromInventory")), Payload);
 }
 
+void UInventoryComponent::EquipFromInventory(const int Index)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Equip from inventory - ") + FString::FromInt(Index));
+}
+
 EEquipmentID UInventoryComponent::GetEquippedType() const
 {
 	if (Equipped)
@@ -147,6 +152,11 @@ void UInventoryComponent::PickupToInventory(AEquipment* NewEquipped, const uint8
 }
 
 void UInventoryComponent::TryDropFromInventory(const uint8 Index)
+{
+	
+}
+
+void UInventoryComponent::DropFromInventory(const int Index)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
 }

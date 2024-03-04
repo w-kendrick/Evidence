@@ -26,9 +26,13 @@ public:
 	void PickupEquipped(AEquipment* NewEquipped);
 	void DropEquipped();
 	void TryEquipFromInventory(const uint8 Index);
+	UFUNCTION(BlueprintCallable)
+	void EquipFromInventory(const int Index);
 
 	void PickupToInventory(AEquipment* NewEquipped, const uint8 Index);
 	void TryDropFromInventory(const uint8 Index);
+	UFUNCTION(BlueprintCallable)
+	void DropFromInventory(const int Index);
 
 	void ToggleInventoryWidget() const;
 
