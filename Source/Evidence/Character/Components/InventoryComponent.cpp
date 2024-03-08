@@ -114,7 +114,7 @@ void UInventoryComponent::DropEquipped()
 	Equipped = nullptr;
 }
 
-void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
+void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index)
 {
 	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
@@ -129,7 +129,18 @@ void UInventoryComponent::TryEquipFromInventory(const uint8 Index)
 
 void UInventoryComponent::EquipFromInventory(const int Index)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Equip from inventory - ") + FString::FromInt(Index));
+	const EEquipmentID ItemToEquip = Inventory[Index];
+
+	PickupToInventory(Equipped, Index);
+
+	const TSubclassOf<AEquipment> ClassToEquip = EGS->GetEquipmentClass(ItemToEquip);
+
+	if (ClassToEquip)
+	{
+		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip);
+
+		PickupEquipped(Equipment);
+	}
 }
 
 EEquipmentID UInventoryComponent::GetEquippedType() const

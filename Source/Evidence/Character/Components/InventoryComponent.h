@@ -25,6 +25,7 @@ public:
 
 	void PickupEquipped(AEquipment* NewEquipped);
 	void DropEquipped();
+	UFUNCTION(Server, Reliable)
 	void TryEquipFromInventory(const uint8 Index);
 	UFUNCTION(BlueprintCallable)
 	void EquipFromInventory(const int Index);
