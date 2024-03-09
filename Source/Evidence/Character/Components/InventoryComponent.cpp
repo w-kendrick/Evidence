@@ -137,7 +137,11 @@ void UInventoryComponent::EquipFromInventory(const int Index)
 
 	if (ClassToEquip)
 	{
-		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip);
+		const FTransform SpawnTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation(), FVector::OneVector);
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip, SpawnTransform, Params);
 
 		PickupEquipped(Equipment);
 	}
@@ -174,7 +178,6 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 
 void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Try drop from inventory");
 	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
 
@@ -188,7 +191,19 @@ void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 
 void UInventoryComponent::DropFromInventory(const int Index)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Drop from inventory");
+	const TSubclassOf<AEquipment> ClassToEquip = EGS->GetEquipmentClass(Inventory[Index]);
+
+	if (ClassToEquip)
+	{
+		const FTransform SpawnTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation(), FVector::OneVector);
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip, SpawnTransform, Params);
+		Equipment->Drop();
+
+		SetInventoryIndex(EEquipmentID::Empty, Index);
+	}
 }
 
 void UInventoryComponent::ToggleInventoryWidget() const
