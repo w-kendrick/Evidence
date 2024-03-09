@@ -34,5 +34,11 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FName EquipSocket;
+
+private:
+	void FindGround(FVector& Location, FRotator& Rotation) const;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
+	float MaxGroundDistance = 10000.f;
 	
 };

@@ -69,4 +69,26 @@ void AEquipment::Drop()
 	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
 	WorldMesh->DetachFromComponent(Rule);
 	LocalMesh->DetachFromComponent(Rule);
+
+	FVector Location;
+	FRotator Rotation;
+	FindGround(Location, Rotation);
+
+	SetActorLocation(Location);
+	SetActorRotation(Rotation);
+}
+
+void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
+{
+	FHitResult Hit;
+	FVector Start = GetActorLocation();
+	FVector End = End + FVector::UpVector * -1 * MaxGroundDistance;
+	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECollisionChannel::ECC_Visibility))
+	{
+		Location = Hit.Location;
+		Rotation = Hit.Normal.Rotation();
+		return;
+	}
+	Location = Start;
+	Rotation = GetActorRotation();
 }
