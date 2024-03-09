@@ -53,11 +53,13 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 	{
 		Equipped->Pickup(Char);
 	}
+
+	EquippedChanged.Broadcast();
 }
 
 void UInventoryComponent::OnRep_Inventory(TArray<EEquipmentID> NewInventory)
 {
-	DisplayInventory();
+	InventoryChanged.Broadcast();
 }
 
 #pragma endregion
@@ -97,6 +99,7 @@ void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 	}
 
 	Equipped = NewEquipped;
+	EquippedChanged.Broadcast();
 
 	if (Equipped && Char)
 	{
@@ -112,6 +115,7 @@ void UInventoryComponent::DropEquipped()
 	}
 
 	Equipped = nullptr;
+	EquippedChanged.Broadcast();
 }
 
 void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index)
@@ -172,7 +176,10 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 		Equipment->Destroy();
 
 		SetInventoryIndex(EquipmentID, Index);
-		DisplayInventory();
+	}
+	else
+	{
+		SetInventoryIndex(EEquipmentID::Empty, Index);
 	}
 }
 
@@ -220,6 +227,7 @@ void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 I
 {
 	Inventory[Index] = ID;
 	Inventory = Inventory; //forces rep notify to be called
+	InventoryChanged.Broadcast();
 }
 
 void UInventoryComponent::DisplayInventory() const
@@ -257,6 +265,7 @@ void UInventoryComponent::InitializeInventory()
 	{
 		Inventory[i] = EEquipmentID::Empty;
 	}
+	InventoryChanged.Broadcast();
 }
 
 #pragma endregion

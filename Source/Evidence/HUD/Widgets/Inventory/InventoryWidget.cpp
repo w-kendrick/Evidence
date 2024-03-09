@@ -10,11 +10,30 @@
 #include "Components/VerticalBox.h"
 #include "Components/Border.h"
 #include "Components/Button.h"
+#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 void UInventoryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (PlayerChar)
+	{
+		PlayerChar->GetInventoryComponent()->InventoryChanged.AddUObject(this, &ThisClass::OnInventoryChanged);
+		PlayerChar->GetInventoryComponent()->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
+	}
+
+	Update();
+}
+
+void UInventoryWidget::OnInventoryChanged()
+{
+	Update();
+}
+
+void UInventoryWidget::OnEquippedChanged()
+{
 	Update();
 }
 

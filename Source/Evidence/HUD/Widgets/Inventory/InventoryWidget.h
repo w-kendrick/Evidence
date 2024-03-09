@@ -34,6 +34,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UBorder* EquippedBox;
 
+	void OnInventoryChanged();
+	void OnEquippedChanged();
+
 private:
 	UPROPERTY()
 	UInventoryComponent* InventoryComp;

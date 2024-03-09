@@ -8,6 +8,8 @@
 #include "InventoryComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnInventoryRequest);
+DECLARE_MULTICAST_DELEGATE(FOnInventoryChanged);
+DECLARE_MULTICAST_DELEGATE(FOnEquippedChanged);
 
 class AEquipment;
 class AEvidenceCharacter;
@@ -43,6 +45,8 @@ public:
 
 	//Delegates
 	FOnInventoryRequest InventoryRequest;
+	FOnInventoryChanged InventoryChanged;
+	FOnEquippedChanged EquippedChanged;
 
 protected:
 	virtual void BeginPlay() override;

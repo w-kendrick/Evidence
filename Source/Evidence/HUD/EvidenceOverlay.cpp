@@ -12,6 +12,8 @@
 
 void UEvidenceOverlay::NativeConstruct()
 {
+	Super::NativeConstruct();
+
 	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (PlayerChar)
 	{
