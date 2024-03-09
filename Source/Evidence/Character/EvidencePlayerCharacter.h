@@ -42,6 +42,12 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InteractAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* DropAction;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InventoryAction;
+
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
@@ -71,6 +77,10 @@ protected:
 	void HandleCrouchActionReleased();
 	void HandleInteractActionPressed();
 	void HandleInteractActionReleased();
+	void HandleDropActionPressed();
+	void HandleDropActionReleased();
+	void HandleInventoryActionPressed();
+	void HandleInventoryActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }

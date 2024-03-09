@@ -8,7 +8,7 @@ AAbilityActor::AAbilityActor()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
+	AbilitySystemComponent = CreateDefaultSubobject<UCharacterAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);

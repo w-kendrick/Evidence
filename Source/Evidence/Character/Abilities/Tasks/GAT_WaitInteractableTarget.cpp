@@ -25,9 +25,8 @@ UGAT_WaitInteractableTarget* UGAT_WaitInteractableTarget::WaitForInteractableTar
 	AEvidencePlayerCharacter* Char = Cast<AEvidencePlayerCharacter>(OwningAbility->GetCurrentActorInfo()->AvatarActor);
 
 	MyObj->StartLocation = FGameplayAbilityTargetingLocationInfo();
-	MyObj->StartLocation.LocationType = EGameplayAbilityTargetingLocationType::SocketTransform;
-	MyObj->StartLocation.SourceComponent = Char->GetMesh1P();
-	MyObj->StartLocation.SourceSocketName = "WeaponPoint";
+	MyObj->StartLocation.LocationType = EGameplayAbilityTargetingLocationType::ActorTransform;
+	MyObj->StartLocation.SourceActor = Char;
 	MyObj->StartLocation.SourceAbility = OwningAbility;
 
 	return MyObj;

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Character/Abilities/CharacterAbilitySystemComponent.h"
 #include "AbilitySystemInterface.h"
 #include "AbilityActor.generated.h"
 
@@ -21,6 +22,6 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY()
-	class UAbilitySystemComponent* AbilitySystemComponent;
+	class UCharacterAbilitySystemComponent* AbilitySystemComponent;
 
 };

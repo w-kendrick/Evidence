@@ -3,7 +3,9 @@
 #include "EvidenceCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Abilities/EIGameplayAbility.h"
-#include "EvidenceCharacterMovementComponent.h"
+#include "Components/EvidenceCharacterMovementComponent.h"
+#include "Components/InventoryComponent.h"
+#include "Evidence/Items/Equipment.h"
 
 #pragma region Class Essentials
 
@@ -18,6 +20,8 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
+
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
 }
@@ -189,6 +193,26 @@ float AEvidenceCharacter::GetMoveSpeed() const
 bool AEvidenceCharacter::IsAlive() const
 {
 	return GetHealth() > 0;
+}
+
+#pragma endregion
+
+#pragma region Equipment
+
+void AEvidenceCharacter::Pickup(AEquipment* Equipment)
+{
+	if (InventoryComponent && Equipment)
+	{
+		InventoryComponent->Pickup(Equipment);
+	}
+}
+
+void AEvidenceCharacter::Drop()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->DropEquipped();
+	}
 }
 
 #pragma endregion

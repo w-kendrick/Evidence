@@ -6,9 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "EvidenceOverlay.generated.h"
 
-/**
- * 
- */
+class UInventoryWidget;
+
 UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 {
@@ -21,6 +20,8 @@ public:
 	void StopInteractionTimer();
 
 protected:
+	virtual void NativeConstruct() override;
+
 	UPROPERTY(meta = (BindWidget))
 	class UCanvasPanel* InteractCanvas;
 
@@ -39,5 +40,12 @@ protected:
 	FTimerHandle InteractionTimer;
 
 	void InteractionProgressTick();
+
+	UPROPERTY(meta = (BindWidget))
+	UInventoryWidget* InventoryWidget;
+
+	bool bInventoryWidgetVisible = false;
+
+	void OnInventoryRequest();
 	
 };

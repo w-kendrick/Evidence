@@ -10,6 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Evidence/EvidencePlayerController.h"
+#include "Components/InventoryComponent.h"
 
 #pragma region Class Essentials
 
@@ -75,6 +76,14 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Interacting
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::HandleInteractActionPressed);
 		EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Completed, this, &ThisClass::HandleInteractActionReleased);
+
+		// Dropping
+		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Started, this, &ThisClass::HandleDropActionPressed);
+		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Completed, this, &ThisClass::HandleDropActionReleased);
+
+		// Inventory
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ThisClass::HandleInventoryActionPressed);
+		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Completed, this, &ThisClass::HandleInventoryActionReleased);
 	}
 }
 
@@ -142,6 +151,29 @@ void AEvidencePlayerCharacter::HandleInteractActionPressed()
 void AEvidencePlayerCharacter::HandleInteractActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Interact);
+}
+
+void AEvidencePlayerCharacter::HandleDropActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Drop);
+}
+
+void AEvidencePlayerCharacter::HandleDropActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Drop);
+}
+
+void AEvidencePlayerCharacter::HandleInventoryActionPressed()
+{
+	if (InventoryComponent)
+	{
+		InventoryComponent->ToggleInventoryWidget();
+	}
+}
+
+void AEvidencePlayerCharacter::HandleInventoryActionReleased()
+{
+
 }
 
 #pragma endregion

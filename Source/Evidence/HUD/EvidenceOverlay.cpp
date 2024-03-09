@@ -5,6 +5,23 @@
 #include "Components/CanvasPanel.h"
 #include "Components/WidgetSwitcher.h"
 #include "Components/ProgressBar.h"
+#include "Widgets/Inventory/InventoryWidget.h"
+#include "Kismet/GameplayStatics.h"
+#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/Character/Components/InventoryComponent.h"
+
+void UEvidenceOverlay::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (PlayerChar)
+	{
+		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
+
+		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
+	}
+}
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
 {
@@ -46,4 +63,31 @@ void UEvidenceOverlay::InteractionProgressTick()
 {
 	CurrentInteractionTime += InteractionTick;
 	InteractBar->SetPercent(CurrentInteractionTime / InteractionDuration);
+}
+
+void UEvidenceOverlay::OnInventoryRequest()
+{
+	bInventoryWidgetVisible = !bInventoryWidgetVisible;
+
+	InventoryWidget->SetVisibility(bInventoryWidgetVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	if (bInventoryWidgetVisible)
+	{
+		APlayerController* PC = GetOwningPlayer();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeGameAndUI());
+			PC->bShowMouseCursor = true;
+		}
+		InventoryWidget->Update();
+	}
+	else
+	{
+		APlayerController* PC = GetOwningPlayer();
+		if (PC)
+		{
+			PC->SetInputMode(FInputModeGameOnly());
+			PC->bShowMouseCursor = false;
+		}
+	}
 }
