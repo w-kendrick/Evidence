@@ -107,6 +107,18 @@ void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 	}
 }
 
+void UInventoryComponent::TryDropEquipped()
+{
+	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.Drop")), Payload);
+}
+
 void UInventoryComponent::DropEquipped()
 {
 	if (Equipped)

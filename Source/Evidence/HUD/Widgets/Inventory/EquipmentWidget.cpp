@@ -52,7 +52,7 @@ void UEquipmentWidget::ButtonRightClicked()
 {
 	if (InventoryComp)
 	{
-		//InventoryComp->DropEquippedFromInventory();
+		InventoryComp->TryDropEquipped();
 	}
 }
 
