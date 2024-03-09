@@ -174,6 +174,7 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 
 void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Try drop from inventory");
 	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
 
