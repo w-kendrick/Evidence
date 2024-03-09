@@ -172,9 +172,17 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 	}
 }
 
-void UInventoryComponent::TryDropFromInventory(const uint8 Index)
+void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 {
-	
+	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	Data->HitResult.FaceIndex = Index;
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.DropFromInventory")), Payload);
 }
 
 void UInventoryComponent::DropFromInventory(const int Index)

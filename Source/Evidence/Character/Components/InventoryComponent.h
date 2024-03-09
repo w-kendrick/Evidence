@@ -31,6 +31,7 @@ public:
 	void EquipFromInventory(const int Index);
 
 	void PickupToInventory(AEquipment* Equipment, const uint8 Index);
+	UFUNCTION(Server, Reliable)
 	void TryDropFromInventory(const uint8 Index);
 	UFUNCTION(BlueprintCallable)
 	void DropFromInventory(const int Index);
