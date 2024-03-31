@@ -13,5 +13,6 @@ enum class EAbilityInputID : uint8
 	Crouch   UMETA(DisplayName = "Crouch"),
 	Interact UMETA(DisplayName = "Interact"),
 	Drop     UMETA(DisplayName = "Drop"),
+	Use      UMETA(DisplayName = "Use"),
 	MAX      UMETA(DisplayName = "MAX")
 };
