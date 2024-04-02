@@ -4,6 +4,8 @@
 #include "UseRifleAbility.h"
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Items/Equipment/Rifle/Rifle.h"
+#include "Evidence/Items/TrueProjectile.h"
+#include "Evidence/Items/CosmeticProjectile.h"
 
 UUseRifleAbility::UUseRifleAbility()
 {
@@ -23,13 +25,23 @@ void UUseRifleAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Use rifle");
 
+	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+
+	FTransform SpawnTransform;
+
 	if (ActorInfo->IsNetAuthority())
 	{
 		//True projectile
+
+		ATrueProjectile* Projectile = GetWorld()->SpawnActorDeferred<ATrueProjectile>(TrueProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		Projectile->FinishSpawning(SpawnTransform);
 	}
 	else if (ActorInfo->IsLocallyControlled())
 	{
-		//Cosmetic only projectile
+		//Cosmetic projectile
+
+		ACosmeticProjectile* Projectile = GetWorld()->SpawnActorDeferred<ACosmeticProjectile>(CosmeticProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
 
