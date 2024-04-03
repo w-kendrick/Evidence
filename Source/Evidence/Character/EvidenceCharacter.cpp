@@ -252,11 +252,3 @@ const FVector AEvidenceCharacter::GetTraceDirection() const
 }
 
 #pragma endregion
-
-void AEvidenceCharacter::ReceiveDamage(const float Amount)
-{
-	if (HealthComponent)
-	{
-		HealthComponent->ReceiveDamage(Amount);
-	}
-}

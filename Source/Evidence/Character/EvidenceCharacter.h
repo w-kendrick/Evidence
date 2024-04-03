@@ -9,7 +9,6 @@
 #include "Abilities/AttributeSets/CharacterAttributeSet.h"
 #include "Evidence/Enums/AbilityInputID.h"
 #include "GameplayEffectTypes.h"
-#include "Evidence/Interfaces/Damageable.h"
 #include "EvidenceCharacter.generated.h"
 
 class UInputComponent;
@@ -25,7 +24,7 @@ class AEquipment;
 DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
 
 UCLASS(config=Game)
-class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface, public IDamageable
+class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 	
@@ -49,8 +48,6 @@ public:
 
 	virtual const FVector GetTraceStart() const;
 	virtual const FVector GetTraceDirection() const;
-
-	virtual void ReceiveDamage(const float Amount) override;
 
 protected:
 	//Components
