@@ -213,3 +213,17 @@ void AEvidencePlayerCharacter::StopInteractionTimer()
 }
 
 #pragma endregion
+
+#pragma region Trace
+
+const FVector AEvidencePlayerCharacter::GetTraceStart() const
+{
+	return FirstPersonCameraComponent->GetComponentLocation();
+}
+
+const FVector AEvidencePlayerCharacter::GetTraceDirection() const
+{
+	return FirstPersonCameraComponent->GetForwardVector();
+}
+
+#pragma endregion

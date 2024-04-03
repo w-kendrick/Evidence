@@ -6,6 +6,7 @@
 #include "Evidence/Items/Equipment/Rifle/Rifle.h"
 #include "Evidence/Items/TrueProjectile.h"
 #include "Evidence/Items/CosmeticProjectile.h"
+#include "Kismet/KismetMathLibrary.h"
 
 UUseRifleAbility::UUseRifleAbility()
 {
@@ -14,6 +15,8 @@ UUseRifleAbility::UUseRifleAbility()
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Use")));
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Equipment.Gun.Cooldown.Rifle")));
+
+	MaxRange = 2500.f;
 }
 
 void UUseRifleAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
@@ -26,8 +29,21 @@ void UUseRifleAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Use rifle");
 
 	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	if (!Char)
+	{
+		return;
+	}
 
-	FTransform SpawnTransform;
+	ARifle* Rifle = Cast<ARifle>(GetSourceObject(Handle, ActorInfo));
+	if (!Rifle)
+	{
+		return;
+	}
+
+	const FVector Start = Rifle->GetWorldMesh()->GetSocketLocation(FName("Muzzle"));
+	const FVector Target = Char->GetTraceStart() + Char->GetTraceDirection() * MaxRange;
+	const FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Start, Target);
+	const FTransform SpawnTransform = FTransform(Rotation, Start, FVector::OneVector);
 
 	if (ActorInfo->IsNetAuthority())
 	{

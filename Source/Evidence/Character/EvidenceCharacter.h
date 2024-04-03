@@ -44,6 +44,11 @@ public:
 	virtual void Pickup(AEquipment* Equipment);
 	virtual void Drop();
 
+	AEquipment* GetEquipped() const;
+
+	virtual const FVector GetTraceStart() const;
+	virtual const FVector GetTraceDirection() const;
+
 protected:
 	//Components
 	UPROPERTY(VisibleDefaultsOnly)

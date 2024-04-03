@@ -23,6 +23,8 @@ public:
 	void Pickup(AEvidenceCharacter* Char);
 	void Drop();
 
+	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* WorldMesh;

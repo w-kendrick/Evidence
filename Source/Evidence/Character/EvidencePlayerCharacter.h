@@ -63,6 +63,9 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void StopInteractionTimer();
 
+	virtual const FVector GetTraceStart() const override;
+	virtual const FVector GetTraceDirection() const override;
+
 protected:
 	virtual void BeginPlay();
 	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;

@@ -28,4 +28,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ACosmeticProjectile> CosmeticProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	float MaxRange;
+
 };
