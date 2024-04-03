@@ -6,6 +6,7 @@
 #include "Components/EvidenceCharacterMovementComponent.h"
 #include "Components/InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
+#include "Components/HealthComponent.h"
 
 #pragma region Class Essentials
 
@@ -22,6 +23,8 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+
+	HealthComponent = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
 }

@@ -20,6 +20,7 @@ struct FInputActionValue;
 class UEvidenceCharacterMovementComponent;
 class UInventoryComponent;
 class AEquipment;
+class UHealthComponent;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
 
@@ -62,6 +63,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	UInventoryComponent* InventoryComponent;
+
+	UPROPERTY(EditDefaultsOnly)
+	UHealthComponent* HealthComponent;
 
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
