@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
-#include "Rifle.generated.h"
+#include "Gun.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAmmoChanged, uint8);
 
 UCLASS()
-class EVIDENCE_API ARifle : public AEquipment
+class EVIDENCE_API AGun : public AEquipment
 {
 	GENERATED_BODY()
 
 public:
-	ARifle();
+	AGun();
 
 	FOnAmmoChanged OnAmmoChanged;
 
