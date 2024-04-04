@@ -17,6 +17,7 @@ UUseGunAbility::UUseGunAbility()
 	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Equipment.Gun.Cooldown.Rifle")));
 
 	MaxRange = 2500.f;
+	Damage = 70.f;
 }
 
 void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
@@ -49,7 +50,12 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 	{
 		//True projectile
 
+		FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());
+
+		DamageEffectSpecHandle.Data.Get()->SetSetByCallerMagnitude(FGameplayTag::RequestGameplayTag(FName("Data.Damage")), Damage);
+
 		ATrueProjectile* Projectile = GetWorld()->SpawnActorDeferred<ATrueProjectile>(TrueProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		Projectile->DamageEffectHandle = DamageEffectSpecHandle;
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 	else if (ActorInfo->IsLocallyControlled())

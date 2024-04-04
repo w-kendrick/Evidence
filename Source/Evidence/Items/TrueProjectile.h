@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Projectile.h"
+#include "GameplayEffectTypes.h"
 #include "TrueProjectile.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class EVIDENCE_API ATrueProjectile : public AProjectile
 {
@@ -16,6 +14,8 @@ class EVIDENCE_API ATrueProjectile : public AProjectile
 
 public:
 	ATrueProjectile();
+
+	FGameplayEffectSpecHandle DamageEffectHandle;
 
 protected:
 	virtual void BeginPlay() override;

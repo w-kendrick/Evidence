@@ -31,4 +31,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxRange;
 
+	UPROPERTY(EditDefaultsOnly)
+	float Damage;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UGameplayEffect> DamageEffect;
+
 };
