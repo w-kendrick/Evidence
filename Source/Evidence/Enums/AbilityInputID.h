@@ -14,5 +14,6 @@ enum class EAbilityInputID : uint8
 	Interact UMETA(DisplayName = "Interact"),
 	Drop     UMETA(DisplayName = "Drop"),
 	Use      UMETA(DisplayName = "Use"),
+	Reload   UMETA(DisplayName = "Reload"),
 	MAX      UMETA(DisplayName = "MAX")
 };
