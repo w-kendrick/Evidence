@@ -86,6 +86,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+	UCharacterAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return AbilitySystemComponent; }
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 
 };

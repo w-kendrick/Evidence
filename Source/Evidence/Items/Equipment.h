@@ -3,14 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/AbilityActor.h"
+#include "GameFramework/Actor.h"
 #include "Interactable.h"
 #include "Equipment.generated.h"
 
 class AEvidenceCharacter;
+class UEIGameplayAbility;
 
 UCLASS()
-class EVIDENCE_API AEquipment : public AAbilityActor, public IInteractable
+class EVIDENCE_API AEquipment : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 
@@ -37,10 +38,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	FName EquipSocket;
 
+	UPROPERTY(EditDefaultsOnly)
+	TArray<TSubclassOf<UEIGameplayAbility>> Abilities;
+
+	TArray<FGameplayAbilitySpecHandle> GrantedAbilities;
+
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
 	float MaxGroundDistance = 10000.f;
+
+	void AddAbilities(AEvidenceCharacter* Char);
+	void RemoveAbilities(AEvidenceCharacter* Char);
 	
 };
