@@ -84,6 +84,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Inventory
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ThisClass::HandleInventoryActionPressed);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Completed, this, &ThisClass::HandleInventoryActionReleased);
+
+		// Use equipment
+		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Started, this, &ThisClass::HandleUseActionPressed);
+		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Completed, this, &ThisClass::HandleUseActionReleased);
 	}
 }
 
@@ -174,6 +178,16 @@ void AEvidencePlayerCharacter::HandleInventoryActionPressed()
 void AEvidencePlayerCharacter::HandleInventoryActionReleased()
 {
 
+}
+
+void AEvidencePlayerCharacter::HandleUseActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Use);
+}
+
+void AEvidencePlayerCharacter::HandleUseActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Use);
 }
 
 #pragma endregion

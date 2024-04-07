@@ -14,7 +14,7 @@ void ATrueProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (GetInstigator() && GetInstigator()->IsLocallyControlled())
+	if (GetInstigator() && GetInstigator()->IsLocallyControlled() && !GetInstigator()->HasAuthority())
 	{
 		Sphere->SetVisibility(false, true);
 	}
@@ -28,6 +28,8 @@ void ATrueProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	{
 		Damageable->ReceiveDamage(30.f);
 	}
+
+	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + 250 * FVector::UpVector, FColor::Purple, true, -1.0f, 0, 5);
 
 	Super::OnHit(HitComponent, OtherActor, OtherComp, NormalImpulse, Hit);
 }

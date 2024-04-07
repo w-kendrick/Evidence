@@ -27,8 +27,6 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 		return;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Use gun");
-
 	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
@@ -56,6 +54,7 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 		ATrueProjectile* Projectile = GetWorld()->SpawnActorDeferred<ATrueProjectile>(TrueProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		Projectile->DamageEffectHandle = DamageEffectSpecHandle;
+		Projectile->SetInstigator(Char);
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 	else if (ActorInfo->IsLocallyControlled())
@@ -65,6 +64,8 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 		ACosmeticProjectile* Projectile = GetWorld()->SpawnActorDeferred<ACosmeticProjectile>(CosmeticProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		Projectile->FinishSpawning(SpawnTransform);
 	}
+
+	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
 
 bool UUseGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const

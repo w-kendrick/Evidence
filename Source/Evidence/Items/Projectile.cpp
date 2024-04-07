@@ -13,6 +13,7 @@ AProjectile::AProjectile()
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	ProjectileMovement->InitialSpeed = 500.f;
 	ProjectileMovement->MaxSpeed = 500.f;
+	ProjectileMovement->ProjectileGravityScale = 0.0f;
 
 	Sphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
 	RootComponent = Sphere;
