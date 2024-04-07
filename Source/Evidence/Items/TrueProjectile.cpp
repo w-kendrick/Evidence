@@ -28,4 +28,6 @@ void ATrueProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	{
 		Damageable->ReceiveDamage(30.f);
 	}
+
+	Super::OnHit(HitComponent, OtherActor, OtherComp, NormalImpulse, Hit);
 }
