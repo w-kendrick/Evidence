@@ -29,4 +29,6 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 	}
 
 	Powered->ToggleActivation();
+
+	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
