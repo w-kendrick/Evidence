@@ -24,6 +24,8 @@ public:
 	void SetActive(const bool NewActive);
 
 	void ToggleActivation();
+
+	float GetPower() const { return Power; }
 	
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

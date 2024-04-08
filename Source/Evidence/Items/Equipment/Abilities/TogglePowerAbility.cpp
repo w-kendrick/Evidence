@@ -32,3 +32,20 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
+
+bool UTogglePowerAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const
+{
+	if (!Super::CanActivateAbility(Handle, ActorInfo, SourceTags, TargetTags, OptionalRelevantTags))
+	{
+		return false;
+	}
+
+	APoweredEquipment* Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
+
+	if (!Powered)
+	{
+		return false;
+	}
+
+	return Powered->GetPower() > 0;
+}
