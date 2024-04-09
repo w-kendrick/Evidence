@@ -43,8 +43,7 @@ public:
 	void ToggleInventoryWidget() const;
 
 	AEquipment* GetEquipped() const { return Equipped; }
-	EEquipmentID GetEquippedType() const;
-	const TArray<EEquipmentID>& GetInventory() const;
+	const TArray<AEquipment*>& GetInventory() const;
 
 	//Delegates
 	FOnInventoryRequest InventoryRequest;
@@ -55,7 +54,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	void SetInventoryIndex(const EEquipmentID ID, const uint8 Index);
+	void SetInventoryIndex(AEquipment* Equipment, const uint8 Index);
 
 	UPROPERTY()
 	AEvidenceCharacter* Char;
@@ -68,13 +67,13 @@ private:
 	AEquipment* Equipped;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Inventory)
-	TArray<EEquipmentID> Inventory;
+	TArray<AEquipment*> Inventory;
 
 	UFUNCTION()
 	void OnRep_Equipped(AEquipment* PrevEquipped);
 
 	UFUNCTION()
-	void OnRep_Inventory(TArray<EEquipmentID> NewInventory);
+	void OnRep_Inventory(TArray<AEquipment*> NewInventory);
 
 	bool DetermineFreeSpot(uint8& Index) const;
 	void InitializeInventory();

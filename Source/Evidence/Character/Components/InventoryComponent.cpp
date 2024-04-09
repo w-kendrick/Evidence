@@ -57,7 +57,7 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 	EquippedChanged.Broadcast();
 }
 
-void UInventoryComponent::OnRep_Inventory(TArray<EEquipmentID> NewInventory)
+void UInventoryComponent::OnRep_Inventory(TArray<AEquipment*> NewInventory)
 {
 	InventoryChanged.Broadcast();
 }
@@ -145,34 +145,11 @@ void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index
 
 void UInventoryComponent::EquipFromInventory(const int Index)
 {
-	const EEquipmentID ItemToEquip = Inventory[Index];
+	AEquipment* Equipment = Inventory[Index];
 
 	PickupToInventory(Equipped, Index);
 
-	const TSubclassOf<AEquipment> ClassToEquip = EGS->GetEquipmentClass(ItemToEquip);
-
-	if (ClassToEquip)
-	{
-		const FTransform SpawnTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation(), FVector::OneVector);
-		FActorSpawnParameters Params;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip, SpawnTransform, Params);
-
-		PickupEquipped(Equipment);
-	}
-}
-
-EEquipmentID UInventoryComponent::GetEquippedType() const
-{
-	if (Equipped)
-	{
-		return EGS->GetEquipmentID(Equipped->GetClass());
-	}
-	else
-	{
-		return EEquipmentID::Empty;
-	}
+	PickupEquipped(Equipment);
 }
 
 #pragma endregion
@@ -181,18 +158,7 @@ EEquipmentID UInventoryComponent::GetEquippedType() const
 
 void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 Index)
 {
-	if (Equipment)
-	{
-		const EEquipmentID EquipmentID = EGS->GetEquipmentID(Equipment->GetClass());
-
-		Equipment->Destroy();
-
-		SetInventoryIndex(EquipmentID, Index);
-	}
-	else
-	{
-		SetInventoryIndex(EEquipmentID::Empty, Index);
-	}
+		SetInventoryIndex(Equipment, Index);
 }
 
 void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
@@ -210,18 +176,12 @@ void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 
 void UInventoryComponent::DropFromInventory(const int Index)
 {
-	const TSubclassOf<AEquipment> ClassToEquip = EGS->GetEquipmentClass(Inventory[Index]);
+	AEquipment* Equipment = Inventory[Index];
 
-	if (ClassToEquip)
+	if (Equipment)
 	{
-		const FTransform SpawnTransform = FTransform(Char->GetActorRotation(), Char->GetActorLocation(), FVector::OneVector);
-		FActorSpawnParameters Params;
-		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-		AEquipment* Equipment = GetWorld()->SpawnActor<AEquipment>(ClassToEquip, SpawnTransform, Params);
 		Equipment->Drop();
-
-		SetInventoryIndex(EEquipmentID::Empty, Index);
+		SetInventoryIndex(nullptr, Index);
 	}
 }
 
@@ -230,26 +190,26 @@ void UInventoryComponent::ToggleInventoryWidget() const
 	InventoryRequest.Broadcast();
 }
 
-const TArray<EEquipmentID>& UInventoryComponent::GetInventory() const
+const TArray<AEquipment*>& UInventoryComponent::GetInventory() const
 {
 	return Inventory;
 }
 
-void UInventoryComponent::SetInventoryIndex(const EEquipmentID ID, const uint8 Index)
+void UInventoryComponent::SetInventoryIndex(AEquipment* Equipment, const uint8 Index)
 {
-	Inventory[Index] = ID;
+	Inventory[Index] = Equipment;
 	Inventory = Inventory; //forces rep notify to be called
 	InventoryChanged.Broadcast();
 }
 
 void UInventoryComponent::DisplayInventory() const
 {
-	FString Result;
+	/*FString Result;
 	for (EEquipmentID ID : Inventory)
 	{
 		Result += FString::FromInt((uint8)ID) + FString("-");
 	}
-	UKismetSystemLibrary::PrintString(GetWorld(), Result);
+	UKismetSystemLibrary::PrintString(GetWorld(), Result);*/
 }
 
 #pragma endregion
@@ -262,7 +222,7 @@ bool UInventoryComponent::DetermineFreeSpot(uint8& Index) const
 
 	for (uint8 i = 0; i < Inventory.Num(); ++i)
 	{
-		if (Inventory[i] == EEquipmentID::Empty)
+		if (Inventory[i] == nullptr)
 		{
 			Index = i;
 			return true;
@@ -275,7 +235,7 @@ void UInventoryComponent::InitializeInventory()
 {
 	for (uint8 i = 0; i < Inventory.Num(); ++i)
 	{
-		Inventory[i] = EEquipmentID::Empty;
+		Inventory[i] = nullptr;
 	}
 	InventoryChanged.Broadcast();
 }
