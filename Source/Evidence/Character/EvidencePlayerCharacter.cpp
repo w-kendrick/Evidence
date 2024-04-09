@@ -84,6 +84,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Inventory
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ThisClass::HandleInventoryActionPressed);
 		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Completed, this, &ThisClass::HandleInventoryActionReleased);
+
+		// Use equipment
+		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Started, this, &ThisClass::HandleUseActionPressed);
+		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Completed, this, &ThisClass::HandleUseActionReleased);
 	}
 }
 
@@ -176,6 +180,16 @@ void AEvidencePlayerCharacter::HandleInventoryActionReleased()
 
 }
 
+void AEvidencePlayerCharacter::HandleUseActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Use);
+}
+
+void AEvidencePlayerCharacter::HandleUseActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Use);
+}
+
 #pragma endregion
 
 #pragma region Interaction
@@ -210,6 +224,20 @@ void AEvidencePlayerCharacter::StopInteractionTimer()
 	{
 		EPC->StopInteractionTimer();
 	}
+}
+
+#pragma endregion
+
+#pragma region Trace
+
+const FVector AEvidencePlayerCharacter::GetTraceStart() const
+{
+	return FirstPersonCameraComponent->GetComponentLocation();
+}
+
+const FVector AEvidencePlayerCharacter::GetTraceDirection() const
+{
+	return FirstPersonCameraComponent->GetForwardVector();
 }
 
 #pragma endregion

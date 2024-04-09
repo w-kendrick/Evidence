@@ -215,4 +215,40 @@ void AEvidenceCharacter::Drop()
 	}
 }
 
+AEquipment* AEvidenceCharacter::GetEquipped() const
+{
+	if (!InventoryComponent)
+	{
+		return nullptr;
+	}
+
+	return InventoryComponent->GetEquipped();
+}
+
+#pragma endregion
+
+#pragma region Trace
+
+const FVector AEvidenceCharacter::GetTraceStart() const
+{
+	AEquipment* Equipped = GetEquipped();
+	if (Equipped)
+	{
+		return Equipped->GetWorldMesh()->GetSocketLocation(FName("Muzzle"));
+	}
+
+	return FVector();
+}
+
+const FVector AEvidenceCharacter::GetTraceDirection() const
+{
+	AEquipment* Equipped = GetEquipped();
+	if (Equipped)
+	{
+		return Equipped->GetWorldMesh()->GetSocketRotation(FName("Muzzle")).Vector();
+	}
+
+	return FVector();
+}
+
 #pragma endregion

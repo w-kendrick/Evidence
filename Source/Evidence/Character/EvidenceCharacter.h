@@ -44,6 +44,11 @@ public:
 	virtual void Pickup(AEquipment* Equipment);
 	virtual void Drop();
 
+	AEquipment* GetEquipped() const;
+
+	virtual const FVector GetTraceStart() const;
+	virtual const FVector GetTraceDirection() const;
+
 protected:
 	//Components
 	UPROPERTY(VisibleDefaultsOnly)
@@ -81,6 +86,7 @@ protected:
 public:
 	UFUNCTION(BlueprintCallable)
 	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+	UCharacterAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return AbilitySystemComponent; }
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 
 };

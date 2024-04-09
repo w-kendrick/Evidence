@@ -42,6 +42,7 @@ public:
 
 	void ToggleInventoryWidget() const;
 
+	AEquipment* GetEquipped() const { return Equipped; }
 	EEquipmentID GetEquippedType() const;
 	const TArray<EEquipmentID>& GetInventory() const;
 

@@ -6,6 +6,7 @@
 #include "Evidence/Evidence.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Evidence/Character/Abilities/EIGameplayAbility.h"
 
 AEquipment::AEquipment()
 {
@@ -49,6 +50,8 @@ void AEquipment::Pickup(AEvidenceCharacter* Char)
 	SetOwner(Char);
 	bIsPickedUp = true;
 
+	AddAbilities(Char);
+
 	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
 	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
 	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
@@ -63,6 +66,11 @@ void AEquipment::Pickup(AEvidenceCharacter* Char)
 
 void AEquipment::Drop()
 {
+	if (AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwner()))
+	{
+		RemoveAbilities(Char);
+	}
+
 	SetOwner(nullptr);
 	bIsPickedUp = false;
 
@@ -91,4 +99,36 @@ void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
 	}
 	Location = Start;
 	Rotation = GetActorRotation();
+}
+
+void AEquipment::AddAbilities(AEvidenceCharacter* Char)
+{
+	UCharacterAbilitySystemComponent* ASC = Char->GetCharacterAbilitySystemComponent();
+
+	if (GetLocalRole() != ROLE_Authority || !ASC)
+	{
+		return;
+	}
+
+	for (TSubclassOf<UEIGameplayAbility>& Ability : Abilities)
+	{
+		GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
+	}
+}
+
+void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
+{
+	UCharacterAbilitySystemComponent* ASC = Char->GetCharacterAbilitySystemComponent();
+
+	if (GetLocalRole() != ROLE_Authority || !ASC)
+	{
+		return;
+	}
+
+	for (const FGameplayAbilitySpecHandle& Handle : GrantedAbilities)
+	{
+		ASC->ClearAbility(Handle);
+	}
+
+	GrantedAbilities.Empty();
 }

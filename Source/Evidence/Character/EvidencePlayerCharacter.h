@@ -48,6 +48,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* InventoryAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* UseAction;
+
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
@@ -62,6 +65,9 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void StopInteractionTimer();
+
+	virtual const FVector GetTraceStart() const override;
+	virtual const FVector GetTraceDirection() const override;
 
 protected:
 	virtual void BeginPlay();
@@ -81,6 +87,8 @@ protected:
 	void HandleDropActionReleased();
 	void HandleInventoryActionPressed();
 	void HandleInventoryActionReleased();
+	void HandleUseActionPressed();
+	void HandleUseActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
