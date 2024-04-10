@@ -37,6 +37,10 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	}
 
 	const uint8 Available = InventoryComp->ConsumeAmmo(AmmoClass, Required);
+
+	Gun->AddAmmoToClip(Available);
+
+	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
 
 bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const

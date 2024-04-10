@@ -18,6 +18,7 @@ public:
 
 	FOnAmmoChanged OnAmmoChanged;
 
+	void AddAmmoToClip(const uint8 Addition);
 	void SetCurrentClip(const uint8 NewClip);
 
 	FORCEINLINE uint8 GetMaxClipSize() const { return MaxClipSize; }

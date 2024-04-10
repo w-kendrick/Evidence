@@ -14,8 +14,7 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 
-	CurrentClip = MaxClipSize;
-	OnAmmoChanged.Broadcast(CurrentClip);
+	SetCurrentClip(MaxClipSize);
 }
 
 void AGun::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -28,6 +27,11 @@ void AGun::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProp
 void AGun::OnRep_CurrentClip(const uint8 OldClip)
 {
 	OnAmmoChanged.Broadcast(CurrentClip);
+}
+
+void AGun::AddAmmoToClip(const uint8 Addition)
+{
+	SetCurrentClip(CurrentClip + Addition);
 }
 
 void AGun::SetCurrentClip(const uint8 NewClip)
