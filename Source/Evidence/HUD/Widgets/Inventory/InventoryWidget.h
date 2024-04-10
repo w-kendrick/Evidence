@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Evidence/Enums/EquipmentID.h"
 #include "InventoryWidget.generated.h"
 
 UCLASS()

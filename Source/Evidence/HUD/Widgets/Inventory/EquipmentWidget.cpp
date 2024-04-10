@@ -5,7 +5,6 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
-#include "Evidence/Libraries/EnumLibrary.h"
 
 void UEquipmentWidget::NativeConstruct()
 {

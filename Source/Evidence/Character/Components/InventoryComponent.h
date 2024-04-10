@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Evidence/Enums/EquipmentID.h"
 #include "InventoryComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnInventoryRequest);
