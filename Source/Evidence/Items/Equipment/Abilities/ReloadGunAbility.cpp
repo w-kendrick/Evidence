@@ -27,7 +27,13 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return;
 	}
 
+	const TArray<AEquipment*> Inventory = InventoryComp->GetInventory();
 	const TArray<uint8> AvailableAmmo = InventoryComp->FindAmmunitionOfType(AmmoClass);
+
+	for (uint8 Index : AvailableAmmo)
+	{
+		AEquipment* Equipment = Inventory[Index];
+	}
 }
 
 bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const
