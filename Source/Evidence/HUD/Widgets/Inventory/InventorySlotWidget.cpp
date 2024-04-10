@@ -28,9 +28,9 @@ void UInventorySlotWidget::ButtonRightClicked()
 	}
 }
 
-void UInventorySlotWidget::SpawnInitialize(UInventoryComponent* Comp, const EEquipmentID Object, const uint8 InventoryIndex)
+void UInventorySlotWidget::SpawnInitialize(UInventoryComponent* Comp, AEquipment* NewEquipment, const uint8 InventoryIndex)
 {
 	InventoryComp = Comp;
-	Slot = Object;
+	Equipment = NewEquipment;
 	Index = InventoryIndex;
 }

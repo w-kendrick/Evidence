@@ -24,7 +24,11 @@ public:
 	void Pickup(AEvidenceCharacter* Char);
 	void Drop();
 
+	void Attach(AEvidenceCharacter* Char, const bool isVisible);
+
 	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
+
+	FString GetEquipmentName() const { return EquipmentName; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
@@ -41,7 +45,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UEIGameplayAbility>> Abilities;
 
+	UPROPERTY()
 	TArray<FGameplayAbilitySpecHandle> GrantedAbilities;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString EquipmentName;
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;

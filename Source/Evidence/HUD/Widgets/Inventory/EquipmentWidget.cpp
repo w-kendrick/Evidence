@@ -5,7 +5,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
-#include "Evidence/Libraries/EnumLibrary.h"
+#include "Evidence/Items/Equipment.h"
 
 void UEquipmentWidget::NativeConstruct()
 {
@@ -18,10 +18,10 @@ void UEquipmentWidget::NativeConstruct()
 	Display();
 }
 
-void UEquipmentWidget::SpawnInitialize(UInventoryComponent* Comp, const EEquipmentID Object)
+void UEquipmentWidget::SpawnInitialize(UInventoryComponent* Comp, AEquipment* NewEquipment)
 {
 	InventoryComp = Comp;
-	Slot = Object;
+	Equipment = NewEquipment;
 }
 
 FReply UEquipmentWidget::NativeOnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent)
@@ -70,7 +70,13 @@ void UEquipmentWidget::Display()
 {
 	if (ObjectName)
 	{
-		FString Name = UEnumLibrary::To_String(Slot);
-		ObjectName->SetText(FText::FromString(Name));
+		if (Equipment)
+		{
+			ObjectName->SetText(FText::FromString(Equipment->GetEquipmentName()));
+		}
+		else
+		{
+			ObjectName->SetText(FText::FromString(FString("Empty")));
+		}
 	}
 }

@@ -4,8 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "Evidence/Enums/EquipmentID.h"
 #include "EquipmentWidget.generated.h"
+
+class AEquipment;
 
 UCLASS()
 class EVIDENCE_API UEquipmentWidget : public UUserWidget
@@ -13,7 +14,7 @@ class EVIDENCE_API UEquipmentWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(class UInventoryComponent* Comp, const EEquipmentID Object);
+	void SpawnInitialize(class UInventoryComponent* Comp, AEquipment* NewEquipment);
 	void Display();
 
 protected:
@@ -31,7 +32,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	FKey RightMouse;
 
-	EEquipmentID Slot;
+	UPROPERTY()
+	AEquipment* Equipment;
 	class UInventoryComponent* InventoryComp;
 
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;

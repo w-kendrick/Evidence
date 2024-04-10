@@ -6,16 +6,15 @@
 #include "EquipmentWidget.h"
 #include "InventorySlotWidget.generated.h"
 
-/**
- * 
- */
+class AEquipment;
+
 UCLASS()
 class EVIDENCE_API UInventorySlotWidget : public UEquipmentWidget
 {
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(class UInventoryComponent* Comp, const EEquipmentID Object, const uint8 InventoryIndex);
+	void SpawnInitialize(class UInventoryComponent* Comp, AEquipment* NewEquipment, const uint8 InventoryIndex);
 
 protected:
 	virtual void NativeConstruct() override;
