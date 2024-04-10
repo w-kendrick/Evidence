@@ -3,6 +3,7 @@
 
 #include "ReloadGunAbility.h"
 #include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Items/Equipment/Gun.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 
 UReloadGunAbility::UReloadGunAbility()
@@ -21,6 +22,14 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return;
 	}
 
+	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
+	if (!Gun)
+	{
+		return;
+	}
+
+	const uint8 Required = Gun->GetMaxClipSize() - Gun->GetCurrentClip();
+
 	UInventoryComponent* InventoryComp = Char->GetInventoryComponent();
 	if (!InventoryComp)
 	{
@@ -28,7 +37,7 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	}
 
 	const TArray<AEquipment*> Inventory = InventoryComp->GetInventory();
-	const TArray<uint8> AvailableAmmo = InventoryComp->FindAmmunitionOfType(AmmoClass, 5);
+	const TArray<uint8> AvailableAmmo = InventoryComp->FindAmmunitionOfType(AmmoClass, Required);
 
 	for (uint8 Index : AvailableAmmo)
 	{
@@ -38,5 +47,13 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayTagContainer* SourceTags, const FGameplayTagContainer* TargetTags, OUT FGameplayTagContainer* OptionalRelevantTags) const
 {
-	return false;
+	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
+	if (!Gun)
+	{
+		return false;
+	}
+
+	const uint8 Required = Gun->GetMaxClipSize() - Gun->GetCurrentClip();
+
+	return Required > 0;
 }

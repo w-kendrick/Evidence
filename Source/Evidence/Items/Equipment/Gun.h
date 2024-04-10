@@ -20,6 +20,7 @@ public:
 
 	void SetCurrentClip(const uint8 NewClip);
 
+	FORCEINLINE uint8 GetMaxClipSize() const { return MaxClipSize; }
 	FORCEINLINE uint8 GetCurrentClip() const { return CurrentClip; }
 
 protected:
