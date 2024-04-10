@@ -31,6 +31,8 @@ AEquipment::AEquipment()
 	LocalMesh->bOwnerNoSee = false;
 	LocalMesh->bOnlyOwnerSee = true;
 	LocalMesh->SetIsReplicated(true);
+
+	EquipmentName = FString("Equipment");
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const

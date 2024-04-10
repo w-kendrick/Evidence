@@ -6,6 +6,7 @@
 
 AGun::AGun()
 {
+	EquipmentName = FString("Gun");
 	MaxClipSize = 8;
 }
 

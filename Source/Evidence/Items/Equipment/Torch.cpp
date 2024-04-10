@@ -11,6 +11,8 @@ ATorch::ATorch()
 	LightComponent->OuterConeAngle = 20.0f;
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
+
+	EquipmentName = FString("Torch");
 }
 
 void ATorch::Activate()

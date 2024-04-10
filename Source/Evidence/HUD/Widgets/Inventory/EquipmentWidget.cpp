@@ -5,6 +5,7 @@
 #include "Components/Button.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Items/Equipment.h"
 
 void UEquipmentWidget::NativeConstruct()
 {
@@ -69,6 +70,13 @@ void UEquipmentWidget::Display()
 {
 	if (ObjectName)
 	{
-		ObjectName->SetText(FText::FromString(FString("Boom")));
+		if (Equipment)
+		{
+			ObjectName->SetText(FText::FromString(Equipment->GetEquipmentName()));
+		}
+		else
+		{
+			ObjectName->SetText(FText::FromString(FString("Empty")));
+		}
 	}
 }

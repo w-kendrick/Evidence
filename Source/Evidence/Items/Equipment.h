@@ -28,6 +28,8 @@ public:
 
 	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 
+	FString GetEquipmentName() const { return EquipmentName; }
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* WorldMesh;
@@ -43,7 +45,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UEIGameplayAbility>> Abilities;
 
+	UPROPERTY()
 	TArray<FGameplayAbilitySpecHandle> GrantedAbilities;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString EquipmentName;
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;
