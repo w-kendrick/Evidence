@@ -201,22 +201,6 @@ const TArray<AEquipment*>& UInventoryComponent::GetInventory() const
 	return Inventory;
 }
 
-TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class) const
-{
-	TArray<uint8> Indices;
-
-	for (uint8 Index = 0; Index < Inventory.Num(); Index++)
-	{
-		AEquipment* Equipment = Inventory[Index];
-		if (Equipment && Equipment->GetClass() == Class)
-		{
-			Indices.Add(Index);
-		}
-	}
-
-	return Indices;
-}
-
 void UInventoryComponent::SetInventoryIndex(AEquipment* Equipment, const uint8 Index)
 {
 	Inventory[Index] = Equipment;
@@ -260,6 +244,22 @@ void UInventoryComponent::InitializeInventory()
 		Inventory[i] = nullptr;
 	}
 	InventoryChanged.Broadcast();
+}
+
+TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class) const
+{
+	TArray<uint8> Indices;
+
+	for (uint8 Index = 0; Index < Inventory.Num(); Index++)
+	{
+		AEquipment* Equipment = Inventory[Index];
+		if (Equipment && Equipment->GetClass() == Class)
+		{
+			Indices.Add(Index);
+		}
+	}
+
+	return Indices;
 }
 
 #pragma endregion
