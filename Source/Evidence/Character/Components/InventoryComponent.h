@@ -13,6 +13,7 @@ DECLARE_MULTICAST_DELEGATE(FOnEquippedChanged);
 class AEquipment;
 class AEvidenceCharacter;
 class AEvidenceGameState;
+class AAmmunition;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class EVIDENCE_API UInventoryComponent : public UActorComponent
@@ -43,6 +44,8 @@ public:
 
 	AEquipment* GetEquipped() const { return Equipped; }
 	const TArray<AEquipment*>& GetInventory() const;
+
+	TArray<uint8> FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class) const;
 
 	//Delegates
 	FOnInventoryRequest InventoryRequest;
