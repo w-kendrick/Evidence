@@ -246,9 +246,10 @@ void UInventoryComponent::InitializeInventory()
 	InventoryChanged.Broadcast();
 }
 
-TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class) const
+TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class, const uint8 RequiredAmount) const
 {
 	TArray<uint8> Indices;
+	uint8 CurrentAmount = 0;
 
 	for (uint8 Index = 0; Index < Inventory.Num(); Index++)
 	{
@@ -256,6 +257,14 @@ TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmun
 		if (Equipment && Equipment->GetClass() == Class)
 		{
 			Indices.Add(Index);
+
+			AAmmunition* Ammunition = Cast<AAmmunition>(Equipment);
+			CurrentAmount += Ammunition->GetQuantity();
+
+			if (CurrentAmount >= RequiredAmount)
+			{
+				return Indices;
+			}
 		}
 	}
 

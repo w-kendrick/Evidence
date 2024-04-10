@@ -28,7 +28,7 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	}
 
 	const TArray<AEquipment*> Inventory = InventoryComp->GetInventory();
-	const TArray<uint8> AvailableAmmo = InventoryComp->FindAmmunitionOfType(AmmoClass);
+	const TArray<uint8> AvailableAmmo = InventoryComp->FindAmmunitionOfType(AmmoClass, 5);
 
 	for (uint8 Index : AvailableAmmo)
 	{
