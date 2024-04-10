@@ -159,6 +159,11 @@ void UInventoryComponent::EquipFromInventory(const int Index)
 void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 Index)
 {
 	SetInventoryIndex(Equipment, Index);
+
+	if (Equipment)
+	{
+		Equipment->Attach(Char, false);
+	}
 }
 
 void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)

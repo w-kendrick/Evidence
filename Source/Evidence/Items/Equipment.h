@@ -24,6 +24,8 @@ public:
 	void Pickup(AEvidenceCharacter* Char);
 	void Drop();
 
+	void Attach(AEvidenceCharacter* Char, const bool isVisible);
+
 	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 
 protected:

@@ -21,6 +21,7 @@ AEquipment::AEquipment()
 	WorldMesh->SetGenerateOverlapEvents(true);
 	WorldMesh->bOwnerNoSee = true;
 	WorldMesh->bOnlyOwnerSee = false;
+	WorldMesh->SetIsReplicated(true);
 
 	LocalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("LocalMesh"));
 	LocalMesh->SetupAttachment(RootComponent);
@@ -29,6 +30,7 @@ AEquipment::AEquipment()
 	LocalMesh->SetGenerateOverlapEvents(false);
 	LocalMesh->bOwnerNoSee = false;
 	LocalMesh->bOnlyOwnerSee = true;
+	LocalMesh->SetIsReplicated(true);
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
@@ -47,21 +49,9 @@ void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiv
 
 void AEquipment::Pickup(AEvidenceCharacter* Char)
 {
-	SetOwner(Char);
-	bIsPickedUp = true;
+	Attach(Char, true);
 
 	AddAbilities(Char);
-
-	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
-	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
-
-	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
-	if (PlayerChar)
-	{
-		USkeletalMeshComponent* CharLocalMesh = PlayerChar->GetMesh1P();
-		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
-	}
 }
 
 void AEquipment::Drop()
@@ -84,6 +74,25 @@ void AEquipment::Drop()
 
 	SetActorLocation(Location);
 	SetActorRotation(Rotation);
+}
+
+void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
+{
+	SetOwner(Char);
+	bIsPickedUp = true;
+
+	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
+	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
+	WorldMesh->SetVisibility(isVisible);
+
+	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
+	if (PlayerChar)
+	{
+		USkeletalMeshComponent* CharLocalMesh = PlayerChar->GetMesh1P();
+		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
+		LocalMesh->SetVisibility(isVisible);
+	}
 }
 
 void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
