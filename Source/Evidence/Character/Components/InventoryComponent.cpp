@@ -246,29 +246,22 @@ void UInventoryComponent::InitializeInventory()
 	InventoryChanged.Broadcast();
 }
 
-TArray<uint8> UInventoryComponent::FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class, const uint8 RequiredAmount) const
+uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required)
 {
-	TArray<uint8> Indices;
-	uint8 CurrentAmount = 0;
+	uint8 Amount = 0;
 
-	for (uint8 Index = 0; Index < Inventory.Num(); Index++)
+	for (AEquipment* Equipment : Inventory)
 	{
-		AEquipment* Equipment = Inventory[Index];
-		if (Equipment && Equipment->GetClass() == Class)
+		if (Equipment && Equipment->GetClass() == AmmoType)
 		{
-			Indices.Add(Index);
-
 			AAmmunition* Ammunition = Cast<AAmmunition>(Equipment);
-			CurrentAmount += Ammunition->GetQuantity();
-
-			if (CurrentAmount >= RequiredAmount)
-			{
-				return Indices;
-			}
+			const uint8 QuantityToTake = FMath::Clamp(Ammunition->GetQuantity(), 0, Required - Amount);
+			Ammunition->Consume(QuantityToTake);
+			Amount += QuantityToTake;
 		}
 	}
 
-	return Indices;
+	return Amount;
 }
 
 #pragma endregion

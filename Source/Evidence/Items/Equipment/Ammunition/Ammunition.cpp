@@ -9,6 +9,16 @@ AAmmunition::AAmmunition()
 	EquipmentName = FString("Ammo");
 }
 
+void AAmmunition::Consume(const uint8 Amount)
+{
+	Quantity -= Amount;
+
+	if (Quantity <= 0)
+	{
+		Destroy();
+	}
+}
+
 void AAmmunition::BeginPlay()
 {
 	Super::BeginPlay();

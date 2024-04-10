@@ -42,10 +42,10 @@ public:
 
 	void ToggleInventoryWidget() const;
 
+	uint8 ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required);
+
 	AEquipment* GetEquipped() const { return Equipped; }
 	const TArray<AEquipment*>& GetInventory() const;
-
-	TArray<uint8> FindAmmunitionOfType(const TSubclassOf<AAmmunition> Class, const uint8 RequiredAmount) const;
 
 	//Delegates
 	FOnInventoryRequest InventoryRequest;

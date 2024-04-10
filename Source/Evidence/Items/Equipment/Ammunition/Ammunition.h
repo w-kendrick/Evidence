@@ -16,9 +16,12 @@ class EVIDENCE_API AAmmunition : public AEquipment
 public:
 	AAmmunition();
 
+	void Consume(const uint8 Amount);
+
 	FOnQuantityChanged OnQuantityChanged;
 
-	uint8 GetQuantity() const { return Quantity; }
+	FORCEINLINE uint8 GetMaxQuantity() const { return MaxQuantity; }
+	FORCEINLINE uint8 GetQuantity() const { return Quantity; }
 
 protected:
 	virtual void BeginPlay() override;
