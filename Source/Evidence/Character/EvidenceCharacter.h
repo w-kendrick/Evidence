@@ -21,13 +21,12 @@ class UEvidenceCharacterMovementComponent;
 class UInventoryComponent;
 class AEquipment;
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FStaminaChange, float);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChanged, float);
 
 UCLASS(config=Game)
 class AEvidenceCharacter : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
-	
 	
 public:
 	AEvidenceCharacter(const FObjectInitializer& ObjectInitializer);
@@ -39,7 +38,7 @@ public:
 	float GetMoveSpeed() const;
 	bool IsAlive() const;
 
-	FStaminaChange StaminaDelegate;
+	FOnStaminaChanged StaminaDelegate;
 
 	virtual void Pickup(AEquipment* Equipment);
 	virtual void Drop();

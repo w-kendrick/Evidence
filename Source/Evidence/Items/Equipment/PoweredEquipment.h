@@ -6,7 +6,7 @@
 #include "Evidence/Items/Equipment.h"
 #include "PoweredEquipment.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPowerChanged, float);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPowerChanged, float, float);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool);
 
 UCLASS()

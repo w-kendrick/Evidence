@@ -55,7 +55,7 @@ void UInventoryComponent::OnRep_Equipped(AEquipment* PrevEquipped)
 		Equipped->Pickup(Char);
 	}
 
-	EquippedChanged.Broadcast();
+	EquippedChanged.Broadcast(Equipped, PrevEquipped);
 }
 
 void UInventoryComponent::OnRep_Inventory(TArray<AEquipment*> NewInventory)
@@ -94,13 +94,14 @@ void UInventoryComponent::Pickup(AEquipment* Equipment)
 
 void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 {
+	AEquipment* Prev = Equipped;
 	if (Equipped)
 	{
 		Equipped->Drop();
 	}
 
 	Equipped = NewEquipped;
-	EquippedChanged.Broadcast();
+	EquippedChanged.Broadcast(Equipped, Prev);
 
 	if (Equipped && Char)
 	{
@@ -122,13 +123,14 @@ void UInventoryComponent::TryDropEquipped()
 
 void UInventoryComponent::DropEquipped()
 {
+	AEquipment* Prev = Equipped;
 	if (Equipped)
 	{
 		Equipped->Drop();
 	}
 
 	Equipped = nullptr;
-	EquippedChanged.Broadcast();
+	EquippedChanged.Broadcast(Equipped, Prev);
 }
 
 void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index)

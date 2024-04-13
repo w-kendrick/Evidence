@@ -6,6 +6,8 @@
 #include "Blueprint/UserWidget.h"
 #include "InventoryWidget.generated.h"
 
+class AEquipment;
+
 UCLASS()
 class EVIDENCE_API UInventoryWidget : public UUserWidget
 {
@@ -34,7 +36,7 @@ protected:
 	class UBorder* EquippedBox;
 
 	void OnInventoryChanged();
-	void OnEquippedChanged();
+	void OnEquippedChanged(AEquipment* Current, AEquipment* Previous);
 
 private:
 	UPROPERTY()

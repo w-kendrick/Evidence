@@ -47,7 +47,7 @@ void APoweredEquipment::Tick(float DeltaTime)
 void APoweredEquipment::SetPower(const float NewPower)
 {
 	Power = NewPower;
-	OnPowerChanged.Broadcast(Power);
+	OnPowerChanged.Broadcast(Power, MaxPower);
 }
 
 void APoweredEquipment::SetActive(const bool NewActive)
@@ -75,7 +75,7 @@ void APoweredEquipment::ToggleActivation()
 
 void APoweredEquipment::OnRep_Power(const float PrevPower)
 {
-	OnPowerChanged.Broadcast(Power);
+	OnPowerChanged.Broadcast(Power, MaxPower);
 }
 
 void APoweredEquipment::OnRep_IsActive(const bool PrevIsActive)
