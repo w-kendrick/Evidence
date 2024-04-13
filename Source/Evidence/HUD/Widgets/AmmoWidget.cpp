@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GunWidget.h"
+#include "AmmoWidget.h"
 #include "Components/TextBlock.h"
-#include "Evidence/Items/Equipment/Gun.h"
+#include "Evidence/Items/Equipment/Ammunition/Ammunition.h"
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 
-void UGunWidget::NativeConstruct()
+void UAmmoWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -17,11 +17,11 @@ void UGunWidget::NativeConstruct()
 		UInventoryComponent* InventoryComponent = Char->GetInventoryComponent();
 		if (InventoryComponent)
 		{
-			AGun* Gun = Cast<AGun>(InventoryComponent->GetEquipped());
+			AAmmunition* Ammo = Cast<AAmmunition>(InventoryComponent->GetEquipped());
 
-			if (Gun)
+			if (Ammo)
 			{
-				AmmoText->SetText(FText::FromString(FString::FromInt(Gun->GetCurrentClip())));
+				AmmoText->SetText(FText::FromString(FString::FromInt(Ammo->GetQuantity())));
 				SetVisibility(ESlateVisibility::Visible);
 			}
 			else
@@ -32,21 +32,21 @@ void UGunWidget::NativeConstruct()
 	}
 }
 
-void UGunWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
+void UAmmoWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
-	AGun* PrevGun = Cast<AGun>(Previous);
-	if (PrevGun)
+	AAmmunition* PrevAmmo = Cast<AAmmunition>(Previous);
+	if (PrevAmmo)
 	{
-		PrevGun->OnAmmoChanged.Remove(GunHandle);
+		PrevAmmo->OnQuantityChanged.Remove(AmmoHandle);
 	}
 
-	AGun* Gun = Cast<AGun>(Current);
+	AAmmunition* Ammo = Cast<AAmmunition>(Current);
 
-	if (Gun)
+	if (Ammo)
 	{
-		GunHandle = Gun->OnAmmoChanged.AddUObject(this, &ThisClass::OnAmmoChanged);
+		AmmoHandle = Ammo->OnQuantityChanged.AddUObject(this, &ThisClass::OnAmmoChanged);
 		SetVisibility(ESlateVisibility::Visible);
-		AmmoText->SetText(FText::FromString(FString::FromInt(Gun->GetCurrentClip())));
+		AmmoText->SetText(FText::FromString(FString::FromInt(Ammo->GetQuantity())));
 	}
 	else
 	{
@@ -54,7 +54,7 @@ void UGunWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 	}
 }
 
-void UGunWidget::OnAmmoChanged(uint8 Ammo)
+void UAmmoWidget::OnAmmoChanged(uint8 Ammo)
 {
 	AmmoText->SetText(FText::FromString(FString::FromInt(Ammo)));
 }
