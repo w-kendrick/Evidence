@@ -14,7 +14,7 @@ void AAmmunition::Consume(const uint8 Amount, bool& isExhausted)
 	isExhausted = false;
 	Quantity -= Amount;
 
-	if (Quantity <= 0 && HasAuthority())
+	if (Quantity <= 0)
 	{
 		isExhausted = true;
 	}
