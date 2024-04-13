@@ -3,20 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "EquipmentStatWidget.h"
 #include "PowerWidget.generated.h"
 
 class AEquipment;
 
 UCLASS()
-class EVIDENCE_API UPowerWidget : public UUserWidget
+class EVIDENCE_API UPowerWidget : public UEquipmentStatWidget
 {
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
-
-	void OnEquippedChanged(AEquipment* Current, AEquipment* Previous);
+	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous) override;
 	void OnPowerChanged(float Power, float MaxPower);
 
 	FDelegateHandle PoweredHandle;
