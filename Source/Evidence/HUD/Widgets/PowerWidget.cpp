@@ -2,7 +2,17 @@
 
 
 #include "PowerWidget.h"
+#include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
+
+void UPowerWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+
+	PowerBar->SetPercent(1.f);
+	PowerText->SetText(FText::FromString(FString("100")));
+}
 
 void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
@@ -27,4 +37,6 @@ void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 
 void UPowerWidget::OnPowerChanged(float Power, float MaxPower)
 {
+	PowerBar->SetPercent(Power / MaxPower);
+	PowerText->SetText(FText::FromString(FString::SanitizeFloat(Power)));
 }

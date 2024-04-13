@@ -14,9 +14,15 @@ class EVIDENCE_API UPowerWidget : public UEquipmentStatWidget
 	GENERATED_BODY()
 
 protected:
+	virtual void NativeConstruct() override;
 	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous) override;
 	void OnPowerChanged(float Power, float MaxPower);
 
 	FDelegateHandle PoweredHandle;
+
+	UPROPERTY(meta = (BindWidget))
+	class UProgressBar* PowerBar;
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* PowerText;
 	
 };
