@@ -32,7 +32,7 @@ void UInventoryWidget::OnInventoryChanged()
 	Update();
 }
 
-void UInventoryWidget::OnEquippedChanged()
+void UInventoryWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
 	Update();
 }

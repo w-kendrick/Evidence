@@ -20,8 +20,6 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Toggle power");
-
 	APoweredEquipment* Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Powered)

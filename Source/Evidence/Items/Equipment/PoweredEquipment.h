@@ -6,7 +6,7 @@
 #include "Evidence/Items/Equipment.h"
 #include "PoweredEquipment.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPowerChanged, float);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPowerChanged, float, float);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool);
 
 UCLASS()
@@ -26,6 +26,7 @@ public:
 	void ToggleActivation();
 
 	float GetPower() const { return Power; }
+	float GetMaxPower() const { return MaxPower; }
 	
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

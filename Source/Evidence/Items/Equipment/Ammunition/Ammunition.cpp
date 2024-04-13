@@ -13,6 +13,7 @@ void AAmmunition::Consume(const uint8 Amount, bool& isExhausted)
 {
 	isExhausted = false;
 	Quantity -= Amount;
+	OnQuantityChanged.Broadcast(Quantity);
 
 	if (Quantity <= 0)
 	{
@@ -25,6 +26,7 @@ void AAmmunition::BeginPlay()
 	Super::BeginPlay();
 
 	Quantity = MaxQuantity;
+	OnQuantityChanged.Broadcast(Quantity);
 }
 
 void AAmmunition::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
