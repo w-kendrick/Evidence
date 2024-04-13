@@ -14,8 +14,6 @@ void AAmmunition::Consume(const uint8 Amount, bool& isExhausted)
 	isExhausted = false;
 	Quantity -= Amount;
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Consumed - remaining ") + FString::FromInt(Quantity));
-
 	if (Quantity <= 0 && HasAuthority())
 	{
 		isExhausted = true;
