@@ -4,12 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "EquipmentStatWidget.h"
-#include "AmmoWidget.generated.h"
+#include "GunWidget.generated.h"
 
 class AEquipment;
 
 UCLASS()
-class EVIDENCE_API UAmmoWidget : public UEquipmentStatWidget
+class EVIDENCE_API UGunWidget : public UEquipmentStatWidget
 {
 	GENERATED_BODY()
 

@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AmmoWidget.h"
+#include "GunWidget.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/Gun.h"
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 
-void UAmmoWidget::NativeConstruct()
+void UGunWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
@@ -33,7 +33,7 @@ void UAmmoWidget::NativeConstruct()
 	}
 }
 
-void UAmmoWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
+void UGunWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
 	AGun* PrevGun = Cast<AGun>(Previous);
 	if (PrevGun)
@@ -55,7 +55,7 @@ void UAmmoWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 	}
 }
 
-void UAmmoWidget::OnAmmoChanged(uint8 Ammo)
+void UGunWidget::OnAmmoChanged(uint8 Ammo)
 {
 	AmmoText->SetText(FText::FromString(FString::FromInt(Ammo)));
 }
