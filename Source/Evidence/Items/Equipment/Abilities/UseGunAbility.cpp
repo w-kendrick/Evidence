@@ -24,18 +24,21 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 {
 	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
 	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
 	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
 	if (!Gun)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
