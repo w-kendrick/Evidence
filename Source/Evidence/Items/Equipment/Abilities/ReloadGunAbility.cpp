@@ -53,5 +53,17 @@ bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 	const uint8 Required = Gun->GetMaxClipSize() - Gun->GetCurrentClip();
 
-	return Required > 0;
+	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	if (!Char)
+	{
+		return false;
+	}
+
+	UInventoryComponent* InventoryComp = Char->GetInventoryComponent();
+	if (!InventoryComp)
+	{
+		return false;
+	}
+
+	return Required > 0 && InventoryComp->IsAmmoAvailable(AmmoClass);
 }

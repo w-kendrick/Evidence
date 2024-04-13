@@ -42,6 +42,7 @@ public:
 
 	void ToggleInventoryWidget() const;
 
+	bool IsAmmoAvailable(const TSubclassOf<AAmmunition> AmmoType) const;
 	uint8 ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required);
 	void ClearSlot(const uint8 Index);
 
