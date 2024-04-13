@@ -208,16 +208,6 @@ void UInventoryComponent::SetInventoryIndex(AEquipment* Equipment, const uint8 I
 	InventoryChanged.Broadcast();
 }
 
-void UInventoryComponent::DisplayInventory() const
-{
-	/*FString Result;
-	for (EEquipmentID ID : Inventory)
-	{
-		Result += FString::FromInt((uint8)ID) + FString("-");
-	}
-	UKismetSystemLibrary::PrintString(GetWorld(), Result);*/
-}
-
 #pragma endregion
 
 #pragma region Helper Functions
@@ -250,18 +240,31 @@ uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, 
 {
 	uint8 Amount = 0;
 
-	for (AEquipment* Equipment : Inventory)
+	for (uint8 Index = 0; Index < Inventory.Num(); ++Index)
 	{
+		AEquipment* Equipment = Inventory[Index];
 		if (Equipment && Equipment->GetClass() == AmmoType)
 		{
+			bool isSlotExhausted = false;
 			AAmmunition* Ammunition = Cast<AAmmunition>(Equipment);
+
 			const uint8 QuantityToTake = FMath::Clamp(Ammunition->GetQuantity(), 0, Required - Amount);
-			Ammunition->Consume(QuantityToTake);
+			Ammunition->Consume(QuantityToTake, isSlotExhausted);
 			Amount += QuantityToTake;
+
+			if (isSlotExhausted)
+			{
+				ClearSlot(Index);
+				Equipment->Destroy();
+			}
 		}
 	}
 
 	return Amount;
+}
+void UInventoryComponent::ClearSlot(const uint8 Index)
+{
+	SetInventoryIndex(nullptr, Index);
 }
 
 #pragma endregion

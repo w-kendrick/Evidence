@@ -9,13 +9,16 @@ AAmmunition::AAmmunition()
 	EquipmentName = FString("Ammo");
 }
 
-void AAmmunition::Consume(const uint8 Amount)
+void AAmmunition::Consume(const uint8 Amount, bool& isExhausted)
 {
+	isExhausted = false;
 	Quantity -= Amount;
 
-	if (Quantity <= 0)
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Consumed - remaining ") + FString::FromInt(Quantity));
+
+	if (Quantity <= 0 && HasAuthority())
 	{
-		Destroy();
+		isExhausted = true;
 	}
 }
 

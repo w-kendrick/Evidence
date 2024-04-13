@@ -16,7 +16,7 @@ class EVIDENCE_API AAmmunition : public AEquipment
 public:
 	AAmmunition();
 
-	void Consume(const uint8 Amount);
+	void Consume(const uint8 Amount, bool& isExhausted);
 
 	FOnQuantityChanged OnQuantityChanged;
 

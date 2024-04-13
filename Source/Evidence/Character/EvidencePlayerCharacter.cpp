@@ -89,9 +89,9 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Started, this, &ThisClass::HandleUseActionPressed);
 		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Completed, this, &ThisClass::HandleUseActionReleased);
 
-		// Use equipment
-		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &ThisClass::HandleUseActionPressed);
-		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Completed, this, &ThisClass::HandleUseActionReleased);
+		// Reload equipment
+		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &ThisClass::HandleReloadActionPressed);
+		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Completed, this, &ThisClass::HandleReloadActionReleased);
 	}
 }
 
