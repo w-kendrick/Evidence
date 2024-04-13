@@ -13,6 +13,7 @@ DECLARE_MULTICAST_DELEGATE(FOnEquippedChanged);
 class AEquipment;
 class AEvidenceCharacter;
 class AEvidenceGameState;
+class AAmmunition;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class EVIDENCE_API UInventoryComponent : public UActorComponent
@@ -40,6 +41,10 @@ public:
 	void DropFromInventory(const int Index);
 
 	void ToggleInventoryWidget() const;
+
+	bool IsAmmoAvailable(const TSubclassOf<AAmmunition> AmmoType) const;
+	uint8 ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required);
+	void ClearSlot(const uint8 Index);
 
 	AEquipment* GetEquipped() const { return Equipped; }
 	const TArray<AEquipment*>& GetInventory() const;
@@ -76,6 +81,4 @@ private:
 
 	bool DetermineFreeSpot(uint8& Index) const;
 	void InitializeInventory();
-
-	void DisplayInventory() const;
 };

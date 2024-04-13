@@ -51,6 +51,9 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* UseAction;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* ReloadAction;
+
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
@@ -89,6 +92,8 @@ protected:
 	void HandleInventoryActionReleased();
 	void HandleUseActionPressed();
 	void HandleUseActionReleased();
+	void HandleReloadActionPressed();
+	void HandleReloadActionReleased();
 
 public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
