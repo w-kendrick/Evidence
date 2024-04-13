@@ -6,6 +6,7 @@
 #include "Components/TextBlock.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
+#include "Evidence/Items/QuantityEquipment.h"
 
 void UEquipmentWidget::NativeConstruct()
 {
@@ -77,6 +78,16 @@ void UEquipmentWidget::Display()
 		else
 		{
 			ObjectName->SetText(FText::FromString(FString("Empty")));
+		}
+
+		AQuantityEquipment* QEquipment = Cast<AQuantityEquipment>(Equipment);
+		if (QEquipment)
+		{
+			ObjectCount->SetText(FText::FromString(FString::FromInt(QEquipment->GetQuantity())));
+		}
+		else
+		{
+			ObjectCount->SetText(FText::FromString(""));
 		}
 	}
 }
