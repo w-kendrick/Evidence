@@ -16,6 +16,7 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 {
 	if (!CommitAbility(Handle, ActorInfo, ActivationInfo))
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
@@ -25,6 +26,7 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 
 	if (!Powered)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 

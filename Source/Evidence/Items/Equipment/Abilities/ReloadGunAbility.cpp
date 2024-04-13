@@ -19,12 +19,14 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
 	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
 	if (!Gun)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
@@ -33,6 +35,7 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 	UInventoryComponent* InventoryComp = Char->GetInventoryComponent();
 	if (!InventoryComp)
 	{
+		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
