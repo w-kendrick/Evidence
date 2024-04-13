@@ -47,6 +47,7 @@ void UAmmoWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 	{
 		GunHandle = Gun->OnAmmoChanged.AddUObject(this, &ThisClass::OnAmmoChanged);
 		SetVisibility(ESlateVisibility::Visible);
+		AmmoText->SetText(FText::FromString(FString::FromInt(Gun->GetCurrentClip())));
 	}
 	else
 	{

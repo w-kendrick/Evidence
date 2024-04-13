@@ -48,6 +48,8 @@ void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 	{
 		PoweredHandle = Powered->OnPowerChanged.AddUObject(this, &ThisClass::OnPowerChanged);
 		SetVisibility(ESlateVisibility::Visible);
+		PowerBar->SetPercent(Powered->GetPower() / Powered->GetMaxPower());
+		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPower())));
 	}
 	else
 	{
