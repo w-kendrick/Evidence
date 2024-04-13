@@ -15,7 +15,7 @@ class EVIDENCE_API UEquipmentWidget : public UUserWidget
 
 public:
 	void SpawnInitialize(class UInventoryComponent* Comp, AEquipment* NewEquipment);
-	void Display();
+	virtual void Display();
 
 protected:
 	virtual void NativeConstruct() override;
@@ -25,6 +25,9 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* ObjectName;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* ObjectCount;
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouse;
