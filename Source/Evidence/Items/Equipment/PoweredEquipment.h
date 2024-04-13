@@ -26,6 +26,7 @@ public:
 	void ToggleActivation();
 
 	float GetPower() const { return Power; }
+	float GetMaxPower() const { return MaxPower; }
 	
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

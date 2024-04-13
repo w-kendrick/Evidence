@@ -5,13 +5,33 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
+#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/Components/InventoryComponent.h"
 
 void UPowerWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	PowerBar->SetPercent(1.f);
-	PowerText->SetText(FText::FromString(FString("100")));
+	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	if (Char)
+	{
+		UInventoryComponent* InventoryComponent = Char->GetInventoryComponent();
+		if (InventoryComponent)
+		{
+			APoweredEquipment* Powered = Cast<APoweredEquipment>(InventoryComponent->GetEquipped());
+
+			if (Powered)
+			{
+				PowerBar->SetPercent(Powered->GetPower() / Powered->GetMaxPower());
+				PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPower())));
+				SetVisibility(ESlateVisibility::Visible);
+			}
+			else
+			{
+				SetVisibility(ESlateVisibility::Hidden);
+			}
+		}
+	}
 }
 
 void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
