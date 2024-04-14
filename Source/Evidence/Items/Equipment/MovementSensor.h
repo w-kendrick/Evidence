@@ -6,6 +6,8 @@
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
 #include "MovementSensor.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSense, const TArray<FVector>)
+
 UCLASS()
 class EVIDENCE_API AMovementSensor : public APoweredEquipment
 {
@@ -13,6 +15,8 @@ class EVIDENCE_API AMovementSensor : public APoweredEquipment
 
 public:
 	AMovementSensor();
+
+	FOnSense OnSense;
 
 protected:
 	virtual void Activate() override;
@@ -24,5 +28,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	float SenseDelay;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SenseRadius;
 	
 };
