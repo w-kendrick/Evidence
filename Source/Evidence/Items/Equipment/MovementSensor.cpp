@@ -37,7 +37,7 @@ void AMovementSensor::Sense()
 	{
 		for (FOverlapResult& Overlap : Overlaps)
 		{
-			const FVector Relative = Overlap.GetActor()->GetActorLocation() - GetActorLocation();
+			const FVector Relative = (Overlap.GetActor()->GetActorLocation() - GetActorLocation()) / SenseRadius;
 			Output.Add(Relative);
 			OnSense.Broadcast(Output);
 		}
