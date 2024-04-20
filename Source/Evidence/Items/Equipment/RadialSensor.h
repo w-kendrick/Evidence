@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
-#include "MovementSensor.generated.h"
+#include "RadialSensor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnSense, const TArray<FVector>)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnRadialSense, const TArray<FVector>)
 
 UCLASS()
-class EVIDENCE_API AMovementSensor : public APoweredEquipment
+class EVIDENCE_API ARadialSensor : public APoweredEquipment
 {
 	GENERATED_BODY()
 
 public:
-	AMovementSensor();
+	ARadialSensor();
 
-	FOnSense OnSense;
+	FOnRadialSense OnSense;
 
 protected:
 	virtual void Activate() override;

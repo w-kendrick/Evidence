@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "MovementSensor.h"
+#include "RadialSensor.h"
 
-AMovementSensor::AMovementSensor()
+ARadialSensor::ARadialSensor()
 {
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
 	ActiveDrainRate = 0.1f;
 }
 
-void AMovementSensor::Activate()
+void ARadialSensor::Activate()
 {
 	if (HasAuthority())
 	{
@@ -18,7 +18,7 @@ void AMovementSensor::Activate()
 	}
 }
 
-void AMovementSensor::Deactivate()
+void ARadialSensor::Deactivate()
 {
 	if (HasAuthority())
 	{
@@ -26,7 +26,7 @@ void AMovementSensor::Deactivate()
 	}
 }
 
-void AMovementSensor::Sense()
+void ARadialSensor::Sense()
 {
 	TArray<FVector> Output;
 
