@@ -2,6 +2,7 @@
 
 
 #include "RadialSensor.h"
+#include "Evidence/Evidence.h"
 
 ARadialSensor::ARadialSensor()
 {
@@ -33,14 +34,14 @@ void ARadialSensor::Sense()
 	DrawDebugSphere(GetWorld(), GetActorLocation(), SenseRadius, 6, FColor::Blue, false, 3.0f);
 
 	TArray<FOverlapResult> Overlaps;
-	if (GetWorld()->OverlapMultiByChannel(Overlaps, GetActorLocation(), GetActorRotation().Quaternion(), ECollisionChannel::ECC_Visibility, FCollisionShape::MakeSphere(SenseRadius)))
+	if (GetWorld()->OverlapMultiByChannel(Overlaps, GetActorLocation(), GetActorRotation().Quaternion(), COLLISION_SENSE, FCollisionShape::MakeSphere(SenseRadius)))
 	{
 		for (FOverlapResult& Overlap : Overlaps)
 		{
 			const FVector Relative = (Overlap.GetActor()->GetActorLocation() - GetActorLocation()) / SenseRadius;
 			Output.Add(Relative);
-			OnSense.Broadcast(Output);
 		}
+		OnRadialSense.Broadcast(Output);
 	}
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Sensed: ") + FString::FromInt(Output.Num()));

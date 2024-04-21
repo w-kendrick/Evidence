@@ -6,6 +6,7 @@
 #include "Components/EvidenceCharacterMovementComponent.h"
 #include "Components/InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
+#include "Evidence/Evidence.h"
 
 #pragma region Class Essentials
 
@@ -24,6 +25,7 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
+	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);
 }
 
 void AEvidenceCharacter::BeginPlay()

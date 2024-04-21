@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
-#include "RadialSensor.generated.h"
+#include "MovementSensor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnRadialSense, const TArray<FVector>)
+DECLARE_MULTICAST_DELEGATE(FOnMovementSense)
 
 UCLASS()
-class EVIDENCE_API ARadialSensor : public APoweredEquipment
+class EVIDENCE_API AMovementSensor : public APoweredEquipment
 {
 	GENERATED_BODY()
 
 public:
-	ARadialSensor();
+	AMovementSensor();
 
-	FOnRadialSense OnRadialSense;
+	FOnMovementSense OnMovementSense;
 
 protected:
 	virtual void Activate() override;
@@ -26,10 +26,16 @@ protected:
 
 	FTimerHandle SenseHandle;
 
+	UPROPERTY()
+	TArray<FVector> PreviousSense;
+
 	UPROPERTY(EditDefaultsOnly)
 	float SenseDelay;
 
 	UPROPERTY(EditDefaultsOnly)
 	float SenseRadius;
+
+private:
+	bool doArraysMatch(const TArray<FVector>& Arr1, const TArray<FVector>& Arr2) const;
 	
 };
