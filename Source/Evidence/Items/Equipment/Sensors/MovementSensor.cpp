@@ -46,14 +46,14 @@ void AMovementSensor::Sense()
 
 	if (Output.Num() != PreviousSense.Num())
 	{
-		OnMovementSense.Broadcast();
+		OnMovementSense.Broadcast(this);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Movement detected"));
 	}
 	else if (Output.Num() > 0)
 	{
 		if (!doArraysMatch(PreviousSense, Output))
 		{
-			OnMovementSense.Broadcast();
+			OnMovementSense.Broadcast(this);
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Movement detected"));
 		}
 	}
