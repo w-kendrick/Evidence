@@ -44,5 +44,5 @@ void ARadialSensor::Sense()
 		OnRadialSense.Broadcast(this, Output);
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Sensed: ") + FString::FromInt(Output.Num()));
+	OnRadialSense.Broadcast(this, TArray<FVector>());
 }

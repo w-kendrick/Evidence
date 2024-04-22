@@ -29,39 +29,44 @@ void AHub::CreateInitialSpawns()
 	}
 }
 
-void AHub::SpawnEquipment(const FSpawnInfo SpawnInfo)
+void AHub::SpawnEquipment(const FSpawnInfo& SpawnInfo)
 {
-	const FTransform& Transform = SpawnInfo.Transform;
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
 	if (Class == AMovementSensor::StaticClass())
 	{
-		AMovementSensor* MovementSensor = Cast<AMovementSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
-		MovementSensor->OnMovementSense.AddUObject(this, &ThisClass::OnMovementSensed);
+		SpawnMovementSensor(SpawnInfo);
 	}
 	if (Class == ARadialSensor::StaticClass())
 	{
-		ARadialSensor* RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
-		RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
+		SpawnRadialSensor(SpawnInfo);
 	}
 }
 
-void AHub::SpawnMovementSensor()
+void AHub::SpawnMovementSensor(const FSpawnInfo& SpawnInfo)
 {
+	const FTransform& Transform = SpawnInfo.Transform;
+	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
+	AMovementSensor* MovementSensor = Cast<AMovementSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
+	MovementSensor->OnMovementSense.AddUObject(this, &ThisClass::OnMovementSensed);
 }
 
-void AHub::SpawnRadialSensor()
+void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 {
+	const FTransform& Transform = SpawnInfo.Transform;
+	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
+	ARadialSensor* RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
+	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
 void AHub::OnMovementSensed(AMovementSensor* Sensor)
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Movement sensed");
 }
 
 void AHub::OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations)
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Radius sensed");
 }

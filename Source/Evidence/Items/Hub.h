@@ -40,7 +40,7 @@ protected:
 
 private:
 	void CreateInitialSpawns();
-	void SpawnEquipment(const FSpawnInfo SpawnInfo);
-	void SpawnMovementSensor();
-	void SpawnRadialSensor();
+	void SpawnEquipment(const FSpawnInfo& SpawnInfo);
+	void SpawnMovementSensor(const FSpawnInfo& SpawnInfo);
+	void SpawnRadialSensor(const FSpawnInfo& SpawnInfo);
 };

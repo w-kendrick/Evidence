@@ -31,7 +31,6 @@ void AMovementSensor::Sense()
 {
 	TArray<FVector> Output;
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sense");
 	DrawDebugSphere(GetWorld(), GetActorLocation(), SenseRadius, 6, FColor::Blue, false, 3.0f);
 
 	TArray<FOverlapResult> Overlaps;
@@ -47,14 +46,12 @@ void AMovementSensor::Sense()
 	if (Output.Num() != PreviousSense.Num())
 	{
 		OnMovementSense.Broadcast(this);
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Movement detected"));
 	}
 	else if (Output.Num() > 0)
 	{
 		if (!doArraysMatch(PreviousSense, Output))
 		{
 			OnMovementSense.Broadcast(this);
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Movement detected"));
 		}
 	}
 
