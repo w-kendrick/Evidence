@@ -15,9 +15,10 @@ struct FSpawnInfo
 {
 	GENERATED_BODY()
 
+	UPROPERTY(EditDefaultsOnly)
 	FTransform Transform;
 
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AEquipment> Class;
 };
 	

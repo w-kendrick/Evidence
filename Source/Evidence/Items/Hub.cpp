@@ -4,6 +4,7 @@
 #include "Hub.h"
 #include "Equipment/Sensors/MovementSensor.h"
 #include "Equipment/RadialSensor.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AHub::AHub()
 {
@@ -33,11 +34,11 @@ void AHub::SpawnEquipment(const FSpawnInfo& SpawnInfo)
 {
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
-	if (Class == AMovementSensor::StaticClass())
+	if (UKismetMathLibrary::ClassIsChildOf(Class, AMovementSensor::StaticClass()))
 	{
 		SpawnMovementSensor(SpawnInfo);
 	}
-	if (Class == ARadialSensor::StaticClass())
+	if (UKismetMathLibrary::ClassIsChildOf(Class, ARadialSensor::StaticClass()))
 	{
 		SpawnRadialSensor(SpawnInfo);
 	}
