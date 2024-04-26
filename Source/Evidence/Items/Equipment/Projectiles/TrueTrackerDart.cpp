@@ -2,10 +2,31 @@
 
 
 #include "TrueTrackerDart.h"
+#include "Evidence/EvidenceGameState.h"
+#include "Kismet/GameplayStatics.h"
+#include "Evidence/Items/Hub.h"
 
 ATrueTrackerDart::ATrueTrackerDart()
 {
 
+}
+
+void ATrueTrackerDart::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (HasAuthority())
+	{
+		AEvidenceGameState* EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
+		if (EGS)
+		{
+			AHub* Hub = EGS->GetHub();
+			if (Hub)
+			{
+				Hub->SubscribeToTrackerDart(this);
+			}
+		}
+	}
 }
 
 void ATrueTrackerDart::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
@@ -21,7 +42,7 @@ void ATrueTrackerDart::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherAct
 
 void ATrueTrackerDart::BroadcastLocation()
 {
-	OnTrackDartBroadcast.Broadcast(GetActorLocation());
+	OnTrackDartBroadcast.Broadcast(this, GetActorLocation());
 	
 	CurrentBroadcastCount++;
 

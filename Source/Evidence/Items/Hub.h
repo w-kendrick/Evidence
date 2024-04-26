@@ -9,6 +9,7 @@
 class AEquipment;
 class AMovementSensor;
 class ARadialSensor;
+class ATrueTrackerDart;
 
 USTRUCT(BlueprintType)
 struct FSpawnInfo
@@ -30,6 +31,8 @@ class EVIDENCE_API AHub : public AActor
 public:	
 	AHub();
 
+	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -38,6 +41,7 @@ protected:
 
 	void OnMovementSensed(AMovementSensor* Sensor);
 	void OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations);
+	void OnDartLocationReceived(ATrueTrackerDart*, const FVector& Location);
 
 private:
 	void CreateInitialSpawns();

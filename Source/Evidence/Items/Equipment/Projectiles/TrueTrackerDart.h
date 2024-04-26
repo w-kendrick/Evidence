@@ -6,7 +6,7 @@
 #include "Evidence/Items/TrueProjectile.h"
 #include "TrueTrackerDart.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnTrackDartBroadcast, const FVector&);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnTrackDartBroadcast, ATrueTrackerDart*, const FVector&);
 
 UCLASS()
 class EVIDENCE_API ATrueTrackerDart : public ATrueProjectile
@@ -19,6 +19,7 @@ public:
 	FOnTrackDartBroadcast OnTrackDartBroadcast;
 
 protected:
+	virtual void BeginPlay() override;
 	virtual void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit) override;
 
 	void BroadcastLocation();
