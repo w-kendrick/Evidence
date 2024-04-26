@@ -238,7 +238,7 @@ void UInventoryComponent::InitializeInventory()
 	InventoryChanged.Broadcast();
 }
 
-bool UInventoryComponent::IsAmmoAvailable(const TSubclassOf<AAmmunition> AmmoType) const
+bool UInventoryComponent::IsAmmoAvailable(const TSubclassOf<AAmmunition>& AmmoType) const
 {
 	bool Result = false;
 
@@ -253,7 +253,7 @@ bool UInventoryComponent::IsAmmoAvailable(const TSubclassOf<AAmmunition> AmmoTyp
 	return Result;
 }
 
-uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required)
+uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition>& AmmoType, const uint8 Required)
 {
 	uint8 Amount = 0;
 

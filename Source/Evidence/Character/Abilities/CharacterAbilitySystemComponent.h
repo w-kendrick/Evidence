@@ -19,7 +19,7 @@ public:
 	bool bStartupEffectsApplied = false;
 
 	UFUNCTION(BlueprintCallable, Meta = (DisplayName = "GetTagCount", ScriptName = "GetTagCount"))
-	int32 K2_GetTagCount(FGameplayTag TagToCheck) const;
+	int32 K2_GetTagCount(FGameplayTag& TagToCheck) const;
 
 	virtual void AbilityLocalInputPressed(int32 InputID) override;
 	
