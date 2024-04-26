@@ -7,7 +7,6 @@
 #include "EquipmentWidget.generated.h"
 
 class AEquipment;
-class UInventoryComponent
 
 UCLASS()
 class EVIDENCE_API UEquipmentWidget : public UUserWidget
@@ -38,8 +37,7 @@ protected:
 
 	UPROPERTY()
 	AEquipment* Equipment;
-	UPROPERTY()
-	UInventoryComponent* InventoryComp;
+	class UInventoryComponent* InventoryComp;
 
 	virtual FReply NativeOnMouseButtonDown(const FGeometry& MyGeometry, const FPointerEvent& MouseEvent) override;
 

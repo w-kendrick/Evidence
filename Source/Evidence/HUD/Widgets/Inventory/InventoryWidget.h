@@ -7,7 +7,6 @@
 #include "InventoryWidget.generated.h"
 
 class AEquipment;
-class UInventoryComponent
 
 UCLASS()
 class EVIDENCE_API UInventoryWidget : public UUserWidget
@@ -15,7 +14,7 @@ class EVIDENCE_API UInventoryWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetInventoryComp(UInventoryComponent* Comp);
+	void SetInventoryComp(class UInventoryComponent* Comp);
 	void Update();
 
 protected:

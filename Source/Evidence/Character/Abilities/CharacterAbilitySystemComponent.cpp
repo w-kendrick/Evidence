@@ -4,7 +4,7 @@
 #include "CharacterAbilitySystemComponent.h"
 #include "EIGameplayAbility.h"
 
-int32 UCharacterAbilitySystemComponent::K2_GetTagCount(FGameplayTag& TagToCheck) const
+int32 UCharacterAbilitySystemComponent::K2_GetTagCount(FGameplayTag TagToCheck) const
 {
 	return GetTagCount(TagToCheck);
 }
