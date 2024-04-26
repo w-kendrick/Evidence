@@ -6,7 +6,7 @@
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
 #include "RadialSensor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnRadialSense, const TArray<FVector>)
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArray<FVector>)
 
 UCLASS()
 class EVIDENCE_API ARadialSensor : public APoweredEquipment

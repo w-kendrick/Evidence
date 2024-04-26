@@ -41,8 +41,8 @@ void ARadialSensor::Sense()
 			const FVector Relative = (Overlap.GetActor()->GetActorLocation() - GetActorLocation()) / SenseRadius;
 			Output.Add(Relative);
 		}
-		OnRadialSense.Broadcast(Output);
+		OnRadialSense.Broadcast(this, Output);
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Sensed: ") + FString::FromInt(Output.Num()));
+	OnRadialSense.Broadcast(this, TArray<FVector>());
 }

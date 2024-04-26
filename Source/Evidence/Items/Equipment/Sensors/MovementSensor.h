@@ -6,7 +6,7 @@
 #include "Evidence/Items/Equipment/PoweredEquipment.h"
 #include "MovementSensor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE(FOnMovementSense)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
 
 UCLASS()
 class EVIDENCE_API AMovementSensor : public APoweredEquipment
