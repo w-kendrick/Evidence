@@ -49,5 +49,7 @@ void ATrueTrackerDart::BroadcastLocation()
 	if (CurrentBroadcastCount >= MaxBroadcastCount)
 	{
 		GetWorldTimerManager().ClearTimer(BroadcastHandle);
+
+		Destroy();
 	}
 }
