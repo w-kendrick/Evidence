@@ -80,5 +80,5 @@ void AHub::OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations
 
 void AHub::OnDartLocationReceived(ATrueTrackerDart*, const FVector& Location)
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Tracker dart location received");
 }
