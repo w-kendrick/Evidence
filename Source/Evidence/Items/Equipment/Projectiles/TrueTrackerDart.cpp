@@ -42,14 +42,16 @@ void ATrueTrackerDart::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherAct
 
 void ATrueTrackerDart::BroadcastLocation()
 {
-	OnTrackDartBroadcast.Broadcast(this, GetActorLocation());
-	
-	CurrentBroadcastCount++;
-
 	if (CurrentBroadcastCount >= MaxBroadcastCount)
 	{
 		GetWorldTimerManager().ClearTimer(BroadcastHandle);
 
 		Destroy();
+	}
+	else
+	{
+		OnTrackDartBroadcast.Broadcast(this, GetActorLocation());
+
+		CurrentBroadcastCount++;
 	}
 }
