@@ -5,6 +5,7 @@
 #include "Equipment/Sensors/MovementSensor.h"
 #include "Equipment/RadialSensor.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Equipment/Projectiles/TrueTrackerDart.h"
 
 AHub::AHub()
 {
@@ -62,6 +63,11 @@ void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
+void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)
+{
+	Dart->OnTrackDartBroadcast.AddUObject(this, &ThisClass::OnDartLocationReceived);
+}
+
 void AHub::OnMovementSensed(AMovementSensor* Sensor)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Movement sensed");
@@ -70,4 +76,9 @@ void AHub::OnMovementSensed(AMovementSensor* Sensor)
 void AHub::OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Radius sensed");
+}
+
+void AHub::OnDartLocationReceived(ATrueTrackerDart*, const FVector& Location)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Tracker dart location received");
 }
