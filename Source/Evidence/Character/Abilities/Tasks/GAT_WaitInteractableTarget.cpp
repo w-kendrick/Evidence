@@ -2,7 +2,7 @@
 
 
 #include "GAT_WaitInteractableTarget.h"
-#include "Evidence/Items/Interactable.h"
+#include "Evidence/Interfaces/Interactable.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "TimerManager.h"
