@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Interactable.h"
+#include "Evidence/Interfaces/Interactable.h"
 #include "Equipment.generated.h"
 
 class AEvidenceCharacter;
