@@ -17,6 +17,7 @@ ACamera::ACamera()
 	}
 
 	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent"));
+	SceneCaptureComponent->SetupAttachment(LocalMesh);
 }
 
 void ACamera::BeginPlay()
