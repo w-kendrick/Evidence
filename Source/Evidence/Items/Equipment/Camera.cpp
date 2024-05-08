@@ -10,7 +10,6 @@ ACamera::ACamera()
 {
 	MaxPhotos = 10;
 
-	Photos.SetNum(MaxPhotos);
 	for (int i = 0; i < MaxPhotos; i++)
 	{
 		Photos.Add(nullptr);
@@ -36,13 +35,13 @@ void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 
 void ACamera::TakePhoto()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Take photo");
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Take photo: ") + FString::FromInt(Photos.Num() - (RemainingPhotos + 1)));
 
 	UTextureRenderTarget2D* Target = UKismetRenderingLibrary::CreateRenderTarget2D(GetWorld(), 960, 540);
 	SceneCaptureComponent->TextureTarget = Target;
 	SceneCaptureComponent->CaptureScene();
 
-	Photos[Photos.Num() - RemainingPhotos] = Target;
+	Photos[Photos.Num() - (RemainingPhotos + 1)] = Target;
 }
 
 void ACamera::SetRemainingPhotos(const uint8 Remaining)
