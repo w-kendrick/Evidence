@@ -22,6 +22,9 @@ public:
 
 	void TakePhoto();
 
+	void SetRemainingPhotos(const uint8 Remaining);
+	uint8 GetRemainingPhotos() const { return RemainingPhotos; }
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	USceneCaptureComponent2D* SceneCaptureComponent;
@@ -37,8 +40,6 @@ protected:
 
 	UFUNCTION()
 	void OnRep_RemainingPhotos();
-
-	void SetRemainingPhotos(const uint8 Remaining);
 
 private:
 	UPROPERTY()
