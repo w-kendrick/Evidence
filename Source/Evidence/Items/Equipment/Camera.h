@@ -21,6 +21,7 @@ public:
 	FOnPhotosChanged OnPhotosChanged;
 
 	void TakePhoto();
+	void AwardCash();
 
 	void SetRemainingPhotos(const uint8 Remaining);
 	uint8 GetRemainingPhotos() const { return RemainingPhotos; }

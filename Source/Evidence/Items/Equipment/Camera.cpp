@@ -5,6 +5,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Kismet/KismetRenderingLibrary.h"
+#include "Evidence/Interfaces/Evidential.h"
 
 ACamera::ACamera()
 {
@@ -42,6 +43,26 @@ void ACamera::TakePhoto()
 	SceneCaptureComponent->CaptureScene();
 
 	Photos[Photos.Num() - (RemainingPhotos + 1)] = Target;
+}
+
+void ACamera::AwardCash()
+{
+	TArray<FHitResult> Hits;
+	const FVector Loc = SceneCaptureComponent->GetComponentLocation();
+	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();
+	const FCollisionShape Shape = FCollisionShape::MakeBox(FVector3f(1, 2, 3));
+
+	if (GetWorld()->SweepMultiByChannel(Hits, Loc, Loc, Rot, ECollisionChannel::ECC_Visibility, Shape))
+	{
+		for (const FHitResult Hit : Hits)
+		{
+			IEvidential* const Evidential = Cast<IEvidential>(Hit.GetActor());
+			if (Evidential)
+			{
+
+			}
+		}
+	}
 }
 
 void ACamera::SetRemainingPhotos(const uint8 Remaining)

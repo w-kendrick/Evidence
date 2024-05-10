@@ -33,6 +33,11 @@ void UTakePhotoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		Camera->TakePhoto();
 	}
 
+	if (ActorInfo->IsNetAuthority())
+	{
+		Camera->AwardCash();
+	}
+
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
 
