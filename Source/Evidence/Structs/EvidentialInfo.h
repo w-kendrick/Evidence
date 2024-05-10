@@ -22,5 +22,10 @@ struct FEvidentialInfo
 
 	}
 
-	FEvidentialInfo() {}
+	FEvidentialInfo() 
+	{
+		Type = EEvidentialType::Alien;
+		Medium = EEvidentialMedium::Photo;
+		BaseCash = 1.0f;
+	}
 };
