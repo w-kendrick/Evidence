@@ -6,6 +6,7 @@
 #include "Components/SceneCaptureComponent2D.h"
 #include "Kismet/KismetRenderingLibrary.h"
 #include "Evidence/Interfaces/Evidential.h"
+#include "Evidence/Structs/EvidentialInfo.h"
 
 ACamera::ACamera()
 {
@@ -52,6 +53,8 @@ void ACamera::AwardCash()
 	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();
 	const FCollisionShape Shape = FCollisionShape::MakeBox(FVector3f(1, 2, 3));
 
+	TArray<FEvidentialInfo> CapturedEvidentials;
+
 	if (GetWorld()->SweepMultiByChannel(Hits, Loc, Loc, Rot, ECollisionChannel::ECC_Visibility, Shape))
 	{
 		for (const FHitResult Hit : Hits)
@@ -59,7 +62,8 @@ void ACamera::AwardCash()
 			IEvidential* const Evidential = Cast<IEvidential>(Hit.GetActor());
 			if (Evidential)
 			{
-
+				FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), EEvidentialMedium::Photo, Evidential->GetBaseWorth());
+				CapturedEvidentials.Add(Info);
 			}
 		}
 	}
