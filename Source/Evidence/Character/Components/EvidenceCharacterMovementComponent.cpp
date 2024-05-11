@@ -14,7 +14,7 @@ UEvidenceCharacterMovementComponent::FSavedMove_Evidence::FSavedMove_Evidence()
 
 bool UEvidenceCharacterMovementComponent::FSavedMove_Evidence::CanCombineWith(const FSavedMovePtr& NewMove, ACharacter* InCharacter, float MaxDelta) const
 {
-	const FSavedMove_Evidence* NewEvidenceMove = static_cast<FSavedMove_Evidence*>(NewMove.Get());
+	const FSavedMove_Evidence* const NewEvidenceMove = static_cast<FSavedMove_Evidence*>(NewMove.Get());
 
 	if (Saved_bWantsToSprint != NewEvidenceMove->Saved_bWantsToSprint)
 	{
@@ -44,7 +44,7 @@ void UEvidenceCharacterMovementComponent::FSavedMove_Evidence::SetMoveFor(AChara
 {
 	FSavedMove_Character::SetMoveFor(C, InDeltaTime, NewAccel, ClientData);
 
-	const UEvidenceCharacterMovementComponent* CharacterMovement = Cast<UEvidenceCharacterMovementComponent>(C->GetCharacterMovement());
+	const UEvidenceCharacterMovementComponent* const CharacterMovement = Cast<UEvidenceCharacterMovementComponent>(C->GetCharacterMovement());
 
 	Saved_bWantsToSprint = CharacterMovement->Safe_bWantsToSprint;
 }
@@ -53,7 +53,7 @@ void UEvidenceCharacterMovementComponent::FSavedMove_Evidence::PrepMoveFor(AChar
 {
 	FSavedMove_Character::PrepMoveFor(C);
 
-	UEvidenceCharacterMovementComponent* CharacterMovement = Cast<UEvidenceCharacterMovementComponent>(C->GetCharacterMovement());
+	UEvidenceCharacterMovementComponent* const CharacterMovement = Cast<UEvidenceCharacterMovementComponent>(C->GetCharacterMovement());
 
 	CharacterMovement->Safe_bWantsToSprint = Saved_bWantsToSprint;
 }
@@ -87,7 +87,7 @@ FNetworkPredictionData_Client* UEvidenceCharacterMovementComponent::GetPredictio
 
 		if (ClientPredictionData == nullptr)
 		{
-			UEvidenceCharacterMovementComponent* MutableThis = const_cast<UEvidenceCharacterMovementComponent*>(this);
+			UEvidenceCharacterMovementComponent* const MutableThis = const_cast<UEvidenceCharacterMovementComponent*>(this);
 
 			MutableThis->ClientPredictionData = new FNetworkPredictionData_Client_Evidence(*this);
 			MutableThis->ClientPredictionData->MaxSmoothNetUpdateDist = 92.f;
@@ -108,7 +108,7 @@ bool UEvidenceCharacterMovementComponent::CanCrouchInCurrentState() const
 
 float UEvidenceCharacterMovementComponent::GetMaxSpeed() const
 {
-	AEvidenceCharacter* Owner = Cast<AEvidenceCharacter>(GetOwner());
+	const AEvidenceCharacter* const Owner = Cast<AEvidenceCharacter>(GetOwner());
 	if (!Owner)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s() No Owner"), *FString(__FUNCTION__));
@@ -147,7 +147,7 @@ bool UEvidenceCharacterMovementComponent::IsMovingForward() const
 	Forward.Z = 0.0f;
 	MoveDirection.Z = 0.0f;
 
-	float VelocityDot = FVector::DotProduct(Forward, MoveDirection);
+	const float VelocityDot = FVector::DotProduct(Forward, MoveDirection);
 	return VelocityDot > 0.7f;
 }
 
@@ -187,7 +187,7 @@ void UEvidenceCharacterMovementComponent::CallServerMovePacked(const FSavedMove_
 
 	// 'static' to avoid reallocation each invocation
 	static FCharacterServerMovePackedBits PackedBits;
-	UNetConnection* NetConnection = CharacterOwner->GetNetConnection();
+	UNetConnection* const NetConnection = CharacterOwner->GetNetConnection();
 
 
 	{

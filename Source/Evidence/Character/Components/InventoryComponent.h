@@ -25,7 +25,7 @@ public:
 
 	void Pickup(AEquipment* Equipment);
 
-	void PickupEquipped(AEquipment* NewEquipped);
+	void PickupEquipped(AEquipment* const NewEquipped);
 	void TryDropEquipped();
 	UFUNCTION(BlueprintCallable)
 	void DropEquipped();
