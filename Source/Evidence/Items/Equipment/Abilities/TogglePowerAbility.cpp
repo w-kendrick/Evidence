@@ -20,7 +20,7 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	APoweredEquipment* Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
+	APoweredEquipment* const Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Powered)
 	{
@@ -40,7 +40,7 @@ bool UTogglePowerAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Ha
 		return false;
 	}
 
-	APoweredEquipment* Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
+	const APoweredEquipment* const Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Powered)
 	{
