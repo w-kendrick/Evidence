@@ -17,10 +17,10 @@ void ATrueTrackerDart::BeginPlay()
 
 	if (HasAuthority())
 	{
-		AEvidenceGameState* EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
+		AEvidenceGameState* const EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
 		if (EGS)
 		{
-			AHub* Hub = EGS->GetHub();
+			AHub* const Hub = EGS->GetHub();
 			if (Hub)
 			{
 				Hub->SubscribeToTrackerDart(this);

@@ -39,9 +39,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FSpawnInfo> InitialSpawns;
 
-	void OnMovementSensed(AMovementSensor* Sensor);
-	void OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations);
-	void OnDartLocationReceived(ATrueTrackerDart*, const FVector& Location);
+	void OnMovementSensed(AMovementSensor* const Sensor);
+	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
+	void OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location);
 
 private:
 	void CreateInitialSpawns();

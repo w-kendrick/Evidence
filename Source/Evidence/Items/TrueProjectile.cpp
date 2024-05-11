@@ -25,11 +25,11 @@ void ATrueProjectile::BeginPlay()
 
 void ATrueProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	IAbilitySystemInterface* AS = Cast<IAbilitySystemInterface>(OtherActor);
+	const IAbilitySystemInterface* const AS = Cast<IAbilitySystemInterface>(OtherActor);
 
 	if (AS)
 	{
-		UAbilitySystemComponent* ASC = AS->GetAbilitySystemComponent();
+		UAbilitySystemComponent* const ASC = AS->GetAbilitySystemComponent();
 
 		if (ASC)
 		{
@@ -37,7 +37,7 @@ void ATrueProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 		}
 	}
 
-	IDamageable* Damageable = Cast<IDamageable>(OtherActor);
+	IDamageable* const Damageable = Cast<IDamageable>(OtherActor);
 
 	if (Damageable)
 	{

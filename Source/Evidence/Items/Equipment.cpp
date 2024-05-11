@@ -42,7 +42,7 @@ bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* I
 
 void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(InteractingActor);
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(InteractingActor);
 	if (Char)
 	{
 		Char->Pickup(this);
@@ -58,7 +58,7 @@ void AEquipment::Pickup(AEvidenceCharacter* Char)
 
 void AEquipment::Drop()
 {
-	if (AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwner()))
+	if (AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner()))
 	{
 		RemoveAbilities(Char);
 	}
@@ -83,7 +83,7 @@ void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 	SetOwner(Char);
 	bIsPickedUp = true;
 
-	USkeletalMeshComponent* CharWorldMesh = Char->GetMesh();
+	USkeletalMeshComponent* const CharWorldMesh = Char->GetMesh();
 	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
 	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
 	WorldMesh->SetVisibility(isVisible);
@@ -91,7 +91,7 @@ void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
 	if (PlayerChar)
 	{
-		USkeletalMeshComponent* CharLocalMesh = PlayerChar->GetMesh1P();
+		USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
 		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
@@ -100,8 +100,8 @@ void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
 {
 	FHitResult Hit;
-	FVector Start = GetActorLocation();
-	FVector End = End + FVector::UpVector * -1 * MaxGroundDistance;
+	const FVector Start = GetActorLocation();
+	const FVector End = End + FVector::UpVector * -1 * MaxGroundDistance;
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECollisionChannel::ECC_Visibility))
 	{
 		Location = Hit.Location;
@@ -114,14 +114,14 @@ void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
 
 void AEquipment::AddAbilities(AEvidenceCharacter* Char)
 {
-	UCharacterAbilitySystemComponent* ASC = Char->GetCharacterAbilitySystemComponent();
+	UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
 		return;
 	}
 
-	for (TSubclassOf<UEIGameplayAbility>& Ability : Abilities)
+	for (const TSubclassOf<UEIGameplayAbility>& Ability : Abilities)
 	{
 		GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
 	}
@@ -129,7 +129,7 @@ void AEquipment::AddAbilities(AEvidenceCharacter* Char)
 
 void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
 {
-	UCharacterAbilitySystemComponent* ASC = Char->GetCharacterAbilitySystemComponent();
+	UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
