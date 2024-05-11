@@ -9,3 +9,8 @@ float IEvidential::GetBaseWorth() const
 {
 	return 0.0f;
 }
+
+EEvidentialType IEvidential::GetType() const
+{
+	return EEvidentialType::Alien;
+}
