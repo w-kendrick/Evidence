@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
+#include "Evidence/Structs/EvidentialCapture.h"
 #include "Camera.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnPhotosChanged, const uint8);
@@ -45,5 +46,8 @@ protected:
 private:
 	UPROPERTY()
 	TArray<UTextureRenderTarget2D*> Photos;
+
+	UPROPERTY(Replicated)
+	TArray<FEvidentialCapture> Captures;
 	
 };

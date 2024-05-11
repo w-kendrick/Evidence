@@ -7,7 +7,6 @@
 #include "Kismet/KismetRenderingLibrary.h"
 #include "Evidence/Interfaces/Evidential.h"
 #include "Evidence/Structs/EvidentialInfo.h"
-#include "Evidence/Structs/EvidentialCapture.h"
 
 ACamera::ACamera()
 {
@@ -16,6 +15,7 @@ ACamera::ACamera()
 	for (int i = 0; i < MaxPhotos; i++)
 	{
 		Photos.Add(nullptr);
+		Captures.Add(FEvidentialCapture());
 	}
 
 	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent"));
@@ -34,6 +34,7 @@ void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ACamera, RemainingPhotos);
+	DOREPLIFETIME(ACamera, Captures);
 }
 
 void ACamera::TakePhoto()
@@ -70,6 +71,7 @@ void ACamera::AwardCash()
 	}
 
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
+	Captures[MaxPhotos - (RemainingPhotos + 1)] = Capture;
 }
 
 void ACamera::SetRemainingPhotos(const uint8 Remaining)
