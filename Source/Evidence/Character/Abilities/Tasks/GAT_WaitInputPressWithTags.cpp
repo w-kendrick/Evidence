@@ -13,7 +13,7 @@ UGAT_WaitInputPressWithTags::UGAT_WaitInputPressWithTags(const FObjectInitialize
 
 UGAT_WaitInputPressWithTags* UGAT_WaitInputPressWithTags::WaitInputPressWithTags(UGameplayAbility* OwningAbility, FGameplayTagContainer RequiredTags, FGameplayTagContainer IgnoredTags, bool bTestAlreadyPressed)
 {
-	UGAT_WaitInputPressWithTags* Task = NewAbilityTask<UGAT_WaitInputPressWithTags>(OwningAbility);
+	UGAT_WaitInputPressWithTags* const Task = NewAbilityTask<UGAT_WaitInputPressWithTags>(OwningAbility);
 	Task->bTestInitialState = bTestAlreadyPressed;
 	Task->RequiredTags = RequiredTags;
 	Task->IgnoredTags = IgnoredTags;
@@ -27,7 +27,7 @@ void UGAT_WaitInputPressWithTags::Activate()
 	{
 		if (bTestInitialState && IsLocallyControlled())
 		{
-			FGameplayAbilitySpec* Spec = Ability->GetCurrentAbilitySpec();
+			const FGameplayAbilitySpec* const Spec = Ability->GetCurrentAbilitySpec();
 			if (Spec && Spec->InputPressed)
 			{
 				OnPressCallback();
@@ -48,7 +48,7 @@ void UGAT_WaitInputPressWithTags::Activate()
 
 void UGAT_WaitInputPressWithTags::OnPressCallback()
 {
-	float ElapsedTime = GetWorld()->GetTimeSeconds() - StartTime;
+	const float ElapsedTime = GetWorld()->GetTimeSeconds() - StartTime;
 
 	if (!Ability || !AbilitySystemComponent.IsValid())
 	{
@@ -74,7 +74,7 @@ void UGAT_WaitInputPressWithTags::OnPressCallback()
 
 	AbilitySystemComponent->AbilityReplicatedEventDelegate(EAbilityGenericReplicatedEvent::InputPressed, GetAbilitySpecHandle(), GetActivationPredictionKey()).Remove(DelegateHandle);
 
-	FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent.Get(), IsPredictingClient());
+	const FScopedPredictionWindow ScopedPrediction(AbilitySystemComponent.Get(), IsPredictingClient());
 
 	if (IsPredictingClient())
 	{
