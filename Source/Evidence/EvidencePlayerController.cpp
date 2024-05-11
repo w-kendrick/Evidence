@@ -11,7 +11,7 @@ void AEvidencePlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	// get the enhanced input subsystem
-	if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
+	if (UEnhancedInputLocalPlayerSubsystem* const Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer()))
 	{
 		// add the mapping context so we get controls
 		Subsystem->AddMappingContext(InputMappingContext, 0);
@@ -24,7 +24,7 @@ void AEvidencePlayerController::AcknowledgePossession(APawn* P)
 {
 	Super::AcknowledgePossession(P);
 
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(P);
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(P);
 	if (Char)
 	{
 		Char->GetAbilitySystemComponent()->InitAbilityActorInfo(Char, Char);
@@ -33,7 +33,7 @@ void AEvidencePlayerController::AcknowledgePossession(APawn* P)
 
 void AEvidencePlayerController::ShowInteractPrompt(const float Duration)
 {
-	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
 	if (EHUD)
 	{
 		EHUD->ShowInteractPrompt(Duration);
@@ -42,7 +42,7 @@ void AEvidencePlayerController::ShowInteractPrompt(const float Duration)
 
 void AEvidencePlayerController::HideInteractPrompt()
 {
-	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
 	if (EHUD)
 	{
 		EHUD->HideInteractPrompt();
@@ -51,7 +51,7 @@ void AEvidencePlayerController::HideInteractPrompt()
 
 void AEvidencePlayerController::StartInteractionTimer(const float Duration)
 {
-	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
 	if (EHUD)
 	{
 		EHUD->StartInteractionTimer(Duration);
@@ -60,7 +60,7 @@ void AEvidencePlayerController::StartInteractionTimer(const float Duration)
 
 void AEvidencePlayerController::StopInteractionTimer()
 {
-	AEvidenceHUD* EHUD = Cast<AEvidenceHUD>(MyHUD);
+	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
 	if (EHUD)
 	{
 		EHUD->StopInteractionTimer();
