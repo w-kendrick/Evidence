@@ -7,6 +7,7 @@
 #include "Kismet/KismetRenderingLibrary.h"
 #include "Evidence/Interfaces/Evidential.h"
 #include "Evidence/Structs/EvidentialInfo.h"
+#include "Evidence/Structs/EvidentialCapture.h"
 
 ACamera::ACamera()
 {
@@ -67,6 +68,8 @@ void ACamera::AwardCash()
 			}
 		}
 	}
+
+	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
 }
 
 void ACamera::SetRemainingPhotos(const uint8 Remaining)
