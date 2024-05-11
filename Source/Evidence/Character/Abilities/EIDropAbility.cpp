@@ -20,7 +20,7 @@ void UEIDropAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		}
 
-		AEvidenceCharacter* Character = CastChecked<AEvidenceCharacter>(ActorInfo->AvatarActor.Get());
+		AEvidenceCharacter* const Character = CastChecked<AEvidenceCharacter>(ActorInfo->AvatarActor.Get());
 		Character->Drop();
 	}
 

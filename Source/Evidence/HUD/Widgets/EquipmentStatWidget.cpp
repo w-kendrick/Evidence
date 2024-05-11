@@ -9,10 +9,10 @@ void UEquipmentStatWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
 	if (Char)
 	{
-		UInventoryComponent* InventoryComponent = Char->GetInventoryComponent();
+		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
 		if (InventoryComponent)
 		{
 			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);

@@ -43,7 +43,7 @@ void ACamera::TakePhoto()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Take photo: ") + FString::FromInt(Photos.Num() - (RemainingPhotos + 1)));
 
-	UTextureRenderTarget2D* Target = UKismetRenderingLibrary::CreateRenderTarget2D(GetWorld(), 960, 540);
+	UTextureRenderTarget2D* const Target = UKismetRenderingLibrary::CreateRenderTarget2D(GetWorld(), 960, 540);
 	SceneCaptureComponent->TextureTarget = Target;
 	SceneCaptureComponent->CaptureScene();
 
@@ -73,7 +73,7 @@ void ACamera::AwardCash()
 			IEvidential* const Evidential = Cast<IEvidential>(Hit.GetActor());
 			if (Evidential)
 			{
-				FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+				const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
 				CapturedEvidentials.Add(Info);
 			}
 		}

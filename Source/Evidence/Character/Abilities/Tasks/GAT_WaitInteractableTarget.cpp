@@ -16,13 +16,13 @@ UGAT_WaitInteractableTarget::UGAT_WaitInteractableTarget(const FObjectInitialize
 
 UGAT_WaitInteractableTarget* UGAT_WaitInteractableTarget::WaitForInteractableTarget(UGameplayAbility* OwningAbility, FName TaskInstanceName, FCollisionProfileName TraceProfile, float MaxRange, float TimerPeriod, bool bShowDebug)
 {
-	UGAT_WaitInteractableTarget* MyObj = NewAbilityTask<UGAT_WaitInteractableTarget>(OwningAbility, TaskInstanceName);		//Register for task list here, providing a given FName as a key
+	UGAT_WaitInteractableTarget* const MyObj = NewAbilityTask<UGAT_WaitInteractableTarget>(OwningAbility, TaskInstanceName);		//Register for task list here, providing a given FName as a key
 	MyObj->TraceProfile = TraceProfile;
 	MyObj->MaxRange = MaxRange;
 	MyObj->TimerPeriod = TimerPeriod;
 	MyObj->bShowDebug = bShowDebug;
 	
-	AEvidencePlayerCharacter* Char = Cast<AEvidencePlayerCharacter>(OwningAbility->GetCurrentActorInfo()->AvatarActor);
+	AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(OwningAbility->GetCurrentActorInfo()->AvatarActor);
 
 	MyObj->StartLocation = FGameplayAbilityTargetingLocationInfo();
 	MyObj->StartLocation.LocationType = EGameplayAbilityTargetingLocationType::ActorTransform;
@@ -34,13 +34,13 @@ UGAT_WaitInteractableTarget* UGAT_WaitInteractableTarget::WaitForInteractableTar
 
 void UGAT_WaitInteractableTarget::Activate()
 {
-	UWorld* World = GetWorld();
+	UWorld* const World = GetWorld();
 	World->GetTimerManager().SetTimer(TraceTimerHandle, this, &UGAT_WaitInteractableTarget::PerformTrace, TimerPeriod, true);
 }
 
 void UGAT_WaitInteractableTarget::OnDestroy(bool AbilityEnded)
 {
-	UWorld* World = GetWorld();
+	UWorld* const World = GetWorld();
 	World->GetTimerManager().ClearTimer(TraceTimerHandle);
 
 	Super::OnDestroy(AbilityEnded);
@@ -71,7 +71,7 @@ void UGAT_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult, const UWor
 					== ECollisionResponse::ECR_Overlap)
 				{
 					// Component/Actor must be available to interact
-					bool bIsInteractable = Hit.GetActor()->Implements<UInteractable>();
+					const bool bIsInteractable = Hit.GetActor()->Implements<UInteractable>();
 
 					if (bIsInteractable && IInteractable::Execute_IsAvailableForInteraction(Hit.GetActor(), Hit.Component.Get()))
 					{
@@ -103,7 +103,7 @@ void UGAT_WaitInteractableTarget::AimWithPlayerController(const AActor* InSource
 		return;
 	}
 
-	APlayerController* PC = Ability->GetCurrentActorInfo()->PlayerController.Get();
+	const APlayerController* const PC = Ability->GetCurrentActorInfo()->PlayerController.Get();
 
 	// Default to TraceStart if no PlayerController
 	FVector ViewStart = TraceStart;
@@ -133,7 +133,7 @@ void UGAT_WaitInteractableTarget::AimWithPlayerController(const AActor* InSource
 
 	if (!bTraceAffectsAimPitch && bUseTraceResult)
 	{
-		FVector OriginalAimDir = (ViewEnd - TraceStart).GetSafeNormal();
+		const FVector OriginalAimDir = (ViewEnd - TraceStart).GetSafeNormal();
 
 		if (!OriginalAimDir.IsZero())
 		{
@@ -152,16 +152,16 @@ void UGAT_WaitInteractableTarget::AimWithPlayerController(const AActor* InSource
 
 bool UGAT_WaitInteractableTarget::ClipCameraRayToAbilityRange(FVector CameraLocation, FVector CameraDirection, FVector AbilityCenter, float AbilityRange, FVector& ClippedPosition) const
 {
-	FVector CameraToCenter = AbilityCenter - CameraLocation;
-	float DotToCenter = FVector::DotProduct(CameraToCenter, CameraDirection);
+	const FVector CameraToCenter = AbilityCenter - CameraLocation;
+	const float DotToCenter = FVector::DotProduct(CameraToCenter, CameraDirection);
 	if (DotToCenter >= 0)		//If this fails, we're pointed away from the center, but we might be inside the sphere and able to find a good exit point.
 	{
-		float DistanceSquared = CameraToCenter.SizeSquared() - (DotToCenter * DotToCenter);
-		float RadiusSquared = (AbilityRange * AbilityRange);
+		const float DistanceSquared = CameraToCenter.SizeSquared() - (DotToCenter * DotToCenter);
+		const float RadiusSquared = (AbilityRange * AbilityRange);
 		if (DistanceSquared <= RadiusSquared)
 		{
-			float DistanceFromCamera = FMath::Sqrt(RadiusSquared - DistanceSquared);
-			float DistanceAlongRay = DotToCenter + DistanceFromCamera;						//Subtracting instead of adding will get the other intersection point
+			const float DistanceFromCamera = FMath::Sqrt(RadiusSquared - DistanceSquared);
+			const float DistanceAlongRay = DotToCenter + DistanceFromCamera;						//Subtracting instead of adding will get the other intersection point
 			ClippedPosition = CameraLocation + (DistanceAlongRay * CameraDirection);		//Cam aim point clipped to range sphere
 			return true;
 		}
@@ -171,10 +171,10 @@ bool UGAT_WaitInteractableTarget::ClipCameraRayToAbilityRange(FVector CameraLoca
 
 void UGAT_WaitInteractableTarget::PerformTrace()
 {
-	bool bTraceComplex = false;
+	const bool bTraceComplex = false;
 	TArray<AActor*> ActorsToIgnore;
 
-	AActor* SourceActor = Ability->GetCurrentActorInfo()->AvatarActor.Get();
+	AActor* const SourceActor = Ability->GetCurrentActorInfo()->AvatarActor.Get();
 	if (!SourceActor)
 	{
 		// Hero is dead
@@ -222,7 +222,7 @@ void UGAT_WaitInteractableTarget::PerformTrace()
 
 		if (TargetData.Num() > 0)
 		{
-			const AActor* OldTarget = TargetData.Get(0)->GetHitResult()->GetActor();
+			const AActor* const OldTarget = TargetData.Get(0)->GetHitResult()->GetActor();
 
 			if (OldTarget == ReturnHitResult.GetActor())
 			{

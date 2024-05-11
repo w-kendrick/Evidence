@@ -40,7 +40,7 @@ public:
 
 	FOnStaminaChanged StaminaDelegate;
 
-	virtual void Pickup(AEquipment* Equipment);
+	virtual void Pickup(AEquipment* const Equipment);
 	virtual void Drop();
 
 	AEquipment* GetEquipped() const;

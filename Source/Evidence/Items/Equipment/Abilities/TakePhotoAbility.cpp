@@ -20,7 +20,7 @@ void UTakePhotoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return;
 	}
 
-	ACamera* Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{
@@ -48,7 +48,7 @@ bool UTakePhotoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 		return false;
 	}
 
-	ACamera* Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	const ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{
@@ -60,7 +60,7 @@ bool UTakePhotoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 void UTakePhotoAbility::ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
-	ACamera* Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{

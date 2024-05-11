@@ -36,7 +36,7 @@ void ARadialSensor::Sense()
 	TArray<FOverlapResult> Overlaps;
 	if (GetWorld()->OverlapMultiByChannel(Overlaps, GetActorLocation(), GetActorRotation().Quaternion(), COLLISION_SENSE, FCollisionShape::MakeSphere(SenseRadius)))
 	{
-		for (FOverlapResult& Overlap : Overlaps)
+		for (const FOverlapResult& Overlap : Overlaps)
 		{
 			const FVector Relative = (Overlap.GetActor()->GetActorLocation() - GetActorLocation()) / SenseRadius;
 			Output.Add(Relative);

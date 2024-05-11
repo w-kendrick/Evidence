@@ -28,14 +28,14 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 		return;
 	}
 
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 		return;
 	}
 
-	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
+	const AGun* const Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
 	if (!Gun)
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
@@ -53,7 +53,7 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 		const FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());
 
-		ATrueProjectile* Projectile = GetWorld()->SpawnActorDeferred<ATrueProjectile>(TrueProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		ATrueProjectile* const Projectile = GetWorld()->SpawnActorDeferred<ATrueProjectile>(TrueProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		Projectile->DamageEffectHandle = DamageEffectSpecHandle;
 		Projectile->SetInstigator(Char);
 		Projectile->FinishSpawning(SpawnTransform);
@@ -62,7 +62,7 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 	{
 		//Cosmetic projectile
 
-		ACosmeticProjectile* Projectile = GetWorld()->SpawnActorDeferred<ACosmeticProjectile>(CosmeticProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
+		ACosmeticProjectile* const Projectile = GetWorld()->SpawnActorDeferred<ACosmeticProjectile>(CosmeticProjectileClass, SpawnTransform, nullptr, Char, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 
@@ -76,7 +76,7 @@ bool UUseGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return false;
 	}
 
-	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
+	const AGun* const Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
 	if (!Gun)
 	{
 		return false;
@@ -87,7 +87,7 @@ bool UUseGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 void UUseGunAbility::ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
-	AGun* Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
+	AGun* const Gun = Cast<AGun>(GetSourceObject(Handle, ActorInfo));
 	if (!Gun)
 	{
 		return;

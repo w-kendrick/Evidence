@@ -34,9 +34,9 @@ void AEvidencePlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	if (APlayerController* const PlayerController = Cast<APlayerController>(Controller))
 	{
-		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
+		if (UEnhancedInputLocalPlayerSubsystem* const Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 		{
 			Subsystem->AddMappingContext(DefaultMappingContext, 0);
 		}
@@ -53,7 +53,7 @@ void AEvidencePlayerCharacter::BeginPlay()
 void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings
-	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
+	if (UEnhancedInputComponent* const EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		// Moving
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ThisClass::Move);
@@ -98,7 +98,7 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 void AEvidencePlayerCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
-	FVector2D MovementVector = Value.Get<FVector2D>();
+	const FVector2D MovementVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -111,7 +111,7 @@ void AEvidencePlayerCharacter::Move(const FInputActionValue& Value)
 void AEvidencePlayerCharacter::Look(const FInputActionValue& Value)
 {
 	// input is a Vector2D
-	FVector2D LookAxisVector = Value.Get<FVector2D>();
+	const FVector2D LookAxisVector = Value.Get<FVector2D>();
 
 	if (Controller != nullptr)
 	{
@@ -210,7 +210,7 @@ void AEvidencePlayerCharacter::HandleReloadActionReleased()
 
 void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
 {
-	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
 	{
 		EPC->ShowInteractPrompt(Duration);
 	}
@@ -218,7 +218,7 @@ void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
 
 void AEvidencePlayerCharacter::HideInteractPrompt()
 {
-	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
 	{
 		EPC->HideInteractPrompt();
 	}
@@ -226,7 +226,7 @@ void AEvidencePlayerCharacter::HideInteractPrompt()
 
 void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)
 {
-	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
 	{
 		EPC->StartInteractionTimer(Duration);
 	}
@@ -234,7 +234,7 @@ void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)
 
 void AEvidencePlayerCharacter::StopInteractionTimer()
 {
-	if (AEvidencePlayerController* EPC = Cast<AEvidencePlayerController>(Controller))
+	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
 	{
 		EPC->StopInteractionTimer();
 	}

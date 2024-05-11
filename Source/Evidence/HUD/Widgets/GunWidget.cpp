@@ -11,13 +11,13 @@ void UGunWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
 	if (Char)
 	{
-		UInventoryComponent* InventoryComponent = Char->GetInventoryComponent();
+		const UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
 		if (InventoryComponent)
 		{
-			AGun* Gun = Cast<AGun>(InventoryComponent->GetEquipped());
+			const AGun* const Gun = Cast<AGun>(InventoryComponent->GetEquipped());
 
 			if (Gun)
 			{
@@ -34,13 +34,13 @@ void UGunWidget::NativeConstruct()
 
 void UGunWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
-	AGun* PrevGun = Cast<AGun>(Previous);
+	AGun* const PrevGun = Cast<AGun>(Previous);
 	if (PrevGun)
 	{
 		PrevGun->OnAmmoChanged.Remove(GunHandle);
 	}
 
-	AGun* Gun = Cast<AGun>(Current);
+	AGun* const Gun = Cast<AGun>(Current);
 
 	if (Gun)
 	{

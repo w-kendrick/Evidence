@@ -92,9 +92,9 @@ void UInventoryComponent::Pickup(AEquipment* Equipment)
 
 #pragma region Equipped
 
-void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
+void UInventoryComponent::PickupEquipped(AEquipment* const NewEquipped)
 {
-	AEquipment* Prev = Equipped;
+	AEquipment* const Prev = Equipped;
 	if (Equipped)
 	{
 		Equipped->Drop();
@@ -111,7 +111,7 @@ void UInventoryComponent::PickupEquipped(AEquipment* NewEquipped)
 
 void UInventoryComponent::TryDropEquipped()
 {
-	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
 
 	FGameplayAbilityTargetDataHandle Handle;
 	Handle.Add(Data);
@@ -123,7 +123,7 @@ void UInventoryComponent::TryDropEquipped()
 
 void UInventoryComponent::DropEquipped()
 {
-	AEquipment* Prev = Equipped;
+	AEquipment* const Prev = Equipped;
 	if (Equipped)
 	{
 		Equipped->Drop();
@@ -135,7 +135,7 @@ void UInventoryComponent::DropEquipped()
 
 void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index)
 {
-	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
 
 	FGameplayAbilityTargetDataHandle Handle;
@@ -148,7 +148,7 @@ void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index
 
 void UInventoryComponent::EquipFromInventory(const int Index)
 {
-	AEquipment* Equipment = Inventory[Index];
+	AEquipment* const Equipment = Inventory[Index];
 
 	PickupToInventory(Equipped, Index);
 
@@ -159,7 +159,7 @@ void UInventoryComponent::EquipFromInventory(const int Index)
 
 #pragma region Inventory
 
-void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 Index)
+void UInventoryComponent::PickupToInventory(AEquipment* const Equipment, const uint8 Index)
 {
 	SetInventoryIndex(Equipment, Index);
 
@@ -171,7 +171,7 @@ void UInventoryComponent::PickupToInventory(AEquipment* Equipment, const uint8 I
 
 void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 {
-	FGameplayAbilityTargetData_SingleTargetHit* Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = Index;
 
 	FGameplayAbilityTargetDataHandle Handle;
@@ -184,7 +184,7 @@ void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 
 void UInventoryComponent::DropFromInventory(const int Index)
 {
-	AEquipment* Equipment = Inventory[Index];
+	AEquipment* const Equipment = Inventory[Index];
 
 	if (Equipment)
 	{
@@ -203,7 +203,7 @@ const TArray<AEquipment*>& UInventoryComponent::GetInventory() const
 	return Inventory;
 }
 
-void UInventoryComponent::SetInventoryIndex(AEquipment* Equipment, const uint8 Index)
+void UInventoryComponent::SetInventoryIndex(AEquipment* const Equipment, const uint8 Index)
 {
 	Inventory[Index] = Equipment;
 	Inventory = Inventory; //forces rep notify to be called
@@ -242,7 +242,7 @@ bool UInventoryComponent::IsAmmoAvailable(const TSubclassOf<AAmmunition> AmmoTyp
 {
 	bool Result = false;
 
-	for (AEquipment* Equipment : Inventory)
+	for (const AEquipment* const Equipment : Inventory)
 	{
 		if (Equipment && Equipment->GetClass() == AmmoType)
 		{
@@ -259,11 +259,11 @@ uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, 
 
 	for (uint8 Index = 0; Index < Inventory.Num(); ++Index)
 	{
-		AEquipment* Equipment = Inventory[Index];
+		AEquipment* const Equipment = Inventory[Index];
 		if (Equipment && Equipment->GetClass() == AmmoType)
 		{
 			bool isSlotExhausted = false;
-			AAmmunition* Ammunition = Cast<AAmmunition>(Equipment);
+			AAmmunition* const Ammunition = Cast<AAmmunition>(Equipment);
 
 			const uint8 QuantityToTake = FMath::Clamp(Ammunition->GetQuantity(), 0, Required - Amount);
 			Ammunition->Consume(QuantityToTake, isSlotExhausted);
@@ -279,6 +279,7 @@ uint8 UInventoryComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, 
 
 	return Amount;
 }
+
 void UInventoryComponent::ClearSlot(const uint8 Index)
 {
 	SetInventoryIndex(nullptr, Index);

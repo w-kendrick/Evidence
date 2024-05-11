@@ -48,7 +48,7 @@ void UCharacterAbilitySystemComponent::AbilityLocalInputPressed(int32 InputID)
 				}
 				else
 				{
-					UEIGameplayAbility* GA = Cast<UEIGameplayAbility>(Spec.Ability);
+					const UEIGameplayAbility* const GA = Cast<UEIGameplayAbility>(Spec.Ability);
 					if (GA && GA->bActivateOnInput)
 					{
 						// Ability is not active, so try to activate it

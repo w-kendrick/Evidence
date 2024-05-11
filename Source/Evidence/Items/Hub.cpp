@@ -50,7 +50,7 @@ void AHub::SpawnMovementSensor(const FSpawnInfo& SpawnInfo)
 	const FTransform& Transform = SpawnInfo.Transform;
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
-	AMovementSensor* MovementSensor = Cast<AMovementSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
+	AMovementSensor* const MovementSensor = Cast<AMovementSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
 	MovementSensor->OnMovementSense.AddUObject(this, &ThisClass::OnMovementSensed);
 }
 
@@ -59,7 +59,7 @@ void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 	const FTransform& Transform = SpawnInfo.Transform;
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
-	ARadialSensor* RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
+	ARadialSensor* const RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
 	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
@@ -68,17 +68,17 @@ void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)
 	Dart->OnTrackDartBroadcast.AddUObject(this, &ThisClass::OnDartLocationReceived);
 }
 
-void AHub::OnMovementSensed(AMovementSensor* Sensor)
+void AHub::OnMovementSensed(AMovementSensor* const Sensor)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Movement sensed");
 }
 
-void AHub::OnRadiusSensed(ARadialSensor* Sensor, const TArray<FVector> Locations)
+void AHub::OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Radius sensed");
 }
 
-void AHub::OnDartLocationReceived(ATrueTrackerDart*, const FVector& Location)
+void AHub::OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Tracker dart location received");
 }

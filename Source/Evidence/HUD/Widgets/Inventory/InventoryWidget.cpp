@@ -17,7 +17,7 @@ void UInventoryWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (PlayerChar)
 	{
 		PlayerChar->GetInventoryComponent()->InventoryChanged.AddUObject(this, &ThisClass::OnInventoryChanged);
@@ -51,7 +51,7 @@ void UInventoryWidget::Update()
 		EquippedBox->ClearChildren();
 
 		TArray<AEquipment*> Inventory = InventoryComp->GetInventory();
-		AEquipment* Equipped = InventoryComp->GetEquipped();
+		AEquipment* const Equipped = InventoryComp->GetEquipped();
 
 		const uint8 Columns = FMath::CeilToInt(((float)Inventory.Num()) / Rows);
 
@@ -76,7 +76,7 @@ void UInventoryWidget::Update()
 
 		if (EquippedBox)
 		{
-			UEquipmentWidget* NewSlot = CreateWidget<UEquipmentWidget>(this, EquippedClass);
+			UEquipmentWidget* const NewSlot = CreateWidget<UEquipmentWidget>(this, EquippedClass);
 			if (NewSlot)
 			{
 				NewSlot->SpawnInitialize(InventoryComp, Equipped);
