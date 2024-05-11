@@ -20,7 +20,8 @@ ACamera::ACamera()
 
 	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent"));
 	SceneCaptureComponent->SetupAttachment(LocalMesh);
-	SceneCaptureComponent->MaxViewDistanceOverride = 2000.f;
+	SceneCaptureComponent->MaxViewDistanceOverride = 200.f;
+	SceneCaptureComponent->FOVAngle = 90.f;
 }
 
 void ACamera::BeginPlay()
@@ -52,11 +53,16 @@ void ACamera::TakePhoto()
 void ACamera::AwardCash()
 {
 	TArray<FHitResult> Hits;
-	const FVector Loc = SceneCaptureComponent->GetComponentLocation();
 	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();
-	const FCollisionShape Shape = FCollisionShape::MakeBox(FVector(SceneCaptureComponent->MaxViewDistanceOverride, 
-																   SceneCaptureComponent->MaxViewDistanceOverride * SceneCaptureComponent->FOVAngle,
-																   SceneCaptureComponent->MaxViewDistanceOverride * SceneCaptureComponent->FOVAngle));
+	const FVector BoxExtent = FVector(SceneCaptureComponent->MaxViewDistanceOverride,
+		SceneCaptureComponent->MaxViewDistanceOverride * FMath::Cos(FMath::DegreesToRadians(SceneCaptureComponent->FOVAngle * 0.5f)) * 2.f,
+		SceneCaptureComponent->MaxViewDistanceOverride * FMath::Cos(FMath::DegreesToRadians(SceneCaptureComponent->FOVAngle * 0.5f)) * 2.f);
+
+	const FVector Loc = SceneCaptureComponent->GetComponentLocation() + SceneCaptureComponent->GetForwardVector() * SceneCaptureComponent->MaxViewDistanceOverride;
+
+	const FCollisionShape Shape = FCollisionShape::MakeBox(BoxExtent);
+
+	DrawDebugBox(GetWorld(), Loc, BoxExtent, Rot, FColor::Red, true, -1.0f, 0, 5.0f);
 
 	TArray<FEvidentialInfo> CapturedEvidentials;
 
