@@ -7,7 +7,7 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FHealthTest, "Character.Health", EAutomationTes
 
 bool FHealthTest::RunTest(const FString& Parameters)
 {
-	AEvidenceCharacter* Char = NewObject<AEvidenceCharacter>();
+	const AEvidenceCharacter* const Char = NewObject<AEvidenceCharacter>();
 
 	if (Char->GetHealth() != Char->GetMaxHealth())
 	{
