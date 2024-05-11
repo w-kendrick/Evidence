@@ -20,7 +20,7 @@ void UEIJumpAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		}
 
-		ACharacter* Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
+		ACharacter* const Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
 		Character->Jump();
 	}
 }
@@ -32,7 +32,7 @@ bool UEIJumpAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return false;
 	}
 
-	const AEvidenceCharacter* Character = CastChecked<AEvidenceCharacter>(ActorInfo->AvatarActor.Get(), ECastCheckedType::NullAllowed);
+	const AEvidenceCharacter* const Character = CastChecked<AEvidenceCharacter>(ActorInfo->AvatarActor.Get(), ECastCheckedType::NullAllowed);
 	return Character && Character->CanJump();
 }
 
@@ -54,6 +54,6 @@ void UEIJumpAbility::CancelAbility(const FGameplayAbilitySpecHandle Handle, cons
 
 	Super::CancelAbility(Handle, ActorInfo, ActivationInfo, bReplicateCancelAbility);
 
-	ACharacter* Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
+	ACharacter* const Character = CastChecked<ACharacter>(ActorInfo->AvatarActor.Get());
 	Character->StopJumping();
 }

@@ -12,7 +12,7 @@ UEIGameplayAbility::UEIGameplayAbility()
 
 bool UEIGameplayAbility::IsInputPressed() const
 {
-	FGameplayAbilitySpec* Spec = GetCurrentAbilitySpec();
+	const FGameplayAbilitySpec* const Spec = GetCurrentAbilitySpec();
 	return Spec && Spec->InputPressed;
 }
 
@@ -22,6 +22,6 @@ void UEIGameplayAbility::OnAvatarSet(const FGameplayAbilityActorInfo* ActorInfo,
 
 	if (bActivateAbilityOnGranted)
 	{
-		bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
+		const bool ActivatedAbility = ActorInfo->AbilitySystemComponent->TryActivateAbility(Spec.Handle, false);
 	}
 }
