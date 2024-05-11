@@ -14,5 +14,5 @@ class EVIDENCE_API UEvidentialFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static float CalculateCash(const TArray<FEvidentialInfo> InfoArray);
+	static float CalculateCash(const TArray<FEvidentialInfo>& InfoArray);
 };
