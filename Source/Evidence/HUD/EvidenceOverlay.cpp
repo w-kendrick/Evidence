@@ -14,7 +14,7 @@ void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	if (PlayerChar)
 	{
 		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
@@ -73,7 +73,7 @@ void UEvidenceOverlay::OnInventoryRequest()
 
 	if (bInventoryWidgetVisible)
 	{
-		APlayerController* PC = GetOwningPlayer();
+		APlayerController* const PC = GetOwningPlayer();
 		if (PC)
 		{
 			PC->SetInputMode(FInputModeGameAndUI());
@@ -83,7 +83,7 @@ void UEvidenceOverlay::OnInventoryRequest()
 	}
 	else
 	{
-		APlayerController* PC = GetOwningPlayer();
+		APlayerController* const PC = GetOwningPlayer();
 		if (PC)
 		{
 			PC->SetInputMode(FInputModeGameOnly());

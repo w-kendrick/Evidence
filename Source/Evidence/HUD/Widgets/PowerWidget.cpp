@@ -12,13 +12,13 @@ void UPowerWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidenceCharacter* Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
 	if (Char)
 	{
-		UInventoryComponent* InventoryComponent = Char->GetInventoryComponent();
+		const UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
 		if (InventoryComponent)
 		{
-			APoweredEquipment* Powered = Cast<APoweredEquipment>(InventoryComponent->GetEquipped());
+			const APoweredEquipment* const Powered = Cast<APoweredEquipment>(InventoryComponent->GetEquipped());
 
 			if (Powered)
 			{
@@ -36,13 +36,13 @@ void UPowerWidget::NativeConstruct()
 
 void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
-	APoweredEquipment* PrevPowered = Cast<APoweredEquipment>(Previous);
+	APoweredEquipment* const PrevPowered = Cast<APoweredEquipment>(Previous);
 	if (PrevPowered)
 	{
 		PrevPowered->OnPowerChanged.Remove(PoweredHandle);
 	}
 
-	APoweredEquipment* Powered = Cast<APoweredEquipment>(Current);
+	APoweredEquipment* const Powered = Cast<APoweredEquipment>(Current);
 
 	if (Powered)
 	{
