@@ -70,10 +70,10 @@ void AEvidenceCharacter::InitializeAttributes()
 	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 
-	FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, 1, EffectContext);
+	const FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(DefaultAttributes, 1, EffectContext);
 	if (NewHandle.IsValid())
 	{
-		FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
+		(void)AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
 	}
 }
 
@@ -84,7 +84,7 @@ void AEvidenceCharacter::AddCharacterAbilities()
 		return;
 	}
 
-	for (TSubclassOf<UEIGameplayAbility>& Ability : StartupAbilities)
+	for (const TSubclassOf<UEIGameplayAbility>& Ability : StartupAbilities)
 	{
 		AbilitySystemComponent->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
 	}
@@ -102,12 +102,12 @@ void AEvidenceCharacter::AddStartupEffects()
 	FGameplayEffectContextHandle EffectContext = AbilitySystemComponent->MakeEffectContext();
 	EffectContext.AddSourceObject(this);
 
-	for (TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
+	for (const TSubclassOf<UGameplayEffect> GameplayEffect : StartupEffects)
 	{
-		FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, 0, EffectContext);
+		const FGameplayEffectSpecHandle NewHandle = AbilitySystemComponent->MakeOutgoingSpec(GameplayEffect, 0, EffectContext);
 		if (NewHandle.IsValid())
 		{
-			FActiveGameplayEffectHandle ActiveGEHandle = AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
+			(void)AbilitySystemComponent->ApplyGameplayEffectSpecToTarget(*NewHandle.Data.Get(), AbilitySystemComponent);
 		}
 	}
 
@@ -201,7 +201,7 @@ bool AEvidenceCharacter::IsAlive() const
 
 #pragma region Equipment
 
-void AEvidenceCharacter::Pickup(AEquipment* Equipment)
+void AEvidenceCharacter::Pickup(AEquipment* const Equipment)
 {
 	if (InventoryComponent && Equipment)
 	{
@@ -233,7 +233,7 @@ AEquipment* AEvidenceCharacter::GetEquipped() const
 
 const FVector AEvidenceCharacter::GetTraceStart() const
 {
-	AEquipment* Equipped = GetEquipped();
+	const AEquipment* const Equipped = GetEquipped();
 	if (Equipped)
 	{
 		return Equipped->GetWorldMesh()->GetSocketLocation(FName("Muzzle"));
@@ -244,7 +244,7 @@ const FVector AEvidenceCharacter::GetTraceStart() const
 
 const FVector AEvidenceCharacter::GetTraceDirection() const
 {
-	AEquipment* Equipped = GetEquipped();
+	const AEquipment* const Equipped = GetEquipped();
 	if (Equipped)
 	{
 		return Equipped->GetWorldMesh()->GetSocketRotation(FName("Muzzle")).Vector();
