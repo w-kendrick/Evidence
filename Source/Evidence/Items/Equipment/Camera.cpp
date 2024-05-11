@@ -62,7 +62,7 @@ void ACamera::AwardCash()
 			IEvidential* const Evidential = Cast<IEvidential>(Hit.GetActor());
 			if (Evidential)
 			{
-				FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), EEvidentialMedium::Photo, Evidential->GetBaseWorth());
+				FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
 				CapturedEvidentials.Add(Info);
 			}
 		}
