@@ -78,7 +78,7 @@ void ACamera::AwardCash()
 			}
 		}
 	}
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured count: ") + FString::FromInt(CapturedEvidentials.Num()));
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
 	Captures[MaxPhotos - (RemainingPhotos + 1)] = Capture;
 }
