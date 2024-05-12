@@ -7,6 +7,8 @@
 #include "Evidence/Interfaces/Evidential.h"
 #include "BloodStain.generated.h"
 
+class UBoxComponent;
+
 UCLASS()
 class EVIDENCE_API ABloodStain : public AActor, public IEvidential
 {
@@ -14,5 +16,9 @@ class EVIDENCE_API ABloodStain : public AActor, public IEvidential
 	
 public:	
 	ABloodStain();
+
+protected:
+	UPROPERTY(VisibleDefaultsOnly)
+	UBoxComponent* Box;
 
 };
