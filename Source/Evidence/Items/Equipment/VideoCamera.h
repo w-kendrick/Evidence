@@ -5,9 +5,8 @@
 #include "CoreMinimal.h"
 #include "Camera.h"
 #include "Evidence/Enums/RecordStatus.h"
+#include "Evidence/Delegates.h"
 #include "VideoCamera.generated.h"
-
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnRecordingChanged, ERecordStatus);
 
 UCLASS()
 class EVIDENCE_API AVideoCamera : public ACamera

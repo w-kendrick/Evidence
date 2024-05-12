@@ -4,10 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
+#include "Evidence/Delegates.h"
 #include "PoweredEquipment.generated.h"
-
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPowerChanged, float, float);
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool);
 
 UCLASS()
 class EVIDENCE_API APoweredEquipment : public AEquipment
