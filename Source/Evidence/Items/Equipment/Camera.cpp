@@ -10,47 +10,20 @@
 
 ACamera::ACamera()
 {
-	MaxPhotos = 10;
-
-	for (int i = 0; i < MaxPhotos; i++)
-	{
-		Photos.Add(nullptr);
-		Captures.Add(FEvidentialCapture());
-	}
-
 	SceneCaptureComponent = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("SceneCaptureComponent"));
 	SceneCaptureComponent->SetupAttachment(LocalMesh);
 	SceneCaptureComponent->MaxViewDistanceOverride = 200.f;
 	SceneCaptureComponent->FOVAngle = 90.f;
 }
 
-void ACamera::BeginPlay()
-{
-	Super::BeginPlay();
-
-	SetRemainingPhotos(MaxPhotos);
-}
-
 void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(ACamera, RemainingPhotos);
 	DOREPLIFETIME(ACamera, Captures);
 }
 
-void ACamera::TakePhoto()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Take photo: ") + FString::FromInt(Photos.Num() - (RemainingPhotos + 1)));
-
-	UTextureRenderTarget2D* const Target = UKismetRenderingLibrary::CreateRenderTarget2D(GetWorld(), 960, 540);
-	SceneCaptureComponent->TextureTarget = Target;
-	SceneCaptureComponent->CaptureScene();
-
-	Photos[Photos.Num() - (RemainingPhotos + 1)] = Target;
-}
-
-void ACamera::AwardCash()
+void ACamera::SaveFrame()
 {
 	TArray<FHitResult> Hits;
 	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();
@@ -80,22 +53,5 @@ void ACamera::AwardCash()
 	}
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured count: ") + FString::FromInt(CapturedEvidentials.Num()));
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
-	Captures[MaxPhotos - (RemainingPhotos + 1)] = Capture;
-}
-
-void ACamera::SetRemainingPhotos(const uint8 Remaining)
-{
-	RemainingPhotos = Remaining;
-	OnPhotosChanged.Broadcast(RemainingPhotos);
-}
-
-void ACamera::OnRep_RemainingPhotos()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Remaining: ") + FString::FromInt(RemainingPhotos));
-	OnPhotosChanged.Broadcast(RemainingPhotos);
-
-	for (int i = 0; i < RemainingPhotos; i++)
-	{
-		Photos[Photos.Num() - (i + 1)] = nullptr;
-	}
+	Captures.Add(Capture);
 }
