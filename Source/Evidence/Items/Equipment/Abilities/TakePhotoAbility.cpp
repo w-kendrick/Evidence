@@ -2,7 +2,7 @@
 
 
 #include "TakePhotoAbility.h"
-#include "Evidence/Items/Equipment/Camera.h"
+#include "Evidence/Items/Equipment/PhotoCamera.h"
 
 UTakePhotoAbility::UTakePhotoAbility()
 {
@@ -20,7 +20,7 @@ void UTakePhotoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 		return;
 	}
 
-	ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	APhotoCamera* const Camera = Cast<APhotoCamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{
@@ -48,7 +48,7 @@ bool UTakePhotoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 		return false;
 	}
 
-	const ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	const APhotoCamera* const Camera = Cast<APhotoCamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{
@@ -60,7 +60,7 @@ bool UTakePhotoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 void UTakePhotoAbility::ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
-	ACamera* const Camera = Cast<ACamera>(GetSourceObject(Handle, ActorInfo));
+	APhotoCamera* const Camera = Cast<APhotoCamera>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Camera)
 	{
