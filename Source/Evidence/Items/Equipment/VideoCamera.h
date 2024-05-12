@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Camera.h"
+#include "Evidence/Enums/RecordStatus.h"
 #include "VideoCamera.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnRecordingChanged, bool);
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnRecordingChanged, ERecordStatus);
 
 UCLASS()
 class EVIDENCE_API AVideoCamera : public ACamera
@@ -21,11 +22,11 @@ public:
 	void StartRecording();
 	void StopRecording();
 
-	bool GetIsRecording() const { return isRecording; }
+	ERecordStatus GetRecordStatus() const { return RecordStatus; }
 
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-	void SetIsRecording(const bool new_isRecording);
+	void SetRecordStatus(const ERecordStatus NewStatus);
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 FPS;
@@ -33,10 +34,16 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxVideoLength;
 
-	UPROPERTY(ReplicatedUsing = OnRep_isRecording)
-	bool isRecording;
+	UPROPERTY(ReplicatedUsing = OnRep_RecordStatus)
+	ERecordStatus RecordStatus;
 
 	UFUNCTION()
-	void OnRep_IsRecording(const bool prev_isRecording);
+	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+
+private:
+	void FrameCheck();
+
+	uint8 FrameCount;
+	FTimerHandle RecordHandle;
 	
 };

@@ -7,7 +7,6 @@
 UENUM(BlueprintType)
 enum class EEvidentialMedium : uint8
 {
-	None     UMETA(DisplayName = "None"),
 	Audio    UMETA(DisplayName = "Audio"),
 	Photo    UMETA(DisplayName = "Photo"),
 	Video    UMETA(DisplayName = "Video"),
