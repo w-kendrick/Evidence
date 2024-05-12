@@ -4,11 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Evidence/Delegates.h"
 #include "InventoryComponent.generated.h"
-
-DECLARE_MULTICAST_DELEGATE(FOnInventoryRequest);
-DECLARE_MULTICAST_DELEGATE(FOnInventoryChanged);
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquippedChanged, AEquipment*, AEquipment*);
 
 class AEquipment;
 class AEvidenceCharacter;
