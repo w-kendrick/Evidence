@@ -50,7 +50,7 @@ void ACamera::TakePhoto()
 	Photos[Photos.Num() - (RemainingPhotos + 1)] = Target;
 }
 
-void ACamera::AwardCash()
+void ACamera::SaveFrame()
 {
 	TArray<FHitResult> Hits;
 	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();

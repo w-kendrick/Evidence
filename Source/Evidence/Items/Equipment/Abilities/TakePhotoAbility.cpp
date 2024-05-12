@@ -35,7 +35,7 @@ void UTakePhotoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	if (ActorInfo->IsNetAuthority())
 	{
-		Camera->AwardCash();
+		Camera->SaveFrame();
 	}
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
