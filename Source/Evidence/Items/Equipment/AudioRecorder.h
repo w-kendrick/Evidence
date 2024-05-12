@@ -4,11 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
+#include "Evidence/Delegates.h"
 #include "AudioRecorder.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class EVIDENCE_API AAudioRecorder : public AEquipment
 {
@@ -16,5 +14,7 @@ class EVIDENCE_API AAudioRecorder : public AEquipment
 
 public:
 	AAudioRecorder();
+
+	FOnRecordingChanged OnRecordingChanged;
 	
 };
