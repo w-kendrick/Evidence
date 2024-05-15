@@ -11,6 +11,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Evidence/EvidencePlayerController.h"
 #include "Components/InventoryComponent.h"
+#include "Perception/AISense_Hearing.h"
 
 #pragma region Class Essentials
 
@@ -123,6 +124,7 @@ void AEvidencePlayerCharacter::Look(const FInputActionValue& Value)
 
 void AEvidencePlayerCharacter::HandleJumpActionPressed()
 {
+	UAISense_Hearing::ReportNoiseEvent(GetWorld(), GetActorLocation(), 100, this, 1000, FName("Tag"));
 	SendASCLocalInput(true, EAbilityInputID::Jump);
 }
 

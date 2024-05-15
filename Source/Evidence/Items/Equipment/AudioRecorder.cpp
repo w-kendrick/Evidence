@@ -10,6 +10,9 @@ AAudioRecorder::AAudioRecorder()
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
 	
 	Hearing = CreateDefaultSubobject<UAISenseConfig_Hearing>(TEXT("Hearing"));
+	Hearing->DetectionByAffiliation.bDetectEnemies = true;
+	Hearing->DetectionByAffiliation.bDetectFriendlies = true;
+	Hearing->DetectionByAffiliation.bDetectNeutrals = true;
 	
 	PerceptionComponent->ConfigureSense(*Hearing);
 }
@@ -18,10 +21,13 @@ void AAudioRecorder::BeginPlay()
 {
 	Super::BeginPlay();
 
-	PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ThisClass::OnSense);
+	if (HasAuthority())
+	{
+		PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ThisClass::OnSense);
+	}
 }
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sensed");
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sensed: " + Stimulus.Tag.ToString());
 }
