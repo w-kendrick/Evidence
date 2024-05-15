@@ -23,5 +23,5 @@ void AAudioRecorder::BeginPlay()
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sensed");
 }
