@@ -7,6 +7,9 @@
 #include "Evidence/Delegates.h"
 #include "AudioRecorder.generated.h"
 
+class UAIPerceptionComponent;
+class UAISenseConfig_Hearing;
+
 UCLASS()
 class EVIDENCE_API AAudioRecorder : public AEquipment
 {
@@ -16,5 +19,17 @@ public:
 	AAudioRecorder();
 
 	FOnRecordingChanged OnRecordingChanged;
-	
+
+protected:
+	virtual void BeginPlay() override;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UAIPerceptionComponent* PerceptionComponent;
+
+	UPROPERTY()
+	UAISenseConfig_Hearing* Hearing;
+
+	UFUNCTION()
+	void OnSense(AActor* Actor, FAIStimulus Stimulus);
+
 };
