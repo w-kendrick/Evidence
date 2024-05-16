@@ -2,6 +2,7 @@
 
 
 #include "AudioRecorder.h"
+#include "Net/UnrealNetwork.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Hearing.h"
 
@@ -27,7 +28,41 @@ void AAudioRecorder::BeginPlay()
 	}
 }
 
+void AAudioRecorder::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AAudioRecorder, RecordStatus);
+}
+
+void AAudioRecorder::StartRecording()
+{
+	SetRecordStatus(ERecordStatus::Recording);
+	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::OnRecordingEnd, MaxLength, true);
+}
+
+void AAudioRecorder::StopRecording()
+{
+	OnRecordingEnd();
+}
+
+void AAudioRecorder::OnRecordingEnd()
+{
+	SetRecordStatus(ERecordStatus::PostRecording);
+}
+
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sensed: " + Stimulus.Tag.ToString());
+}
+
+void AAudioRecorder::SetRecordStatus(const ERecordStatus NewStatus)
+{
+	RecordStatus = NewStatus;
+	OnRecordingChanged.Broadcast(RecordStatus);
+}
+
+void AAudioRecorder::OnRep_RecordStatus(const ERecordStatus PrevStatus)
+{
+	OnRecordingChanged.Broadcast(RecordStatus);
 }

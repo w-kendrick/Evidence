@@ -20,8 +20,17 @@ public:
 
 	FOnRecordingChanged OnRecordingChanged;
 
+	void StartRecording();
+	void StopRecording();
+
+	ERecordStatus GetRecordStatus() const { return RecordStatus; }
+
 protected:
 	virtual void BeginPlay() override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+
+	void OnRecordingEnd();
+	void SetRecordStatus(const ERecordStatus NewStatus);
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UAIPerceptionComponent* PerceptionComponent;
@@ -31,5 +40,17 @@ protected:
 
 	UFUNCTION()
 	void OnSense(AActor* Actor, FAIStimulus Stimulus);
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxLength;
+
+	UPROPERTY(ReplicatedUsing = OnRep_RecordStatus)
+	ERecordStatus RecordStatus;
+
+	UFUNCTION()
+	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+
+private:
+	FTimerHandle RecordHandle;
 
 };

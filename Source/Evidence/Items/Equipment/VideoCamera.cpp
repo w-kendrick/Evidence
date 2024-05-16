@@ -22,13 +22,13 @@ void AVideoCamera::StartRecording()
 {
 	FrameCount = 0;
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::FrameCheck, 1.f / FPS, true);
-	RecordStatus = ERecordStatus::Recording;
+	SetRecordStatus(ERecordStatus::Recording);
 }
 
 void AVideoCamera::StopRecording()
 {
 	GetWorldTimerManager().ClearTimer(RecordHandle);
-	RecordStatus = ERecordStatus::PostRecording;
+	SetRecordStatus(ERecordStatus::PostRecording);
 }
 
 void AVideoCamera::FrameCheck()
