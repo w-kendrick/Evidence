@@ -9,6 +9,8 @@
 
 class UAIPerceptionComponent;
 class UAISenseConfig_Hearing;
+struct FEvidentialInfo;
+struct FEvidentialCapture;
 
 UCLASS()
 class EVIDENCE_API AAudioRecorder : public AEquipment
@@ -49,6 +51,12 @@ protected:
 
 	UFUNCTION()
 	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+
+	UPROPERTY()
+	TArray<FEvidentialInfo> Recording;
+
+	UPROPERTY()
+	TArray<FEvidentialCapture> Captures;
 
 private:
 	FTimerHandle RecordHandle;

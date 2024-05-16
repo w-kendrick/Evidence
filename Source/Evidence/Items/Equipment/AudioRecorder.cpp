@@ -5,6 +5,10 @@
 #include "Net/UnrealNetwork.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Hearing.h"
+#include "Evidence/Structs/EvidentialInfo.h"
+#include "Evidence/Structs/EvidentialCapture.h"
+#include "Evidence/Libraries/EvidentialFunctionLibrary.h"
+#include "Evidence/Interfaces/Evidential.h"
 
 AAudioRecorder::AAudioRecorder()
 {
@@ -38,6 +42,7 @@ void AAudioRecorder::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 void AAudioRecorder::StartRecording()
 {
 	SetRecordStatus(ERecordStatus::Recording);
+	Recording.Empty();
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::OnRecordingEnd, MaxLength, true);
 }
 
@@ -49,11 +54,25 @@ void AAudioRecorder::StopRecording()
 void AAudioRecorder::OnRecordingEnd()
 {
 	SetRecordStatus(ERecordStatus::PostRecording);
+
+	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Audio, Recording);
+	Captures.Add(Capture);
 }
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Sensed: " + Stimulus.Tag.ToString());
+	if (Stimulus.SensingSucceeded)
+	{
+		if (RecordStatus == ERecordStatus::Recording)
+		{
+			const IEvidential* const Evidential = Cast<IEvidential>(Actor);
+			if (Evidential)
+			{
+				const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+				Recording.Add(Info);
+			}
+		}
+	}
 }
 
 void AAudioRecorder::SetRecordStatus(const ERecordStatus NewStatus)

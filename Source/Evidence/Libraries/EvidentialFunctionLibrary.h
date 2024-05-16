@@ -15,6 +15,4 @@ class EVIDENCE_API UEvidentialFunctionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	static float CalculateCash(const TArray<FEvidentialInfo>& InfoArray);
-
-	static constexpr float MaxAudioRange = 1000.f;
 };
