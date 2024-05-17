@@ -28,13 +28,16 @@ void URecordVideoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	if (Camera->GetRecordStatus() == ERecordStatus::PreRecording)
+	if (ActorInfo->IsNetAuthority())
 	{
-		Camera->StartRecording();
-	}
-	else if (Camera->GetRecordStatus() == ERecordStatus::Recording)
-	{
-		Camera->StopRecording();
+		if (Camera->GetRecordStatus() == ERecordStatus::PreRecording)
+		{
+			Camera->StartRecording();
+		}
+		else if (Camera->GetRecordStatus() == ERecordStatus::Recording)
+		{
+			Camera->StopRecording();
+		}
 	}
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);

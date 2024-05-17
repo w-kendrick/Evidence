@@ -28,13 +28,16 @@ void URecordAudioAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	if (Recorder->GetRecordStatus() == ERecordStatus::PreRecording)
+	if (ActorInfo->IsNetAuthority())
 	{
-		Recorder->StartRecording();
-	}
-	else if (Recorder->GetRecordStatus() == ERecordStatus::Recording)
-	{
-		Recorder->StopRecording();
+		if (Recorder->GetRecordStatus() == ERecordStatus::PreRecording)
+		{
+			Recorder->StartRecording();
+		}
+		else if (Recorder->GetRecordStatus() == ERecordStatus::Recording)
+		{
+			Recorder->StopRecording();
+		}
 	}
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
