@@ -2,25 +2,36 @@
 
 
 #include "AudioSource.h"
+#include "Perception/AISense_Hearing.h"
 
 AAudioSource::AAudioSource()
 {
 	PrimaryActorTick.bCanEverTick = false;
-	SetReplicates(true);
 
-	Type = EEvidentialType::Alien;
-	Lifetime = 1.f;
-	AudibleRange = 100.f;
 }
 
-void AAudioSource::SetLifetime(const float NewLifetime)
+void AAudioSource::BeginPlay()
 {
-	Lifetime = NewLifetime;
+	Super::BeginPlay();
 
-	GetWorldTimerManager().SetTimer(LifeHandle, this, &ThisClass::EndLife, Lifetime, false);
+	if (HasAuthority())
+	{
+		FTimerHandle Handle;
+		GetWorldTimerManager().SetTimer(Handle, this, &ThisClass::PlayAudio, 2.f, true);
+	}
 }
 
-void AAudioSource::EndLife()
+void AAudioSource::PlayAudio()
 {
-	Destroy();
+	UAISense_Hearing::ReportNoiseEvent(GetWorld(), GetActorLocation(), 100, this, 1000, FName());
+}
+
+EEvidentialType AAudioSource::GetType() const
+{
+	return EEvidentialType::Alien;
+}
+
+float AAudioSource::GetBaseWorth() const
+{
+	return 0.0f;
 }

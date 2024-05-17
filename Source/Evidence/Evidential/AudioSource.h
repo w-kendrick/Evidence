@@ -4,33 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Evidence/Enums/EvidentialType.h"
+#include "Evidence/Interfaces/Evidential.h"
 #include "AudioSource.generated.h"
 
 UCLASS()
-class EVIDENCE_API AAudioSource : public AActor
+class EVIDENCE_API AAudioSource : public AActor, public IEvidential
 {
 	GENERATED_BODY()
 	
-public:	
+public:
 	AAudioSource();
 
-	void SetLifetime(const float NewLifetime);
-	EEvidentialType GetType() const { return Type; }
-	float GetAudibleRange() const { return AudibleRange; }
+	virtual EEvidentialType GetType() const override;
+	virtual float GetBaseWorth() const override;
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	EEvidentialType Type;
-
-	UPROPERTY(EditDefaultsOnly)
-	float Lifetime;
-
-	UPROPERTY(EditDefaultsOnly)
-	float AudibleRange;
+	virtual void BeginPlay() override;
 
 private:
-	void EndLife();
+	void PlayAudio();
 
-	FTimerHandle LifeHandle;
 };
