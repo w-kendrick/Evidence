@@ -15,3 +15,13 @@ ABloodStain::ABloodStain()
 	PrimaryActorTick.bCanEverTick = false;
 
 }
+
+EEvidentialType ABloodStain::GetType() const
+{
+	return EEvidentialType::Blood;
+}
+
+float ABloodStain::GetBaseWorth() const
+{
+	return 0.0f;
+}

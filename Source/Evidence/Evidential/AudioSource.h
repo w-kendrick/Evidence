@@ -5,23 +5,23 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Evidence/Interfaces/Evidential.h"
-#include "BloodStain.generated.h"
-
-class UBoxComponent;
+#include "AudioSource.generated.h"
 
 UCLASS()
-class EVIDENCE_API ABloodStain : public AActor, public IEvidential
+class EVIDENCE_API AAudioSource : public AActor, public IEvidential
 {
 	GENERATED_BODY()
 	
-public:	
-	ABloodStain();
+public:
+	AAudioSource();
 
 	virtual EEvidentialType GetType() const override;
 	virtual float GetBaseWorth() const override;
 
 protected:
-	UPROPERTY(VisibleDefaultsOnly)
-	UBoxComponent* Box;
+	virtual void BeginPlay() override;
+
+private:
+	void PlayAudio();
 
 };

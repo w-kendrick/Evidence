@@ -20,6 +20,8 @@ AAudioRecorder::AAudioRecorder()
 	Hearing->DetectionByAffiliation.bDetectNeutrals = true;
 	
 	PerceptionComponent->ConfigureSense(*Hearing);
+
+	MaxLength = 10.f;
 }
 
 void AAudioRecorder::BeginPlay()
@@ -61,16 +63,15 @@ void AAudioRecorder::OnRecordingEnd()
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (Stimulus.SensingSucceeded)
+	if (RecordStatus == ERecordStatus::Recording)
 	{
-		if (RecordStatus == ERecordStatus::Recording)
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Actor->GetName());
+		const IEvidential* const Evidential = Cast<IEvidential>(Actor);
+		if (Evidential)
 		{
-			const IEvidential* const Evidential = Cast<IEvidential>(Actor);
-			if (Evidential)
-			{
-				const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
-				Recording.Add(Info);
-			}
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Sensed evidential");
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+			Recording.Add(Info);
 		}
 	}
 }
