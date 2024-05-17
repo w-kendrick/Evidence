@@ -3,6 +3,8 @@
 
 #include "Camera.h"
 #include "Net/UnrealNetwork.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "Kismet/KismetRenderingLibrary.h"
 #include "Evidence/Interfaces/Evidential.h"
@@ -14,6 +16,15 @@ ACamera::ACamera()
 	SceneCaptureComponent->SetupAttachment(LocalMesh);
 	SceneCaptureComponent->MaxViewDistanceOverride = 200.f;
 	SceneCaptureComponent->FOVAngle = 90.f;
+
+	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
+
+	Sight = CreateDefaultSubobject<UAISenseConfig_Sight>(TEXT("Sight"));
+	Sight->PeripheralVisionAngleDegrees = 45.f;
+	Sight->SightRadius = 200.f;
+	Sight->LoseSightRadius = 200.f;
+
+	PerceptionComponent->ConfigureSense(*Sight);
 }
 
 void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

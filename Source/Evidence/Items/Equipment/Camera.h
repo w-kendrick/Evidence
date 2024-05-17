@@ -7,6 +7,9 @@
 #include "Evidence/Structs/EvidentialCapture.h"
 #include "Camera.generated.h"
 
+class UAIPerceptionComponent;
+class UAISenseConfig_Sight;
+
 UCLASS()
 class EVIDENCE_API ACamera : public AEquipment
 {
@@ -21,9 +24,15 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	USceneCaptureComponent2D* SceneCaptureComponent;
 
+	UPROPERTY(VisibleDefaultsOnly)
+	UAIPerceptionComponent* PerceptionComponent;
+
+	UPROPERTY()
+	UAISenseConfig_Sight* Sight;
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	UPROPERTY(Replicated)
 	TArray<FEvidentialCapture> Captures;
-	
+
 };
