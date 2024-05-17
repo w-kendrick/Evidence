@@ -23,6 +23,9 @@ ACamera::ACamera()
 	Sight->PeripheralVisionAngleDegrees = 45.f;
 	Sight->SightRadius = 200.f;
 	Sight->LoseSightRadius = 200.f;
+	Sight->DetectionByAffiliation.bDetectEnemies = true;
+	Sight->DetectionByAffiliation.bDetectNeutrals = true;
+	Sight->DetectionByAffiliation.bDetectFriendlies = true;
 
 	PerceptionComponent->ConfigureSense(*Sight);
 }
@@ -36,32 +39,22 @@ void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 
 void ACamera::SaveFrame()
 {
-	TArray<FHitResult> Hits;
-	const FQuat Rot = SceneCaptureComponent->GetComponentQuat();
-	const FVector BoxExtent = FVector(SceneCaptureComponent->MaxViewDistanceOverride,
-		SceneCaptureComponent->MaxViewDistanceOverride * FMath::Cos(FMath::DegreesToRadians(SceneCaptureComponent->FOVAngle * 0.5f)) * 2.f,
-		SceneCaptureComponent->MaxViewDistanceOverride * FMath::Cos(FMath::DegreesToRadians(SceneCaptureComponent->FOVAngle * 0.5f)) * 2.f);
-
-	const FVector Loc = SceneCaptureComponent->GetComponentLocation() + SceneCaptureComponent->GetForwardVector() * SceneCaptureComponent->MaxViewDistanceOverride;
-
-	const FCollisionShape Shape = FCollisionShape::MakeBox(BoxExtent);
-
-	DrawDebugBox(GetWorld(), Loc, BoxExtent, Rot, FColor::Red, true, -1.0f, 0, 5.0f);
-
 	TArray<FEvidentialInfo> CapturedEvidentials;
 
-	if (GetWorld()->SweepMultiByChannel(Hits, Loc, Loc, Rot, ECollisionChannel::ECC_Visibility, Shape))
+	TArray<AActor*> OutActors;
+	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), OutActors);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured actors: ") + FString::FromInt(OutActors.Num()));
+	for (const AActor* const Actor : OutActors)
 	{
-		for (const FHitResult Hit : Hits)
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, Actor->GetName());
+		const IEvidential* const Evidential = Cast<IEvidential>(Actor);
+		if (Evidential)
 		{
-			IEvidential* const Evidential = Cast<IEvidential>(Hit.GetActor());
-			if (Evidential)
-			{
-				const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
-				CapturedEvidentials.Add(Info);
-			}
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+			CapturedEvidentials.Add(Info);
 		}
 	}
+	
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured count: ") + FString::FromInt(CapturedEvidentials.Num()));
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
 	Captures.Add(Capture);
