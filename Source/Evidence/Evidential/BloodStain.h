@@ -8,6 +8,7 @@
 #include "BloodStain.generated.h"
 
 class UBoxComponent;
+class UAIPerceptionStimuliSourceComponent;
 
 UCLASS()
 class EVIDENCE_API ABloodStain : public AActor, public IEvidential
@@ -21,7 +22,12 @@ public:
 	virtual float GetBaseWorth() const override;
 
 protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleDefaultsOnly)
 	UBoxComponent* Box;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UAIPerceptionStimuliSourceComponent* Stimulus;
 
 };
