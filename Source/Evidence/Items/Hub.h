@@ -11,6 +11,7 @@ class AEquipment;
 class AMovementSensor;
 class ARadialSensor;
 class ATrueTrackerDart;
+class UBoxComponent;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor
@@ -27,6 +28,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FSpawnInfo> InitialSpawns;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UBoxComponent* Bounds;
 
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);

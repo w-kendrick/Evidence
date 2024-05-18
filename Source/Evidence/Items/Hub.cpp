@@ -6,11 +6,15 @@
 #include "Equipment/RadialSensor.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Equipment/Projectiles/TrueTrackerDart.h"
+#include "Components/BoxComponent.h"
 
 AHub::AHub()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
+	Bounds = CreateDefaultSubobject<UBoxComponent>(TEXT("Bounds"));
+	Bounds->SetupAttachment(RootComponent);
+	Bounds->InitBoxExtent(FVector(200.f, 100.f, 100.f));
 }
 
 void AHub::BeginPlay()
