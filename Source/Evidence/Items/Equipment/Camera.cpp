@@ -59,3 +59,8 @@ void ACamera::SaveFrame()
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
 	Captures.Add(Capture);
 }
+
+TArray<FEvidentialCapture> ACamera::GetCaptures()
+{
+	return Captures;
+}
