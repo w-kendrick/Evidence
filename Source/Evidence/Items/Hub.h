@@ -4,24 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Evidence/Structs/SpawnInfo.h"
 #include "Hub.generated.h"
 
 class AEquipment;
 class AMovementSensor;
 class ARadialSensor;
 class ATrueTrackerDart;
-
-USTRUCT(BlueprintType)
-struct FSpawnInfo
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly)
-	FTransform Transform;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AEquipment> Class;
-};
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor
