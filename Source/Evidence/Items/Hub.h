@@ -51,4 +51,6 @@ private:
 
 	UPROPERTY()
 	TArray<ICaptureDevice*> CaptureDevices;
+
+	void CalculateStoredCash();
 };

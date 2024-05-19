@@ -6,7 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "EvidentialFunctionLibrary.generated.h"
 
-struct FEvidentialInfo;
+struct FEvidentialCapture;
 
 UCLASS()
 class EVIDENCE_API UEvidentialFunctionLibrary : public UBlueprintFunctionLibrary
@@ -14,5 +14,5 @@ class EVIDENCE_API UEvidentialFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static float CalculateCash(const TArray<FEvidentialInfo>& InfoArray);
+	static float CalculateCash(const TArray<FEvidentialCapture>& CaptureArray);
 };

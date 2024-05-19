@@ -8,6 +8,7 @@
 #include "Equipment/Projectiles/TrueTrackerDart.h"
 #include "Components/BoxComponent.h"
 #include "Evidence/Interfaces/CaptureDevice.h"
+#include "Evidence/Libraries/EvidentialFunctionLibrary.h"
 
 AHub::AHub()
 {
@@ -91,6 +92,24 @@ void AHub::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 		CaptureDevices.Remove(Device);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Remove device");
 	}
+}
+
+void AHub::CalculateStoredCash()
+{
+	TArray<FEvidentialCapture> Captures;
+
+	for (const ICaptureDevice* const Device : CaptureDevices)
+	{
+		const TArray<FEvidentialCapture> DeviceCaptures = Device->GetCaptures();
+		
+		for (const FEvidentialCapture& Capture : DeviceCaptures)
+		{
+			Captures.Add(Capture);
+		}
+	}
+
+	float Cash = UEvidentialFunctionLibrary::CalculateCash(Captures);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Awarded: $") + FString::SanitizeFloat(Cash));
 }
 
 void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)
