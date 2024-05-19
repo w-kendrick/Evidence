@@ -56,6 +56,7 @@ void AAudioRecorder::StopRecording()
 void AAudioRecorder::OnRecordingEnd()
 {
 	SetRecordStatus(ERecordStatus::PostRecording);
+	GetWorldTimerManager().ClearTimer(RecordHandle);
 
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Audio, Recording);
 	Captures.Add(Capture);
