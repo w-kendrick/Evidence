@@ -7,6 +7,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Equipment/Projectiles/TrueTrackerDart.h"
 #include "Components/BoxComponent.h"
+#include "Evidence/Interfaces/CaptureDevice.h"
 
 AHub::AHub()
 {
@@ -15,6 +16,8 @@ AHub::AHub()
 	Bounds = CreateDefaultSubobject<UBoxComponent>(TEXT("Bounds"));
 	Bounds->SetupAttachment(RootComponent);
 	Bounds->InitBoxExtent(FVector(200.f, 100.f, 100.f));
+	Bounds->SetVisibility(true);
+	Bounds->SetHiddenInGame(false);
 }
 
 void AHub::BeginPlay()
@@ -24,6 +27,9 @@ void AHub::BeginPlay()
 	if (HasAuthority())
 	{
 		CreateInitialSpawns();
+
+		Bounds->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
+		Bounds->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnOverlapEnd);
 	}
 }
 
@@ -65,6 +71,26 @@ void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 
 	ARadialSensor* const RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
 	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
+}
+
+void AHub::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	ICaptureDevice* const Device = Cast<ICaptureDevice>(OtherActor);
+	if (Device)
+	{
+		CaptureDevices.Add(Device);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Add device");
+	}
+}
+
+void AHub::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	ICaptureDevice* const Device = Cast<ICaptureDevice>(OtherActor);
+	if (Device)
+	{
+		CaptureDevices.Remove(Device);
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Remove device");
+	}
 }
 
 void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)

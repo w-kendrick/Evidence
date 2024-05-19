@@ -28,7 +28,7 @@ public:
 
 	ERecordStatus GetRecordStatus() const { return RecordStatus; }
 
-	virtual TArray<FEvidentialCapture> GetCaptures() override;
+	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
 	virtual void BeginPlay() override;

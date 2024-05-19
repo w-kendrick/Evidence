@@ -60,7 +60,7 @@ void ACamera::SaveFrame()
 	Captures.Add(Capture);
 }
 
-TArray<FEvidentialCapture> ACamera::GetCaptures()
+TArray<FEvidentialCapture> ACamera::GetCaptures() const
 {
 	return Captures;
 }

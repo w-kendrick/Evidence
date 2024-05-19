@@ -16,6 +16,7 @@ AEquipment::AEquipment()
 	RootComponent = WorldMesh;
 	WorldMesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	WorldMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+	WorldMesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_WorldDynamic, ECollisionResponse::ECR_Overlap);
 	WorldMesh->SetCollisionResponseToChannel(COLLISION_ABILITY, ECollisionResponse::ECR_Overlap);
 	WorldMesh->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 	WorldMesh->SetGenerateOverlapEvents(true);

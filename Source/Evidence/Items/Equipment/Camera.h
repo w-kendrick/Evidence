@@ -21,7 +21,7 @@ public:
 
 	void SaveFrame();
 
-	virtual TArray<FEvidentialCapture> GetCaptures() override;
+	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
