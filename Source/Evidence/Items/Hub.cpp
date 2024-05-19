@@ -31,6 +31,9 @@ void AHub::BeginPlay()
 
 		Bounds->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 		Bounds->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnOverlapEnd);
+
+		FTimerHandle Handle;
+		GetWorldTimerManager().SetTimer(Handle, this, &ThisClass::CalculateStoredCash, 10.f, true);
 	}
 }
 
