@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Structs/EvidentialCapture.h"
+#include "Evidence/Interfaces/CaptureDevice.h"
 #include "Camera.generated.h"
 
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
 
 UCLASS()
-class EVIDENCE_API ACamera : public AEquipment
+class EVIDENCE_API ACamera : public AEquipment, public ICaptureDevice
 {
 	GENERATED_BODY()
 
@@ -19,6 +20,8 @@ public:
 	ACamera();
 
 	void SaveFrame();
+
+	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)

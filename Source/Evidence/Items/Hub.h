@@ -4,24 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Evidence/Structs/SpawnInfo.h"
 #include "Hub.generated.h"
 
 class AEquipment;
 class AMovementSensor;
 class ARadialSensor;
 class ATrueTrackerDart;
-
-USTRUCT(BlueprintType)
-struct FSpawnInfo
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditDefaultsOnly)
-	FTransform Transform;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AEquipment> Class;
-};
+class UBoxComponent;
+class ICaptureDevice;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor
@@ -39,6 +30,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FSpawnInfo> InitialSpawns;
 
+	UPROPERTY(VisibleDefaultsOnly)
+	UBoxComponent* Bounds;
+
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
 	void OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location);
@@ -48,4 +42,15 @@ private:
 	void SpawnEquipment(const FSpawnInfo& SpawnInfo);
 	void SpawnMovementSensor(const FSpawnInfo& SpawnInfo);
 	void SpawnRadialSensor(const FSpawnInfo& SpawnInfo);
+
+	UFUNCTION()
+	void OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UPROPERTY()
+	TArray<ICaptureDevice*> CaptureDevices;
+
+	void CalculateStoredCash();
 };

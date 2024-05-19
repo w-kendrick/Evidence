@@ -86,3 +86,8 @@ void AAudioRecorder::OnRep_RecordStatus(const ERecordStatus PrevStatus)
 {
 	OnRecordingChanged.Broadcast(RecordStatus);
 }
+
+TArray<FEvidentialCapture> AAudioRecorder::GetCaptures() const
+{
+	return Captures;
+}

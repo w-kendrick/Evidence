@@ -4,7 +4,7 @@
 #include "EvidentialFunctionLibrary.h"
 #include "Evidence/Structs/EvidentialInfo.h"
 
-float UEvidentialFunctionLibrary::CalculateCash(const TArray<FEvidentialInfo>& InfoArray)
+float UEvidentialFunctionLibrary::CalculateCash(const TArray<FEvidentialCapture>& CaptureArray)
 {
-	return 0.0f;
+	return CaptureArray.Num();
 }

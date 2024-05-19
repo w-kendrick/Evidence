@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Delegates.h"
+#include "Evidence/Interfaces/CaptureDevice.h"
 #include "AudioRecorder.generated.h"
 
 class UAIPerceptionComponent;
@@ -13,7 +14,7 @@ struct FEvidentialInfo;
 struct FEvidentialCapture;
 
 UCLASS()
-class EVIDENCE_API AAudioRecorder : public AEquipment
+class EVIDENCE_API AAudioRecorder : public AEquipment, public ICaptureDevice
 {
 	GENERATED_BODY()
 
@@ -26,6 +27,8 @@ public:
 	void StopRecording();
 
 	ERecordStatus GetRecordStatus() const { return RecordStatus; }
+
+	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
 	virtual void BeginPlay() override;
