@@ -38,4 +38,6 @@ protected:
 	UPROPERTY(Replicated)
 	TArray<FEvidentialCapture> Captures;
 
+	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
+
 };

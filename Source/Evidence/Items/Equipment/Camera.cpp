@@ -37,6 +37,14 @@ void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	DOREPLIFETIME(ACamera, Captures);
 }
 
+void ACamera::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
+{
+	FRotator Rot;
+	Super::GetActorEyesViewPoint(OutLocation, Rot);
+
+	OutRotation = GetActorRightVector().Rotation();
+}
+
 void ACamera::SaveFrame()
 {
 	TArray<FEvidentialInfo> CapturedEvidentials;
