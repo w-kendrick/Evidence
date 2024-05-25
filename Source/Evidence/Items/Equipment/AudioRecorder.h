@@ -64,4 +64,6 @@ protected:
 private:
 	FTimerHandle RecordHandle;
 
+	uint8 Count;
+
 };

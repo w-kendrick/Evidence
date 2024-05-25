@@ -46,6 +46,7 @@ void AAudioRecorder::StartRecording()
 	SetRecordStatus(ERecordStatus::Recording);
 	Recording.Empty();
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::OnRecordingEnd, MaxLength, true);
+	Count = 0;
 }
 
 void AAudioRecorder::StopRecording()
@@ -71,8 +72,9 @@ void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 		if (Evidential)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Sensed evidential");
-			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth(), Count);
 			Recording.Add(Info);
+			Count++;
 		}
 	}
 }

@@ -58,7 +58,7 @@ void ACamera::SaveFrame()
 		const IEvidential* const Evidential = Cast<IEvidential>(Actor);
 		if (Evidential)
 		{
-			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth(), GetFrameIndex());
 			CapturedEvidentials.Add(Info);
 		}
 	}
@@ -71,4 +71,9 @@ void ACamera::SaveFrame()
 TArray<FEvidentialCapture> ACamera::GetCaptures() const
 {
 	return Captures;
+}
+
+uint8 ACamera::GetFrameIndex() const
+{
+	return 0;
 }

@@ -40,4 +40,6 @@ protected:
 
 	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
 
+	virtual uint8 GetFrameIndex() const;
+
 };
