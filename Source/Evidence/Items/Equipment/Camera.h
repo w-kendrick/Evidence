@@ -3,23 +3,20 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Items/Equipment.h"
+#include "EvidenceCaptureEquipment.h"
 #include "Evidence/Structs/EvidentialCapture.h"
-#include "Evidence/Interfaces/CaptureDevice.h"
 #include "Camera.generated.h"
 
 class UAIPerceptionComponent;
 class UAISenseConfig_Sight;
 
 UCLASS()
-class EVIDENCE_API ACamera : public AEquipment, public ICaptureDevice
+class EVIDENCE_API ACamera : public AEvidenceCaptureEquipment
 {
 	GENERATED_BODY()
 
 public:
 	ACamera();
-
-	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
@@ -30,11 +27,6 @@ protected:
 
 	UPROPERTY()
 	UAISenseConfig_Sight* Sight;
-
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-
-	UPROPERTY(Replicated)
-	TArray<FEvidentialCapture> Captures;
 
 	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
 

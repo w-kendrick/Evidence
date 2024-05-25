@@ -30,13 +30,6 @@ ACamera::ACamera()
 	PerceptionComponent->ConfigureSense(*Sight);
 }
 
-void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(ACamera, Captures);
-}
-
 void ACamera::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
 {
 	FRotator Rot;
@@ -64,11 +57,6 @@ TArray<FEvidentialInfo> ACamera::CaptureFrame()
 	}
 	
 	return CapturedEvidentials;
-}
-
-TArray<FEvidentialCapture> ACamera::GetCaptures() const
-{
-	return Captures;
 }
 
 uint8 ACamera::GetFrameIndex() const

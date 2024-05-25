@@ -12,7 +12,7 @@ class AMovementSensor;
 class ARadialSensor;
 class ATrueTrackerDart;
 class UBoxComponent;
-class ICaptureDevice;
+class AEvidenceCaptureEquipment;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor
@@ -50,7 +50,7 @@ private:
 	void OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
 	UPROPERTY()
-	TArray<ICaptureDevice*> CaptureDevices;
+	TArray<AEvidenceCaptureEquipment*> CaptureDevices;
 
 	void CalculateStoredCash();
 };
