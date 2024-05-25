@@ -22,6 +22,7 @@ AAudioRecorder::AAudioRecorder()
 	PerceptionComponent->ConfigureSense(*Hearing);
 
 	MaxLength = 10.f;
+	isRecording = false;
 }
 
 void AAudioRecorder::BeginPlay()
@@ -38,14 +39,15 @@ void AAudioRecorder::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLi
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AAudioRecorder, RecordStatus);
+	DOREPLIFETIME(AAudioRecorder, isRecording);
 }
 
 void AAudioRecorder::StartRecording()
 {
-	SetRecordStatus(ERecordStatus::Recording);
+	SetIsRecording(true);
 	Recording.Empty();
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::OnRecordingEnd, MaxLength, true);
+	Count = 0;
 }
 
 void AAudioRecorder::StopRecording()
@@ -55,40 +57,36 @@ void AAudioRecorder::StopRecording()
 
 void AAudioRecorder::OnRecordingEnd()
 {
-	SetRecordStatus(ERecordStatus::PostRecording);
+	SetIsRecording(false);
 	GetWorldTimerManager().ClearTimer(RecordHandle);
 
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Audio, Recording);
-	Captures.Add(Capture);
+	AddCapture(Capture);
 }
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 {
-	if (RecordStatus == ERecordStatus::Recording)
+	if (isRecording)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Actor->GetName());
 		const IEvidential* const Evidential = Cast<IEvidential>(Actor);
 		if (Evidential)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "Sensed evidential");
-			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth());
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth(), Count);
 			Recording.Add(Info);
+			Count++;
 		}
 	}
 }
 
-void AAudioRecorder::SetRecordStatus(const ERecordStatus NewStatus)
+void AAudioRecorder::SetIsRecording(const bool NewIsRecording)
 {
-	RecordStatus = NewStatus;
-	OnRecordingChanged.Broadcast(RecordStatus);
+	isRecording = NewIsRecording;
+	OnRecordingChanged.Broadcast(isRecording);
 }
 
-void AAudioRecorder::OnRep_RecordStatus(const ERecordStatus PrevStatus)
+void AAudioRecorder::OnRep_IsRecording(const bool PrevIsRecording)
 {
-	OnRecordingChanged.Broadcast(RecordStatus);
-}
-
-TArray<FEvidentialCapture> AAudioRecorder::GetCaptures() const
-{
-	return Captures;
+	OnRecordingChanged.Broadcast(isRecording);
 }

@@ -6,8 +6,6 @@
 #include "Camera.h"
 #include "PhotoCamera.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnPhotosChanged, const uint8);
-
 class USceneCaptureComponent2D;
 
 UCLASS()
@@ -18,25 +16,12 @@ class EVIDENCE_API APhotoCamera : public ACamera
 public:
 	APhotoCamera();
 
-	FOnPhotosChanged OnPhotosChanged;
+	void SaveFrame();
 
 	void TakePhoto();
 
-	void SetRemainingPhotos(const uint8 Remaining);
-	uint8 GetRemainingPhotos() const { return RemainingPhotos; }
-
 protected:
-	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-
-	UPROPERTY(EditDefaultsOnly)
-	uint8 MaxPhotos;
-
-	UPROPERTY(ReplicatedUsing = OnRep_RemainingPhotos)
-	uint8 RemainingPhotos;
-
-	UFUNCTION()
-	void OnRep_RemainingPhotos();
+	virtual uint8 GetFrameIndex() const override;
 
 private:
 	UPROPERTY()
