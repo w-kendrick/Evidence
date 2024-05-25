@@ -33,10 +33,10 @@ void AVideoCamera::StopRecording()
 
 void AVideoCamera::FrameCheck()
 {
-	FrameCount++;
-	if (RecordStatus == ERecordStatus::Recording && FrameCount <= FPS * MaxVideoLength)
+	if (RecordStatus == ERecordStatus::Recording && FrameCount < FPS * MaxVideoLength)
 	{
 		SaveFrame();
+		FrameCount++;
 	}
 	else
 	{
@@ -53,4 +53,9 @@ void AVideoCamera::SetRecordStatus(const ERecordStatus NewStatus)
 void AVideoCamera::OnRep_RecordStatus(const ERecordStatus PrevStatus)
 {
 	OnRecordingChanged.Broadcast(RecordStatus);
+}
+
+uint8 AVideoCamera::GetFrameIndex() const
+{
+	return FrameCount;
 }

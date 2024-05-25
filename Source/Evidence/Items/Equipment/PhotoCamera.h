@@ -38,6 +38,8 @@ protected:
 	UFUNCTION()
 	void OnRep_RemainingPhotos();
 
+	virtual uint8 GetFrameIndex() const override;
+
 private:
 	UPROPERTY()
 	TArray<UTextureRenderTarget2D*> Photos;

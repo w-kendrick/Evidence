@@ -57,3 +57,8 @@ void APhotoCamera::OnRep_RemainingPhotos()
 		Photos[Photos.Num() - (i + 1)] = nullptr;
 	}
 }
+
+uint8 APhotoCamera::GetFrameIndex() const
+{
+	return Photos.Num() - (RemainingPhotos + 1);
+}

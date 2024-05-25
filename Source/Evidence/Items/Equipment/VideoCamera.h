@@ -39,6 +39,8 @@ protected:
 	UFUNCTION()
 	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
 
+	virtual uint8 GetFrameIndex() const override;
+
 private:
 	void FrameCheck();
 
