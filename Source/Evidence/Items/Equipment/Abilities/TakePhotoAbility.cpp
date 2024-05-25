@@ -55,17 +55,5 @@ bool UTakePhotoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 		return false;
 	}
 
-	return Camera->GetRemainingPhotos() > 0;
-}
-
-void UTakePhotoAbility::ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
-{
-	APhotoCamera* const Camera = Cast<APhotoCamera>(GetSourceObject(Handle, ActorInfo));
-
-	if (!Camera)
-	{
-		return;
-	}
-
-	Camera->SetRemainingPhotos(Camera->GetRemainingPhotos() - 1);
+	return Camera->hasCapturesRemaining();
 }

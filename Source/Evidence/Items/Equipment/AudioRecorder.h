@@ -25,14 +25,14 @@ public:
 	void StartRecording();
 	void StopRecording();
 
-	ERecordStatus GetRecordStatus() const { return RecordStatus; }
+	bool GetIsRecording() const { return isRecording; }
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	void OnRecordingEnd();
-	void SetRecordStatus(const ERecordStatus NewStatus);
+	void SetIsRecording(const bool NewIsRecording);
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UAIPerceptionComponent* PerceptionComponent;
@@ -46,11 +46,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxLength;
 
-	UPROPERTY(ReplicatedUsing = OnRep_RecordStatus)
-	ERecordStatus RecordStatus;
+	UPROPERTY(ReplicatedUsing = OnRep_IsRecording)
+	bool isRecording;
 
 	UFUNCTION()
-	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+	void OnRep_IsRecording(const bool PrevIsRecording);
 
 	UPROPERTY()
 	TArray<FEvidentialInfo> Recording;

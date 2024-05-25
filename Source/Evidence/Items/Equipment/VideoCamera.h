@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Camera.h"
-#include "Evidence/Enums/RecordStatus.h"
 #include "Evidence/Delegates.h"
 #include "VideoCamera.generated.h"
 
@@ -21,11 +20,11 @@ public:
 	void StartRecording();
 	void StopRecording();
 
-	ERecordStatus GetRecordStatus() const { return RecordStatus; }
+	bool GetIsRecording() const { return isRecording; }
 
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
-	void SetRecordStatus(const ERecordStatus NewStatus);
+	void SetIsRecording(const bool NewIsRecording);
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 FPS;
@@ -33,11 +32,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxVideoLength;
 
-	UPROPERTY(ReplicatedUsing = OnRep_RecordStatus)
-	ERecordStatus RecordStatus;
+	UPROPERTY(ReplicatedUsing = OnRep_IsRecording)
+	bool isRecording;
 
 	UFUNCTION()
-	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+	void OnRep_IsRecording(const bool PrevIsRecording);
 
 	virtual uint8 GetFrameIndex() const override;
 

@@ -15,7 +15,8 @@ class EVIDENCE_API AEvidenceCaptureEquipment : public AEquipment
 public:
 	AEvidenceCaptureEquipment();
 
-	virtual TArray<FEvidentialCapture> GetCaptures() const;
+	TArray<FEvidentialCapture> GetCaptures() const;
+	bool hasCapturesRemaining() const;
 
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;

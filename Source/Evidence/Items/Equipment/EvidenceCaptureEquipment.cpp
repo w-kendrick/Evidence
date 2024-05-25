@@ -20,3 +20,8 @@ TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
 {
 	return Captures;
 }
+
+bool AEvidenceCaptureEquipment::hasCapturesRemaining() const
+{
+	return Captures.Num() < MaxCaptures;
+}
