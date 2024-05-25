@@ -14,6 +14,8 @@ class ARadialSensor;
 class ATrueTrackerDart;
 class UBoxComponent;
 class AEvidenceCaptureEquipment;
+class AEvidenceGameState;
+class USphereComponent;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor
@@ -23,6 +25,7 @@ class EVIDENCE_API AHub : public AActor
 public:	
 	AHub();
 
+	void PurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
 
 protected:
@@ -33,6 +36,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UBoxComponent* Bounds;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	USphereComponent* PurchaseSpawn;
 
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
@@ -57,4 +63,9 @@ private:
 	TArray<AEvidenceCaptureEquipment*> CaptureDevices;
 
 	void CalculateStoredCash();
+
+	UPROPERTY()
+	AEvidenceGameState* GameState;
+
+	FTransform MakePurchaseSpawnTransform() const;
 };

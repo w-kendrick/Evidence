@@ -16,5 +16,5 @@ struct FShopItem
 	float Price;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AEquipment> Item;
+	TSubclassOf<AEquipment> Class;
 };

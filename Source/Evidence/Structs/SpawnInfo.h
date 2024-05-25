@@ -13,8 +13,26 @@ struct FSpawnInfo
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly)
-	FTransform Transform;
+	TSubclassOf<AEquipment> Class;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<AEquipment> Class;
+	FTransform Transform;
+
+	FSpawnInfo(const TSubclassOf<AEquipment>& NewClass, const FTransform& NewTransform)
+		: Class(NewClass), Transform(NewTransform)
+	{
+
+	}
+
+	FSpawnInfo(const FSpawnInfo& Info)
+		: Class(Info.Class), Transform(Info.Transform)
+	{
+
+	}
+
+	FSpawnInfo()
+		: Class(nullptr), Transform(FTransform())
+	{
+
+	}
 };

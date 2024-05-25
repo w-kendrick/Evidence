@@ -9,6 +9,9 @@
 #include "Components/BoxComponent.h"
 #include "Evidence/Items/Equipment/EvidenceCaptureEquipment.h"
 #include "Evidence/Libraries/EvidentialFunctionLibrary.h"
+#include "Kismet/GameplayStatics.h"
+#include "Evidence/EvidenceGameState.h"
+#include "Components/SphereComponent.h"
 
 AHub::AHub()
 {
@@ -19,11 +22,18 @@ AHub::AHub()
 	Bounds->InitBoxExtent(FVector(200.f, 100.f, 100.f));
 	Bounds->SetVisibility(true);
 	Bounds->SetHiddenInGame(false);
+
+	PurchaseSpawn = CreateDefaultSubobject<USphereComponent>(TEXT("PurchaseSpawn"));
+	PurchaseSpawn->SetupAttachment(RootComponent);
+	PurchaseSpawn->SetVisibility(false);
+	PurchaseSpawn->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 }
 
 void AHub::BeginPlay()
 {
 	Super::BeginPlay();
+
+	GameState = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
 
 	if (HasAuthority())
 	{
@@ -113,6 +123,29 @@ void AHub::CalculateStoredCash()
 
 	float Cash = UEvidentialFunctionLibrary::CalculateCash(Captures);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Awarded: $") + FString::SanitizeFloat(Cash));
+}
+
+FTransform AHub::MakePurchaseSpawnTransform() const
+{
+	FTransform T;
+	T.SetLocation(PurchaseSpawn->GetComponentLocation());
+	T.SetRotation(PurchaseSpawn->GetComponentQuat());
+	T.SetScale3D(FVector::OneVector);
+	return T;
+}
+
+void AHub::PurchaseEquipment(const FShopItem& Item)
+{
+	if (GameState)
+	{
+		if (GameState->SpendCash(Item.Price))
+		{
+			const TSubclassOf<AEquipment>& Class = Item.Class;
+
+			const FSpawnInfo SpawnInfo = FSpawnInfo(Class, MakePurchaseSpawnTransform());
+			SpawnEquipment(SpawnInfo);
+		}
+	}
 }
 
 void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)
