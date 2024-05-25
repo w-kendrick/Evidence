@@ -21,6 +21,7 @@ void AVideoCamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 void AVideoCamera::StartRecording()
 {
 	FrameCount = 0;
+	CurrentCaptures.Empty();
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::FrameCheck, 1.f / FPS, true);
 	SetRecordStatus(ERecordStatus::Recording);
 }
@@ -29,18 +30,30 @@ void AVideoCamera::StopRecording()
 {
 	GetWorldTimerManager().ClearTimer(RecordHandle);
 	SetRecordStatus(ERecordStatus::PostRecording);
+	
+	const FEvidentialCapture FinalCapture = FEvidentialCapture(EEvidentialMedium::Photo, CurrentCaptures);
+	Captures.Add(FinalCapture);
 }
 
 void AVideoCamera::FrameCheck()
 {
 	if (RecordStatus == ERecordStatus::Recording && FrameCount < FPS * MaxVideoLength)
 	{
-		SaveFrame();
+		const TArray<FEvidentialInfo>& Captured = CaptureFrame();
+		AddToCurrentCaptures(Captured);
 		FrameCount++;
 	}
 	else
 	{
 		StopRecording();
+	}
+}
+
+void AVideoCamera::AddToCurrentCaptures(const TArray<FEvidentialInfo>& New)
+{
+	for (const FEvidentialInfo& Info : New)
+	{
+		CurrentCaptures.Add(Info);
 	}
 }
 

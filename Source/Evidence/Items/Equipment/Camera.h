@@ -19,8 +19,6 @@ class EVIDENCE_API ACamera : public AEquipment, public ICaptureDevice
 public:
 	ACamera();
 
-	void SaveFrame();
-
 	virtual TArray<FEvidentialCapture> GetCaptures() const override;
 
 protected:
@@ -41,5 +39,7 @@ protected:
 	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
 
 	virtual uint8 GetFrameIndex() const;
+
+	TArray<FEvidentialInfo> CaptureFrame();
 
 };

@@ -20,6 +20,8 @@ public:
 
 	FOnPhotosChanged OnPhotosChanged;
 
+	void SaveFrame();
+
 	void TakePhoto();
 
 	void SetRemainingPhotos(const uint8 Remaining);

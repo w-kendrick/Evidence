@@ -30,6 +30,14 @@ void APhotoCamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLife
 	DOREPLIFETIME(APhotoCamera, RemainingPhotos);
 }
 
+void APhotoCamera::SaveFrame()
+{
+	const TArray<FEvidentialInfo>& Captured = CaptureFrame();
+
+	const FEvidentialCapture FinalCapture = FEvidentialCapture(EEvidentialMedium::Photo, Captured);
+	Captures.Add(FinalCapture);
+}
+
 void APhotoCamera::TakePhoto()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Take photo: ") + FString::FromInt(Photos.Num() - (RemainingPhotos + 1)));

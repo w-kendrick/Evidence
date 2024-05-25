@@ -45,13 +45,13 @@ void ACamera::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation)
 	OutRotation = GetActorRightVector().Rotation();
 }
 
-void ACamera::SaveFrame()
+TArray<FEvidentialInfo> ACamera::CaptureFrame()
 {
 	TArray<FEvidentialInfo> CapturedEvidentials;
 
 	TArray<AActor*> OutActors;
 	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), OutActors);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured actors: ") + FString::FromInt(OutActors.Num()));
+
 	for (const AActor* const Actor : OutActors)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, Actor->GetName());
@@ -63,9 +63,7 @@ void ACamera::SaveFrame()
 		}
 	}
 	
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured count: ") + FString::FromInt(CapturedEvidentials.Num()));
-	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
-	Captures.Add(Capture);
+	return CapturedEvidentials;
 }
 
 TArray<FEvidentialCapture> ACamera::GetCaptures() const

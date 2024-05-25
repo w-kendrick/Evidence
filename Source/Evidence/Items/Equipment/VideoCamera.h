@@ -46,5 +46,10 @@ private:
 
 	uint8 FrameCount;
 	FTimerHandle RecordHandle;
+
+	UPROPERTY()
+	TArray<FEvidentialInfo> CurrentCaptures;
+
+	void AddToCurrentCaptures(const TArray<FEvidentialInfo>& New);
 	
 };
