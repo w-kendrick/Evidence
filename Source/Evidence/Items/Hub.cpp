@@ -39,7 +39,7 @@ void AHub::BeginPlay()
 
 void AHub::CreateInitialSpawns()
 {
-	for (const FSpawnInfo SpawnInfo : InitialSpawns)
+	for (const FSpawnInfo& SpawnInfo : InitialSpawns)
 	{
 		SpawnEquipment(SpawnInfo);
 	}
