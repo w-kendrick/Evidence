@@ -33,7 +33,7 @@ void AVideoCamera::StopRecording()
 
 void AVideoCamera::FrameCheck()
 {
-	if (RecordStatus == ERecordStatus::Recording && FrameCount <= FPS * MaxVideoLength)
+	if (RecordStatus == ERecordStatus::Recording && FrameCount < FPS * MaxVideoLength)
 	{
 		SaveFrame();
 		FrameCount++;
