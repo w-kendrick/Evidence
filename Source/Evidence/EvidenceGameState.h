@@ -17,6 +17,8 @@ class EVIDENCE_API AEvidenceGameState : public AGameStateBase
 public:
 	AHub* GetHub();
 
+	FOnCashChanged OnCashChanged;
+
 	float GetCash() const { return Cash; }
 	void AwardCash(const float Amount);
 	bool SpendCash(const float Amount);
@@ -32,7 +34,5 @@ protected:
 
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);
-
-	FOnCashChanged OnCashChanged;
 	
 };
