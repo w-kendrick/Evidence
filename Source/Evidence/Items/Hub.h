@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Evidence/Structs/SpawnInfo.h"
+#include "Evidence/Structs/ShopItem.h"
 #include "Hub.generated.h"
 
 class AEquipment;
@@ -36,6 +37,9 @@ protected:
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
 	void OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location);
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<FShopItem> ShopItems;
 
 private:
 	void CreateInitialSpawns();
