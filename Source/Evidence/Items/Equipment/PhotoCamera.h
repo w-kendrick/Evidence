@@ -31,9 +31,6 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
-	UPROPERTY(EditDefaultsOnly)
-	uint8 MaxPhotos;
-
 	UPROPERTY(ReplicatedUsing = OnRep_RemainingPhotos)
 	uint8 RemainingPhotos;
 

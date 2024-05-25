@@ -8,9 +8,9 @@
 
 APhotoCamera::APhotoCamera()
 {
-	MaxPhotos = 10;
+	MaxCaptures = 10;
 
-	for (int i = 0; i < MaxPhotos; i++)
+	for (int i = 0; i < MaxCaptures; i++)
 	{
 		Photos.Add(nullptr);
 	}
@@ -20,7 +20,7 @@ void APhotoCamera::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetRemainingPhotos(MaxPhotos);
+	SetRemainingPhotos(MaxCaptures);
 }
 
 void APhotoCamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
