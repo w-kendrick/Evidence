@@ -7,7 +7,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "Equipment/Projectiles/TrueTrackerDart.h"
 #include "Components/BoxComponent.h"
-#include "Evidence/Interfaces/CaptureDevice.h"
+#include "Evidence/Items/Equipment/EvidenceCaptureEquipment.h"
 #include "Evidence/Libraries/EvidentialFunctionLibrary.h"
 
 AHub::AHub()
@@ -79,7 +79,7 @@ void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 
 void AHub::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	ICaptureDevice* const Device = Cast<ICaptureDevice>(OtherActor);
+	AEvidenceCaptureEquipment* const Device = Cast<AEvidenceCaptureEquipment>(OtherActor);
 	if (Device)
 	{
 		CaptureDevices.Add(Device);
@@ -89,7 +89,7 @@ void AHub::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* Othe
 
 void AHub::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	ICaptureDevice* const Device = Cast<ICaptureDevice>(OtherActor);
+	AEvidenceCaptureEquipment* const Device = Cast<AEvidenceCaptureEquipment>(OtherActor);
 	if (Device)
 	{
 		CaptureDevices.Remove(Device);
@@ -101,9 +101,9 @@ void AHub::CalculateStoredCash()
 {
 	TArray<FEvidentialCapture> Captures;
 
-	for (const ICaptureDevice* const Device : CaptureDevices)
+	for (const AEvidenceCaptureEquipment* const Device : CaptureDevices)
 	{
-		const TArray<FEvidentialCapture> DeviceCaptures = Device->GetCaptures();
+		const TArray<FEvidentialCapture>& DeviceCaptures = Device->GetCaptures();
 		
 		for (const FEvidentialCapture& Capture : DeviceCaptures)
 		{

@@ -8,34 +8,39 @@ AVideoCamera::AVideoCamera()
 {
 	FPS = 10;
 	MaxVideoLength = 10.f;
-	RecordStatus = ERecordStatus::PreRecording;
+	isRecording = false;
 }
 
 void AVideoCamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AVideoCamera, RecordStatus);
+	DOREPLIFETIME(AVideoCamera, isRecording);
 }
 
 void AVideoCamera::StartRecording()
 {
 	FrameCount = 0;
+	CurrentCaptures.Empty();
 	GetWorldTimerManager().SetTimer(RecordHandle, this, &ThisClass::FrameCheck, 1.f / FPS, true);
-	SetRecordStatus(ERecordStatus::Recording);
+	SetIsRecording(true);
 }
 
 void AVideoCamera::StopRecording()
 {
 	GetWorldTimerManager().ClearTimer(RecordHandle);
-	SetRecordStatus(ERecordStatus::PostRecording);
+	SetIsRecording(false);
+	
+	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CurrentCaptures);
+	AddCapture(Capture);
 }
 
 void AVideoCamera::FrameCheck()
 {
-	if (RecordStatus == ERecordStatus::Recording && FrameCount < FPS * MaxVideoLength)
+	if (isRecording && FrameCount < FPS * MaxVideoLength)
 	{
-		SaveFrame();
+		const TArray<FEvidentialInfo>& Captured = CaptureFrame();
+		AddToCurrentCaptures(Captured);
 		FrameCount++;
 	}
 	else
@@ -44,15 +49,23 @@ void AVideoCamera::FrameCheck()
 	}
 }
 
-void AVideoCamera::SetRecordStatus(const ERecordStatus NewStatus)
+void AVideoCamera::AddToCurrentCaptures(const TArray<FEvidentialInfo>& New)
 {
-	RecordStatus = NewStatus;
-	OnRecordingChanged.Broadcast(RecordStatus);
+	for (const FEvidentialInfo& Info : New)
+	{
+		CurrentCaptures.Add(Info);
+	}
 }
 
-void AVideoCamera::OnRep_RecordStatus(const ERecordStatus PrevStatus)
+void AVideoCamera::SetIsRecording(const bool NewIsRecording)
 {
-	OnRecordingChanged.Broadcast(RecordStatus);
+	isRecording = NewIsRecording;
+	OnRecordingChanged.Broadcast(isRecording);
+}
+
+void AVideoCamera::OnRep_IsRecording(const bool PrevIsRecording)
+{
+	OnRecordingChanged.Broadcast(isRecording);
 }
 
 uint8 AVideoCamera::GetFrameIndex() const

@@ -30,13 +30,13 @@ void URecordVideoAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 
 	if (ActorInfo->IsNetAuthority())
 	{
-		if (Camera->GetRecordStatus() == ERecordStatus::PreRecording)
-		{
-			Camera->StartRecording();
-		}
-		else if (Camera->GetRecordStatus() == ERecordStatus::Recording)
+		if (Camera->GetIsRecording())
 		{
 			Camera->StopRecording();
+		}
+		else
+		{
+			Camera->StartRecording();
 		}
 	}
 
@@ -57,5 +57,5 @@ bool URecordVideoAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Ha
 		return false;
 	}
 
-	return Camera->GetRecordStatus() != ERecordStatus::PostRecording;
+	return Camera->hasCapturesRemaining();
 }

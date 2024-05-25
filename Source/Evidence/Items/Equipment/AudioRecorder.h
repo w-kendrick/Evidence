@@ -3,9 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Items/Equipment.h"
+#include "EvidenceCaptureEquipment.h"
 #include "Evidence/Delegates.h"
-#include "Evidence/Interfaces/CaptureDevice.h"
 #include "AudioRecorder.generated.h"
 
 class UAIPerceptionComponent;
@@ -14,7 +13,7 @@ struct FEvidentialInfo;
 struct FEvidentialCapture;
 
 UCLASS()
-class EVIDENCE_API AAudioRecorder : public AEquipment, public ICaptureDevice
+class EVIDENCE_API AAudioRecorder : public AEvidenceCaptureEquipment
 {
 	GENERATED_BODY()
 
@@ -26,16 +25,14 @@ public:
 	void StartRecording();
 	void StopRecording();
 
-	ERecordStatus GetRecordStatus() const { return RecordStatus; }
-
-	virtual TArray<FEvidentialCapture> GetCaptures() const override;
+	bool GetIsRecording() const { return isRecording; }
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	void OnRecordingEnd();
-	void SetRecordStatus(const ERecordStatus NewStatus);
+	void SetIsRecording(const bool NewIsRecording);
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UAIPerceptionComponent* PerceptionComponent;
@@ -49,17 +46,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxLength;
 
-	UPROPERTY(ReplicatedUsing = OnRep_RecordStatus)
-	ERecordStatus RecordStatus;
+	UPROPERTY(ReplicatedUsing = OnRep_IsRecording)
+	bool isRecording;
 
 	UFUNCTION()
-	void OnRep_RecordStatus(const ERecordStatus PrevStatus);
+	void OnRep_IsRecording(const bool PrevIsRecording);
 
 	UPROPERTY()
 	TArray<FEvidentialInfo> Recording;
-
-	UPROPERTY()
-	TArray<FEvidentialCapture> Captures;
 
 private:
 	FTimerHandle RecordHandle;

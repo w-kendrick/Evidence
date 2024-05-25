@@ -16,6 +16,7 @@ ACamera::ACamera()
 	SceneCaptureComponent->SetupAttachment(LocalMesh);
 	SceneCaptureComponent->MaxViewDistanceOverride = 200.f;
 	SceneCaptureComponent->FOVAngle = 90.f;
+	SceneCaptureComponent->bCaptureEveryFrame = false;
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
 
@@ -30,13 +31,6 @@ ACamera::ACamera()
 	PerceptionComponent->ConfigureSense(*Sight);
 }
 
-void ACamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(ACamera, Captures);
-}
-
 void ACamera::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
 {
 	FRotator Rot;
@@ -45,13 +39,13 @@ void ACamera::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation)
 	OutRotation = GetActorRightVector().Rotation();
 }
 
-void ACamera::SaveFrame()
+TArray<FEvidentialInfo> ACamera::CaptureFrame()
 {
 	TArray<FEvidentialInfo> CapturedEvidentials;
 
 	TArray<AActor*> OutActors;
 	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), OutActors);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured actors: ") + FString::FromInt(OutActors.Num()));
+
 	for (const AActor* const Actor : OutActors)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, Actor->GetName());
@@ -63,14 +57,7 @@ void ACamera::SaveFrame()
 		}
 	}
 	
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Pictured count: ") + FString::FromInt(CapturedEvidentials.Num()));
-	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CapturedEvidentials);
-	Captures.Add(Capture);
-}
-
-TArray<FEvidentialCapture> ACamera::GetCaptures() const
-{
-	return Captures;
+	return CapturedEvidentials;
 }
 
 uint8 ACamera::GetFrameIndex() const
