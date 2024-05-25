@@ -15,8 +15,8 @@ void APhotoCamera::SaveFrame()
 {
 	const TArray<FEvidentialInfo>& Captured = CaptureFrame();
 
-	const FEvidentialCapture FinalCapture = FEvidentialCapture(EEvidentialMedium::Photo, Captured);
-	Captures.Add(FinalCapture);
+	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, Captured);
+	AddCapture(Capture);
 }
 
 void APhotoCamera::TakePhoto()
@@ -30,5 +30,5 @@ void APhotoCamera::TakePhoto()
 
 uint8 APhotoCamera::GetFrameIndex() const
 {
-	return Photos.Num() - (Captures.Num() + 1);
+	return MaxCaptures - RemainingCaptures;
 }

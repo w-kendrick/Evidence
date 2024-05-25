@@ -31,8 +31,8 @@ void AVideoCamera::StopRecording()
 	GetWorldTimerManager().ClearTimer(RecordHandle);
 	SetIsRecording(false);
 	
-	const FEvidentialCapture FinalCapture = FEvidentialCapture(EEvidentialMedium::Photo, CurrentCaptures);
-	Captures.Add(FinalCapture);
+	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Photo, CurrentCaptures);
+	AddCapture(Capture);
 }
 
 void AVideoCamera::FrameCheck()

@@ -22,15 +22,21 @@ public:
 	bool hasCapturesRemaining() const;
 
 protected:
+	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Captures)
+	UPROPERTY()
 	TArray<FEvidentialCapture> Captures;
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 MaxCaptures;
 
+	UPROPERTY(ReplicatedUsing = OnRep_RemainingCaptures)
+	uint8 RemainingCaptures;
+
 	UFUNCTION()
-	void OnRep_Captures(const TArray<FEvidentialCapture> PrevCaptures);
+	void OnRep_RemainingCaptures(const uint8 PrevRemaining);
+
+	void AddCapture(const FEvidentialCapture& Capture);
 	
 };

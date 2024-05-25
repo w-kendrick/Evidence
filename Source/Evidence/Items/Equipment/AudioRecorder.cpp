@@ -61,7 +61,7 @@ void AAudioRecorder::OnRecordingEnd()
 	GetWorldTimerManager().ClearTimer(RecordHandle);
 
 	const FEvidentialCapture Capture = FEvidentialCapture(EEvidentialMedium::Audio, Recording);
-	Captures.Add(Capture);
+	AddCapture(Capture);
 }
 
 void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)

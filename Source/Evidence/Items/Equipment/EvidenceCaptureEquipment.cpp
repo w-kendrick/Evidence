@@ -9,16 +9,29 @@ AEvidenceCaptureEquipment::AEvidenceCaptureEquipment()
 	MaxCaptures = 1U;
 }
 
+void AEvidenceCaptureEquipment::BeginPlay()
+{
+	Super::BeginPlay();
+
+	RemainingCaptures = MaxCaptures;
+}
+
 void AEvidenceCaptureEquipment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(AEvidenceCaptureEquipment, Captures);
+	DOREPLIFETIME(AEvidenceCaptureEquipment, RemainingCaptures);
 }
 
-void AEvidenceCaptureEquipment::OnRep_Captures(const TArray<FEvidentialCapture> PrevCaptures)
+void AEvidenceCaptureEquipment::OnRep_RemainingCaptures(const uint8 PrevRemaining)
 {
-	OnRemainingCapturesChanged.Broadcast(MaxCaptures - Captures.Num());
+	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
+}
+
+void AEvidenceCaptureEquipment::AddCapture(const FEvidentialCapture& Capture)
+{
+	Captures.Add(Capture);
+	RemainingCaptures--;
 }
 
 TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
@@ -28,5 +41,5 @@ TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
 
 bool AEvidenceCaptureEquipment::hasCapturesRemaining() const
 {
-	return Captures.Num() < MaxCaptures;
+	return RemainingCaptures > 0;
 }
