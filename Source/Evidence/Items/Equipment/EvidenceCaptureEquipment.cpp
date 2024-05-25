@@ -16,6 +16,11 @@ void AEvidenceCaptureEquipment::GetLifetimeReplicatedProps(TArray<FLifetimePrope
 	DOREPLIFETIME(AEvidenceCaptureEquipment, Captures);
 }
 
+void AEvidenceCaptureEquipment::OnRep_Captures(const TArray<FEvidentialCapture> PrevCaptures)
+{
+	OnRemainingCapturesChanged.Broadcast(MaxCaptures - Captures.Num());
+}
+
 TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
 {
 	return Captures;

@@ -6,6 +6,8 @@
 
 class AEquipment;
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnRemainingCapturesChanged, uint8);
+
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnRecordingChanged, bool);
 
 DECLARE_MULTICAST_DELEGATE(FOnInventoryRequest);

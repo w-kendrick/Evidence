@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Structs/EvidentialCapture.h"
+#include "Evidence/Delegates.h"
 #include "EvidenceCaptureEquipment.generated.h"
 
 UCLASS()
@@ -15,16 +16,21 @@ class EVIDENCE_API AEvidenceCaptureEquipment : public AEquipment
 public:
 	AEvidenceCaptureEquipment();
 
+	FOnRemainingCapturesChanged OnRemainingCapturesChanged;
+
 	TArray<FEvidentialCapture> GetCaptures() const;
 	bool hasCapturesRemaining() const;
 
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_Captures)
 	TArray<FEvidentialCapture> Captures;
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 MaxCaptures;
+
+	UFUNCTION()
+	void OnRep_Captures(const TArray<FEvidentialCapture> PrevCaptures);
 	
 };
