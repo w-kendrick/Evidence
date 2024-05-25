@@ -16,6 +16,7 @@ ACamera::ACamera()
 	SceneCaptureComponent->SetupAttachment(LocalMesh);
 	SceneCaptureComponent->MaxViewDistanceOverride = 200.f;
 	SceneCaptureComponent->FOVAngle = 90.f;
+	SceneCaptureComponent->bCaptureEveryFrame = false;
 
 	PerceptionComponent = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("PerceptionComponent"));
 
