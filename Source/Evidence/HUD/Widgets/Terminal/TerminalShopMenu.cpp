@@ -6,6 +6,7 @@
 #include "Evidence/EvidenceGameState.h"
 #include "Evidence/Items/Hub.h"
 #include "TerminalShopItemWidget.h"
+#include "Components/VerticalBox.h"
 
 void UTerminalShopMenu::NativeConstruct()
 {
@@ -25,6 +26,7 @@ void UTerminalShopMenu::NativeConstruct()
 				if (ItemWidget)
 				{
 					ItemWidget->SpawnInitialize(Item);
+					Box->AddChild(ItemWidget);
 				}
 			}
 		}

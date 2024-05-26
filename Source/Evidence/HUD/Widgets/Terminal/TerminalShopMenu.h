@@ -7,6 +7,7 @@
 #include "TerminalShopMenu.generated.h"
 
 class UTerminalShopItemWidget;
+class UVerticalBox;
 
 UCLASS()
 class EVIDENCE_API UTerminalShopMenu : public UUserWidget
@@ -18,5 +19,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTerminalShopItemWidget> ItemWidgetClass;
+
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* Box;
 	
 };
