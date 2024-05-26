@@ -31,8 +31,7 @@ public:
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
-	UFUNCTION(Server, Reliable)
-	void ServerRelinquishTerminal(AEvidencePlayerCharacter* Relinquisher);
+	void RelinquishTerminal();
 
 	void PurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
@@ -62,6 +61,9 @@ protected:
 
 	UPROPERTY(Replicated)
 	AEvidencePlayerCharacter* Interactor;
+
+	UFUNCTION(Server, Reliable)
+	void ServerRelinquishTerminal();
 
 private:
 	void CreateInitialSpawns();

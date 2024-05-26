@@ -13,5 +13,15 @@ UCLASS()
 class EVIDENCE_API UTerminalMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	void Enable();
+	void Disable();
+
+protected:
+	void LeaveTerminal();
+
+private:
+	FTimerHandle LeaveHandle;
 	
 };

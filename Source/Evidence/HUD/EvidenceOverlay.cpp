@@ -97,10 +97,10 @@ void UEvidenceOverlay::OnInventoryRequest()
 
 void UEvidenceOverlay::ShowTerminalMenu()
 {
-	TerminalMenu->SetVisibility(ESlateVisibility::Visible);
+	TerminalMenu->Enable();
 }
 
 void UEvidenceOverlay::HideTerminalMenu()
 {
-	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
+	TerminalMenu->Disable();
 }
