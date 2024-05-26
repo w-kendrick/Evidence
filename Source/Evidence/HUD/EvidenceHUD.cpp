@@ -57,6 +57,22 @@ void AEvidenceHUD::StopInteractionTimer()
 	}
 }
 
+void AEvidenceHUD::ShowTerminalMenu()
+{
+	if (Overlay)
+	{
+		Overlay->ShowTerminalMenu();
+	}
+}
+
+void AEvidenceHUD::HideTerminalMenu()
+{
+	if (Overlay)
+	{
+		Overlay->HideTerminalMenu();
+	}
+}
+
 UEvidenceOverlay* AEvidenceHUD::GetOverlay() const
 {
 	return Overlay;

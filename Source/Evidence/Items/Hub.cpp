@@ -15,6 +15,7 @@
 #include "Evidence/EvidenceGameState.h"
 #include "Components/SphereComponent.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/EvidencePlayerController.h"
 
 AHub::AHub()
 {
@@ -64,21 +65,35 @@ void AHub::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProp
 
 bool AHub::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::FromInt(!Interactor));
 	return !Interactor;
 }
 
 void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
-	if (Char)
+	if (HasAuthority())
 	{
-		Interactor = Char;
+		AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+		if (Char)
+		{
+			Interactor = Char;
+
+			AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Interactor->GetController());
+			if (EPC)
+			{
+				EPC->ClientShowTerminalMenu();
+			}
+		}
 	}
 }
 
 void AHub::ServerRelinquishTerminal_Implementation(AEvidencePlayerCharacter* Relinquisher)
 {
+	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Interactor->GetController());
+	if (EPC)
+	{
+		EPC->ClientShowTerminalMenu();
+	}
+
 	Interactor = nullptr;
 }
 
