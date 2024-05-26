@@ -14,6 +14,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/EvidenceGameState.h"
 #include "Components/SphereComponent.h"
+#include "Evidence/Character/EvidencePlayerCharacter.h"
 
 AHub::AHub()
 {
@@ -63,13 +64,22 @@ void AHub::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProp
 
 bool AHub::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::FromInt(!Interactor));
 	return !Interactor;
 }
 
 void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Hub interact");
-	Interactor = InteractingActor;
+	AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+	if (Char)
+	{
+		Interactor = Char;
+	}
+}
+
+void AHub::ServerRelinquishTerminal_Implementation(AEvidencePlayerCharacter* Relinquisher)
+{
+	Interactor = nullptr;
 }
 
 void AHub::CreateInitialSpawns()

@@ -18,6 +18,7 @@ class AEvidenceCaptureEquipment;
 class AEvidenceGameState;
 class USphereComponent;
 class UStaticMeshComponent;
+class AEvidencePlayerCharacter;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor, public IInteractable
@@ -29,6 +30,9 @@ public:
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+
+	UFUNCTION(Server, Reliable)
+	void ServerRelinquishTerminal(AEvidencePlayerCharacter* Relinquisher);
 
 	void PurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
@@ -57,7 +61,7 @@ protected:
 	TArray<FShopItem> ShopItems;
 
 	UPROPERTY(Replicated)
-	AActor* Interactor;
+	AEvidencePlayerCharacter* Interactor;
 
 private:
 	void CreateInitialSpawns();
