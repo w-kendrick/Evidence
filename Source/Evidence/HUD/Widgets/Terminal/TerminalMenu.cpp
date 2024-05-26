@@ -37,6 +37,7 @@ void UTerminalMenu::OnShopClicked()
 {
 	ShopMenu = CreateWidget<UTerminalShopMenu>(this, ShopMenuClass);
 	ShopMenu->AddToViewport();
+	SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UTerminalMenu::Enable()
