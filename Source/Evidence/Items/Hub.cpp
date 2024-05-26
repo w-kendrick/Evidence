@@ -2,6 +2,7 @@
 
 
 #include "Hub.h"
+#include "Evidence/Evidence.h"
 #include "Equipment/Sensors/MovementSensor.h"
 #include "Equipment/RadialSensor.h"
 #include "Kismet/KismetMathLibrary.h"
@@ -27,6 +28,10 @@ AHub::AHub()
 	PurchaseSpawn->SetupAttachment(RootComponent);
 	PurchaseSpawn->SetVisibility(false);
 	PurchaseSpawn->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+
+	Terminal = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Terminal"));
+	Terminal->SetupAttachment(RootComponent);
+	Terminal->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 }
 
 void AHub::BeginPlay()
@@ -45,6 +50,11 @@ void AHub::BeginPlay()
 		FTimerHandle Handle;
 		GetWorldTimerManager().SetTimer(Handle, this, &ThisClass::CalculateStoredCash, 10.f, true);
 	}
+}
+
+void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Hub interact");
 }
 
 void AHub::CreateInitialSpawns()

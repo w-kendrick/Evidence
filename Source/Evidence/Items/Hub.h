@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Evidence/Structs/SpawnInfo.h"
 #include "Evidence/Structs/ShopItem.h"
+#include "Evidence/Interfaces/Interactable.h"
 #include "Hub.generated.h"
 
 class AEquipment;
@@ -16,14 +17,17 @@ class UBoxComponent;
 class AEvidenceCaptureEquipment;
 class AEvidenceGameState;
 class USphereComponent;
+class UStaticMeshComponent;
 	
 UCLASS()
-class EVIDENCE_API AHub : public AActor
+class EVIDENCE_API AHub : public AActor, public IInteractable
 {
 	GENERATED_BODY()
 	
 public:	
 	AHub();
+
+	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
 	void PurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
@@ -39,6 +43,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	USphereComponent* PurchaseSpawn;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UStaticMeshComponent* Terminal;
 
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
