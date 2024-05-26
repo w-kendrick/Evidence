@@ -36,6 +36,8 @@ public:
 	void PurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
 
+	FORCEINLINE TArray<FShopItem> GetShopItems() const { return ShopItems; }
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
