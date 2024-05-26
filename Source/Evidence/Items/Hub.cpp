@@ -2,6 +2,7 @@
 
 
 #include "Hub.h"
+#include "Net/UnrealNetwork.h"
 #include "Evidence/Evidence.h"
 #include "Equipment/Sensors/MovementSensor.h"
 #include "Equipment/RadialSensor.h"
@@ -17,6 +18,7 @@
 AHub::AHub()
 {
 	PrimaryActorTick.bCanEverTick = false;
+	bReplicates = true;
 
 	Bounds = CreateDefaultSubobject<UBoxComponent>(TEXT("Bounds"));
 	Bounds->SetupAttachment(RootComponent);
@@ -52,9 +54,22 @@ void AHub::BeginPlay()
 	}
 }
 
+void AHub::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AHub, Interactor);
+}
+
+bool AHub::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	return !Interactor;
+}
+
 void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Hub interact");
+	Interactor = InteractingActor;
 }
 
 void AHub::CreateInitialSpawns()

@@ -27,6 +27,7 @@ class EVIDENCE_API AHub : public AActor, public IInteractable
 public:	
 	AHub();
 
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
 	void PurchaseEquipment(const FShopItem& Item);
@@ -34,6 +35,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FSpawnInfo> InitialSpawns;
@@ -53,6 +55,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FShopItem> ShopItems;
+
+	UPROPERTY(Replicated)
+	AActor* Interactor;
 
 private:
 	void CreateInitialSpawns();
