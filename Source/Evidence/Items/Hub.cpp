@@ -91,7 +91,7 @@ void AHub::ServerRelinquishTerminal_Implementation(AEvidencePlayerCharacter* Rel
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Interactor->GetController());
 	if (EPC)
 	{
-		EPC->ClientShowTerminalMenu();
+		EPC->ClientHideTerminalMenu();
 	}
 
 	Interactor = nullptr;
