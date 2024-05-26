@@ -42,12 +42,26 @@ void UTerminalMenu::OnShopClicked()
 
 void UTerminalMenu::Enable()
 {
+	APlayerController* const PC = GetOwningPlayer();
+	if (PC)
+	{
+		PC->SetInputMode(FInputModeGameAndUI());
+		PC->bShowMouseCursor = true;
+	}
+
 	SetVisibility(ESlateVisibility::Visible);
 	//GetWorld()->GetTimerManager().SetTimer(LeaveHandle, this, &ThisClass::LeaveTerminal, 5.0f, false);
 }
 
 void UTerminalMenu::Disable()
 {
+	APlayerController* const PC = GetOwningPlayer();
+	if (PC)
+	{
+		PC->SetInputMode(FInputModeGameOnly());
+		PC->bShowMouseCursor = false;
+	}
+
 	SetVisibility(ESlateVisibility::Hidden);
 	
 	if (ShopMenu)
