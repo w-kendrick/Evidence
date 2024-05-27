@@ -7,6 +7,11 @@
 void UTerminalShopItemWidget::SpawnInitialize(const FShopItem& NewItem)
 {
 	Item = NewItem;
+}
+
+void UTerminalShopItemWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
 
 	if (NameBlock)
 	{
@@ -17,9 +22,4 @@ void UTerminalShopItemWidget::SpawnInitialize(const FShopItem& NewItem)
 	{
 		PriceBlock->SetText(FText::FromString(FString(TEXT("$")) + FString::SanitizeFloat(Item.Price)));
 	}
-}
-
-void UTerminalShopItemWidget::NativeConstruct()
-{
-	Super::NativeConstruct();
 }
