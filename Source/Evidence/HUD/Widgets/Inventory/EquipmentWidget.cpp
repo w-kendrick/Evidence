@@ -77,7 +77,7 @@ void UEquipmentWidget::Display()
 		}
 		else
 		{
-			ObjectName->SetText(FText::FromString(FString("Empty")));
+			ObjectName->SetText(FText::FromString(FString(TEXT("Empty"))));
 		}
 
 		const AQuantityEquipment* const QEquipment = Cast<AQuantityEquipment>(Equipment);

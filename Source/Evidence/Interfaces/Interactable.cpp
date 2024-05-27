@@ -65,7 +65,7 @@ void IInteractable::InteractableCancelInteraction_Implementation(UPrimitiveCompo
 	if (Interacters.Contains(InteractionComponent))
 	{
 		FGameplayTagContainer InteractAbilityTagContainer;
-		InteractAbilityTagContainer.AddTag(FGameplayTag::RequestGameplayTag("Ability.Interaction"));
+		InteractAbilityTagContainer.AddTag(FGameplayTag::RequestGameplayTag(TEXT("Ability.Interaction")));
 
 		TArray<AActor*>& InteractingActors = Interacters[InteractionComponent];
 		for (AActor* InteractingActor : InteractingActors)

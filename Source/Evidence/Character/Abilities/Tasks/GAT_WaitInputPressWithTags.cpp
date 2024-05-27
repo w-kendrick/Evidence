@@ -65,8 +65,8 @@ void UGAT_WaitInputPressWithTags::OnPressCallback()
 
 	//TODO extend tag query to support this and move this into it
 	// Hardcoded for GA_InteractPassive to ignore input while already interacting
-	if (AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag("State.Interacting"))
-		> AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag("State.InteractingRemoval")))
+	if (AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag(TEXT("State.Interacting")))
+		> AbilitySystemComponent->GetTagCount(FGameplayTag::RequestGameplayTag(TEXT("State.InteractingRemoval"))))
 	{
 		Reset();
 		return;

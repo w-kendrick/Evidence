@@ -173,7 +173,7 @@ void AHub::CalculateStoredCash()
 	}
 
 	float Cash = UEvidentialFunctionLibrary::CalculateCash(Captures);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Awarded: $") + FString::SanitizeFloat(Cash));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString(TEXT("Awarded: $")) + FString::SanitizeFloat(Cash));
 }
 
 FTransform AHub::MakePurchaseSpawnTransform() const
