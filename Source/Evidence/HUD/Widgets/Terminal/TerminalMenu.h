@@ -25,15 +25,26 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UButton* ShopButton;
 
+	UPROPERTY(meta = (BindWidget))
+	UButton* CloseButton;
+
 	UFUNCTION()
 	void OnShopClicked();
+
+	UFUNCTION()
+	void OnCloseClicked();
+
+	virtual FReply NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTerminalShopMenu> ShopMenuClass;
 
+	UPROPERTY(EditDefaultsOnly)
+	FKey EscapeKey;
+
 	UTerminalShopMenu* ShopMenu;
 
 private:
-	FTimerHandle LeaveHandle;
+	bool isActive;
 	
 };

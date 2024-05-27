@@ -13,9 +13,16 @@ void UTerminalMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 
+	bIsFocusable = true;
+
 	if (ShopButton)
 	{
 		ShopButton->OnClicked.AddDynamic(this, &ThisClass::OnShopClicked);
+	}
+
+	if (CloseButton)
+	{
+		CloseButton->OnClicked.AddDynamic(this, &ThisClass::OnCloseClicked);
 	}
 }
 
@@ -40,17 +47,38 @@ void UTerminalMenu::OnShopClicked()
 	SetVisibility(ESlateVisibility::Hidden);
 }
 
+void UTerminalMenu::OnCloseClicked()
+{
+	LeaveTerminal();
+}
+
+FReply UTerminalMenu::NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "on key down");
+	if (InKeyEvent.GetKey() == EscapeKey)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "escape");
+		if (isActive)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "isactive");
+			LeaveTerminal();
+		}
+	}
+
+	return Super::NativeOnKeyDown(MyGeometry, InKeyEvent);
+}
+
 void UTerminalMenu::Enable()
 {
 	APlayerController* const PC = GetOwningPlayer();
 	if (PC)
 	{
-		PC->SetInputMode(FInputModeGameAndUI());
+		PC->SetInputMode(FInputModeUIOnly());
 		PC->bShowMouseCursor = true;
 	}
 
 	SetVisibility(ESlateVisibility::Visible);
-	//GetWorld()->GetTimerManager().SetTimer(LeaveHandle, this, &ThisClass::LeaveTerminal, 5.0f, false);
+	isActive = true;
 }
 
 void UTerminalMenu::Disable()
@@ -63,6 +91,7 @@ void UTerminalMenu::Disable()
 	}
 
 	SetVisibility(ESlateVisibility::Hidden);
+	isActive = false;
 	
 	if (ShopMenu)
 	{
