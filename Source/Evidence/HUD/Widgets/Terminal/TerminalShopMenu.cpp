@@ -7,6 +7,13 @@
 #include "Evidence/Items/Hub.h"
 #include "TerminalShopItemWidget.h"
 #include "Components/VerticalBox.h"
+#include "Components/Button.h"
+#include "TerminalMenu.h"
+
+void UTerminalShopMenu::SpawnInitialize(UTerminalMenu* Menu)
+{
+	TerminalMenu = Menu;
+}
 
 void UTerminalShopMenu::NativeConstruct()
 {
@@ -31,4 +38,15 @@ void UTerminalShopMenu::NativeConstruct()
 			}
 		}
 	}
+
+	if (BackButton)
+	{
+		BackButton->OnClicked.AddDynamic(this, &ThisClass::OnBackClicked);
+	}
+}
+
+void UTerminalShopMenu::OnBackClicked()
+{
+	TerminalMenu->Enable();
+	RemoveFromParent();
 }

@@ -8,11 +8,16 @@
 
 class UTerminalShopItemWidget;
 class UVerticalBox;
+class UButton;
+class UTerminalMenu;
 
 UCLASS()
 class EVIDENCE_API UTerminalShopMenu : public UUserWidget
 {
 	GENERATED_BODY()
+
+public:
+	void SpawnInitialize(UTerminalMenu* Menu);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -22,5 +27,13 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* Box;
+
+	UPROPERTY(meta = (BindWidget))
+	UButton* BackButton;
+
+	UFUNCTION()
+	void OnBackClicked();
+
+	UTerminalMenu* TerminalMenu;
 	
 };
