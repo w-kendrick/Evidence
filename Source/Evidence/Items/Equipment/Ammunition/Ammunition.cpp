@@ -5,5 +5,5 @@
 
 AAmmunition::AAmmunition()
 {
-	EquipmentName = FString("Ammo");
+	EquipmentName = FString(TEXT("Ammo"));
 }

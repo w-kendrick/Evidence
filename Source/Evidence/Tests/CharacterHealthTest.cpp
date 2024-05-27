@@ -3,7 +3,7 @@
 
 #include "Evidence/Character/EvidenceCharacter.h"
 
-IMPLEMENT_SIMPLE_AUTOMATION_TEST(FHealthTest, "Character.Health", EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
+IMPLEMENT_SIMPLE_AUTOMATION_TEST(FHealthTest, TEXT("Character.Health"), EAutomationTestFlags::EditorContext | EAutomationTestFlags::ProductFilter)
 
 bool FHealthTest::RunTest(const FString& Parameters)
 {

@@ -13,8 +13,8 @@ UUseGunAbility::UUseGunAbility()
 	AbilityInputID = EAbilityInputID::Use;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
-	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Ability.Use")));
-	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName("Equipment.Gun.Cooldown.Rifle")));
+	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Use"))));
+	ActivationBlockedTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Equipment.Gun.Cooldown.Rifle"))));
 
 	MaxRange = 2500.f;
 	Damage = 70.f;

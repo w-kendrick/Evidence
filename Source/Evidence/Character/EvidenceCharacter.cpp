@@ -236,7 +236,7 @@ const FVector AEvidenceCharacter::GetTraceStart() const
 	const AEquipment* const Equipped = GetEquipped();
 	if (Equipped)
 	{
-		return Equipped->GetWorldMesh()->GetSocketLocation(FName("Muzzle"));
+		return Equipped->GetWorldMesh()->GetSocketLocation(FName(TEXT("Muzzle")));
 	}
 
 	return FVector();
@@ -247,7 +247,7 @@ const FVector AEvidenceCharacter::GetTraceDirection() const
 	const AEquipment* const Equipped = GetEquipped();
 	if (Equipped)
 	{
-		return Equipped->GetWorldMesh()->GetSocketRotation(FName("Muzzle")).Vector();
+		return Equipped->GetWorldMesh()->GetSocketRotation(FName(TEXT("Muzzle"))).Vector();
 	}
 
 	return FVector();

@@ -12,7 +12,7 @@ ATorch::ATorch()
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
 
-	EquipmentName = FString("Torch");
+	EquipmentName = FString(TEXT("Torch"));
 }
 
 void ATorch::Activate()

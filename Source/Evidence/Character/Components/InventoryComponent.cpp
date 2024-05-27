@@ -118,7 +118,7 @@ void UInventoryComponent::TryDropEquipped()
 
 	FGameplayEventData Payload;
 	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.Drop")), Payload);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))), Payload);
 }
 
 void UInventoryComponent::DropEquipped()
@@ -143,7 +143,7 @@ void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index
 
 	FGameplayEventData Payload;
 	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.EquipFromInventory")), Payload);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.EquipFromInventory"))), Payload);
 }
 
 void UInventoryComponent::EquipFromInventory(const int Index)
@@ -179,7 +179,7 @@ void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
 
 	FGameplayEventData Payload;
 	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName("Ability.DropFromInventory")), Payload);
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.DropFromInventory"))), Payload);
 }
 
 void UInventoryComponent::DropFromInventory(const int Index)
