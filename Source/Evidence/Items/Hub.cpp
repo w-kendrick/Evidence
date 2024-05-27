@@ -16,7 +16,6 @@
 #include "Components/SphereComponent.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Evidence/EvidencePlayerController.h"
-#include "Kismet/KismetSystemLibrary.h"
 
 AHub::AHub()
 {
@@ -90,13 +89,11 @@ void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCompo
 
 void AHub::RelinquishTerminal()
 {
-	UKismetSystemLibrary::PrintString(GetWorld(), "relinquish terminal");
 	ServerRelinquishTerminal();
 }
 
 void AHub::ServerRelinquishTerminal_Implementation()
 {
-	UKismetSystemLibrary::PrintString(GetWorld(), "server relinquish terminal");
 	Interactor = nullptr;
 	SetOwner(nullptr);
 }

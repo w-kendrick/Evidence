@@ -13,6 +13,9 @@ struct FShopItem
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly)
+	FString Name;
+
+	UPROPERTY(EditDefaultsOnly)
 	float Price;
 
 	UPROPERTY(EditDefaultsOnly)

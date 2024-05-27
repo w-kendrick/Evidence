@@ -2,8 +2,24 @@
 
 
 #include "TerminalShopItemWidget.h"
+#include "Components/TextBlock.h"
 
 void UTerminalShopItemWidget::SpawnInitialize(const FShopItem& NewItem)
 {
 	Item = NewItem;
+
+	if (NameBlock)
+	{
+		NameBlock->SetText(FText::FromString(Item.Name));
+	}
+
+	if (PriceBlock)
+	{
+		PriceBlock->SetText(FText::FromString(FString(TEXT("$")) + FString::SanitizeFloat(Item.Price)));
+	}
+}
+
+void UTerminalShopItemWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
 }
