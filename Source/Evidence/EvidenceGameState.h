@@ -30,7 +30,7 @@ protected:
 	AHub* Hub;
 
 	UPROPERTY(ReplicatedUsing=OnRep_Cash)
-	float Cash;
+	float Cash = 100.f;
 
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);

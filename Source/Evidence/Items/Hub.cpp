@@ -185,7 +185,7 @@ FTransform AHub::MakePurchaseSpawnTransform() const
 	return T;
 }
 
-void AHub::PurchaseEquipment(const FShopItem& Item)
+void AHub::ServerPurchaseEquipment_Implementation(const FShopItem& Item)
 {
 	if (GameState)
 	{

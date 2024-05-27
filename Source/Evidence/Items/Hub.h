@@ -33,7 +33,8 @@ public:
 
 	void RelinquishTerminal();
 
-	void PurchaseEquipment(const FShopItem& Item);
+	UFUNCTION(Server, Reliable)
+	void ServerPurchaseEquipment(const FShopItem& Item);
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
 
 	FORCEINLINE TArray<FShopItem> GetShopItems() const { return ShopItems; }

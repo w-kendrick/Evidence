@@ -8,6 +8,7 @@
 #include "TerminalShopItemWidget.generated.h"
 
 class UTextBlock;
+class UButton;
 
 UCLASS()
 class EVIDENCE_API UTerminalShopItemWidget : public UUserWidget
@@ -28,4 +29,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* PriceBlock;
 	
+	UPROPERTY(meta = (BindWidget))
+	UButton* BuyButton;
+
+	UFUNCTION()
+	void OnBuyClicked();
 };
