@@ -21,6 +21,11 @@ public:
 	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
+
+	UFUNCTION(Client, Reliable)
+	void ClientShowTerminalMenu();
+	UFUNCTION(Client, Reliable)
+	void ClientHideTerminalMenu();
 	
 protected:
 

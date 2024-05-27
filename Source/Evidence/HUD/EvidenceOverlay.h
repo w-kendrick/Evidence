@@ -7,6 +7,7 @@
 #include "EvidenceOverlay.generated.h"
 
 class UInventoryWidget;
+class UTerminalMenu;
 
 UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
@@ -18,6 +19,9 @@ public:
 	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
+
+	void ShowTerminalMenu();
+	void HideTerminalMenu();
 
 protected:
 	virtual void NativeConstruct() override;
@@ -47,5 +51,7 @@ protected:
 	bool bInventoryWidgetVisible = false;
 
 	void OnInventoryRequest();
-	
+
+	UPROPERTY(meta = (BindWidget))
+	UTerminalMenu* TerminalMenu;
 };

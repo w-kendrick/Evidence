@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
+#include "Widgets/Terminal/TerminalMenu.h"
 
 void UEvidenceOverlay::NativeConstruct()
 {
@@ -21,6 +22,8 @@ void UEvidenceOverlay::NativeConstruct()
 
 		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
 	}
+
+	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
@@ -90,4 +93,14 @@ void UEvidenceOverlay::OnInventoryRequest()
 			PC->bShowMouseCursor = false;
 		}
 	}
+}
+
+void UEvidenceOverlay::ShowTerminalMenu()
+{
+	TerminalMenu->Enable();
+}
+
+void UEvidenceOverlay::HideTerminalMenu()
+{
+	TerminalMenu->Disable();
 }

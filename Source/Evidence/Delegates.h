@@ -18,3 +18,5 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnAmmoChanged, uint8);
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPowerChanged, float, float);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool);
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnCashChanged, float);
