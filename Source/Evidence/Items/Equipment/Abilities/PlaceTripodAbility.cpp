@@ -29,13 +29,8 @@ void UPlaceTripodAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
-
-	FGameplayAbilityTargetDataHandle DropHandle;
-	DropHandle.Add(Data);
 
 	FGameplayEventData Payload;
-	Payload.TargetData = DropHandle;
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(ActorInfo->AvatarActor.Get(), FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))), Payload);
 
 	Tripod->Plant();
