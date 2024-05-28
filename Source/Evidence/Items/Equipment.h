@@ -21,7 +21,7 @@ public:
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
-	void Pickup(AEvidenceCharacter* Char);
+	virtual void Pickup(AEvidenceCharacter* Char);
 	void Drop();
 
 	void Attach(AEvidenceCharacter* Char, const bool isVisible);
@@ -51,9 +51,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	FString EquipmentName;
 
-private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;
 
+protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
 	float MaxGroundDistance = 10000.f;
 
