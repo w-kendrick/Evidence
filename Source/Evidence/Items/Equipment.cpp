@@ -81,6 +81,10 @@ void AEquipment::Drop()
 
 void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 {
+	//Detach from tripod
+	const FDetachmentTransformRules DetachmentRule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+	WorldMesh->DetachFromComponent(DetachmentRule);
+
 	SetOwner(Char);
 	bIsPickedUp = true;
 

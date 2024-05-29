@@ -3,10 +3,15 @@
 
 #include "Tripod.h"
 #include "Net/UnrealNetwork.h"
+#include "Components/SphereComponent.h"
+#include "Evidence/Evidence.h"
+#include "Evidence/Character/EvidenceCharacter.h"
 
 ATripod::ATripod()
 {
-
+	HoldLocation = CreateDefaultSubobject<USphereComponent>(TEXT("HoldLocation"));
+	HoldLocation->SetupAttachment(RootComponent);
+	HoldLocation->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 }
 
 void ATripod::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -26,4 +31,39 @@ void ATripod::Pickup(AEvidenceCharacter* Char)
 {
 	Super::Pickup(Char);
 	isPlaced = false;
+}
+
+bool ATripod::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	if (InteractionComponent == WorldMesh)
+	{
+		return Super::IsAvailableForInteraction_Implementation(InteractionComponent);
+	}
+	else
+	{
+		return isPlaced && !EmplacedEquipment;
+	}
+}
+
+void ATripod::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
+{
+	if (InteractionComponent == WorldMesh)
+	{
+		Super::PostInteract_Implementation(InteractingActor, InteractionComponent);
+	}
+	else
+	{
+		AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(InteractingActor);
+		if (Char)
+		{
+			AEquipment* const Equipped = Char->GetEquipped();
+			if (Equipped)
+			{
+				Char->Drop();
+
+				const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+				Equipped->AttachToComponent(HoldLocation, Rule);
+			}
+		}
+	}
 }
