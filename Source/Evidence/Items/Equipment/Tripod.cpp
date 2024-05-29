@@ -41,7 +41,7 @@ bool ATripod::IsAvailableForInteraction_Implementation(UPrimitiveComponent* Inte
 	}
 	else
 	{
-		return isPlaced && !EmplacedEquipment;
+		return isPlaced;
 	}
 }
 
@@ -56,13 +56,27 @@ void ATripod::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCo
 		AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(InteractingActor);
 		if (Char)
 		{
-			AEquipment* const Equipped = Char->GetEquipped();
-			if (Equipped)
+			if (EmplacedEquipment)
 			{
-				Char->Drop();
+				const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+				EmplacedEquipment->Drop();
 
-				const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-				Equipped->AttachToComponent(HoldLocation, Rule);
+				Char->Pickup(EmplacedEquipment);
+
+				EmplacedEquipment = nullptr;
+			}
+			else
+			{
+				AEquipment* const Equipped = Char->GetEquipped();
+				if (Equipped)
+				{
+					Char->Drop();
+
+					const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+					Equipped->AttachToComponent(HoldLocation, Rule);
+
+					EmplacedEquipment = Equipped;
+				}
 			}
 		}
 	}
