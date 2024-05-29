@@ -28,9 +28,15 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	USphereComponent* HoldLocation;
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_EmplacedEquipment)
 	AEquipment* EmplacedEquipment;
+
+	void Emplace(AEquipment* Equipment);
+	void Unemplace(AEquipment* Equipment);
 
 	UPROPERTY(Replicated)
 	bool isPlaced;
+
+	UFUNCTION()
+	void OnRep_EmplacedEquipment(AEquipment* PrevEquipment);
 };

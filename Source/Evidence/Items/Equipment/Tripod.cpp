@@ -58,8 +58,7 @@ void ATripod::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCo
 		{
 			if (EmplacedEquipment)
 			{
-				const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
-				EmplacedEquipment->Drop();
+				Unemplace(EmplacedEquipment);
 
 				Char->Pickup(EmplacedEquipment);
 
@@ -72,12 +71,36 @@ void ATripod::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCo
 				{
 					Char->Drop();
 
-					const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-					Equipped->AttachToComponent(HoldLocation, Rule);
-
 					EmplacedEquipment = Equipped;
+
+					Emplace(Equipped);
 				}
 			}
 		}
+	}
+}
+
+void ATripod::Emplace(AEquipment* Equipment)
+{
+	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	Equipment->AttachToComponent(HoldLocation, Rule);
+}
+
+void ATripod::Unemplace(AEquipment* Equipment)
+{
+	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+	Equipment->Drop();
+}
+
+void ATripod::OnRep_EmplacedEquipment(AEquipment* PrevEquipment)
+{
+	if (EmplacedEquipment)
+	{
+		Emplace(EmplacedEquipment);
+	}
+
+	if (PrevEquipment)
+	{
+		Unemplace(PrevEquipment);
 	}
 }
