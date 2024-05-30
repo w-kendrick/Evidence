@@ -89,7 +89,7 @@ void ATripod::Emplace(AEquipment* Equipment)
 void ATripod::Unemplace(AEquipment* Equipment)
 {
 	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
-	Equipment->Drop();
+	Equipment->GetWorldMesh()->DetachFromComponent(Rule);
 }
 
 void ATripod::OnRep_EmplacedEquipment(AEquipment* PrevEquipment)
