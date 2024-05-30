@@ -36,5 +36,8 @@ private:
 	FTimerHandle StrobeHandle;
 
 	void StrobeEvent();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastSynchronise(const bool State);
 	
 };

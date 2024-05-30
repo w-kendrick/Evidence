@@ -35,6 +35,11 @@ void ALightBait::Activate()
 void ALightBait::Deactivate()
 {
 	GetWorldTimerManager().ClearTimer(StrobeHandle);
+
+	if (HasAuthority())
+	{
+		MulticastSynchronise(false);
+	}
 }
 
 void ALightBait::StrobeEvent()
@@ -52,4 +57,10 @@ void ALightBait::StrobeEvent()
 			Stimulus->SetActive(false);
 		}
 	}
+}
+
+void ALightBait::MulticastSynchronise_Implementation(const bool State)
+{
+	LightComponent->SetVisibility(State);
+	Stimulus->SetActive(false);
 }
