@@ -11,18 +11,12 @@ ANoiseBait::ANoiseBait()
 
 void ANoiseBait::Activate()
 {
-	if (HasAuthority())
-	{
-		GetWorldTimerManager().SetTimer(SoundHandle, this, &ThisClass::SoundEvent, EventDelay, true);
-	}
+	GetWorldTimerManager().SetTimer(SoundHandle, this, &ThisClass::SoundEvent, EventDelay, true);
 }
 
 void ANoiseBait::Deactivate()
 {
-	if (HasAuthority())
-	{
-		GetWorldTimerManager().ClearTimer(SoundHandle);
-	}
+	GetWorldTimerManager().ClearTimer(SoundHandle);
 }
 
 void ANoiseBait::SoundEvent()
