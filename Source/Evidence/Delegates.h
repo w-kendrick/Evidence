@@ -6,6 +6,7 @@
 
 class AEquipment;
 class ARadialSensor;
+class AMovementSensor;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnRemainingCapturesChanged, uint8);
 
@@ -23,3 +24,5 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCashChanged, float);
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArray<FVector>)
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
