@@ -15,7 +15,14 @@ ALightBait::ALightBait()
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
 
+	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
+
 	EventDelay = 0.5f;
+}
+
+UPowerComponent* ALightBait::GetPowerComponent() const
+{
+	return PowerComponent;
 }
 
 void ALightBait::BeginPlay()

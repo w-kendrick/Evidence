@@ -3,18 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "PoweredEquipment.h"
+#include "Evidence/Items/Equipment.h"
+#include "Evidence/Interfaces/PowerInterface.h"
 #include "Torch.generated.h"
 
 class USpotLightComponent;
 
 UCLASS()
-class EVIDENCE_API ATorch : public APoweredEquipment
+class EVIDENCE_API ATorch : public AEquipment, public IPowerInterface
 {
 	GENERATED_BODY()
 
 public:
 	ATorch();
+
+	virtual UPowerComponent* GetPowerComponent() const override;
 
 protected:
 	virtual void Activate() override;
@@ -22,4 +25,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	USpotLightComponent* LightComponent;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UPowerComponent* PowerComponent;
 };
