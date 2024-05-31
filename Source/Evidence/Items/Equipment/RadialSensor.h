@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Items/Equipment/PoweredEquipment.h"
+#include "Evidence/Items/Equipment.h"
+#include "Evidence/Interfaces/PowerInterface.h"
+#include "Evidence/Delegates.h"
 #include "RadialSensor.generated.h"
 
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArray<FVector>)
-
 UCLASS()
-class EVIDENCE_API ARadialSensor : public APoweredEquipment
+class EVIDENCE_API ARadialSensor : public AEquipment, public IPowerInterface
 {
 	GENERATED_BODY()
 
@@ -18,7 +18,12 @@ public:
 
 	FOnRadialSense OnRadialSense;
 
+	virtual UPowerComponent* GetPowerComponent() const override;
+
 protected:
+	UPROPERTY(VisibleDefaultsOnly)
+	UPowerComponent* PowerComponent;
+
 	virtual void Activate() override;
 	virtual void Deactivate() override;
 
