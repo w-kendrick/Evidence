@@ -2,7 +2,7 @@
 
 
 #include "TogglePowerAbility.h"
-#include "Evidence/Items/Equipment/PoweredEquipment.h"
+#include "Evidence/Interfaces/PowerInterface.h"
 
 UTogglePowerAbility::UTogglePowerAbility()
 {
@@ -20,7 +20,7 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	APoweredEquipment* const Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
+	IPowerInterface* const Powered = Cast<IPowerInterface>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Powered)
 	{
@@ -28,7 +28,7 @@ void UTogglePowerAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handl
 		return;
 	}
 
-	Powered->ToggleActivation();
+	Powered->GetPowerComponent()->ToggleActivation();
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
@@ -40,12 +40,12 @@ bool UTogglePowerAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Ha
 		return false;
 	}
 
-	const APoweredEquipment* const Powered = Cast<APoweredEquipment>(GetSourceObject(Handle, ActorInfo));
+	const IPowerInterface* const Powered = Cast<IPowerInterface>(GetSourceObject(Handle, ActorInfo));
 
 	if (!Powered)
 	{
 		return false;
 	}
 
-	return Powered->GetPower() > 0;
+	return Powered->GetPowerComponent()->GetPower() > 0;
 }

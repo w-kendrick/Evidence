@@ -73,7 +73,7 @@ void UPowerComponent::ToggleActivation()
 {
 	if (Power > 0)
 	{
-		SetActive(!isPowerActive);
+		SetPowerActive(!isPowerActive);
 	}
 }
 
