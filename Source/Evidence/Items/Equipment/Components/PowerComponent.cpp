@@ -21,7 +21,7 @@ void UPowerComponent::BeginPlay()
 	Super::BeginPlay();
 
 	SetPower(MaxPower);
-	SetActive(false);
+	SetPowerActive(false);
 }
 
 void UPowerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -43,7 +43,7 @@ void UPowerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 
 		if (Power == 0)
 		{
-			SetActive(false);
+			SetPowerActive(false);
 		}
 	}
 }
@@ -54,7 +54,7 @@ void UPowerComponent::SetPower(const float NewPower)
 	OnPowerChanged.Broadcast(Power, MaxPower);
 }
 
-void UPowerComponent::SetActive(const bool NewActive)
+void UPowerComponent::SetPowerActive(const bool NewActive)
 {
 	isPowerActive = NewActive;
 	OnActiveChanged.Broadcast(isPowerActive);

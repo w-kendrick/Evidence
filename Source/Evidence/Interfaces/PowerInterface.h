@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "Evidence/Items/Equipment/Components/PowerComponent.h"
 #include "PowerInterface.generated.h"
-
-class UPowerComponent;
 
 // This class does not need to be modified.
 UINTERFACE(MinimalAPI)
@@ -24,7 +23,7 @@ class EVIDENCE_API IPowerInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual UPowerComponent* GetPowerComponent() const;
+	virtual UPowerComponent* GetPowerComponent() const = 0;
 
 	virtual void Activate();
 	virtual void Deactivate();

@@ -5,11 +5,6 @@
 
 // Add default functionality here for any IPowerInterface functions that are not pure virtual.
 
-UPowerComponent* IPowerInterface::GetPowerComponent() const
-{
-	return nullptr;
-}
-
 void IPowerInterface::Activate()
 {
 }

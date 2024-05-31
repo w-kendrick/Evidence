@@ -19,8 +19,11 @@ public:
 	FOnPowerChanged OnPowerChanged;
 	FOnActiveChanged OnActiveChanged;
 
+	UPROPERTY(EditDefaultsOnly)
+	float ActiveDrainRate;
+
 	void SetPower(const float NewPower);
-	void SetActive(const bool NewActive);
+	void SetPowerActive(const bool NewActive);
 
 	void ToggleActivation();
 
@@ -30,9 +33,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
-
-	UPROPERTY(EditDefaultsOnly)
-	float ActiveDrainRate;
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxPower;
