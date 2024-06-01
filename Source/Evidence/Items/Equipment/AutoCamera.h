@@ -23,4 +23,24 @@ protected:
 
 	virtual void Activate() override;
 	virtual void Deactivate() override;
+
+	void Sense();
+
+	FTimerHandle SenseHandle;
+
+	UPROPERTY()
+	TArray<FVector> PreviousSense;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SenseDelay;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SenseRadius;
+
+private:
+	float GetAngleBetweenVectors(const FVector& Vec1, const FVector& Vec2) const;
+	bool doArraysMatch(const TArray<FVector>& Arr1, const TArray<FVector>& Arr2) const;
+
+	void MovementSensed();
+
 };
