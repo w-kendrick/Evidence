@@ -12,23 +12,22 @@ struct FEvidentialInfo
 	GENERATED_BODY();
 
 	EEvidentialType Type;
-	float BaseCash;
 	uint8 Index;
 
-	FEvidentialInfo(const EEvidentialType NewType, const float NewCash, const uint8 NewIndex)
-		: Type(NewType), BaseCash(NewCash), Index(NewIndex)
+	FEvidentialInfo(const EEvidentialType NewType, const uint8 NewIndex)
+		: Type(NewType), Index(NewIndex)
 	{
 
 	}
 
 	FEvidentialInfo(const FEvidentialInfo& Other)
-		: Type(Other.Type), BaseCash(Other.BaseCash), Index(Other.Index)
+		: Type(Other.Type), Index(Other.Index)
 	{
 		
 	}
 
 	FEvidentialInfo()
-		: Type(EEvidentialType::Alien), BaseCash(1.0f), Index(0U)
+		: Type(EEvidentialType::Alien), Index(0U)
 	{
 		
 	}
