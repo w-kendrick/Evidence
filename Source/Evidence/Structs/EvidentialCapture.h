@@ -26,4 +26,16 @@ struct FEvidentialCapture
 	{
 		
 	}
+
+	float GetWorth() const
+	{
+		float Worth = 0.0f;
+
+		for (const FEvidentialInfo& Info : Infos)
+		{
+
+		}
+
+		return Worth;
+	}
 };

@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Evidence/Enums/EvidentialType.h"
+#include "Evidence/Enums/EvidentialMedium.h"
 #include "EvidentialFunctionLibrary.generated.h"
 
 struct FEvidentialCapture;
@@ -15,4 +17,6 @@ class EVIDENCE_API UEvidentialFunctionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	static float CalculateCash(const TArray<FEvidentialCapture>& CaptureArray);
+
+	static float GetWorth(const EEvidentialType Type, const EEvidentialMedium Medium);
 };
