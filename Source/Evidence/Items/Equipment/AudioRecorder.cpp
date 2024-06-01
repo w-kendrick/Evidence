@@ -73,7 +73,7 @@ void AAudioRecorder::OnSense(AActor* Actor, FAIStimulus Stimulus)
 		if (Evidential)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, TEXT("Sensed evidential"));
-			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Evidential->GetBaseWorth(), Count);
+			const FEvidentialInfo Info = FEvidentialInfo(Evidential->GetType(), Count);
 			Recording.Add(Info);
 			Count++;
 		}
