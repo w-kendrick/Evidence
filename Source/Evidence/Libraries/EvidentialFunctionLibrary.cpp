@@ -2,7 +2,7 @@
 
 
 #include "EvidentialFunctionLibrary.h"
-#include "Evidence/Structs/EvidentialInfo.h"
+#include "Evidence/Structs/EvidentialCapture.h"
 
 TMap<TPair<EEvidentialType, EEvidentialMedium>, float> WorthMap = {
 	{{EEvidentialType::Alien, EEvidentialMedium::Photo}, 5.0f},
@@ -34,7 +34,14 @@ TMap<TPair<EEvidentialType, EEvidentialMedium>, float> WorthMap = {
 
 float UEvidentialFunctionLibrary::CalculateCash(const TArray<FEvidentialCapture>& CaptureArray)
 {
-	return CaptureArray.Num();
+	float Cash = 0.0f;
+
+	for (const FEvidentialCapture& Capture : CaptureArray)
+	{
+		Cash += Capture.GetWorth();
+	}
+
+	return Cash;
 }
 
 float UEvidentialFunctionLibrary::GetWorth(const EEvidentialType Type, const EEvidentialMedium Medium)
