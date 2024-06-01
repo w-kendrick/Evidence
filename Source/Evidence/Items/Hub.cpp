@@ -5,7 +5,7 @@
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Evidence.h"
 #include "Equipment/Sensors/MovementSensor.h"
-#include "Equipment/RadialSensor.h"
+#include "Equipment/Sensors/RadialSensor.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Equipment/Projectiles/TrueTrackerDart.h"
 #include "Components/BoxComponent.h"
