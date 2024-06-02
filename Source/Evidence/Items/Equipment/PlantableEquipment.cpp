@@ -12,11 +12,12 @@ void APlantableEquipment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& 
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
-	DOREPLIFETIME(APlantableEquipment, isPlaced);
+	DOREPLIFETIME(APlantableEquipment, isPlanted);
 }
 
 void APlantableEquipment::Plant()
 {
+	isPlanted = true;
 }
 
 bool APlantableEquipment::CanPlant() const
@@ -30,6 +31,6 @@ void APlantableEquipment::GetPlantPoint(FVector& Location, FRotator& Rotation) c
 	Rotation = GetActorRotation();
 }
 
-void APlantableEquipment::OnRep_IsPlaced(const bool PrevIsPlaced)
+void APlantableEquipment::OnRep_IsPlanted(const bool PrevIsPlaced)
 {
 }

@@ -21,9 +21,9 @@ protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	void GetPlantPoint(FVector& Location, FRotator& Rotation) const;
 
-	UPROPERTY(ReplicatedUsing=OnRep_IsPlaced)
-	bool isPlaced;
+	UPROPERTY(ReplicatedUsing=OnRep_IsPlanted)
+	bool isPlanted;
 
 	UFUNCTION()
-	void OnRep_IsPlaced(const bool PrevIsPlaced);
+	void OnRep_IsPlanted(const bool PrevIsPlaced);
 };
