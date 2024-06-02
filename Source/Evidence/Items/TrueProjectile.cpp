@@ -37,13 +37,6 @@ void ATrueProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 		}
 	}
 
-	IDamageable* const Damageable = Cast<IDamageable>(OtherActor);
-
-	if (Damageable)
-	{
-		Damageable->ReceiveDamage(30.f);
-	}
-
 	DrawDebugLine(GetWorld(), GetActorLocation(), GetActorLocation() + 250 * FVector::UpVector, FColor::Purple, true, -1.0f, 0, 5);
 
 	Super::OnHit(HitComponent, OtherActor, OtherComp, NormalImpulse, Hit);
