@@ -17,6 +17,8 @@ class EVIDENCE_API AClaymore : public APlantableEquipment
 public:
 	AClaymore();
 
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+
 	virtual void Plant() override;
 
 protected:

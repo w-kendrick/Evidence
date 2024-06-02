@@ -20,10 +20,23 @@ AClaymore::AClaymore()
 	PerceptionComponent->ConfigureSense(*Sight);
 }
 
+bool AClaymore::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	if (isPlanted)
+	{
+		return false;
+	}
+	else
+	{
+		return Super::IsAvailableForInteraction_Implementation(InteractionComponent);
+	}
+}
+
 void AClaymore::BeginPlay()
 {
 	Super::BeginPlay();
 
+	PerceptionComponent->Deactivate();
 	if (HasAuthority())
 	{
 		PerceptionComponent->OnTargetPerceptionUpdated.AddDynamic(this, &ThisClass::OnTargetPerceptionUpdated);
@@ -33,6 +46,7 @@ void AClaymore::BeginPlay()
 void AClaymore::Plant()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Plant claymore");
+	PerceptionComponent->Activate();
 }
 
 void AClaymore::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
@@ -50,4 +64,6 @@ void AClaymore::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 
 void AClaymore::Detonate()
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Boom");
+	Destroy();
 }
