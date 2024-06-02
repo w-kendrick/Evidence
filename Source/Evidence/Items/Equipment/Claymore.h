@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment/PlantableEquipment.h"
+#include "GameplayEffectTypes.h"
 #include "Claymore.generated.h"
 
 class UAIPerceptionComponent;
@@ -16,6 +17,8 @@ class EVIDENCE_API AClaymore : public APlantableEquipment
 
 public:
 	AClaymore();
+
+	FGameplayEffectSpecHandle DamageEffectHandle;
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 
@@ -36,5 +39,8 @@ protected:
 	void OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus);
 
 	void Detonate();
+
+private:
+	float CalculateDamage(const FVector Location) const;
 	
 };

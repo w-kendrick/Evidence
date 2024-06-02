@@ -4,6 +4,8 @@
 #include "Claymore.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "Perception/AISenseConfig_Sight.h"
+#include "AbilitySystemInterface.h"
+#include "AbilitySystemComponent.h"
 
 AClaymore::AClaymore()
 {
@@ -45,6 +47,7 @@ void AClaymore::BeginPlay()
 
 void AClaymore::Plant()
 {
+	Super::Plant();
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Plant claymore");
 	PerceptionComponent->Activate();
 }
@@ -59,11 +62,42 @@ void AClaymore::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotatio
 
 void AClaymore::OnTargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
 {
-	Detonate();
+	if (isPlanted)
+	{
+		Detonate();
+	}
 }
 
 void AClaymore::Detonate()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Boom");
+
+	TArray<AActor*> OutActors;
+	PerceptionComponent->GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), OutActors);
+
+	for (AActor* const Actor : OutActors)
+	{
+		const float Damage = CalculateDamage(Actor->GetActorLocation());
+
+		const IAbilitySystemInterface* const AS = Cast<IAbilitySystemInterface>(Actor);
+
+		if (AS)
+		{
+			UAbilitySystemComponent* const ASC = AS->GetAbilitySystemComponent();
+
+			if (ASC)
+			{
+				ASC->ApplyGameplayEffectSpecToSelf(*DamageEffectHandle.Data);
+			}
+		}
+	}
+
 	Destroy();
+}
+
+float AClaymore::CalculateDamage(const FVector Location) const
+{
+	const FVector Delta = Location - GetActorLocation();
+
+	return Delta.Size();
 }
