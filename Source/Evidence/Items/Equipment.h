@@ -9,6 +9,7 @@
 
 class AEvidenceCharacter;
 class UEIGameplayAbility;
+class AEquipmentAttachment;
 
 UCLASS()
 class EVIDENCE_API AEquipment : public AActor, public IInteractable
@@ -17,6 +18,9 @@ class EVIDENCE_API AEquipment : public AActor, public IInteractable
 
 public:
 	AEquipment();
+
+	void AddAttachment(AEquipmentAttachment* const Attachment);
+	void AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;

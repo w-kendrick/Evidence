@@ -7,6 +7,8 @@
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Equipment/Components/AttachmentComponent.h"
+#include "Equipment/EquipmentAttachment.h"
 
 AEquipment::AEquipment()
 {
@@ -34,6 +36,36 @@ AEquipment::AEquipment()
 	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
+}
+
+void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment)
+{
+	const TSubclassOf<UAttachmentComponent>& ComponentClass = Attachment->GetComponentClass();
+	UAttachmentComponent* const Comp = NewObject<UAttachmentComponent>(this, ComponentClass);
+	Comp->RegisterComponent();
+
+	Comp->AttachTo(this);
+}
+
+void AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
+{
+	Abilities.Add(Ability);
+
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
+	if (Char)
+	{
+		if (Char->GetEquipped() == this)
+		{
+			UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+
+			if (GetLocalRole() != ROLE_Authority || !ASC)
+			{
+				return;
+			}
+
+			GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
+		}
+	}
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
