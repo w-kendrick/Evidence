@@ -38,13 +38,14 @@ AEquipment::AEquipment()
 	EquipmentName = FString(TEXT("Equipment"));
 }
 
-void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment)
+void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
 {
 	const TSubclassOf<UAttachmentComponent>& ComponentClass = Attachment->GetComponentClass();
 	UAttachmentComponent* const Comp = NewObject<UAttachmentComponent>(this, ComponentClass);
 	Comp->RegisterComponent();
 
 	Comp->AttachTo(this);
+	Attachments[Type] = Comp;
 }
 
 void AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)

@@ -5,11 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Evidence/Interfaces/Interactable.h"
+#include "Evidence/Enums/AttachmentType.h"
 #include "Equipment.generated.h"
 
 class AEvidenceCharacter;
 class UEIGameplayAbility;
 class AEquipmentAttachment;
+class UAttachmentComponent;
 
 UCLASS()
 class EVIDENCE_API AEquipment : public AActor, public IInteractable
@@ -19,7 +21,7 @@ class EVIDENCE_API AEquipment : public AActor, public IInteractable
 public:
 	AEquipment();
 
-	void AddAttachment(AEquipmentAttachment* const Attachment);
+	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
 	void AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
@@ -54,6 +56,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FString EquipmentName;
+
+	UPROPERTY()
+	TMap<EAttachmentType, UAttachmentComponent*> Attachments;
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;
