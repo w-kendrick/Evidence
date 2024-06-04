@@ -8,6 +8,10 @@ AGun::AGun()
 {
 	EquipmentName = FString(TEXT("Gun"));
 	MaxClipSize = 8;
+
+	Attachments.Add(EAttachmentType::Underbarrel, nullptr);
+	Attachments.Add(EAttachmentType::Scope, nullptr);
+	Attachments.Add(EAttachmentType::Magazine, nullptr);
 }
 
 void AGun::BeginPlay()
