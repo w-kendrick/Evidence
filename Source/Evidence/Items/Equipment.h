@@ -32,9 +32,9 @@ public:
 
 	void Attach(AEvidenceCharacter* Char, const bool isVisible);
 
-	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
-
-	FString GetEquipmentName() const { return EquipmentName; }
+	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
+	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
+	FORCEINLINE const TMap<EAttachmentType, UAttachmentComponent*>& GetAttachments() const { return Attachments; };
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
