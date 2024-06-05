@@ -31,7 +31,6 @@ void AAttachmentBench::PostInteract_Implementation(AActor* InteractingActor, UPr
 
 		if (Equipment)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, "Valid equipment");
 			const TMap<EAttachmentType, UAttachmentComponent*>& Attachments = Equipment->GetAttachments();
 
 			for (const TPair<EAttachmentType, UAttachmentComponent*>& Elem : Attachments)
