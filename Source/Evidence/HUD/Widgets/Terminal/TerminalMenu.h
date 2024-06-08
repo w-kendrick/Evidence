@@ -3,48 +3,33 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "Evidence/HUD/Widgets/DisableInputWidget.h"
 #include "TerminalMenu.generated.h"
 
 class UButton;
 class UTerminalShopMenu;
 
 UCLASS()
-class EVIDENCE_API UTerminalMenu : public UUserWidget
+class EVIDENCE_API UTerminalMenu : public UDisableInputWidget
 {
 	GENERATED_BODY()
 
 public:
-	void Enable();
-	void Disable();
+	virtual void Disable() override;
 
 protected:
 	void NativeConstruct() override;
-	void LeaveTerminal();
+	virtual void LeaveEvent() override;;
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ShopButton;
 
-	UPROPERTY(meta = (BindWidget))
-	UButton* CloseButton;
-
 	UFUNCTION()
 	void OnShopClicked();
-
-	UFUNCTION()
-	void OnCloseClicked();
-
-	virtual FReply NativeOnKeyDown(const FGeometry& MyGeometry, const FKeyEvent& InKeyEvent) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UTerminalShopMenu> ShopMenuClass;
 
-	UPROPERTY(EditDefaultsOnly)
-	FKey EscapeKey;
-
 	UTerminalShopMenu* ShopMenu;
-
-private:
-	bool isActive;
 	
 };
