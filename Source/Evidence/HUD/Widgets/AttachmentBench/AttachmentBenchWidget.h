@@ -7,6 +7,9 @@
 #include "AttachmentBenchWidget.generated.h"
 
 class AEquipment;
+class AEvidenceCharacter;
+class UAttachmentWidget;
+class UVerticalBox;
 
 UCLASS()
 class EVIDENCE_API UAttachmentBenchWidget : public UDisableInputWidget
@@ -16,6 +19,15 @@ class EVIDENCE_API UAttachmentBenchWidget : public UDisableInputWidget
 protected:
 	virtual void NativeConstruct() override;
 
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* AttachmentBox;
+
 	UPROPERTY()
 	AEquipment* CurrentEquipment;
+
+	UPROPERTY()
+	AEvidenceCharacter* Character;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UAttachmentWidget> AttachmentWidgetClass;
 };
