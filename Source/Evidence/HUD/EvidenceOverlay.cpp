@@ -10,6 +10,8 @@
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
+#include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
+#include "Evidence/EvidencePlayerController.h"
 
 void UEvidenceOverlay::NativeConstruct()
 {
@@ -23,7 +25,14 @@ void UEvidenceOverlay::NativeConstruct()
 		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
 	}
 
+	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	if (EPC)
+	{
+		EPC->OnSetAttachmentWidgetVisibility.BindUObject(this, &ThisClass::SetAttachmentVisibility);
+	}
+
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
+	AttachmentWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
@@ -93,6 +102,11 @@ void UEvidenceOverlay::OnInventoryRequest()
 			PC->bShowMouseCursor = false;
 		}
 	}
+}
+
+void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
+{
+	AttachmentWidget->SetVisibility(bVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 }
 
 void UEvidenceOverlay::ShowTerminalMenu()

@@ -26,3 +26,5 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnCashChanged, float);
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArray<FVector>)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
+
+DECLARE_DELEGATE_OneParam(FOnSetAttachmentWidgetVisibility, bool)

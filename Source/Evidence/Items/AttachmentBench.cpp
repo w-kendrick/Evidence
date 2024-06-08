@@ -3,15 +3,14 @@
 
 #include "AttachmentBench.h"
 #include "Evidence/Evidence.h"
-#include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Items/Equipment.h"
-#include "Evidence/Items/Equipment/Components/AttachmentComponent.h"
+#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/EvidencePlayerController.h"
 
 AAttachmentBench::AAttachmentBench()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	Bench = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Terminal"));
+	Bench = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Bench"));
 	Bench->SetupAttachment(RootComponent);
 	Bench->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 }
@@ -23,19 +22,15 @@ bool AAttachmentBench::IsAvailableForInteraction_Implementation(UPrimitiveCompon
 
 void AAttachmentBench::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(InteractingActor);
-
-	if (Char)
+	if (HasAuthority())
 	{
-		const AEquipment* const Equipment = Char->GetEquipped();
-
-		if (Equipment)
+		AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+		if (Char)
 		{
-			const TMap<EAttachmentType, UAttachmentComponent*>& Attachments = Equipment->GetAttachments();
-
-			for (const TPair<EAttachmentType, UAttachmentComponent*>& Elem : Attachments)
+			AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Char->GetController());
+			if (EPC)
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Black, UEnum::GetValueAsString(Elem.Key));
+				EPC->ClientSetAttachmentWidgetVisibility(true);
 			}
 		}
 	}
