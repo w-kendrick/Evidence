@@ -19,7 +19,7 @@ public:
 
 protected:
 	void NativeConstruct() override;
-	virtual void LeaveEvent() override;;
+	virtual void LeaveEvent() override;
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ShopButton;

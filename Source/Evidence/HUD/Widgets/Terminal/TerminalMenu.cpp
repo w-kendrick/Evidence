@@ -30,6 +30,8 @@ void UTerminalMenu::LeaveEvent()
 			Hub->RelinquishTerminal();
 		}
 	}
+
+	Super::LeaveEvent();
 }
 
 void UTerminalMenu::OnShopClicked()

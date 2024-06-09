@@ -8,9 +8,9 @@
 #include "AttachmentWidget.h"
 #include "Components/VerticalBox.h"
 
-void UAttachmentBenchWidget::NativeConstruct()
+void UAttachmentBenchWidget::Enable()
 {
-	Super::NativeConstruct();
+	Super::Enable();
 
 	Character = Cast<AEvidenceCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
@@ -34,4 +34,11 @@ void UAttachmentBenchWidget::NativeConstruct()
 			}
 		}
 	}
+}
+
+void UAttachmentBenchWidget::Disable()
+{
+	AttachmentBox->ClearChildren();
+
+	Super::Disable();
 }

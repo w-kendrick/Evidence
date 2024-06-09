@@ -16,9 +16,11 @@ class EVIDENCE_API UAttachmentBenchWidget : public UDisableInputWidget
 {
 	GENERATED_BODY()
 	
-protected:
-	virtual void NativeConstruct() override;
+public:
+	virtual void Enable() override;
+	virtual void Disable() override;
 
+protected:
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* AttachmentBox;
 

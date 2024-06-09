@@ -107,6 +107,15 @@ void UEvidenceOverlay::OnInventoryRequest()
 void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 {
 	AttachmentWidget->SetVisibility(bVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	if (bVisibility)
+	{
+		AttachmentWidget->Enable();
+	}
+	else
+	{
+		AttachmentWidget->Disable();
+	}
 }
 
 void UEvidenceOverlay::ShowTerminalMenu()
