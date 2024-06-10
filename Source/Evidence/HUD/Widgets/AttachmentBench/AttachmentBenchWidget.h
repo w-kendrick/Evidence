@@ -10,6 +10,7 @@ class AEquipment;
 class AEvidenceCharacter;
 class UAttachmentWidget;
 class UVerticalBox;
+class UInventorySlot;
 
 UCLASS()
 class EVIDENCE_API UAttachmentBenchWidget : public UDisableInputWidget
@@ -24,6 +25,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* AttachmentBox;
 
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* InventoryBox;
+
 	UPROPERTY()
 	AEquipment* CurrentEquipment;
 
@@ -32,4 +36,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UAttachmentWidget> AttachmentWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UInventorySlot> InventorySlotClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	uint8 Columns = 2;
 };
