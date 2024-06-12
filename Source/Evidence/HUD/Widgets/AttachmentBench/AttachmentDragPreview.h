@@ -4,24 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "InventoryDragPreview.generated.h"
+#include "Evidence/Enums/AttachmentType.h"
+#include "AttachmentDragPreview.generated.h"
 
 class UTextBlock;
 
 UCLASS()
-class EVIDENCE_API UInventoryDragPreview : public UUserWidget
+class EVIDENCE_API UAttachmentDragPreview : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
-	void SetIndex(const uint8 NewIndex);
+	void SetAttachmentType(const EAttachmentType NewType);
 
 protected:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY(meta = (BindWidget))
-	UTextBlock* SlotText;
+	UTextBlock* AttachmentText;
 
-	uint8 Index;
+	EAttachmentType AttachmentType;
 	
 };

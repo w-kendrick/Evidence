@@ -9,6 +9,8 @@
 
 class UAttachmentComponent;
 class UTextBlock;
+class UAttachmentDragPreview;
+class UAttachmentDragWidget;
 
 UCLASS()
 class EVIDENCE_API UAttachmentWidget : public UUserWidget
@@ -20,9 +22,21 @@ public:
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* AttachmentText;
+
+	UPROPERTY(EditDefaultsOnly)
+	FKey LeftMouseButton;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UAttachmentDragPreview> DragPreviewClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UAttachmentDragWidget> DragWidgetClass;
 
 private:
 	EAttachmentType AttachmentType;

@@ -7,16 +7,24 @@
 #include "InventorySlot.generated.h"
 
 class UInventoryDragPreview;
-class UDragWidget;
+class UInventoryDragWidget;
+class UTextBlock;
 
 UCLASS()
 class EVIDENCE_API UInventorySlot : public UUserWidget
 {
 	GENERATED_BODY()
 
+public:
+	void SpawnInitialize(const uint8 Index);
+
 protected:
-	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent);
-	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation);
+	virtual void NativeConstruct() override;
+	virtual FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	virtual void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
+	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
+
+	uint8 InventoryIndex;
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;
@@ -25,5 +33,8 @@ protected:
 	TSubclassOf<UInventoryDragPreview> DragPreviewClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UDragWidget> DragWidgetClass;
+	TSubclassOf<UInventoryDragWidget> DragWidgetClass;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* SlotText;
 };

@@ -60,7 +60,7 @@ void UAttachmentBenchWidget::Enable()
 			UInventorySlot* NewSlot = CreateWidget<UInventorySlot>(this, InventorySlotClass);
 			if (NewSlot)
 			{
-				//NewSlot->SpawnInitialize(InventoryComp, Equipment, i);
+				NewSlot->SpawnInitialize(i);
 				CurrentRow->AddChild(NewSlot);
 			}
 		}
