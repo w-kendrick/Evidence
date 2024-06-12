@@ -6,15 +6,21 @@
 #include "Blueprint/DragDropOperation.h"
 #include "InventoryDragWidget.generated.h"
 
+class UInventoryComponent;
+
 UCLASS()
 class EVIDENCE_API UInventoryDragWidget : public UDragDropOperation
 {
 	GENERATED_BODY()
 
 public:
-	void SetIndex(const uint8 NewIndex);
+	void SpawnInitialize(const uint8 NewIndex, UInventoryComponent* Comp);
 	uint8 GetIndex() const;
+	UInventoryComponent* GetInventoryComponent() const;
 	
 protected:
 	uint8 Index;
+
+	UPROPERTY()
+	UInventoryComponent* InventoryComponent;
 };

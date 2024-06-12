@@ -7,7 +7,7 @@
 #include "Evidence/Enums/AttachmentType.h"
 #include "AttachmentWidget.generated.h"
 
-class UAttachmentComponent;
+class AEquipment;
 class UTextBlock;
 class UAttachmentDragPreview;
 class UAttachmentDragWidget;
@@ -18,7 +18,7 @@ class EVIDENCE_API UAttachmentWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(const EAttachmentType Type, UAttachmentComponent* const Comp);
+	void SpawnInitialize(const EAttachmentType Type, AEquipment* const Equipment);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -42,6 +42,6 @@ private:
 	EAttachmentType AttachmentType;
 
 	UPROPERTY()
-	UAttachmentComponent* Attachment;
+	AEquipment* Equipped;
 	
 };

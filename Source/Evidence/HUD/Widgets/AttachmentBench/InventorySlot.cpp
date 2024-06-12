@@ -8,9 +8,10 @@
 #include "InventoryDragPreview.h"
 #include "Components/TextBlock.h"
 
-void UInventorySlot::SpawnInitialize(const uint8 Index)
+void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Comp)
 {
 	InventoryIndex = Index;
+	InventoryComponent = Comp;
 }
 
 void UInventorySlot::NativeConstruct()
@@ -40,7 +41,7 @@ void UInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 	UInventoryDragWidget* DragWidget = Cast<UInventoryDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
 	DragWidget->DefaultDragVisual = DragPreview;
 	DragWidget->Pivot = EDragPivot::MouseDown;
-	DragWidget->SetIndex(InventoryIndex);
+	DragWidget->SpawnInitialize(InventoryIndex, InventoryComponent);
 
 	OutOperation = DragWidget;
 }

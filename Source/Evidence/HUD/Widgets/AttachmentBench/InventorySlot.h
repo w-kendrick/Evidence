@@ -9,6 +9,7 @@
 class UInventoryDragPreview;
 class UInventoryDragWidget;
 class UTextBlock;
+class UInventoryComponent;
 
 UCLASS()
 class EVIDENCE_API UInventorySlot : public UUserWidget
@@ -16,7 +17,7 @@ class EVIDENCE_API UInventorySlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(const uint8 Index);
+	void SpawnInitialize(const uint8 Index, UInventoryComponent* Comp);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -25,6 +26,9 @@ protected:
 	virtual bool NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation) override;
 
 	uint8 InventoryIndex;
+
+	UPROPERTY()
+	UInventoryComponent* InventoryComponent;
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;

@@ -8,10 +8,10 @@
 #include "AttachmentDragWidget.h"
 #include "InventoryDragWidget.h"
 
-void UAttachmentWidget::SpawnInitialize(const EAttachmentType Type, UAttachmentComponent* const Comp)
+void UAttachmentWidget::SpawnInitialize(const EAttachmentType Type, AEquipment* const Equipment)
 {
 	AttachmentType = Type;
-	Attachment = Comp;
+	Equipped = Equipment;
 }
 
 void UAttachmentWidget::NativeConstruct()
