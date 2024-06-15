@@ -7,6 +7,7 @@
 #include "AttachmentDragWidget.h"
 #include "InventoryDragPreview.h"
 #include "Components/TextBlock.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Comp)
 {
@@ -54,6 +55,19 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
 	{
 		return false;
 	}
+
+	const EAttachmentType AttachmentType = DragWidget->GetAttachmentType();
+
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	Data->HitResult.FaceIndex = InventoryIndex;
+	Data->HitResult.ElementIndex = static_cast<uint8>(AttachmentType);
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPlayerPawn(), FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.AttachmentSwap"))), Payload);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, UEnum::GetValueAsString(DragWidget->GetAttachmentType()) + FString(TEXT(" dragged onto ")) + FString::FromInt(InventoryIndex));
 

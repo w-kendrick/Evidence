@@ -40,7 +40,11 @@ AEquipment::AEquipment()
 void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
 {
 	Attachments[Type] = Attachment;
-	Attachment->AttachTo(this);
+
+	if (Attachment)
+	{
+		Attachment->AttachTo(this);
+	}
 }
 
 void AEquipment::RemoveAttachment(const EAttachmentType Type)
