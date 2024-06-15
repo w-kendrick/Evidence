@@ -45,6 +45,7 @@ public:
 
 	AEquipment* GetEquipped() const { return Equipped; }
 	const TArray<AEquipment*>& GetInventory() const;
+	AEquipment* GetEquipmentAtIndex(const uint8 Index) const;
 
 	//Delegates
 	FOnInventoryRequest InventoryRequest;

@@ -36,6 +36,8 @@ public:
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
 	FORCEINLINE const TMap<EAttachmentType, UAttachmentComponent*>& GetAttachments() const { return Attachments; };
 
+	UAttachmentComponent* GetAttachment(const EAttachmentType Type) const;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
 	USkeletalMeshComponent* WorldMesh;

@@ -7,6 +7,8 @@
 #include "AttachmentDragPreview.h"
 #include "AttachmentDragWidget.h"
 #include "InventoryDragWidget.h"
+#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Items/Equipment/EquipmentAttachment.h"
 
 void UAttachmentWidget::SpawnInitialize(const EAttachmentType Type, AEquipment* const Equipment)
 {
@@ -38,15 +40,18 @@ void UAttachmentWidget::NativeOnDragDetected(const FGeometry& InGeometry, const 
 {
 	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
 
-	UAttachmentDragPreview* DragPreview = CreateWidget<UAttachmentDragPreview>(this, DragPreviewClass);
-	DragPreview->SetAttachmentType(AttachmentType);
+	if (Cast<AEquipmentAttachment>(Equipped))
+	{
+		UAttachmentDragPreview* DragPreview = CreateWidget<UAttachmentDragPreview>(this, DragPreviewClass);
+		DragPreview->SetAttachmentType(AttachmentType);
 
-	UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
-	DragWidget->DefaultDragVisual = DragPreview;
-	DragWidget->Pivot = EDragPivot::MouseDown;
-	DragWidget->SetAttachmentType(AttachmentType);
+		UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
+		DragWidget->DefaultDragVisual = DragPreview;
+		DragWidget->Pivot = EDragPivot::MouseDown;
+		DragWidget->SetAttachmentType(AttachmentType);
 
-	OutOperation = DragWidget;
+		OutOperation = DragWidget;
+	}
 }
 
 bool UAttachmentWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
@@ -58,7 +63,18 @@ bool UAttachmentWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 		return false;
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::FromInt(DragWidget->GetIndex()) + FString(TEXT(" dragged onto ")) + UEnum::GetValueAsString(AttachmentType));
+	UInventoryComponent* const InventoryComponent = DragWidget->GetInventoryComponent();
+	const uint8 Index = DragWidget->GetIndex();
+	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(Index));
+
+	UAttachmentComponent* const CurrentAttachmentComp = Equipped->GetAttachment(AttachmentType);
+
+	if (NewAttachment)
+	{
+
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::FromInt(Index) + FString(TEXT(" dragged onto ")) + UEnum::GetValueAsString(AttachmentType));
 
 	return true;
 }

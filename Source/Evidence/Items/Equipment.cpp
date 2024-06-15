@@ -177,3 +177,8 @@ void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
 
 	GrantedAbilities.Empty();
 }
+
+UAttachmentComponent* AEquipment::GetAttachment(const EAttachmentType Type) const
+{
+	return Attachments[Type];
+}

@@ -203,6 +203,11 @@ const TArray<AEquipment*>& UInventoryComponent::GetInventory() const
 	return Inventory;
 }
 
+AEquipment* UInventoryComponent::GetEquipmentAtIndex(const uint8 Index) const
+{
+	return Inventory[Index];
+}
+
 void UInventoryComponent::SetInventoryIndex(AEquipment* const Equipment, const uint8 Index)
 {
 	Inventory[Index] = Equipment;

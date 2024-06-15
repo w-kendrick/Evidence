@@ -25,5 +25,8 @@ protected:
 
 	UPROPERTY()
 	AEquipment* OwningEquipment;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AEquipmentAttachment> EquipmentClass;
 	
 };
