@@ -67,12 +67,12 @@ bool UAttachmentWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	const uint8 Index = DragWidget->GetIndex();
 	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(Index));
 
-	UAttachmentComponent* const CurrentAttachmentComp = Equipped->GetAttachment(AttachmentType);
+	AEquipmentAttachment* const CurrentAttachment = Equipped->GetAttachment(AttachmentType);
 
-	if (NewAttachment)
-	{
-
-	}
+	//InventoryComponent->DropFromInventory(Index);
+	//Equipped->RemoveAttachment(AttachmentType);
+	//InventoryComponent->PickupToInventory(CurrentAttachment, Index);
+	//Equipped->AddAttachment(NewAttachment, AttachmentType);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString::FromInt(Index) + FString(TEXT(" dragged onto ")) + UEnum::GetValueAsString(AttachmentType));
 

@@ -7,7 +7,7 @@
 #include "Evidence/Enums/AttachmentType.h"
 #include "EquipmentAttachment.generated.h"
 
-class UAttachmentComponent;
+class UEIGameplayAbility;
 
 UCLASS()
 class EVIDENCE_API AEquipmentAttachment : public AEquipment
@@ -17,13 +17,21 @@ class EVIDENCE_API AEquipmentAttachment : public AEquipment
 public:
 	AEquipmentAttachment();
 
-	FORCEINLINE TSubclassOf<UAttachmentComponent> GetComponentClass() const { return ComponentClass; }
+	void AttachTo(AEquipment* const Equipment);
+	void DetachFrom();
+
 	FORCEINLINE EAttachmentType GetType() const { return Type; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UAttachmentComponent> ComponentClass;
+	EAttachmentType Type;
 
 	UPROPERTY(EditDefaultsOnly)
-	EAttachmentType Type;
+	TArray<TSubclassOf<UEIGameplayAbility>> AttachmentAbilities;
+
+	UPROPERTY()
+	TArray<FGameplayAbilitySpecHandle> GrantedAttachmentAbilities;
+
+	UPROPERTY()
+	AEquipment* OwningEquipment;
 };

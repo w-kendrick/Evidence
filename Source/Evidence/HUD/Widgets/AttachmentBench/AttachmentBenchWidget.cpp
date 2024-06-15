@@ -24,9 +24,9 @@ void UAttachmentBenchWidget::Enable()
 
 		if (CurrentEquipment)
 		{
-			const TMap<EAttachmentType, UAttachmentComponent*>& Attachments = CurrentEquipment->GetAttachments();
+			const TMap<EAttachmentType, AEquipmentAttachment*>& Attachments = CurrentEquipment->GetAttachments();
 
-			for (const TPair<EAttachmentType, UAttachmentComponent*>& Elem : Attachments)
+			for (const TPair<EAttachmentType, AEquipmentAttachment*>& Elem : Attachments)
 			{
 				UAttachmentWidget* const Widget = CreateWidget<UAttachmentWidget>(this, AttachmentWidgetClass);
 

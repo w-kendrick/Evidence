@@ -11,7 +11,6 @@
 class AEvidenceCharacter;
 class UEIGameplayAbility;
 class AEquipmentAttachment;
-class UAttachmentComponent;
 
 UCLASS()
 class EVIDENCE_API AEquipment : public AActor, public IInteractable
@@ -22,7 +21,9 @@ public:
 	AEquipment();
 
 	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
-	void AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
+	void RemoveAttachment(const EAttachmentType Type);
+	FGameplayAbilitySpecHandle AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
+	void RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle);
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
@@ -34,9 +35,9 @@ public:
 
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
-	FORCEINLINE const TMap<EAttachmentType, UAttachmentComponent*>& GetAttachments() const { return Attachments; };
+	FORCEINLINE const TMap<EAttachmentType, AEquipmentAttachment*>& GetAttachments() const { return Attachments; };
 
-	UAttachmentComponent* GetAttachment(const EAttachmentType Type) const;
+	AEquipmentAttachment* GetAttachment(const EAttachmentType Type) const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
@@ -60,7 +61,7 @@ protected:
 	FString EquipmentName;
 
 	UPROPERTY()
-	TMap<EAttachmentType, UAttachmentComponent*> Attachments;
+	TMap<EAttachmentType, AEquipmentAttachment*> Attachments;
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;

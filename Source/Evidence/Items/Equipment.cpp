@@ -7,7 +7,6 @@
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Evidence/Character/Abilities/EIGameplayAbility.h"
-#include "Equipment/Components/AttachmentComponent.h"
 #include "Equipment/EquipmentAttachment.h"
 
 AEquipment::AEquipment()
@@ -40,18 +39,24 @@ AEquipment::AEquipment()
 
 void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
 {
-	const TSubclassOf<UAttachmentComponent>& ComponentClass = Attachment->GetComponentClass();
-	UAttachmentComponent* const Comp = NewObject<UAttachmentComponent>(this, ComponentClass);
-	Comp->RegisterComponent();
-
-	Comp->AttachTo(this);
-	Attachments[Type] = Comp;
+	Attachments[Type] = Attachment;
+	Attachment->AttachTo(this);
 }
 
-void AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
+void AEquipment::RemoveAttachment(const EAttachmentType Type)
 {
-	Abilities.Add(Ability);
+	AEquipmentAttachment* const Attachment = Attachments[Type];
 
+	if (Attachment)
+	{
+		Attachment->DetachFrom();
+	}
+
+	Attachments[Type] = nullptr;
+}
+
+FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
+{
 	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
 	if (Char)
 	{
@@ -59,13 +64,21 @@ void AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Abi
 		{
 			UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
 
-			if (GetLocalRole() != ROLE_Authority || !ASC)
-			{
-				return;
-			}
-
-			GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
+			return ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
 		}
+	}
+
+	return FGameplayAbilitySpecHandle();
+}
+
+void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle)
+{
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
+	if (Char)
+	{
+		UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+
+		ASC->ClearAbility(Handle);
 	}
 }
 
@@ -178,7 +191,7 @@ void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
 	GrantedAbilities.Empty();
 }
 
-UAttachmentComponent* AEquipment::GetAttachment(const EAttachmentType Type) const
+AEquipmentAttachment* AEquipment::GetAttachment(const EAttachmentType Type) const
 {
 	return Attachments[Type];
 }
