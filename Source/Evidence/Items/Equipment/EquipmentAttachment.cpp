@@ -11,19 +11,29 @@ void AEquipmentAttachment::AttachTo(AEquipment* const Equipment)
 {
 	for (const TSubclassOf<UEIGameplayAbility>& Ability : AttachmentAbilities)
 	{
-		FGameplayAbilitySpecHandle Handle = Equipment->AddAttachmentAbility(Ability);
-		GrantedAttachmentAbilities.Add(Handle);
+		if (GetLocalRole() == ROLE_Authority)
+		{
+			FGameplayAbilitySpecHandle Handle = Equipment->AddAttachmentAbility(Ability);
+			const FGrantedAbility Granted = { Ability, Handle };
+			GrantedAttachmentAbilities.Add(Granted);
+		}
 	}
 
 	OwningEquipment = Equipment;
+
+	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	AttachToActor(OwningEquipment, Rule);
 }
 
 void AEquipmentAttachment::DetachFrom()
 {
-	for (const FGameplayAbilitySpecHandle& Handle : GrantedAttachmentAbilities)
+	for (const FGrantedAbility& Granted : GrantedAttachmentAbilities)
 	{
-		OwningEquipment->RemoveAttachmentAbility(Handle);
+		OwningEquipment->RemoveAttachmentAbility(Granted.AbilityHandle, Granted.AbilityClass);
 	}
 
 	OwningEquipment = nullptr;
+
+	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+	DetachFromActor(Rule);
 }

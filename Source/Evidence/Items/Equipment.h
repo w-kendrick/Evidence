@@ -23,7 +23,7 @@ public:
 	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
 	void RemoveAttachment(const EAttachmentType Type);
 	FGameplayAbilitySpecHandle AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
-	void RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle);
+	void RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability);
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;

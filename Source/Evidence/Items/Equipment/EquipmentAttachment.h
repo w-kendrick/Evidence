@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Enums/AttachmentType.h"
+#include "Evidence/Structs/GrantedAbility.h"
 #include "EquipmentAttachment.generated.h"
 
 class UEIGameplayAbility;
@@ -30,7 +31,7 @@ protected:
 	TArray<TSubclassOf<UEIGameplayAbility>> AttachmentAbilities;
 
 	UPROPERTY()
-	TArray<FGameplayAbilitySpecHandle> GrantedAttachmentAbilities;
+	TArray<FGrantedAbility> GrantedAttachmentAbilities;
 
 	UPROPERTY()
 	AEquipment* OwningEquipment;

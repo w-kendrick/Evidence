@@ -61,6 +61,8 @@ void AEquipment::RemoveAttachment(const EAttachmentType Type)
 
 FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
 {
+	Abilities.Add(Ability);
+
 	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
 	if (Char)
 	{
@@ -75,7 +77,7 @@ FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UE
 	return FGameplayAbilitySpecHandle();
 }
 
-void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle)
+void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability)
 {
 	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
 	if (Char)
@@ -84,6 +86,8 @@ void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handl
 
 		ASC->ClearAbility(Handle);
 	}
+
+	Abilities.Remove(Ability);
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
