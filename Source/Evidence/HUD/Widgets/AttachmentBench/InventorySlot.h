@@ -41,4 +41,6 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* SlotText;
+
+	void Update();
 };

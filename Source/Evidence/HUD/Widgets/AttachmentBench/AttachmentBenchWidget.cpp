@@ -39,6 +39,24 @@ void UAttachmentBenchWidget::Enable()
 		}
 	}
 
+	UpdateInventory();
+
+	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
+	InventoryComp->InventoryChanged.AddUObject(this, &ThisClass::UpdateInventory);
+}
+
+void UAttachmentBenchWidget::Disable()
+{
+	AttachmentBox->ClearChildren();
+	InventoryBox->ClearChildren();
+
+	Super::Disable();
+}
+
+void UAttachmentBenchWidget::UpdateInventory()
+{
+	InventoryBox->ClearChildren();
+
 	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
 
 	if (InventoryComp)
@@ -65,12 +83,4 @@ void UAttachmentBenchWidget::Enable()
 			}
 		}
 	}
-}
-
-void UAttachmentBenchWidget::Disable()
-{
-	AttachmentBox->ClearChildren();
-	InventoryBox->ClearChildren();
-
-	Super::Disable();
 }

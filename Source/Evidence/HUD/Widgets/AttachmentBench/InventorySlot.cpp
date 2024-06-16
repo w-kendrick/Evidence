@@ -15,22 +15,15 @@ void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Com
 {
 	InventoryIndex = Index;
 	InventoryComponent = Comp;
+
+	Update();
 }
 
 void UInventorySlot::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEquipment* const Equipment = InventoryComponent->GetEquipmentAtIndex(InventoryIndex);
-
-	if (Equipment)
-	{
-		SlotText->SetText(FText::FromString(Equipment->GetEquipmentName()));
-	}
-	else
-	{
-		SlotText->SetText(FText::FromString(TEXT("Empty")));
-	}
+	Update();
 }
 
 FReply UInventorySlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -84,4 +77,18 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, UEnum::GetValueAsString(DragWidget->GetAttachmentType()) + FString(TEXT(" dragged onto ")) + FString::FromInt(InventoryIndex));
 
 	return true;
+}
+
+void UInventorySlot::Update()
+{
+	AEquipment* const Equipment = InventoryComponent->GetEquipmentAtIndex(InventoryIndex);
+
+	if (Equipment)
+	{
+		SlotText->SetText(FText::FromString(Equipment->GetEquipmentName()));
+	}
+	else
+	{
+		SlotText->SetText(FText::FromString(TEXT("Empty")));
+	}
 }

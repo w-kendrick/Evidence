@@ -42,4 +42,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 Columns = 2;
+
+	UFUNCTION()
+	void UpdateInventory();
 };
