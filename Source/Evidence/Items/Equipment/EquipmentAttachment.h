@@ -18,6 +18,8 @@ class EVIDENCE_API AEquipmentAttachment : public AEquipment
 public:
 	AEquipmentAttachment();
 
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+
 	void AttachTo(AEquipment* const Equipment);
 	void DetachFrom();
 

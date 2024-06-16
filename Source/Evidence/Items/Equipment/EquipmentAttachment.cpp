@@ -7,6 +7,11 @@ AEquipmentAttachment::AEquipmentAttachment()
 {
 }
 
+bool AEquipmentAttachment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	return Super::IsAvailableForInteraction_Implementation(InteractionComponent) && !OwningEquipment;
+}
+
 void AEquipmentAttachment::AttachTo(AEquipment* const Equipment)
 {
 	for (const TSubclassOf<UEIGameplayAbility>& Ability : AttachmentAbilities)
