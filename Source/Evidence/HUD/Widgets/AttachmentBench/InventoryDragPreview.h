@@ -7,6 +7,7 @@
 #include "InventoryDragPreview.generated.h"
 
 class UTextBlock;
+class UInventoryComponent;
 
 UCLASS()
 class EVIDENCE_API UInventoryDragPreview : public UUserWidget
@@ -15,6 +16,7 @@ class EVIDENCE_API UInventoryDragPreview : public UUserWidget
 
 public:
 	void SetIndex(const uint8 NewIndex);
+	void SetInventoryComponent(UInventoryComponent* Comp);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -23,5 +25,6 @@ protected:
 	UTextBlock* SlotText;
 
 	uint8 Index;
+	UInventoryComponent* InventoryComponent;
 	
 };

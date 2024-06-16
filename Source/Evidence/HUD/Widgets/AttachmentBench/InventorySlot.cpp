@@ -8,6 +8,8 @@
 #include "InventoryDragPreview.h"
 #include "Components/TextBlock.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Evidence/Items/Equipment.h"
+#include "Evidence/Character/Components/InventoryComponent.h"
 
 void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Comp)
 {
@@ -19,7 +21,16 @@ void UInventorySlot::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	SlotText->SetText(FText::FromString(FString::FromInt(InventoryIndex)));
+	AEquipment* const Equipment = InventoryComponent->GetEquipmentAtIndex(InventoryIndex);
+
+	if (Equipment)
+	{
+		SlotText->SetText(FText::FromString(Equipment->GetEquipmentName()));
+	}
+	else
+	{
+		SlotText->SetText(FText::FromString(TEXT("Empty")));
+	}
 }
 
 FReply UInventorySlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
@@ -38,6 +49,7 @@ void UInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 
 	UInventoryDragPreview* DragPreview = CreateWidget<UInventoryDragPreview>(this, DragPreviewClass);
 	DragPreview->SetIndex(InventoryIndex);
+	DragPreview->SetInventoryComponent(InventoryComponent);
 
 	UInventoryDragWidget* DragWidget = Cast<UInventoryDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
 	DragWidget->DefaultDragVisual = DragPreview;
