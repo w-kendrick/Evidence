@@ -20,11 +20,11 @@ public:
 	void AttachTo(AEquipment* const Equipment);
 	void DetachFrom();
 
-	FORCEINLINE EAttachmentType GetType() const { return Type; }
+	FORCEINLINE EAttachmentType GetAttachmentType() const { return AttachmentType; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly)
-	EAttachmentType Type;
+	EAttachmentType AttachmentType;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<TSubclassOf<UEIGameplayAbility>> AttachmentAbilities;
