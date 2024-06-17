@@ -18,6 +18,8 @@ public:
 	void SetIndex(const uint8 NewIndex);
 	void SetInventoryComponent(UInventoryComponent* Comp);
 
+	void SetColour(const FColor Colour);
+
 protected:
 	virtual void NativeConstruct() override;
 

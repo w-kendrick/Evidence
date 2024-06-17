@@ -31,3 +31,8 @@ void UInventoryDragPreview::SetInventoryComponent(UInventoryComponent* Comp)
 {
 	InventoryComponent = Comp;
 }
+
+void UInventoryDragPreview::SetColour(const FColor Colour)
+{
+	SlotText->SetColorAndOpacity(FSlateColor(Colour));
+}

@@ -43,6 +43,7 @@ void UInventorySlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPo
 	UInventoryDragPreview* DragPreview = CreateWidget<UInventoryDragPreview>(this, DragPreviewClass);
 	DragPreview->SetIndex(InventoryIndex);
 	DragPreview->SetInventoryComponent(InventoryComponent);
+	DragPreview->SetColour(FColor::Black);
 
 	UInventoryDragWidget* DragWidget = Cast<UInventoryDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
 	DragWidget->DefaultDragVisual = DragPreview;
