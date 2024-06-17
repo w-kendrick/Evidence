@@ -8,6 +8,7 @@
 #include "AttachmentDragPreview.generated.h"
 
 class UTextBlock;
+class AEquipment;
 
 UCLASS()
 class EVIDENCE_API UAttachmentDragPreview : public UUserWidget
@@ -16,6 +17,7 @@ class EVIDENCE_API UAttachmentDragPreview : public UUserWidget
 
 public:
 	void SetAttachmentType(const EAttachmentType NewType);
+	void SetEquipped(AEquipment* const Equipment);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -23,6 +25,12 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* AttachmentText;
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* TypeText;
+
 	EAttachmentType AttachmentType;
+
+	UPROPERTY()
+	AEquipment* Equipped;
 	
 };

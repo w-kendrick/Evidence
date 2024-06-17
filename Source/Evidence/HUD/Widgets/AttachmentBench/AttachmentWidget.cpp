@@ -21,9 +21,25 @@ void UAttachmentWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (AttachmentText)
+	TypeText->SetText(FText::FromString(UEnum::GetValueAsString(AttachmentType)));
+	TypeText->SetColorAndOpacity(FSlateColor());
+
+	if (Equipped)
 	{
-		AttachmentText->SetText(FText::FromString(UEnum::GetValueAsString(AttachmentType)));
+		AEquipmentAttachment* const Attachment = Equipped->GetAttachment(AttachmentType);
+
+		if (Attachment)
+		{
+			AttachmentText->SetText(FText::FromString(Attachment->GetEquipmentName()));
+		}
+		else
+		{
+			AttachmentText->SetText(FText::FromString(TEXT("Empty")));
+		}
+	}
+	else
+	{
+		AttachmentText->SetText(FText::FromString(TEXT("")));
 	}
 }
 
@@ -43,6 +59,7 @@ void UAttachmentWidget::NativeOnDragDetected(const FGeometry& InGeometry, const 
 
 	UAttachmentDragPreview* DragPreview = CreateWidget<UAttachmentDragPreview>(this, DragPreviewClass);
 	DragPreview->SetAttachmentType(AttachmentType);
+	DragPreview->SetEquipped(Equipped);
 
 	UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
 	DragWidget->DefaultDragVisual = DragPreview;

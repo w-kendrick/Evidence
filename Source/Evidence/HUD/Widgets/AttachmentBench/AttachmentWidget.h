@@ -29,6 +29,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* AttachmentText;
 
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* TypeText;
+
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;
 
