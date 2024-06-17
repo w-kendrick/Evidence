@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Evidence/Interfaces/Interactable.h"
 #include "Evidence/Enums/AttachmentType.h"
+#include "Evidence/Delegates.h"
 #include "Equipment.generated.h"
 
 class AEvidenceCharacter;
@@ -19,6 +20,8 @@ class EVIDENCE_API AEquipment : public AActor, public IInteractable
 
 public:
 	AEquipment();
+
+	FOnAttachmentsUpdated OnAttachmentsUpdated;
 
 	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
 	void RemoveAttachment(const EAttachmentType Type);

@@ -44,5 +44,8 @@ protected:
 	uint8 Columns = 2;
 
 	UFUNCTION()
+	void UpdateAttachments();
+
+	UFUNCTION()
 	void UpdateInventory();
 };

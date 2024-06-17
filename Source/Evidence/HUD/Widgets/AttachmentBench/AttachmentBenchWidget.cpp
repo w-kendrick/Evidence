@@ -16,6 +16,31 @@ void UAttachmentBenchWidget::Enable()
 {
 	Super::Enable();
 
+	UpdateAttachments();
+	UpdateInventory();
+
+	CurrentEquipment = Character->GetEquipped();
+	if (CurrentEquipment)
+	{
+		CurrentEquipment->OnAttachmentsUpdated.AddUObject(this, &ThisClass::UpdateAttachments);
+	}
+
+	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
+	InventoryComp->InventoryChanged.AddUObject(this, &ThisClass::UpdateInventory);
+}
+
+void UAttachmentBenchWidget::Disable()
+{
+	AttachmentBox->ClearChildren();
+	InventoryBox->ClearChildren();
+
+	Super::Disable();
+}
+
+void UAttachmentBenchWidget::UpdateAttachments()
+{
+	AttachmentBox->ClearChildren();
+
 	Character = Cast<AEvidenceCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 	if (Character)
@@ -38,19 +63,6 @@ void UAttachmentBenchWidget::Enable()
 			}
 		}
 	}
-
-	UpdateInventory();
-
-	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
-	InventoryComp->InventoryChanged.AddUObject(this, &ThisClass::UpdateInventory);
-}
-
-void UAttachmentBenchWidget::Disable()
-{
-	AttachmentBox->ClearChildren();
-	InventoryBox->ClearChildren();
-
-	Super::Disable();
 }
 
 void UAttachmentBenchWidget::UpdateInventory()

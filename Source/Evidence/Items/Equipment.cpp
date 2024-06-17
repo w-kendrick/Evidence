@@ -40,6 +40,7 @@ AEquipment::AEquipment()
 void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
 {
 	Attachments[Type] = Attachment;
+	OnAttachmentsUpdated.Broadcast();
 
 	if (Attachment)
 	{
@@ -57,6 +58,7 @@ void AEquipment::RemoveAttachment(const EAttachmentType Type)
 	}
 
 	Attachments[Type] = nullptr;
+	OnAttachmentsUpdated.Broadcast();
 }
 
 FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
