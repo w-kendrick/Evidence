@@ -8,6 +8,7 @@
 
 class UInventoryWidget;
 class UTerminalMenu;
+class UAttachmentBenchWidget;
 
 UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
@@ -54,4 +55,10 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	UTerminalMenu* TerminalMenu;
+
+	UPROPERTY(meta = (BindWidget))
+	UAttachmentBenchWidget* AttachmentWidget;
+
+	UFUNCTION()
+	void SetAttachmentVisibility(bool bVisibility);
 };

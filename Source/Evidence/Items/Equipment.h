@@ -5,10 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Evidence/Interfaces/Interactable.h"
+#include "Evidence/Enums/AttachmentType.h"
+#include "Evidence/Delegates.h"
 #include "Equipment.generated.h"
 
 class AEvidenceCharacter;
 class UEIGameplayAbility;
+class AEquipmentAttachment;
 
 UCLASS()
 class EVIDENCE_API AEquipment : public AActor, public IInteractable
@@ -18,6 +21,13 @@ class EVIDENCE_API AEquipment : public AActor, public IInteractable
 public:
 	AEquipment();
 
+	FOnAttachmentsUpdated OnAttachmentsUpdated;
+
+	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
+	void RemoveAttachment(const EAttachmentType Type);
+	FGameplayAbilitySpecHandle AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
+	void RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability);
+
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
@@ -26,9 +36,11 @@ public:
 
 	void Attach(AEvidenceCharacter* Char, const bool isVisible);
 
-	USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
+	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
+	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
+	FORCEINLINE const TMap<EAttachmentType, AEquipmentAttachment*>& GetAttachments() const { return Attachments; };
 
-	FString GetEquipmentName() const { return EquipmentName; }
+	AEquipmentAttachment* GetAttachment(const EAttachmentType Type) const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
@@ -50,6 +62,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FString EquipmentName;
+
+	UPROPERTY()
+	TMap<EAttachmentType, AEquipmentAttachment*> Attachments;
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;

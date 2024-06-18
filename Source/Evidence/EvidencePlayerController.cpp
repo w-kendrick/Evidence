@@ -67,6 +67,11 @@ void AEvidencePlayerController::StopInteractionTimer()
 	}
 }
 
+void AEvidencePlayerController::ClientSetAttachmentWidgetVisibility_Implementation(const bool bVisibility)
+{
+	OnSetAttachmentWidgetVisibility.ExecuteIfBound(bVisibility);
+}
+
 void AEvidencePlayerController::ClientShowTerminalMenu_Implementation()
 {
 	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);

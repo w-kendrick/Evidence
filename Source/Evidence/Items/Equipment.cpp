@@ -7,6 +7,7 @@
 #include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Equipment/EquipmentAttachment.h"
 
 AEquipment::AEquipment()
 {
@@ -34,6 +35,61 @@ AEquipment::AEquipment()
 	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
+}
+
+void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
+{
+	Attachments[Type] = Attachment;
+	OnAttachmentsUpdated.Broadcast();
+
+	if (Attachment)
+	{
+		Attachment->AttachTo(this);
+	}
+}
+
+void AEquipment::RemoveAttachment(const EAttachmentType Type)
+{
+	AEquipmentAttachment* const Attachment = Attachments[Type];
+
+	if (Attachment)
+	{
+		Attachment->DetachFrom();
+	}
+
+	Attachments[Type] = nullptr;
+	OnAttachmentsUpdated.Broadcast();
+}
+
+FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
+{
+	Abilities.Add(Ability);
+
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
+	if (Char)
+	{
+		if (Char->GetEquipped() == this)
+		{
+			UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+
+			return ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
+		}
+	}
+
+	return FGameplayAbilitySpecHandle();
+}
+
+void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability)
+{
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
+	if (Char)
+	{
+		UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+
+		ASC->ClearAbility(Handle);
+	}
+
+	Abilities.Remove(Ability);
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
@@ -143,4 +199,9 @@ void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
 	}
 
 	GrantedAbilities.Empty();
+}
+
+AEquipmentAttachment* AEquipment::GetAttachment(const EAttachmentType Type) const
+{
+	return Attachments[Type];
 }

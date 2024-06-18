@@ -4,13 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Evidence/Delegates.h"
 #include "EvidencePlayerController.generated.h"
 
 class UInputMappingContext;
 
-/**
- *
- */
 UCLASS()
 class EVIDENCE_API AEvidencePlayerController : public APlayerController
 {
@@ -26,6 +24,11 @@ public:
 	void ClientShowTerminalMenu();
 	UFUNCTION(Client, Reliable)
 	void ClientHideTerminalMenu();
+
+	UFUNCTION(Client, Reliable)
+	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
+
+	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	
 protected:
 
