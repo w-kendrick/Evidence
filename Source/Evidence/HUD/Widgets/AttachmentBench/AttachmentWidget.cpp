@@ -46,7 +46,7 @@ void UAttachmentWidget::NativeConstruct()
 
 FReply UAttachmentWidget::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton))
+	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton) && Equipped && Equipped->GetAttachment(AttachmentType))
 	{
 		return UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, LeftMouseButton).NativeReply;
 	}

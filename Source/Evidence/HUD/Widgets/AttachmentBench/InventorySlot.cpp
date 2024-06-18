@@ -30,7 +30,7 @@ void UInventorySlot::NativeConstruct()
 
 FReply UInventorySlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton))
+	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton) && InventoryComponent && Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(InventoryIndex)))
 	{
 		return UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, LeftMouseButton).NativeReply;
 	}
@@ -112,7 +112,7 @@ void UInventorySlot::NativeOnDragEnter(const FGeometry& InGeometry, const FDragD
 	}
 	else
 	{
-		Preview->SetColour(FColor::Red);
+		Preview->SetColour(FColor::Green);
 	}
 }
 
