@@ -5,6 +5,7 @@
 
 AEquipmentAttachment::AEquipmentAttachment()
 {
+	EquipmentName = FString(TEXT("Attachment"));
 }
 
 bool AEquipmentAttachment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
