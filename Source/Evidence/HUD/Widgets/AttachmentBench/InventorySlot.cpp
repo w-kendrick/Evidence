@@ -10,6 +10,8 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Items/Equipment/EquipmentAttachment.h"
+#include "AttachmentDragPreview.h"
 
 void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Comp)
 {
@@ -78,6 +80,53 @@ bool UInventorySlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEv
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, UEnum::GetValueAsString(DragWidget->GetAttachmentType()) + FString(TEXT(" dragged onto ")) + FString::FromInt(InventoryIndex));
 
 	return true;
+}
+
+void UInventorySlot::NativeOnDragEnter(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(InOperation);
+
+	if (!DragWidget)
+	{
+		return;
+	}
+
+	const EAttachmentType AttachmentType = DragWidget->GetAttachmentType();
+
+	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(InventoryIndex));
+
+	UAttachmentDragPreview* const Preview = Cast<UAttachmentDragPreview>(DragWidget->DefaultDragVisual);
+
+	if (NewAttachment)
+	{
+		const EAttachmentType Type = NewAttachment->GetAttachmentType();
+
+		if (Type == AttachmentType)
+		{
+			Preview->SetColour(FColor::Green);
+		}
+		else
+		{
+			Preview->SetColour(FColor::Red);
+		}
+	}
+	else
+	{
+		Preview->SetColour(FColor::Red);
+	}
+}
+
+void UInventorySlot::NativeOnDragLeave(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(InOperation);
+
+	if (!DragWidget)
+	{
+		return;
+	}
+
+	UAttachmentDragPreview* const Preview = Cast<UAttachmentDragPreview>(DragWidget->DefaultDragVisual);
+	Preview->SetColour(FColor::Black);
 }
 
 void UInventorySlot::Update()

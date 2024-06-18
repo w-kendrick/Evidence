@@ -39,3 +39,8 @@ void UAttachmentDragPreview::SetEquipped(AEquipment* const Equipment)
 {
 	Equipped = Equipment;
 }
+
+void UAttachmentDragPreview::SetColour(const FColor& Colour)
+{
+	AttachmentText->SetColorAndOpacity(FSlateColor(Colour));
+}

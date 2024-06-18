@@ -18,6 +18,7 @@ class EVIDENCE_API UAttachmentDragPreview : public UUserWidget
 public:
 	void SetAttachmentType(const EAttachmentType NewType);
 	void SetEquipped(AEquipment* const Equipment);
+	void SetColour(const FColor& Colour);
 
 protected:
 	virtual void NativeConstruct() override;

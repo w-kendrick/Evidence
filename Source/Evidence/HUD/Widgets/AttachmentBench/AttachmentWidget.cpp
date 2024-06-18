@@ -61,6 +61,7 @@ void UAttachmentWidget::NativeOnDragDetected(const FGeometry& InGeometry, const 
 	UAttachmentDragPreview* DragPreview = CreateWidget<UAttachmentDragPreview>(this, DragPreviewClass);
 	DragPreview->SetAttachmentType(AttachmentType);
 	DragPreview->SetEquipped(Equipped);
+	DragPreview->SetColour(FColor::Black);
 
 	UAttachmentDragWidget* DragWidget = Cast<UAttachmentDragWidget>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragWidgetClass));
 	DragWidget->DefaultDragVisual = DragPreview;
