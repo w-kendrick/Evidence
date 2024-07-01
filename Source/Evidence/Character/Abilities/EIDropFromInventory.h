@@ -4,15 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "EIGameplayAbility.h"
-#include "EIEquipFromInventory.generated.h"
+#include "EIDropFromInventory.generated.h"
 
 UCLASS()
-class EVIDENCE_API UEIEquipFromInventory : public UEIGameplayAbility
+class EVIDENCE_API UEIDropFromInventory : public UEIGameplayAbility
 {
 	GENERATED_BODY()
 
 public:
-	UEIEquipFromInventory();
+	UEIDropFromInventory();
 
 	UFUNCTION(BlueprintCallable)
 	void Activate(const FGameplayEventData& EventData);
