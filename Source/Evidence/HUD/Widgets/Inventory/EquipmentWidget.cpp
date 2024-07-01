@@ -7,6 +7,10 @@
 #include "Evidence/Character/Components/InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Items/QuantityEquipment.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "Abilities/GameplayAbilityTargetTypes.h"
+#include "Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h"
 
 void UEquipmentWidget::NativeConstruct()
 {
@@ -51,10 +55,16 @@ void UEquipmentWidget::ButtonLeftClicked()
 
 void UEquipmentWidget::ButtonRightClicked()
 {
-	if (InventoryComp)
-	{
-		InventoryComp->TryDropEquipped();
-	}
+	AActor* const CharActor = Cast<AActor>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(CharActor, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))), Payload);
 }
 
 void UEquipmentWidget::OnHover()

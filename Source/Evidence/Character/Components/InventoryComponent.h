@@ -23,8 +23,6 @@ public:
 	void Pickup(AEquipment* Equipment);
 
 	void PickupEquipped(AEquipment* const NewEquipped);
-	void TryDropEquipped();
-	UFUNCTION(BlueprintCallable)
 	void DropEquipped();
 	void EquipFromInventory(const uint8 Index);
 

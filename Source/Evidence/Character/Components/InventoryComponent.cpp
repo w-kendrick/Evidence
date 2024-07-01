@@ -109,18 +109,6 @@ void UInventoryComponent::PickupEquipped(AEquipment* const NewEquipped)
 	}
 }
 
-void UInventoryComponent::TryDropEquipped()
-{
-	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
-
-	FGameplayAbilityTargetDataHandle Handle;
-	Handle.Add(Data);
-
-	FGameplayEventData Payload;
-	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))), Payload);
-}
-
 void UInventoryComponent::DropEquipped()
 {
 	AEquipment* const Prev = Equipped;
