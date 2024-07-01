@@ -17,8 +17,6 @@ public:
 	void SpawnInitialize(class UInventoryComponent* Comp, AEquipment* NewEquipment, const uint8 InventoryIndex);
 
 protected:
-	virtual void NativeConstruct() override;
-
 	uint8 Index;
 
 	virtual void ButtonLeftClicked() override;

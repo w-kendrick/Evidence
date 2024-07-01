@@ -26,16 +26,10 @@ public:
 	void TryDropEquipped();
 	UFUNCTION(BlueprintCallable)
 	void DropEquipped();
-	UFUNCTION(Server, Reliable)
-	void TryEquipFromInventory(const uint8 Index);
-	UFUNCTION(BlueprintCallable)
-	void EquipFromInventory(const int Index);
+	void EquipFromInventory(const uint8 Index);
 
 	void PickupToInventory(AEquipment* Equipment, const uint8 Index);
-	UFUNCTION(Server, Reliable)
-	void TryDropFromInventory(const uint8 Index);
-	UFUNCTION(BlueprintCallable)
-	void DropFromInventory(const int Index);
+	void DropFromInventory(const uint8 Index);
 
 	void ToggleInventoryWidget() const;
 
