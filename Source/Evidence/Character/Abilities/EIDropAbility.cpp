@@ -8,7 +8,8 @@
 UEIDropAbility::UEIDropAbility()
 {
 	AbilityInputID = EAbilityInputID::Drop;
-	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerExecution;
+	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))));
 }
 
