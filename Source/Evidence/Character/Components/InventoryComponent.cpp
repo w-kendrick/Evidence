@@ -109,18 +109,6 @@ void UInventoryComponent::PickupEquipped(AEquipment* const NewEquipped)
 	}
 }
 
-void UInventoryComponent::TryDropEquipped()
-{
-	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
-
-	FGameplayAbilityTargetDataHandle Handle;
-	Handle.Add(Data);
-
-	FGameplayEventData Payload;
-	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))), Payload);
-}
-
 void UInventoryComponent::DropEquipped()
 {
 	AEquipment* const Prev = Equipped;
@@ -133,20 +121,7 @@ void UInventoryComponent::DropEquipped()
 	EquippedChanged.Broadcast(Equipped, Prev);
 }
 
-void UInventoryComponent::TryEquipFromInventory_Implementation(const uint8 Index)
-{
-	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
-	Data->HitResult.FaceIndex = Index;
-
-	FGameplayAbilityTargetDataHandle Handle;
-	Handle.Add(Data);
-
-	FGameplayEventData Payload;
-	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.EquipFromInventory"))), Payload);
-}
-
-void UInventoryComponent::EquipFromInventory(const int Index)
+void UInventoryComponent::EquipFromInventory(const uint8 Index)
 {
 	AEquipment* const Equipment = Inventory[Index];
 
@@ -169,20 +144,7 @@ void UInventoryComponent::PickupToInventory(AEquipment* const Equipment, const u
 	}
 }
 
-void UInventoryComponent::TryDropFromInventory_Implementation(const uint8 Index)
-{
-	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
-	Data->HitResult.FaceIndex = Index;
-
-	FGameplayAbilityTargetDataHandle Handle;
-	Handle.Add(Data);
-
-	FGameplayEventData Payload;
-	Payload.TargetData = Handle;
-	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Char, FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.DropFromInventory"))), Payload);
-}
-
-void UInventoryComponent::DropFromInventory(const int Index)
+void UInventoryComponent::DropFromInventory(const uint8 Index)
 {
 	AEquipment* const Equipment = Inventory[Index];
 
@@ -221,8 +183,6 @@ void UInventoryComponent::SetInventoryIndex(AEquipment* const Equipment, const u
 
 bool UInventoryComponent::DetermineFreeSpot(uint8& Index) const
 {
-	bool result = false;
-
 	for (uint8 i = 0; i < Inventory.Num(); ++i)
 	{
 		if (Inventory[i] == nullptr)
