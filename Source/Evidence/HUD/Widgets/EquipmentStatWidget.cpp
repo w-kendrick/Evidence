@@ -5,8 +5,6 @@
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 
-static constexpr float SETUP_PERIOD = 0.5f;
-
 void UEquipmentStatWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -22,12 +20,12 @@ void UEquipmentStatWidget::NativeConstruct()
 		}
 		else
 		{
-			GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, SETUP_PERIOD, true);
+			GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
 		}
 	}
 	else
 	{
-		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, SETUP_PERIOD, true);
+		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
 	}
 }
 

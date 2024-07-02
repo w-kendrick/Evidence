@@ -13,8 +13,6 @@
 #include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
 
-static constexpr float SETUP_PERIOD = 0.5f;
-
 void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -28,7 +26,7 @@ void UEvidenceOverlay::NativeConstruct()
 	}
 	else
 	{
-		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, SETUP_PERIOD, true);
+		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
 	}
 
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
