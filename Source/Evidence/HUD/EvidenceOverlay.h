@@ -61,4 +61,8 @@ protected:
 
 	UFUNCTION()
 	void SetAttachmentVisibility(bool bVisibility);
+
+private:
+	FTimerHandle SetupHandle;
+	void ReattemptSetup();
 };

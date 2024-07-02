@@ -13,6 +13,8 @@
 #include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
 
+static constexpr float SETUP_PERIOD = 0.5f;
+
 void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -23,6 +25,10 @@ void UEvidenceOverlay::NativeConstruct()
 		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
 
 		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
+	}
+	else
+	{
+		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, SETUP_PERIOD, true);
 	}
 
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
@@ -126,4 +132,17 @@ void UEvidenceOverlay::ShowTerminalMenu()
 void UEvidenceOverlay::HideTerminalMenu()
 {
 	TerminalMenu->Disable();
+}
+
+void UEvidenceOverlay::ReattemptSetup()
+{
+	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	if (PlayerChar)
+	{
+		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
+
+		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
+
+		GetWorld()->GetTimerManager().ClearTimer(SetupHandle);
+	}
 }

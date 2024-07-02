@@ -7,28 +7,18 @@
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryComponent.h"
 
-void UGunWidget::NativeConstruct()
+void UGunWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
 {
-	Super::NativeConstruct();
+	const AGun* const Gun = Cast<AGun>(InventoryComponent->GetEquipped());
 
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	if (Gun)
 	{
-		const UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
-		if (InventoryComponent)
-		{
-			const AGun* const Gun = Cast<AGun>(InventoryComponent->GetEquipped());
-
-			if (Gun)
-			{
-				AmmoText->SetText(FText::FromString(FString::FromInt(Gun->GetCurrentClip())));
-				SetVisibility(ESlateVisibility::Visible);
-			}
-			else
-			{
-				SetVisibility(ESlateVisibility::Hidden);
-			}
-		}
+		AmmoText->SetText(FText::FromString(FString::FromInt(Gun->GetCurrentClip())));
+		SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 
