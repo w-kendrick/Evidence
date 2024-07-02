@@ -6,9 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "StaminaWidget.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class EVIDENCE_API UStaminaWidget : public UUserWidget
 {
@@ -26,5 +23,9 @@ protected:
 	class UTextBlock* StaminaText;
 
 	void OnStaminaChanged(float NewStamina);
+
+private:
+	FTimerHandle SetupHandle;
+	void ReattemptSetup();
 	
 };
