@@ -3,11 +3,13 @@
 
 #include "EIDropAbility.h"
 #include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/Components/InventoryComponent.h"
 
 UEIDropAbility::UEIDropAbility()
 {
 	AbilityInputID = EAbilityInputID::Drop;
-	InstancingPolicy = EGameplayAbilityInstancingPolicy::NonInstanced;
+	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerExecution;
+	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Drop"))));
 }
 
@@ -20,9 +22,43 @@ void UEIDropAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		}
 
-		AEvidenceCharacter* const Character = CastChecked<AEvidenceCharacter>(ActorInfo->AvatarActor.Get());
-		Character->Drop();
+		AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+
+		if (!Char)
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+			return;
+		}
+
+		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+
+		if (!InventoryComponent)
+		{
+			EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
+			return;
+		}
+
+		InventoryComponent->DropEquipped();
 	}
 
 	EndAbility(Handle, ActorInfo, ActivationInfo, true, false);
+}
+
+void UEIDropAbility::Activate()
+{
+	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+
+	if (!Char)
+	{
+		return;
+	}
+
+	UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+
+	if (!InventoryComponent)
+	{
+		return;
+	}
+
+	InventoryComponent->DropEquipped();
 }
