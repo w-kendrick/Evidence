@@ -25,7 +25,7 @@ protected:
 	void OnStaminaChanged(float NewStamina);
 
 private:
-	FTimerHandle SetupHandle;
-	void ReattemptSetup();
+	UFUNCTION()
+	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
 	
 };

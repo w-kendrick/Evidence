@@ -10,16 +10,19 @@ void UStaminaWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	StaminaBar->SetPercent(1.f);
+	StaminaText->SetText(FText::FromString(FString(TEXT("100"))));
+
+	if (GetOwningPlayer())
 	{
-		StaminaBar->SetPercent(1.f);
-		StaminaText->SetText(FText::FromString(TEXT("100")));
-		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);
-	}
-	else
-	{
-		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
+		if (GetOwningPlayer()->GetCharacter())
+		{
+			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
+		}
+		else
+		{
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &UStaminaWidget::SetupDelegate);
+		}
 	}
 }
 
@@ -31,15 +34,11 @@ void UStaminaWidget::OnStaminaChanged(float NewStamina)
 	StaminaText->SetText(FText::FromString(FString::SanitizeFloat(NewStamina)));
 }
 
-void UStaminaWidget::ReattemptSetup()
+void UStaminaWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	Char = Cast<AEvidenceCharacter>(NewPawn);
 	if (Char)
 	{
-		StaminaBar->SetPercent(1.f);
-		StaminaText->SetText(FText::FromString(TEXT("100")));
 		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);
-
-		GetWorld()->GetTimerManager().ClearTimer(SetupHandle);
 	}
 }
