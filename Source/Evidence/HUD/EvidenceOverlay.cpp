@@ -17,16 +17,16 @@ void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
-	if (PlayerChar)
+	if (GetOwningPlayer())
 	{
-		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
-
-		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
-	}
-	else
-	{
-		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
+		if (GetOwningPlayer()->GetCharacter())
+		{
+			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
+		}
+		else
+		{
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
+		}
 	}
 
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
@@ -132,15 +132,13 @@ void UEvidenceOverlay::HideTerminalMenu()
 	TerminalMenu->Disable();
 }
 
-void UEvidenceOverlay::ReattemptSetup()
+void UEvidenceOverlay::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
 	if (PlayerChar)
 	{
 		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
 
 		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
-
-		GetWorld()->GetTimerManager().ClearTimer(SetupHandle);
 	}
 }

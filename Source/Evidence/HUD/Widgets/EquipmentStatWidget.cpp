@@ -9,23 +9,16 @@ void UEquipmentStatWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	if (GetOwningPlayer())
 	{
-		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
-		if (InventoryComponent)
+		if (GetOwningPlayer()->GetCharacter())
 		{
-			EquipmentSetup(InventoryComponent);
-			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
+			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
 		}
 		else
 		{
-			GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
 		}
-	}
-	else
-	{
-		GetWorld()->GetTimerManager().SetTimer(SetupHandle, this, &ThisClass::ReattemptSetup, 0.5f, true);
 	}
 }
 
@@ -37,9 +30,9 @@ void UEquipmentStatWidget::EquipmentSetup(UInventoryComponent* const InventoryCo
 {
 }
 
-void UEquipmentStatWidget::ReattemptSetup()
+void UEquipmentStatWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
+	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(NewPawn);
 	if (Char)
 	{
 		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
@@ -47,8 +40,6 @@ void UEquipmentStatWidget::ReattemptSetup()
 		{
 			EquipmentSetup(InventoryComponent);
 			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
-
-			GetWorld()->GetTimerManager().ClearTimer(SetupHandle);
 		}
 	}
 }

@@ -20,7 +20,7 @@ protected:
 	virtual void EquipmentSetup(UInventoryComponent* const InventoryComponent);
 
 private:
-	FTimerHandle SetupHandle;
-	void ReattemptSetup();
+	UFUNCTION()
+	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
 	
 };

@@ -63,6 +63,6 @@ protected:
 	void SetAttachmentVisibility(bool bVisibility);
 
 private:
-	FTimerHandle SetupHandle;
-	void ReattemptSetup();
+	UFUNCTION()
+	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
 };

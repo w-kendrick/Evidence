@@ -21,7 +21,7 @@ void UStaminaWidget::NativeConstruct()
 		}
 		else
 		{
-			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &UStaminaWidget::SetupDelegate);
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
 		}
 	}
 }
