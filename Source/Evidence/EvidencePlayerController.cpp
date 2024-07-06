@@ -67,25 +67,12 @@ void AEvidencePlayerController::StopInteractionTimer()
 	}
 }
 
+void AEvidencePlayerController::ClientSetTerminalMenuVisibility_Implementation(const bool bVisibility)
+{
+	OnSetTerminalMenuVisibility.ExecuteIfBound(bVisibility);
+}
+
 void AEvidencePlayerController::ClientSetAttachmentWidgetVisibility_Implementation(const bool bVisibility)
 {
 	OnSetAttachmentWidgetVisibility.ExecuteIfBound(bVisibility);
-}
-
-void AEvidencePlayerController::ClientShowTerminalMenu_Implementation()
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->ShowTerminalMenu();
-	}
-}
-
-void AEvidencePlayerController::ClientHideTerminalMenu_Implementation()
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->HideTerminalMenu();
-	}
 }

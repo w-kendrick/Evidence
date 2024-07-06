@@ -81,7 +81,7 @@ void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCompo
 			if (EPC)
 			{
 				SetOwner(InteractingActor);
-				EPC->ClientShowTerminalMenu();
+				EPC->ClientSetTerminalMenuVisibility(true);
 			}
 		}
 	}

@@ -27,6 +27,7 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArra
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
 
+DECLARE_DELEGATE_OneParam(FOnSetTerminalMenuVisibility, bool)
 DECLARE_DELEGATE_OneParam(FOnSetAttachmentWidgetVisibility, bool)
 
 DECLARE_MULTICAST_DELEGATE(FOnAttachmentsUpdated)

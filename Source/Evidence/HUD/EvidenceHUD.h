@@ -31,8 +31,5 @@ public:
 	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
-
-	void ShowTerminalMenu();
-	void HideTerminalMenu();
 	
 };

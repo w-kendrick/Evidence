@@ -21,13 +21,12 @@ public:
 	void StopInteractionTimer();
 
 	UFUNCTION(Client, Reliable)
-	void ClientShowTerminalMenu();
-	UFUNCTION(Client, Reliable)
-	void ClientHideTerminalMenu();
+	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
 	UFUNCTION(Client, Reliable)
 	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
 
+	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	
 protected:
