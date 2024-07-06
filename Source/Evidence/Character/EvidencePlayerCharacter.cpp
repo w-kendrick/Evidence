@@ -92,6 +92,10 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Reload equipment
 		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Started, this, &ThisClass::HandleReloadActionPressed);
 		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Completed, this, &ThisClass::HandleReloadActionReleased);
+
+		// Underbarrel equipment
+		EnhancedInputComponent->BindAction(UnderbarrelAction, ETriggerEvent::Started, this, &ThisClass::HandleUnderbarrelActionPressed);
+		EnhancedInputComponent->BindAction(UnderbarrelAction, ETriggerEvent::Completed, this, &ThisClass::HandleUnderbarrelActionReleased);
 	}
 }
 
@@ -202,6 +206,16 @@ void AEvidencePlayerCharacter::HandleReloadActionPressed()
 void AEvidencePlayerCharacter::HandleReloadActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Reload);
+}
+
+void AEvidencePlayerCharacter::HandleUnderbarrelActionPressed()
+{
+	SendASCLocalInput(true, EAbilityInputID::Underbarrel);
+}
+
+void AEvidencePlayerCharacter::HandleUnderbarrelActionReleased()
+{
+	SendASCLocalInput(false, EAbilityInputID::Underbarrel);
 }
 
 #pragma endregion
