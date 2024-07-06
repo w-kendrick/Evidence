@@ -32,6 +32,7 @@ void UEvidenceOverlay::NativeConstruct()
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (EPC)
 	{
+		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetAttachmentWidgetVisibility.BindUObject(this, &ThisClass::SetAttachmentVisibility);
 	}
 
@@ -108,6 +109,18 @@ void UEvidenceOverlay::OnInventoryRequest()
 	}
 }
 
+void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
+{
+	if (bVisibility)
+	{
+		TerminalMenu->Enable();
+	}
+	else
+	{
+		TerminalMenu->Disable();
+	}
+}
+
 void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 {
 	AttachmentWidget->SetVisibility(bVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
@@ -120,16 +133,6 @@ void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 	{
 		AttachmentWidget->Disable();
 	}
-}
-
-void UEvidenceOverlay::ShowTerminalMenu()
-{
-	TerminalMenu->Enable();
-}
-
-void UEvidenceOverlay::HideTerminalMenu()
-{
-	TerminalMenu->Disable();
 }
 
 void UEvidenceOverlay::SetupDelegate(APawn* OldPawn, APawn* NewPawn)

@@ -21,9 +21,6 @@ public:
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
 
-	void ShowTerminalMenu();
-	void HideTerminalMenu();
-
 protected:
 	virtual void NativeConstruct() override;
 
@@ -59,7 +56,7 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UAttachmentBenchWidget* AttachmentWidget;
 
-	UFUNCTION()
+	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetAttachmentVisibility(bool bVisibility);
 
 private:
