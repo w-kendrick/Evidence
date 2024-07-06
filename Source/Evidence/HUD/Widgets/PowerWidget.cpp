@@ -9,29 +9,19 @@
 #include "Evidence/Character/Components/InventoryComponent.h"
 #include "Evidence/Items/Equipment.h"
 
-void UPowerWidget::NativeConstruct()
+void UPowerWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
 {
-	Super::NativeConstruct();
+	const IPowerInterface* const Powered = Cast<IPowerInterface>(InventoryComponent->GetEquipped());
 
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	if (Powered)
 	{
-		const UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
-		if (InventoryComponent)
-		{
-			const IPowerInterface* const Powered = Cast<IPowerInterface>(InventoryComponent->GetEquipped());
-
-			if (Powered)
-			{
-				PowerBar->SetPercent(Powered->GetPowerComponent()->GetPower() / Powered->GetPowerComponent()->GetMaxPower());
-				PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPowerComponent()->GetPower())));
-				SetVisibility(ESlateVisibility::Visible);
-			}
-			else
-			{
-				SetVisibility(ESlateVisibility::Hidden);
-			}
-		}
+		PowerBar->SetPercent(Powered->GetPowerComponent()->GetPower() / Powered->GetPowerComponent()->GetMaxPower());
+		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPowerComponent()->GetPower())));
+		SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		SetVisibility(ESlateVisibility::Hidden);
 	}
 }
 

@@ -10,12 +10,19 @@ void UStaminaWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	StaminaBar->SetPercent(1.f);
+	StaminaText->SetText(FText::FromString(FString(TEXT("100"))));
+
+	if (GetOwningPlayer())
 	{
-		StaminaBar->SetPercent(1.f);
-		StaminaText->SetText(FText::FromString(TEXT("100")));
-		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);
+		if (GetOwningPlayer()->GetCharacter())
+		{
+			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
+		}
+		else
+		{
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
+		}
 	}
 }
 
@@ -25,4 +32,13 @@ void UStaminaWidget::OnStaminaChanged(float NewStamina)
 
 	StaminaBar->SetPercent(NewStamina / Char->GetMaxStamina());
 	StaminaText->SetText(FText::FromString(FString::SanitizeFloat(NewStamina)));
+}
+
+void UStaminaWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
+{
+	Char = Cast<AEvidenceCharacter>(NewPawn);
+	if (Char)
+	{
+		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);
+	}
 }

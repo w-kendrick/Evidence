@@ -9,17 +9,37 @@ void UEquipmentStatWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwningPlayerPawn());
-	if (Char)
+	if (GetOwningPlayer())
 	{
-		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
-		if (InventoryComponent)
+		if (GetOwningPlayer()->GetCharacter())
 		{
-			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
+			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
+		}
+		else
+		{
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
 		}
 	}
 }
 
 void UEquipmentStatWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
+}
+
+void UEquipmentStatWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
+{
+}
+
+void UEquipmentStatWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
+{
+	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(NewPawn);
+	if (Char)
+	{
+		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+		if (InventoryComponent)
+		{
+			EquipmentSetup(InventoryComponent);
+			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
+		}
+	}
 }

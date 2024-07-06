@@ -12,7 +12,7 @@ class EVIDENCE_API UAmmoWidget : public UEquipmentStatWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
+	virtual void EquipmentSetup(UInventoryComponent* const InventoryComponent) override;
 	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous) override;
 	void OnAmmoChanged(uint8 Ammo);
 

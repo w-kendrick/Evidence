@@ -61,4 +61,8 @@ protected:
 
 	UFUNCTION()
 	void SetAttachmentVisibility(bool bVisibility);
+
+private:
+	UFUNCTION()
+	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
 };
