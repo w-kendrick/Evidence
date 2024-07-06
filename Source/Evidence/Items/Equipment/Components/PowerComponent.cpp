@@ -29,7 +29,6 @@ void UPowerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutL
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UPowerComponent, Power);
-	DOREPLIFETIME(UPowerComponent, isPowerActive);
 }
 
 void UPowerComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -54,9 +53,13 @@ void UPowerComponent::SetPower(const float NewPower)
 	OnPowerChanged.Broadcast(Power, MaxPower);
 }
 
-void UPowerComponent::SetPowerActive(const bool NewActive)
+void UPowerComponent::SetPowerActive(const bool NewActive, const bool bMulticast)
 {
 	isPowerActive = NewActive;
+	if (bMulticast)
+	{
+		MulticastSetPowerActive(NewActive);
+	}
 	OnActiveChanged.Broadcast(isPowerActive);
 
 	if (isPowerActive)
@@ -67,33 +70,24 @@ void UPowerComponent::SetPowerActive(const bool NewActive)
 	{
 		DeactivatePower();
 	}
+}
+
+void UPowerComponent::MulticastSetPowerActive_Implementation(const bool NewActive)
+{
+	SetPowerActive(NewActive);
 }
 
 void UPowerComponent::ToggleActivation()
 {
 	if (Power > 0)
 	{
-		SetPowerActive(!isPowerActive);
+		SetPowerActive(!isPowerActive, true);
 	}
 }
 
 void UPowerComponent::OnRep_Power(const float PrevPower)
 {
 	OnPowerChanged.Broadcast(Power, MaxPower);
-}
-
-void UPowerComponent::OnRep_IsPowerActive(const bool PrevIsActive)
-{
-	OnActiveChanged.Broadcast(isPowerActive);
-
-	if (isPowerActive)
-	{
-		ActivatePower();
-	}
-	else
-	{
-		DeactivatePower();
-	}
 }
 
 void UPowerComponent::ActivatePower()

@@ -23,7 +23,7 @@ public:
 	float ActiveDrainRate;
 
 	void SetPower(const float NewPower);
-	void SetPowerActive(const bool NewActive);
+	void SetPowerActive(const bool NewActive, const bool bMulticast = false);
 
 	void ToggleActivation();
 
@@ -40,14 +40,13 @@ protected:
 	UPROPERTY(ReplicatedUsing = OnRep_Power)
 	float Power;
 
-	UPROPERTY(ReplicatedUsing = OnRep_IsPowerActive)
 	bool isPowerActive;
 
 	UFUNCTION()
 	void OnRep_Power(const float PrevPower);
 
-	UFUNCTION()
-	void OnRep_IsPowerActive(const bool PrevIsActive);
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastSetPowerActive(const bool NewActive);
 
 	void ActivatePower();
 	void DeactivatePower();
