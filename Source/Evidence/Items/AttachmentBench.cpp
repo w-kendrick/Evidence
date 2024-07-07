@@ -35,3 +35,8 @@ void AAttachmentBench::PostInteract_Implementation(AActor* InteractingActor, UPr
 		}
 	}
 }
+
+FString AAttachmentBench::GetInteractionString_Implementation()
+{
+	return FString("Use attachments bench");
+}

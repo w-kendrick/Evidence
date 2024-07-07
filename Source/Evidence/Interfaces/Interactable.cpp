@@ -81,3 +81,8 @@ void IInteractable::InteractableCancelInteraction_Implementation(UPrimitiveCompo
 		InteractingActors.Empty();
 	}
 }
+
+FString IInteractable::GetInteractionString_Implementation()
+{
+	return FString("Press E to pickup");
+}

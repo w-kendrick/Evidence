@@ -222,20 +222,9 @@ void AEvidencePlayerCharacter::HandleUnderbarrelActionReleased()
 
 #pragma region Interaction
 
-void AEvidencePlayerCharacter::ShowInteractPrompt(const float Duration)
+void AEvidencePlayerCharacter::SetInteractPromptVisibility(const bool bVisibility, const float Duration, const FString DisplayString)
 {
-	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
-	{
-		EPC->ShowInteractPrompt(Duration);
-	}
-}
-
-void AEvidencePlayerCharacter::HideInteractPrompt()
-{
-	if (AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Controller))
-	{
-		EPC->HideInteractPrompt();
-	}
+	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
 }
 
 void AEvidencePlayerCharacter::StartInteractionTimer(const float Duration)

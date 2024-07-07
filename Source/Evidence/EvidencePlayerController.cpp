@@ -31,24 +31,6 @@ void AEvidencePlayerController::AcknowledgePossession(APawn* P)
 	}
 }
 
-void AEvidencePlayerController::ShowInteractPrompt(const float Duration)
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->ShowInteractPrompt(Duration);
-	}
-}
-
-void AEvidencePlayerController::HideInteractPrompt()
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->HideInteractPrompt();
-	}
-}
-
 void AEvidencePlayerController::StartInteractionTimer(const float Duration)
 {
 	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
