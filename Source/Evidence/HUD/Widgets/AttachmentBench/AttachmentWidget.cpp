@@ -114,11 +114,9 @@ void UAttachmentWidget::NativeOnDragEnter(const FGeometry& InGeometry, const FDr
 
 	if (NewAttachment)
 	{
-		const EAttachmentType Type = NewAttachment->GetAttachmentType();
-
 		UInventoryDragPreview* const Preview = Cast<UInventoryDragPreview>(DragWidget->DefaultDragVisual);
 
-		if (Type == AttachmentType)
+		if (NewAttachment->CanAttach(AttachmentType, Equipped->GetClass()))
 		{
 			Preview->SetColour(FColor::Green);
 		}
