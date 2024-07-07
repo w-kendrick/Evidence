@@ -5,6 +5,7 @@
 #include "Components/CanvasPanel.h"
 #include "Components/WidgetSwitcher.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 #include "Widgets/Inventory/InventoryWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
@@ -42,6 +43,8 @@ void UEvidenceOverlay::NativeConstruct()
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration, const FString DisplayString)
 {
+	InteractText->SetText(FText::FromString(DisplayString));
+
 	if (Duration > 0)
 	{
 		InteractSwitcher->SetActiveWidgetIndex(1);

@@ -33,6 +33,9 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* InteractBar;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* InteractText;
+
 	float CurrentInteractionTime;
 	float InteractionDuration;
 
