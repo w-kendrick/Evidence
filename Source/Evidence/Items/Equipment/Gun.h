@@ -20,7 +20,7 @@ public:
 	void AddAmmoToClip(const uint8 Addition);
 	void SetCurrentClip(const uint8 NewClip);
 
-	FORCEINLINE uint8 GetMaxClipSize() const { return MaxClipSize; }
+	uint8 GetMaxClipSize() const;
 	FORCEINLINE uint8 GetCurrentClip() const { return CurrentClip; }
 
 protected:
