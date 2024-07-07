@@ -3,6 +3,7 @@
 
 #include "Gun.h"
 #include "Net/UnrealNetwork.h"
+#include "Attachments/ExtendedMagazine.h"
 
 AGun::AGun()
 {
@@ -18,7 +19,7 @@ void AGun::BeginPlay()
 {
 	Super::BeginPlay();
 
-	SetCurrentClip(MaxClipSize);
+	SetCurrentClip(GetMaxClipSize());
 }
 
 void AGun::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -40,6 +41,18 @@ void AGun::AddAmmoToClip(const uint8 Addition)
 
 void AGun::SetCurrentClip(const uint8 NewClip)
 {
-	CurrentClip = FMath::Clamp(NewClip, 0, MaxClipSize);
+	CurrentClip = FMath::Clamp(NewClip, 0, GetMaxClipSize());
 	OnAmmoChanged.Broadcast(CurrentClip);
+}
+
+uint8 AGun::GetMaxClipSize() const
+{
+	const AExtendedMagazine* const ExtendedMagazine = Cast<AExtendedMagazine>(GetAttachment(EAttachmentType::Magazine));
+
+	if (ExtendedMagazine)
+	{
+		return ExtendedMagazine->GetExtendedMagazineSize();
+	}
+
+	return MaxClipSize;
 }
