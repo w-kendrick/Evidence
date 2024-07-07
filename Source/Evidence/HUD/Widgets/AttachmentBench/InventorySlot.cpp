@@ -94,14 +94,13 @@ void UInventorySlot::NativeOnDragEnter(const FGeometry& InGeometry, const FDragD
 	const EAttachmentType AttachmentType = DragWidget->GetAttachmentType();
 
 	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(InventoryIndex));
+	const AEquipment* const Equipped = InventoryComponent->GetEquipped();
 
 	UAttachmentDragPreview* const Preview = Cast<UAttachmentDragPreview>(DragWidget->DefaultDragVisual);
 
 	if (NewAttachment)
 	{
-		const EAttachmentType Type = NewAttachment->GetAttachmentType();
-
-		if (Type == AttachmentType)
+		if (NewAttachment->CanAttach(AttachmentType, Equipped->GetClass()))
 		{
 			Preview->SetColour(FColor::Green);
 		}

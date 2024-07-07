@@ -43,3 +43,8 @@ void AEquipmentAttachment::DetachFrom()
 	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
 	DetachFromActor(Rule);
 }
+
+bool AEquipmentAttachment::CanAttach(const EAttachmentType Type, const TSubclassOf<AEquipment>& Class) const
+{
+	return GetAttachmentType() == Type && Class == PermittedClass;
+}

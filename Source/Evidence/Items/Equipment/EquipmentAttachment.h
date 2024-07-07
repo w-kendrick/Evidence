@@ -23,6 +23,8 @@ public:
 	void AttachTo(AEquipment* const Equipment);
 	void DetachFrom();
 
+	bool CanAttach(const EAttachmentType Type, const TSubclassOf<AEquipment>& Class) const;
+
 	FORCEINLINE EAttachmentType GetAttachmentType() const { return AttachmentType; }
 
 protected:
@@ -34,6 +36,9 @@ protected:
 
 	UPROPERTY()
 	TArray<FGrantedAbility> GrantedAttachmentAbilities;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<AEquipment> PermittedClass;
 
 	UPROPERTY()
 	AEquipment* OwningEquipment;
