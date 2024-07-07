@@ -45,7 +45,7 @@ void UEIAttachmentSwap::Activate(const FGameplayEventData& EventData)
 	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(Index));
 	AEquipmentAttachment* const CurrentAttachment = Equipped->GetAttachment(AttachmentType);
 
-	if (NewAttachment && NewAttachment->CanAttach(AttachmentType, Equipped->GetClass()))
+	if (NewAttachment && !NewAttachment->CanAttach(AttachmentType, Equipped->GetClass()))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Swap failed due to mismatch");
 		return;
