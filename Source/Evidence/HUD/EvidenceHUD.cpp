@@ -25,22 +25,6 @@ void AEvidenceHUD::AddOverlay()
 	}
 }
 
-void AEvidenceHUD::ShowInteractPrompt(const float Duration)
-{
-	if (Overlay)
-	{
-		Overlay->ShowInteractPrompt(Duration);
-	}
-}
-
-void AEvidenceHUD::HideInteractPrompt()
-{
-	if (Overlay)
-	{
-		Overlay->HideInteractPrompt();
-	}
-}
-
 void AEvidenceHUD::StartInteractionTimer(const float Duration)
 {
 	if (Overlay)

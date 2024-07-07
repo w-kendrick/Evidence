@@ -27,8 +27,6 @@ public:
 	UEvidenceOverlay* GetOverlay() const;
 	void AddOverlay();
 
-	void ShowInteractPrompt(const float Duration);
-	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
 	

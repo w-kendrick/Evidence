@@ -17,6 +17,7 @@ public:
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+	virtual FString GetInteractionString_Implementation() override;
 
 protected:
 	UPROPERTY(VisibleDefaultsOnly)

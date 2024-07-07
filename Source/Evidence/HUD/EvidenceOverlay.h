@@ -16,13 +16,13 @@ class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void ShowInteractPrompt(const float Duration);
-	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
 
 protected:
 	virtual void NativeConstruct() override;
+	void ShowInteractPrompt(const float Duration, const FString DisplayString);
+	void HideInteractPrompt();
 
 	UPROPERTY(meta = (BindWidget))
 	class UCanvasPanel* InteractCanvas;
@@ -32,6 +32,9 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* InteractBar;
+
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* InteractText;
 
 	float CurrentInteractionTime;
 	float InteractionDuration;
@@ -48,6 +51,7 @@ protected:
 
 	bool bInventoryWidgetVisible = false;
 
+	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 	void OnInventoryRequest();
 
 	UPROPERTY(meta = (BindWidget))
@@ -61,5 +65,5 @@ protected:
 
 private:
 	UFUNCTION()
-	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
+	void SetupDelegates(APawn* OldPawn, APawn* NewPawn);
 };

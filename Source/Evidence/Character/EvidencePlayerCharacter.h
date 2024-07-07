@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "EvidenceCharacter.h"
+#include "Evidence/Delegates.h"
 #include "EvidencePlayerCharacter.generated.h"
 
 class UInputAction;
@@ -60,11 +61,10 @@ private:
 public:
 	AEvidencePlayerCharacter(const FObjectInitializer& ObjectInitializer);
 
-	UFUNCTION(BlueprintCallable)
-	void ShowInteractPrompt(const float Duration);
+	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 
 	UFUNCTION(BlueprintCallable)
-	void HideInteractPrompt();
+	void SetInteractPromptVisibility(const bool bVisibility, const float Duration, const FString DisplayString);
 
 	UFUNCTION(BlueprintCallable)
 	void StartInteractionTimer(const float Duration);

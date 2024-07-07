@@ -5,6 +5,7 @@
 #include "Components/CanvasPanel.h"
 #include "Components/WidgetSwitcher.h"
 #include "Components/ProgressBar.h"
+#include "Components/TextBlock.h"
 #include "Widgets/Inventory/InventoryWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
@@ -21,11 +22,11 @@ void UEvidenceOverlay::NativeConstruct()
 	{
 		if (GetOwningPlayer()->GetCharacter())
 		{
-			SetupDelegate(nullptr, GetOwningPlayer()->GetCharacter());
+			SetupDelegates(nullptr, GetOwningPlayer()->GetCharacter());
 		}
 		else
 		{
-			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegate);
+			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegates);
 		}
 	}
 
@@ -40,8 +41,10 @@ void UEvidenceOverlay::NativeConstruct()
 	AttachmentWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
-void UEvidenceOverlay::ShowInteractPrompt(const float Duration)
+void UEvidenceOverlay::ShowInteractPrompt(const float Duration, const FString DisplayString)
 {
+	InteractText->SetText(FText::FromString(DisplayString));
+
 	if (Duration > 0)
 	{
 		InteractSwitcher->SetActiveWidgetIndex(1);
@@ -80,6 +83,18 @@ void UEvidenceOverlay::InteractionProgressTick()
 {
 	CurrentInteractionTime += InteractionTick;
 	InteractBar->SetPercent(CurrentInteractionTime / InteractionDuration);
+}
+
+void UEvidenceOverlay::SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString)
+{
+	if (bVisibility)
+	{
+		ShowInteractPrompt(Duration, DisplayString);
+	}
+	else
+	{
+		HideInteractPrompt();
+	}
 }
 
 void UEvidenceOverlay::OnInventoryRequest()
@@ -135,12 +150,13 @@ void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 	}
 }
 
-void UEvidenceOverlay::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
+void UEvidenceOverlay::SetupDelegates(APawn* OldPawn, APawn* NewPawn)
 {
-	const AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
+	AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
 	if (PlayerChar)
 	{
 		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
+		PlayerChar->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 
 		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
 	}

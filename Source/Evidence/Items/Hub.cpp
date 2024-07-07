@@ -87,6 +87,11 @@ void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCompo
 	}
 }
 
+FString AHub::GetInteractionString_Implementation()
+{
+	return FString("Use terminal");
+}
+
 void AHub::RelinquishTerminal()
 {
 	ServerRelinquishTerminal();

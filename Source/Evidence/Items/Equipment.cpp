@@ -106,6 +106,11 @@ void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiv
 	}
 }
 
+FString AEquipment::GetInteractionString_Implementation()
+{
+	return FString("Pickup ") + GetEquipmentName();
+}
+
 void AEquipment::Pickup(AEvidenceCharacter* Char)
 {
 	Attach(Char, true);

@@ -152,6 +152,14 @@ public:
 	void InteractableCancelInteraction(UPrimitiveComponent* InteractionComponent);
 	void InteractableCancelInteraction_Implementation(UPrimitiveComponent* InteractionComponent);
 
+	/**
+	* Returns the string to be displayed in the interact widget
+	* 
+	*/
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
+	FString GetInteractionString();
+	virtual FString GetInteractionString_Implementation();
+
 protected:
 	TMap<UPrimitiveComponent*, TArray<AActor*>> Interacters;
 };
