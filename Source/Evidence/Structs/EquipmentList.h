@@ -34,6 +34,16 @@ public:
 		Entries.SetNum(INVENTORY_SIZE);
 	}
 
+	FEquipmentItem& operator[](int Index)
+	{
+		return Entries[Index];
+	}
+
+	const FEquipmentItem& operator[](int Index) const
+	{
+		return Entries[Index];
+	}
+
 	void PreReplicatedRemove(const TArrayView<int32> RemovedIndices, int32 FinalSize)
 	{
 

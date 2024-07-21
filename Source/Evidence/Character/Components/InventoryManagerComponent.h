@@ -21,12 +21,22 @@ public:
 	void Pickup(AEquipment* Equipment, const uint8 Index);
 	void Drop(const uint8 Index);
 
+	AEquipment* GetEquipped() const;
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_EquipmentList)
 	FEquipmentList EquipmentList;
+
+	UPROPERTY(ReplicatedUsing = OnRep_EquippedIndex)
+	uint8 EquippedIndex;
 	
+	UFUNCTION()
+	void OnRep_EquipmentList(const FEquipmentList PrevList);
+
+	UFUNCTION()
+	void OnRep_EquippedIndex(const uint8 PrevIndex);
 };
