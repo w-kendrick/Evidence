@@ -17,7 +17,6 @@ void UAttachmentBenchWidget::Enable()
 	Super::Enable();
 
 	UpdateAttachments();
-	UpdateInventory();
 
 	CurrentEquipment = Character->GetEquipped();
 	if (CurrentEquipment)
@@ -65,7 +64,7 @@ void UAttachmentBenchWidget::UpdateAttachments()
 	}
 }
 
-void UAttachmentBenchWidget::UpdateInventory()
+void UAttachmentBenchWidget::UpdateInventory(FEquipmentList EquipmentList)
 {
 	InventoryBox->ClearChildren();
 
@@ -73,7 +72,7 @@ void UAttachmentBenchWidget::UpdateInventory()
 
 	if (InventoryComp)
 	{
-		const FEquipmentList& Inventory = InventoryComp->GetInventory();
+		const FEquipmentList& Inventory = EquipmentList;
 
 		const uint8 Rows = FMath::CeilToInt(((float)INVENTORY_SIZE) / Columns);
 		UHorizontalBox* CurrentRow = nullptr;

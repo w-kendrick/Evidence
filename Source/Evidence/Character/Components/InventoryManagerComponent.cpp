@@ -14,7 +14,16 @@ UInventoryManagerComponent::UInventoryManagerComponent()
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 {
+	AEquipment* const PrevEquipped = GetEquipped();
+
 	Pickup(Equipment, SelectedIndex);
+
+	if (Equipment)
+	{
+		Equipment->Pickup(Cast<AEvidenceCharacter>(GetOwner()));
+	}
+
+	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
 }
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8 Index)
@@ -105,7 +114,7 @@ void UInventoryManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 
 void UInventoryManagerComponent::OnRep_EquipmentList(const FEquipmentList PrevList)
 {
-	OnInventoryChanged.Broadcast();
+	OnInventoryChanged.Broadcast(EquipmentList);
 
 	if (PrevList[SelectedIndex] != EquipmentList[SelectedIndex])
 	{
