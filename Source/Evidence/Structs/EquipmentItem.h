@@ -28,6 +28,11 @@ struct FEquipmentItem : public FFastArraySerializerItem
 
 	}
 
+	bool operator==(const FEquipmentItem& rhs)
+	{
+		return Equipment == rhs.GetEquipment();
+	}
+
 	AEquipment* GetEquipment() const
 	{
 		return Equipment;

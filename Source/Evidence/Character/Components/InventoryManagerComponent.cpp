@@ -44,7 +44,7 @@ AEquipment* UInventoryManagerComponent::GetEquipmentAtIndex(const uint8 Index) c
 
 AEquipment* UInventoryManagerComponent::GetEquipped() const
 {
-	return EquipmentList[SelectedIndex].GetEquipment();
+	return GetEquipmentAtIndex(SelectedIndex);
 }
 
 bool UInventoryManagerComponent::IsAmmoAvailable(const TSubclassOf<AAmmunition>& AmmoType) const
@@ -105,8 +105,15 @@ void UInventoryManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProp
 
 void UInventoryManagerComponent::OnRep_EquipmentList(const FEquipmentList PrevList)
 {
+	OnInventoryChanged.Broadcast();
+
+	if (PrevList[SelectedIndex] != EquipmentList[SelectedIndex])
+	{
+		OnEquippedChanged.Broadcast(GetEquipped(), PrevList[SelectedIndex].GetEquipment());
+	}
 }
 
 void UInventoryManagerComponent::OnRep_SelectedIndex(const uint8 PrevIndex)
 {
+	OnEquippedChanged.Broadcast(GetEquipped(), GetEquipmentAtIndex(PrevIndex));
 }
