@@ -3,7 +3,7 @@
 
 #include "EIDropAbility.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 UEIDropAbility::UEIDropAbility()
 {
@@ -30,7 +30,7 @@ void UEIDropAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 			return;
 		}
 
-		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+		UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();
 
 		if (!InventoryComponent)
 		{
@@ -53,7 +53,7 @@ void UEIDropAbility::Activate()
 		return;
 	}
 
-	UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+	UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();
 
 	if (!InventoryComponent)
 	{

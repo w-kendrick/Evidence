@@ -5,9 +5,9 @@
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/Gun.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
-void UGunWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
+void UGunWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)
 {
 	const AGun* const Gun = Cast<AGun>(InventoryComponent->GetEquipped());
 

@@ -3,7 +3,7 @@
 
 #include "EquipmentStatWidget.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 void UEquipmentStatWidget::NativeConstruct()
 {
@@ -26,7 +26,7 @@ void UEquipmentStatWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Pr
 {
 }
 
-void UEquipmentStatWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
+void UEquipmentStatWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)
 {
 }
 
@@ -35,11 +35,11 @@ void UEquipmentStatWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(NewPawn);
 	if (Char)
 	{
-		UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+		UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();
 		if (InventoryComponent)
 		{
 			EquipmentSetup(InventoryComponent);
-			InventoryComponent->EquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
+			InventoryComponent->OnEquippedChanged.AddUObject(this, &ThisClass::OnEquippedChanged);
 		}
 	}
 }

@@ -3,7 +3,7 @@
 
 #include "EIAttachmentSwap.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Enums/AttachmentType.h"
 #include "Evidence/Items/Equipment/EquipmentAttachment.h"
 
@@ -28,7 +28,7 @@ void UEIAttachmentSwap::Activate(const FGameplayEventData& EventData)
 		return;
 	}
 
-	UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+	UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();
 
 	if (!InventoryComponent)
 	{
@@ -51,8 +51,8 @@ void UEIAttachmentSwap::Activate(const FGameplayEventData& EventData)
 		return;
 	}
 
-	InventoryComponent->DropFromInventory(Index);
+	InventoryComponent->Drop(Index);
 	Equipped->RemoveAttachment(AttachmentType);
-	InventoryComponent->PickupToInventory(CurrentAttachment, Index);
+	InventoryComponent->Pickup(CurrentAttachment, Index);
 	Equipped->AddAttachment(NewAttachment, AttachmentType);
 }

@@ -47,9 +47,6 @@ private:
 	UInputAction* DropAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-	UInputAction* InventoryAction;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* UseAction;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
@@ -91,8 +88,6 @@ protected:
 	void HandleInteractActionReleased();
 	void HandleDropActionPressed();
 	void HandleDropActionReleased();
-	void HandleInventoryActionPressed();
-	void HandleInventoryActionReleased();
 	void HandleUseActionPressed();
 	void HandleUseActionReleased();
 	void HandleReloadActionPressed();

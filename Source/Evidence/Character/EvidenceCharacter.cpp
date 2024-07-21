@@ -4,7 +4,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Abilities/EIGameplayAbility.h"
 #include "Components/EvidenceCharacterMovementComponent.h"
-#include "Components/InventoryComponent.h"
+#include "Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Evidence.h"
 
@@ -22,7 +22,7 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 
-	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+	InventoryComponent = CreateDefaultSubobject<UInventoryManagerComponent>(TEXT("InventoryComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);

@@ -4,7 +4,7 @@
 #include "ReloadGunAbility.h"
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Items/Equipment/Gun.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 UReloadGunAbility::UReloadGunAbility()
 {
@@ -32,7 +32,7 @@ void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
 
 	const uint8 Required = Gun->GetMaxClipSize() - Gun->GetCurrentClip();
 
-	UInventoryComponent* const InventoryComp = Char->GetInventoryComponent();
+	UInventoryManagerComponent* const InventoryComp = Char->GetInventoryComponent();
 	if (!InventoryComp)
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
@@ -62,7 +62,7 @@ bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 		return false;
 	}
 
-	const UInventoryComponent* const InventoryComp = Char->GetInventoryComponent();
+	const UInventoryManagerComponent* const InventoryComp = Char->GetInventoryComponent();
 	if (!InventoryComp)
 	{
 		return false;

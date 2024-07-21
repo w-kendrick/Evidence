@@ -9,11 +9,11 @@
 #include "Components/TextBlock.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "Evidence/Items/Equipment.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment/EquipmentAttachment.h"
 #include "AttachmentDragPreview.h"
 
-void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryComponent* Comp)
+void UInventorySlot::SpawnInitialize(const uint8 Index, UInventoryManagerComponent* Comp)
 {
 	InventoryIndex = Index;
 	InventoryComponent = Comp;

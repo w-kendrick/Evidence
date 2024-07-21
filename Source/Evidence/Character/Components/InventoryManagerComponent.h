@@ -5,7 +5,10 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "Evidence/Structs/EquipmentList.h"
+#include "Evidence/Delegates.h"
 #include "InventoryManagerComponent.generated.h"
+
+class AAmmunition;
 
 /*
  Manages a character's stored equipment
@@ -18,10 +21,20 @@ class EVIDENCE_API UInventoryManagerComponent : public UActorComponent
 public:	
 	UInventoryManagerComponent();
 
-	void Pickup(AEquipment* Equipment, const uint8 Index);
-	void Drop(const uint8 Index);
+	FOnInventoryChanged OnInventoryChanged;
+	FOnEquippedChanged OnEquippedChanged;
 
+	void Pickup(AEquipment* const Equipment);
+	void Pickup(AEquipment* const Equipment, const uint8 Index);
+	void Drop(const uint8 Index);
+	void DropEquipped();
+
+	const FEquipmentList& GetInventory() const;
+	AEquipment* GetEquipmentAtIndex(const uint8 Index) const;
 	AEquipment* GetEquipped() const;
+
+	bool IsAmmoAvailable(const TSubclassOf<AAmmunition>& AmmoType) const;
+	uint8 ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required);
 
 protected:
 	virtual void BeginPlay() override;
@@ -31,12 +44,12 @@ private:
 	UPROPERTY(ReplicatedUsing = OnRep_EquipmentList)
 	FEquipmentList EquipmentList;
 
-	UPROPERTY(ReplicatedUsing = OnRep_EquippedIndex)
-	uint8 EquippedIndex;
+	UPROPERTY(ReplicatedUsing = OnRep_SelectedIndex)
+	uint8 SelectedIndex;
 	
 	UFUNCTION()
 	void OnRep_EquipmentList(const FEquipmentList PrevList);
 
 	UFUNCTION()
-	void OnRep_EquippedIndex(const uint8 PrevIndex);
+	void OnRep_SelectedIndex(const uint8 PrevIndex);
 };
