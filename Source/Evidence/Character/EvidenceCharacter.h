@@ -60,7 +60,7 @@ protected:
 	UEvidenceCharacterMovementComponent* EvidenceCMC;
 
 	UPROPERTY(EditDefaultsOnly)
-	UInventoryManagerComponent* InventoryComponent;
+	UInventoryManagerComponent* InventoryManagerComponent;
 
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
@@ -84,7 +84,7 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	UInventoryManagerComponent* GetInventoryComponent() const { return InventoryComponent; }
+	UInventoryManagerComponent* GetInventoryComponent() const { return InventoryManagerComponent; }
 	UCharacterAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return AbilitySystemComponent; }
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 

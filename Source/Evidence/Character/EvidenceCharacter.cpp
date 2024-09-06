@@ -22,7 +22,7 @@ AEvidenceCharacter::AEvidenceCharacter(const FObjectInitializer& ObjectInitializ
 
 	CharacterAttributeSet = CreateDefaultSubobject<UCharacterAttributeSet>(TEXT("CharacterAttributeSet"));
 
-	InventoryComponent = CreateDefaultSubobject<UInventoryManagerComponent>(TEXT("InventoryComponent"));
+	InventoryManagerComponent = CreateDefaultSubobject<UInventoryManagerComponent>(TEXT("InventoryComponent"));
 
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);
@@ -203,28 +203,28 @@ bool AEvidenceCharacter::IsAlive() const
 
 void AEvidenceCharacter::Pickup(AEquipment* const Equipment)
 {
-	if (InventoryComponent && Equipment)
+	if (InventoryManagerComponent && Equipment)
 	{
-		InventoryComponent->Pickup(Equipment);
+		InventoryManagerComponent->Pickup(Equipment);
 	}
 }
 
 void AEvidenceCharacter::Drop()
 {
-	if (InventoryComponent)
+	if (InventoryManagerComponent)
 	{
-		InventoryComponent->DropEquipped();
+		InventoryManagerComponent->DropEquipped();
 	}
 }
 
 AEquipment* AEvidenceCharacter::GetEquipped() const
 {
-	if (!InventoryComponent)
+	if (!InventoryManagerComponent)
 	{
 		return nullptr;
 	}
 
-	return InventoryComponent->GetEquipped();
+	return InventoryManagerComponent->GetEquipped();
 }
 
 #pragma endregion
