@@ -6,10 +6,9 @@
 #include "Components/WidgetSwitcher.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-#include "Widgets/Inventory/InventoryWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/EvidencePlayerCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
 #include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
@@ -97,33 +96,6 @@ void UEvidenceOverlay::SetInteractPromptVisibility(bool bVisibility, float Durat
 	}
 }
 
-void UEvidenceOverlay::OnInventoryRequest()
-{
-	bInventoryWidgetVisible = !bInventoryWidgetVisible;
-
-	InventoryWidget->SetVisibility(bInventoryWidgetVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-
-	if (bInventoryWidgetVisible)
-	{
-		APlayerController* const PC = GetOwningPlayer();
-		if (PC)
-		{
-			PC->SetInputMode(FInputModeGameAndUI());
-			PC->bShowMouseCursor = true;
-		}
-		InventoryWidget->Update();
-	}
-	else
-	{
-		APlayerController* const PC = GetOwningPlayer();
-		if (PC)
-		{
-			PC->SetInputMode(FInputModeGameOnly());
-			PC->bShowMouseCursor = false;
-		}
-	}
-}
-
 void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 {
 	if (bVisibility)
@@ -155,9 +127,6 @@ void UEvidenceOverlay::SetupDelegates(APawn* OldPawn, APawn* NewPawn)
 	AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
 	if (PlayerChar)
 	{
-		PlayerChar->GetInventoryComponent()->InventoryRequest.AddUObject(this, &ThisClass::OnInventoryRequest);
 		PlayerChar->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
-
-		InventoryWidget->SetInventoryComp(PlayerChar->GetInventoryComponent());
 	}
 }

@@ -9,7 +9,7 @@
 class UInventoryDragPreview;
 class UInventoryDragWidget;
 class UTextBlock;
-class UInventoryComponent;
+class UInventoryManagerComponent;
 
 UCLASS()
 class EVIDENCE_API UInventorySlot : public UUserWidget
@@ -17,7 +17,7 @@ class EVIDENCE_API UInventorySlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(const uint8 Index, UInventoryComponent* Comp);
+	void SpawnInitialize(const uint8 Index, UInventoryManagerComponent* Comp);
 
 protected:
 	virtual void NativeConstruct() override;
@@ -30,7 +30,7 @@ protected:
 	uint8 InventoryIndex;
 
 	UPROPERTY()
-	UInventoryComponent* InventoryComponent;
+	UInventoryManagerComponent* InventoryComponent;
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;

@@ -18,7 +18,7 @@ class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
 class UEvidenceCharacterMovementComponent;
-class UInventoryComponent;
+class UInventoryManagerComponent;
 class AEquipment;
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnStaminaChanged, float);
@@ -60,7 +60,7 @@ protected:
 	UEvidenceCharacterMovementComponent* EvidenceCMC;
 
 	UPROPERTY(EditDefaultsOnly)
-	UInventoryComponent* InventoryComponent;
+	UInventoryManagerComponent* InventoryManagerComponent;
 
 	virtual void BeginPlay() override;
 	virtual void PossessedBy(AController* NewController) override;
@@ -84,7 +84,7 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	UInventoryComponent* GetInventoryComponent() const { return InventoryComponent; }
+	UInventoryManagerComponent* GetInventoryComponent() const { return InventoryManagerComponent; }
 	UCharacterAbilitySystemComponent* GetCharacterAbilitySystemComponent() const { return AbilitySystemComponent; }
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; }
 

@@ -14,7 +14,7 @@ class EVIDENCE_API UPowerWidget : public UEquipmentStatWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void EquipmentSetup(UInventoryComponent* const InventoryComponent) override;
+	virtual void EquipmentSetup(UInventoryManagerComponent* const InventoryComponent) override;
 	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous) override;
 	void OnPowerChanged(float Power, float MaxPower);
 

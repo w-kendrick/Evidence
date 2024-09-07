@@ -7,7 +7,7 @@
 #include "AttachmentDragPreview.h"
 #include "AttachmentDragWidget.h"
 #include "InventoryDragWidget.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment/EquipmentAttachment.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "InventoryDragPreview.h"
@@ -107,7 +107,7 @@ void UAttachmentWidget::NativeOnDragEnter(const FGeometry& InGeometry, const FDr
 		return;
 	}
 
-	const UInventoryComponent* const InventoryComponent = DragWidget->GetInventoryComponent();
+	const UInventoryManagerComponent* const InventoryComponent = DragWidget->GetInventoryComponent();
 	const uint8 Index = DragWidget->GetIndex();
 
 	AEquipmentAttachment* const NewAttachment = Cast<AEquipmentAttachment>(InventoryComponent->GetEquipmentAtIndex(Index));

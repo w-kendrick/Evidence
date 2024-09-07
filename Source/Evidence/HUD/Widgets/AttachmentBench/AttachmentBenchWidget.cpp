@@ -9,7 +9,7 @@
 #include "Components/VerticalBox.h"
 #include "Components/HorizontalBox.h"
 #include "Blueprint/WidgetTree.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "InventorySlot.h"
 
 void UAttachmentBenchWidget::Enable()
@@ -17,7 +17,6 @@ void UAttachmentBenchWidget::Enable()
 	Super::Enable();
 
 	UpdateAttachments();
-	UpdateInventory();
 
 	CurrentEquipment = Character->GetEquipped();
 	if (CurrentEquipment)
@@ -25,8 +24,8 @@ void UAttachmentBenchWidget::Enable()
 		CurrentEquipment->OnAttachmentsUpdated.AddUObject(this, &ThisClass::UpdateAttachments);
 	}
 
-	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
-	InventoryComp->InventoryChanged.AddUObject(this, &ThisClass::UpdateInventory);
+	UInventoryManagerComponent* const InventoryComp = Character->GetInventoryComponent();
+	InventoryComp->OnInventoryChanged.AddUObject(this, &ThisClass::UpdateInventory);
 }
 
 void UAttachmentBenchWidget::Disable()
@@ -65,20 +64,20 @@ void UAttachmentBenchWidget::UpdateAttachments()
 	}
 }
 
-void UAttachmentBenchWidget::UpdateInventory()
+void UAttachmentBenchWidget::UpdateInventory(FEquipmentList EquipmentList)
 {
 	InventoryBox->ClearChildren();
 
-	UInventoryComponent* const InventoryComp = Character->GetInventoryComponent();
+	UInventoryManagerComponent* const InventoryComp = Character->GetInventoryComponent();
 
 	if (InventoryComp)
 	{
-		TArray<AEquipment*> Inventory = InventoryComp->GetInventory();
+		const FEquipmentList& Inventory = EquipmentList;
 
-		const uint8 Rows = FMath::CeilToInt(((float)Inventory.Num()) / Columns);
+		const uint8 Rows = FMath::CeilToInt(((float)INVENTORY_SIZE) / Columns);
 		UHorizontalBox* CurrentRow = nullptr;
 
-		for (uint8 i = 0; i < Inventory.Num(); i++)
+		for (uint8 i = 0; i < INVENTORY_SIZE; i++)
 		{
 			if (i % 2 == 0)
 			{
@@ -86,7 +85,7 @@ void UAttachmentBenchWidget::UpdateInventory()
 				InventoryBox->AddChild(CurrentRow);
 			}
 
-			AEquipment* Equipment = Inventory[i];
+			AEquipment* const Equipment = Inventory[i].GetEquipment();
 			UInventorySlot* NewSlot = CreateWidget<UInventorySlot>(this, InventorySlotClass);
 			if (NewSlot)
 			{

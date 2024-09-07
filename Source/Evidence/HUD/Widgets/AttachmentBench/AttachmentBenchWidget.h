@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/HUD/Widgets/DisableInputWidget.h"
+#include "Evidence/Structs/EquipmentList.h"
 #include "AttachmentBenchWidget.generated.h"
 
 class AEquipment;
@@ -46,6 +47,5 @@ protected:
 	UFUNCTION()
 	void UpdateAttachments();
 
-	UFUNCTION()
-	void UpdateInventory();
+	void UpdateInventory(FEquipmentList EquipmentList);
 };

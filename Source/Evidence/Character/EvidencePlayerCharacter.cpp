@@ -10,7 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Evidence/EvidencePlayerController.h"
-#include "Components/InventoryComponent.h"
+#include "Components/InventoryManagerComponent.h"
 
 #pragma region Class Essentials
 
@@ -80,10 +80,6 @@ void AEvidencePlayerCharacter::SetupPlayerInputComponent(UInputComponent* Player
 		// Dropping
 		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Started, this, &ThisClass::HandleDropActionPressed);
 		EnhancedInputComponent->BindAction(DropAction, ETriggerEvent::Completed, this, &ThisClass::HandleDropActionReleased);
-
-		// Inventory
-		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Started, this, &ThisClass::HandleInventoryActionPressed);
-		EnhancedInputComponent->BindAction(InventoryAction, ETriggerEvent::Completed, this, &ThisClass::HandleInventoryActionReleased);
 
 		// Use equipment
 		EnhancedInputComponent->BindAction(UseAction, ETriggerEvent::Started, this, &ThisClass::HandleUseActionPressed);
@@ -173,19 +169,6 @@ void AEvidencePlayerCharacter::HandleDropActionPressed()
 void AEvidencePlayerCharacter::HandleDropActionReleased()
 {
 	SendASCLocalInput(false, EAbilityInputID::Drop);
-}
-
-void AEvidencePlayerCharacter::HandleInventoryActionPressed()
-{
-	if (InventoryComponent)
-	{
-		InventoryComponent->ToggleInventoryWidget();
-	}
-}
-
-void AEvidencePlayerCharacter::HandleInventoryActionReleased()
-{
-
 }
 
 void AEvidencePlayerCharacter::HandleUseActionPressed()

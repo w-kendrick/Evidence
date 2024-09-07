@@ -3,7 +3,7 @@
 
 #include "InventoryDragWidget.h"
 
-void UInventoryDragWidget::SpawnInitialize(const uint8 NewIndex, UInventoryComponent* Comp)
+void UInventoryDragWidget::SpawnInitialize(const uint8 NewIndex, UInventoryManagerComponent* Comp)
 {
 	Index = NewIndex;
 	InventoryComponent = Comp;
@@ -14,7 +14,7 @@ uint8 UInventoryDragWidget::GetIndex() const
 	return Index;
 }
 
-UInventoryComponent* UInventoryDragWidget::GetInventoryComponent() const
+UInventoryManagerComponent* UInventoryDragWidget::GetInventoryComponent() const
 {
 	return InventoryComponent;
 }

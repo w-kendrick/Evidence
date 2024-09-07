@@ -3,7 +3,7 @@
 
 #include "EIDropFromInventory.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 UEIDropFromInventory::UEIDropFromInventory()
 {
@@ -25,12 +25,12 @@ void UEIDropFromInventory::Activate(const FGameplayEventData& EventData)
 		return;
 	}
 
-	UInventoryComponent* const InventoryComponent = Char->GetInventoryComponent();
+	UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();
 
 	if (!InventoryComponent)
 	{
 		return;
 	}
 
-	InventoryComponent->DropFromInventory(Index);
+	InventoryComponent->Drop(Index);
 }

@@ -6,7 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "EvidenceOverlay.generated.h"
 
-class UInventoryWidget;
 class UTerminalMenu;
 class UAttachmentBenchWidget;
 
@@ -46,13 +45,9 @@ protected:
 
 	void InteractionProgressTick();
 
-	UPROPERTY(meta = (BindWidget))
-	UInventoryWidget* InventoryWidget;
-
 	bool bInventoryWidgetVisible = false;
 
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
-	void OnInventoryRequest();
 
 	UPROPERTY(meta = (BindWidget))
 	UTerminalMenu* TerminalMenu;

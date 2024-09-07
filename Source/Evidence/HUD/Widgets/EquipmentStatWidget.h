@@ -7,7 +7,7 @@
 #include "EquipmentStatWidget.generated.h"
 
 class AEquipment;
-class UInventoryComponent;
+class UInventoryManagerComponent;
 
 UCLASS()
 class EVIDENCE_API UEquipmentStatWidget : public UUserWidget
@@ -17,7 +17,7 @@ class EVIDENCE_API UEquipmentStatWidget : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous);
-	virtual void EquipmentSetup(UInventoryComponent* const InventoryComponent);
+	virtual void EquipmentSetup(UInventoryManagerComponent* const InventoryComponent);
 
 private:
 	UFUNCTION()

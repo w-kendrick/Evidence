@@ -6,10 +6,10 @@
 #include "Components/TextBlock.h"
 #include "Evidence/Interfaces/PowerInterface.h"
 #include "Evidence/Character/EvidenceCharacter.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 
-void UPowerWidget::EquipmentSetup(UInventoryComponent* const InventoryComponent)
+void UPowerWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)
 {
 	const IPowerInterface* const Powered = Cast<IPowerInterface>(InventoryComponent->GetEquipped());
 

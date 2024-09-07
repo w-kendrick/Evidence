@@ -7,7 +7,7 @@
 #include "GunWidget.generated.h"
 
 class AEquipment;
-class UInventoryComponent;
+class UInventoryManagerComponent;
 
 UCLASS()
 class EVIDENCE_API UGunWidget : public UEquipmentStatWidget
@@ -15,7 +15,7 @@ class EVIDENCE_API UGunWidget : public UEquipmentStatWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void EquipmentSetup(UInventoryComponent* const InventoryComponent) override;
+	virtual void EquipmentSetup(UInventoryManagerComponent* const InventoryComponent) override;
 	virtual void OnEquippedChanged(AEquipment* Current, AEquipment* Previous) override;
 	void OnAmmoChanged(uint8 Ammo);
 

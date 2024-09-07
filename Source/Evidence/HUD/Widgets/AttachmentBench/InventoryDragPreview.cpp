@@ -4,7 +4,7 @@
 #include "InventoryDragPreview.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment.h"
-#include "Evidence/Character/Components/InventoryComponent.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 void UInventoryDragPreview::NativeConstruct()
 {
@@ -27,7 +27,7 @@ void UInventoryDragPreview::SetIndex(const uint8 NewIndex)
 	Index = NewIndex;
 }
 
-void UInventoryDragPreview::SetInventoryComponent(UInventoryComponent* Comp)
+void UInventoryDragPreview::SetInventoryComponent(UInventoryManagerComponent* Comp)
 {
 	InventoryComponent = Comp;
 }
