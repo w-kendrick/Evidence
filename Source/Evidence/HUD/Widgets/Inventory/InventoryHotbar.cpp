@@ -4,10 +4,15 @@
 #include "InventoryHotbar.h"
 #include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "Evidence/Structs/EquipmentList.h"
+#include "Evidence/HUD/Widgets/Inventory/InventoryHotbarSlot.h"
+#include "Components/HorizontalBox.h"
 
 void UInventoryHotbar::NativeConstruct()
 {
 	Super::NativeConstruct();
+
+	InitializeSlots();
 
 	if (GetOwningPlayer())
 	{
@@ -31,10 +36,30 @@ void UInventoryHotbar::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 		if (InventoryComponent)
 		{
 			InventoryComponent->OnInventoryChanged.AddUObject(this, &ThisClass::OnInventoryChanged);
+			InventoryComponent->OnEquippedIndexChanged.AddUObject(this, &ThisClass::OnEquippedIndexChanged);
 		}
 	}
 }
 
+void UInventoryHotbar::InitializeSlots()
+{
+	for (uint8 Index = 0; Index < INVENTORY_SIZE; Index++)
+	{
+		UInventoryHotbarSlot* const InventorySlot = CreateWidget<UInventoryHotbarSlot>(this, SlotClass);
+		Hotbar->AddChild(InventorySlot);
+		HotbarSlots.Add(InventorySlot);
+	}
+}
+
 void UInventoryHotbar::OnInventoryChanged(FEquipmentList EquipmentList)
+{
+	for (uint8 Index = 0; Index < INVENTORY_SIZE; Index++)
+	{
+		const AEquipment* const Equipment = EquipmentList[Index].GetEquipment();
+		HotbarSlots[Index]->UpdateSlot(Equipment);
+	}
+}
+
+void UInventoryHotbar::OnEquippedIndexChanged(uint8 SelectedIndex, uint8 PrevIndex)
 {
 }

@@ -7,6 +7,8 @@
 #include "Evidence/Structs/EquipmentList.h"
 #include "InventoryHotbar.generated.h"
 
+class UInventoryHotbarSlot;
+
 /**
 Widget for showing the equipment stored in player inventory
  */
@@ -18,10 +20,22 @@ class EVIDENCE_API UInventoryHotbar : public UUserWidget
 protected:
 	virtual void NativeConstruct() override;
 
+	UPROPERTY(meta = (BindWidget))
+	class UHorizontalBox* Hotbar;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UInventoryHotbarSlot> SlotClass;
+
+	UPROPERTY()
+	TArray<UInventoryHotbarSlot*> HotbarSlots;
+
 private:
 	UFUNCTION()
 	void SetupDelegate(APawn* OldPawn, APawn* NewPawn);
 
+	void InitializeSlots();
+
 	void OnInventoryChanged(FEquipmentList EquipmentList);
+	void OnEquippedIndexChanged(uint8 SelectedIndex, uint8 PrevIndex);
 	
 };

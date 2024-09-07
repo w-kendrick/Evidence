@@ -23,6 +23,7 @@ public:
 
 	FOnInventoryChanged OnInventoryChanged;
 	FOnEquippedChanged OnEquippedChanged;
+	FOnEquippedIndexChanged OnEquippedIndexChanged;
 
 	void Pickup(AEquipment* const Equipment);
 	void Pickup(AEquipment* const Equipment, const uint8 Index);

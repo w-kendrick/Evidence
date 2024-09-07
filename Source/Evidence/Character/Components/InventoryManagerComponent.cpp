@@ -125,4 +125,5 @@ void UInventoryManagerComponent::OnRep_EquipmentList(const FEquipmentList PrevLi
 void UInventoryManagerComponent::OnRep_SelectedIndex(const uint8 PrevIndex)
 {
 	OnEquippedChanged.Broadcast(GetEquipped(), GetEquipmentAtIndex(PrevIndex));
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
 }

@@ -15,6 +15,7 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnRecordingChanged, bool)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnInventoryChanged, FEquipmentList)
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquippedChanged, AEquipment*, AEquipment*)
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnEquippedIndexChanged, uint8, uint8)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnAmmoChanged, uint8)
 
