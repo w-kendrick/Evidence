@@ -22,4 +22,6 @@ public:
 protected:
 	virtual void NativeConstruct() override;
 	
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* NameText;
 };

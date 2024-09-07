@@ -2,6 +2,8 @@
 
 
 #include "InventoryHotbarSlot.h"
+#include "Components/TextBlock.h"
+#include "Evidence/Items/Equipment.h"
 
 void UInventoryHotbarSlot::NativeConstruct()
 {
@@ -14,10 +16,10 @@ void UInventoryHotbarSlot::UpdateSlot(const AEquipment* const Equipment)
 {
 	if (Equipment)
 	{
-
+		NameText->SetText(FText::FromString(Equipment->GetEquipmentName()));
 	}
 	else
 	{
-
+		NameText->SetText(FText::FromString(FString(TEXT("Empty"))));
 	}
 }
