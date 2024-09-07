@@ -23,6 +23,8 @@ UProneMovement::UProneMovement(const FObjectInitializer& ObjectInitializer)
 	bCanWalkOffLedgesWhenProned = false;
 	bWantsToProne = false;
 	bProneLocked = false;
+
+	NavAgentProps.bCanCrouch = true;
 }
 
 bool UProneMovement::HasValidData() const
