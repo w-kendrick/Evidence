@@ -28,6 +28,7 @@ AProneCharacter::AProneCharacter(const FObjectInitializer& FObjectInitializer)
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(RootComponent);
+	CameraComponent->bUsePawnControlRotation = true;
 
 	PronedEyeHeight = 30.f;
 }
