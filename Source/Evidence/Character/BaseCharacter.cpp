@@ -21,6 +21,28 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 
 #pragma region Attributes
 
+void ABaseCharacter::AttributeSetup()
+{
+	Super::AttributeSetup();
+
+	SetupAttributeDelegates();
+}
+
+void ABaseCharacter::SetupAttributeDelegates()
+{
+	if (!AbilitySystemComponent)
+	{
+		return;
+	}
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(StaminaSet->GetStaminaAttribute()).AddUObject(this, &ThisClass::OnStaminaChanged);
+}
+
+void ABaseCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
+{
+	StaminaDelegate.Broadcast(Data.NewValue);
+}
+
 bool ABaseCharacter::IsAlive() const
 {
 	return true;

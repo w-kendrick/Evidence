@@ -42,5 +42,11 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	UInventoryManagerComponent* InventoryManagerComponent;
+
+	virtual void AttributeSetup();
+
+	void SetupAttributeDelegates();
+
+	void OnStaminaChanged(const FOnAttributeChangeData& Data);
 	
 };
