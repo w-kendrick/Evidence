@@ -5,9 +5,8 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Evidence/Evidence.h"
 #include "Evidence/Character/BaseCharacter.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
 #include "Equipment/EquipmentAttachment.h"
+#include "AdvancedAbilityComponent.h"
 
 AEquipment::AEquipment()
 {
@@ -59,37 +58,6 @@ void AEquipment::RemoveAttachment(const EAttachmentType Type)
 
 	Attachments[Type] = nullptr;
 	OnAttachmentsUpdated.Broadcast();
-}
-
-FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
-{
-	/*Abilities.Add(Ability);
-
-	ABaseCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
-	if (Char)
-	{
-		if (Char->GetEquipped() == this)
-		{
-			UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
-
-			return ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
-		}
-	}*/
-
-	return FGameplayAbilitySpecHandle();
-}
-
-void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability)
-{
-	/*AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
-	if (Char)
-	{
-		UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
-
-		ASC->ClearAbility(Handle);
-	}
-
-	Abilities.Remove(Ability);*/
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
@@ -176,34 +144,26 @@ void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
 
 void AEquipment::AddAbilities(ABaseCharacter* Char)
 {
-	/*UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+	UAdvancedAbilityComponent* const ASC = Cast<UAdvancedAbilityComponent>(Char->GetAbilitySystemComponent());
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
 		return;
 	}
 
-	for (const TSubclassOf<UEIGameplayAbility>& Ability : Abilities)
-	{
-		GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
-	}*/
+	AbilitySet->GiveToAbilitySystem(ASC, &GrantedHandles, this);
 }
 
 void AEquipment::RemoveAbilities(ABaseCharacter* Char)
 {
-	/*UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+	UAdvancedAbilityComponent* const ASC = Cast<UAdvancedAbilityComponent>(Char->GetAbilitySystemComponent());
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
 		return;
 	}
 
-	for (const FGameplayAbilitySpecHandle& Handle : GrantedAbilities)
-	{
-		ASC->ClearAbility(Handle);
-	}
-
-	GrantedAbilities.Empty();*/
+	GrantedHandles.TakeFromAbilitySystem(ASC);
 }
 
 AEquipmentAttachment* AEquipment::GetAttachment(const EAttachmentType Type) const

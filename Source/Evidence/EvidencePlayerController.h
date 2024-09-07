@@ -37,7 +37,6 @@ protected:
 protected:
 
 	virtual void BeginPlay() override;
-	virtual void AcknowledgePossession(APawn* P) override;
 
 	// End Actor interface
 };

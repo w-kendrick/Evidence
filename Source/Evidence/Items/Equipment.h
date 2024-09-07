@@ -7,10 +7,10 @@
 #include "Evidence/Interfaces/Interactable.h"
 #include "Evidence/Enums/AttachmentType.h"
 #include "Evidence/Delegates.h"
+#include "AbilitySet.h"
 #include "Equipment.generated.h"
 
 class ABaseCharacter;
-class UEIGameplayAbility;
 class AEquipmentAttachment;
 
 UCLASS()
@@ -25,8 +25,6 @@ public:
 
 	void AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type);
 	void RemoveAttachment(const EAttachmentType Type);
-	FGameplayAbilitySpecHandle AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability);
-	void RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability);
 
 	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
@@ -55,11 +53,10 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	FName EquipSocket;
 
-	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<UEIGameplayAbility>> Abilities;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability")
+	TObjectPtr<const UAbilitySet> AbilitySet;
 
-	UPROPERTY()
-	TArray<FGameplayAbilitySpecHandle> GrantedAbilities;
+	FAbilitySet_GrantedHandles GrantedHandles;
 
 	UPROPERTY(EditDefaultsOnly)
 	FString EquipmentName;

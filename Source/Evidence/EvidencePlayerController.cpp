@@ -3,7 +3,6 @@
 
 #include "EvidencePlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "Character/EvidenceCharacter.h"
 #include "HUD/EvidenceHUD.h"
 
 void AEvidencePlayerController::BeginPlay()
@@ -17,17 +16,6 @@ void AEvidencePlayerController::BeginPlay()
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 
 		UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
-	}
-}
-
-void AEvidencePlayerController::AcknowledgePossession(APawn* P)
-{
-	Super::AcknowledgePossession(P);
-
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(P);
-	if (Char)
-	{
-		Char->GetAbilitySystemComponent()->InitAbilityActorInfo(Char, Char);
 	}
 }
 

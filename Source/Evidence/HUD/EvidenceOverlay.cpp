@@ -7,11 +7,11 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
 #include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
+#include "Evidence/Character/BaseCharacter.h"
 
 void UEvidenceOverlay::NativeConstruct()
 {
@@ -124,7 +124,7 @@ void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 
 void UEvidenceOverlay::SetupDelegates(APawn* OldPawn, APawn* NewPawn)
 {
-	AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
+	ABaseCharacter* const PlayerChar = Cast<ABaseCharacter>(NewPawn);
 	if (PlayerChar)
 	{
 		PlayerChar->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
