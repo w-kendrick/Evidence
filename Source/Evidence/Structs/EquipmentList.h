@@ -79,6 +79,7 @@ public:
 		{
 			PrevEquipment->Drop();
 		}
+		Entries[Index] = FEquipmentItem(nullptr);
 	}
 
 private:

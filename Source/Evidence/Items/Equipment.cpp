@@ -23,7 +23,7 @@ AEquipment::AEquipment()
 	WorldMesh->SetGenerateOverlapEvents(true);
 	WorldMesh->bOwnerNoSee = true;
 	WorldMesh->bOnlyOwnerSee = false;
-	WorldMesh->SetIsReplicated(true);
+	//WorldMesh->SetIsReplicated(true);
 
 	LocalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("LocalMesh"));
 	LocalMesh->SetupAttachment(RootComponent);
@@ -32,7 +32,7 @@ AEquipment::AEquipment()
 	LocalMesh->SetGenerateOverlapEvents(false);
 	LocalMesh->bOwnerNoSee = false;
 	LocalMesh->bOnlyOwnerSee = true;
-	LocalMesh->SetIsReplicated(true);
+	//LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
 }
@@ -147,14 +147,14 @@ void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 
 	USkeletalMeshComponent* const CharWorldMesh = Char->GetMesh();
 	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
+	//WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
 	WorldMesh->SetVisibility(isVisible);
 
 	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
 	if (PlayerChar)
 	{
 		USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
-		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
+		//LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
 }
