@@ -40,7 +40,7 @@ void UAttachmentBenchWidget::UpdateAttachments()
 {
 	AttachmentBox->ClearChildren();
 
-	Character = Cast<AEvidenceCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Character = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 	if (Character)
 	{

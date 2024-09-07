@@ -8,7 +8,7 @@
 #include "AttachmentBenchWidget.generated.h"
 
 class AEquipment;
-class AEvidenceCharacter;
+class ABaseCharacter;
 class UAttachmentWidget;
 class UVerticalBox;
 class UInventorySlot;
@@ -33,7 +33,7 @@ protected:
 	AEquipment* CurrentEquipment;
 
 	UPROPERTY()
-	AEvidenceCharacter* Character;
+	ABaseCharacter* Character;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UAttachmentWidget> AttachmentWidgetClass;

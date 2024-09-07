@@ -6,10 +6,8 @@
 #include "Net/Serialization/FastArraySerializer.h"
 #include "EquipmentItem.h"
 #include "Evidence/Items/Equipment.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "EquipmentList.generated.h"
-
-class AEvidenceCharacter;
 
 constexpr uint8 INVENTORY_SIZE = 8;
 
@@ -29,7 +27,7 @@ public:
 	}
 
 	FEquipmentList(AActor* const OwningActor)
-		: OwningCharacter(Cast<AEvidenceCharacter>(OwningActor))
+		: OwningCharacter(Cast<ABaseCharacter>(OwningActor))
 	{
 		Entries.SetNum(INVENTORY_SIZE);
 	}
@@ -87,5 +85,5 @@ private:
 	TArray<FEquipmentItem> Entries;
 
 	UPROPERTY()
-	AEvidenceCharacter* OwningCharacter;
+	ABaseCharacter* OwningCharacter;
 };

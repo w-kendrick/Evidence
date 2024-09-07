@@ -20,7 +20,7 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 
 	if (Equipment)
 	{
-		Equipment->Pickup(Cast<AEvidenceCharacter>(GetOwner()));
+		Equipment->Pickup(Cast<ABaseCharacter>(GetOwner()));
 	}
 
 	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);

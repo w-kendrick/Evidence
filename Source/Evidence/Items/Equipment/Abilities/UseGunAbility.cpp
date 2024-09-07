@@ -2,7 +2,7 @@
 
 
 #include "UseGunAbility.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Items/Equipment/Gun.h"
 #include "Evidence/Items/TrueProjectile.h"
 #include "Evidence/Items/CosmeticProjectile.h"
@@ -28,7 +28,7 @@ void UUseGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 		return;
 	}
 
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);

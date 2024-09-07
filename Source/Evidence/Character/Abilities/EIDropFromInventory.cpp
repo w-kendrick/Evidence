@@ -2,7 +2,7 @@
 
 
 #include "EIDropFromInventory.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 UEIDropFromInventory::UEIDropFromInventory()
@@ -18,7 +18,7 @@ void UEIDropFromInventory::Activate(const FGameplayEventData& EventData)
 	FGameplayAbilityTargetData* const Data = EventData.TargetData.Data[0].Get();
 	const uint8 Index = Data->GetHitResult()->FaceIndex;
 
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
 
 	if (!Char)
 	{

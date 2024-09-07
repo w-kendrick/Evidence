@@ -9,7 +9,7 @@
 #include "Evidence/Delegates.h"
 #include "Equipment.generated.h"
 
-class AEvidenceCharacter;
+class ABaseCharacter;
 class UEIGameplayAbility;
 class AEquipmentAttachment;
 
@@ -32,10 +32,10 @@ public:
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 	virtual FString GetInteractionString_Implementation() override;
 
-	void Pickup(AEvidenceCharacter* Char);
+	void Pickup(ABaseCharacter* Char);
 	void Drop();
 
-	void Attach(AEvidenceCharacter* Char, const bool isVisible);
+	void Attach(ABaseCharacter* Char, const bool isVisible);
 
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
@@ -73,7 +73,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup")
 	float MaxGroundDistance = 10000.f;
 
-	void AddAbilities(AEvidenceCharacter* Char);
-	void RemoveAbilities(AEvidenceCharacter* Char);
+	void AddAbilities(ABaseCharacter* Char);
+	void RemoveAbilities(ABaseCharacter* Char);
 	
 };

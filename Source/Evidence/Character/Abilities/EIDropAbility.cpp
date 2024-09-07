@@ -2,7 +2,7 @@
 
 
 #include "EIDropAbility.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 UEIDropAbility::UEIDropAbility()
@@ -22,7 +22,7 @@ void UEIDropAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 			EndAbility(Handle, ActorInfo, ActivationInfo, true, true);
 		}
 
-		AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+		ABaseCharacter* const Char = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
 
 		if (!Char)
 		{
@@ -46,7 +46,7 @@ void UEIDropAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, co
 
 void UEIDropAbility::Activate()
 {
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
 
 	if (!Char)
 	{
