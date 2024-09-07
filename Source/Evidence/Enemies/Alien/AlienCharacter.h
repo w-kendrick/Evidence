@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Interfaces/Evidential.h"
 #include "AlienCharacter.generated.h"
 
 class UBehaviorTree;
 
 UCLASS()
-class EVIDENCE_API AAlienCharacter : public AEvidenceCharacter, public IEvidential
+class EVIDENCE_API AAlienCharacter : public ABaseCharacter, public IEvidential
 {
 	GENERATED_BODY()
 
