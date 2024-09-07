@@ -5,7 +5,6 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Interfaces/PowerInterface.h"
-#include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 

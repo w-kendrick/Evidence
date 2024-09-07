@@ -2,7 +2,7 @@
 
 
 #include "InventoryHotbar.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Structs/EquipmentList.h"
 #include "Evidence/HUD/Widgets/Inventory/InventoryHotbarSlot.h"
@@ -29,7 +29,7 @@ void UInventoryHotbar::NativeConstruct()
 
 void UInventoryHotbar::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(NewPawn);
+	const ABaseCharacter* const Char = Cast<ABaseCharacter>(NewPawn);
 	if (Char)
 	{
 		UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();

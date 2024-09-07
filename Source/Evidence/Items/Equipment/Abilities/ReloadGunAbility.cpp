@@ -2,7 +2,7 @@
 
 
 #include "ReloadGunAbility.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Items/Equipment/Gun.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
@@ -15,7 +15,7 @@ UReloadGunAbility::UReloadGunAbility()
 
 void UReloadGunAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData)
 {
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	const ABaseCharacter* const Char = Cast<ABaseCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
 		EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
@@ -55,7 +55,7 @@ bool UReloadGunAbility::CanActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 	const uint8 Required = Gun->GetMaxClipSize() - Gun->GetCurrentClip();
 
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	const ABaseCharacter* const Char = Cast<ABaseCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
 		return false;

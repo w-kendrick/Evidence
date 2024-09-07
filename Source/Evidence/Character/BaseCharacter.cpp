@@ -6,6 +6,7 @@
 #include "Evidence/Evidence.h"
 #include "Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
+#include "AttributeSets/StaminaSet.h"
 
 ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -17,6 +18,24 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);
 }
+
+#pragma region Attributes
+
+bool ABaseCharacter::IsAlive() const
+{
+	return true;
+}
+
+float ABaseCharacter::GetMaxStamina() const
+{
+	if (StaminaSet)
+	{
+		return StaminaSet->GetMaxStamina();
+	}
+	return 0.0f;
+}
+
+#pragma endregion
 
 #pragma region Equipment
 
@@ -73,3 +92,8 @@ const FVector ABaseCharacter::GetTraceDirection() const
 }
 
 #pragma endregion
+
+void ABaseCharacter::SetInteractPromptVisibility(const bool bVisibility, const float Duration, const FString DisplayString)
+{
+	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
+}

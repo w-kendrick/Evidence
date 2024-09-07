@@ -2,7 +2,6 @@
 
 
 #include "AbilitySet.h"
-#include "AdvancedAbilityComponent.h"
 #include "Abilities/AdvancedGameplayAbility.h"
 
 void FAbilitySet_GrantedHandles::AddAbilitySpecHandle(const FGameplayAbilitySpecHandle& Handle)
@@ -24,42 +23,6 @@ void FAbilitySet_GrantedHandles::AddGameplayEffectHandle(const FActiveGameplayEf
 void FAbilitySet_GrantedHandles::AddAttributeSet(UAttributeSet* Set)
 {
 	GrantedAttributeSets.Add(Set);
-}
-
-void FAbilitySet_GrantedHandles::TakeFromAbilitySystem(UAdvancedAbilityComponent* AASC)
-{
-	check(AASC);
-
-	if (!AASC->IsOwnerActorAuthoritative())
-	{
-		// Must be authoritative to give or take ability sets.
-		return;
-	}
-
-	for (const FGameplayAbilitySpecHandle& Handle : AbilitySpecHandles)
-	{
-		if (Handle.IsValid())
-		{
-			AASC->ClearAbility(Handle);
-		}
-	}
-
-	for (const FActiveGameplayEffectHandle& Handle : GameplayEffectHandles)
-	{
-		if (Handle.IsValid())
-		{
-			AASC->RemoveActiveGameplayEffect(Handle);
-		}
-	}
-
-	for (UAttributeSet* Set : GrantedAttributeSets)
-	{
-		AASC->RemoveSpawnedAttribute(Set);
-	}
-
-	AbilitySpecHandles.Reset();
-	GameplayEffectHandles.Reset();
-	GrantedAttributeSets.Reset();
 }
 
 void UAbilitySet::GiveToAbilitySystem(UAdvancedAbilityComponent* AASC, FAbilitySet_GrantedHandles* OutGrantedHandles, UObject* SourceObject) const

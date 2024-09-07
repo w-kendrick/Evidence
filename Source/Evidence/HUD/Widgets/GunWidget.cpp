@@ -4,7 +4,6 @@
 #include "GunWidget.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/Gun.h"
-#include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 void UGunWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)

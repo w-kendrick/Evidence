@@ -3,7 +3,7 @@
 
 #include "AttachmentBench.h"
 #include "Evidence/Evidence.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/EvidencePlayerController.h"
 
 AAttachmentBench::AAttachmentBench()
@@ -24,7 +24,7 @@ void AAttachmentBench::PostInteract_Implementation(AActor* InteractingActor, UPr
 {
 	if (HasAuthority())
 	{
-		AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+		ABaseCharacter* const Char = Cast<ABaseCharacter>(InteractingActor);
 		if (Char)
 		{
 			AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Char->GetController());

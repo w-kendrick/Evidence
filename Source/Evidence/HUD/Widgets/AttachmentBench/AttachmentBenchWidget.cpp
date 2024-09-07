@@ -3,7 +3,7 @@
 
 #include "AttachmentBenchWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Items/Equipment.h"
 #include "AttachmentWidget.h"
 #include "Components/VerticalBox.h"

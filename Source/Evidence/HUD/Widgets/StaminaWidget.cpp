@@ -4,7 +4,7 @@
 #include "StaminaWidget.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 
 void UStaminaWidget::NativeConstruct()
 {
@@ -36,7 +36,7 @@ void UStaminaWidget::OnStaminaChanged(float NewStamina)
 
 void UStaminaWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	Char = Cast<AEvidenceCharacter>(NewPawn);
+	Char = Cast<ABaseCharacter>(NewPawn);
 	if (Char)
 	{
 		Char->StaminaDelegate.AddUObject(this, &ThisClass::OnStaminaChanged);

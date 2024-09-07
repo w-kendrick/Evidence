@@ -2,7 +2,7 @@
 
 
 #include "EquipmentStatWidget.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 void UEquipmentStatWidget::NativeConstruct()
@@ -32,7 +32,7 @@ void UEquipmentStatWidget::EquipmentSetup(UInventoryManagerComponent* const Inve
 
 void UEquipmentStatWidget::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 {
-	const AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(NewPawn);
+	const ABaseCharacter* const Char = Cast<ABaseCharacter>(NewPawn);
 	if (Char)
 	{
 		UInventoryManagerComponent* const InventoryComponent = Char->GetInventoryComponent();

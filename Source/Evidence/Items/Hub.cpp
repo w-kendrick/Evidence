@@ -14,7 +14,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/EvidenceGameState.h"
 #include "Components/SphereComponent.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/EvidencePlayerController.h"
 
 AHub::AHub()
@@ -72,7 +72,7 @@ void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveCompo
 {
 	if (HasAuthority())
 	{
-		AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(InteractingActor);
+		ABaseCharacter* const Char = Cast<ABaseCharacter>(InteractingActor);
 		if (Char)
 		{
 			Interactor = Char;

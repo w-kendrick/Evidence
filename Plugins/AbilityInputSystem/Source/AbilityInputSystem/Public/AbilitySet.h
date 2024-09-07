@@ -7,6 +7,7 @@
 #include "GameplayTagContainer.h"
 #include "GameplayAbilitySpecHandle.h"
 #include "ActiveGameplayEffectHandle.h"
+#include "AdvancedAbilityComponent.h"
 #include "AbilitySet.generated.h"
 
 class UAdvancedAbilityComponent;
@@ -77,7 +78,41 @@ public:
 	void AddGameplayEffectHandle(const FActiveGameplayEffectHandle& Handle);
 	void AddAttributeSet(UAttributeSet* Set);
 
-	void TakeFromAbilitySystem(UAdvancedAbilityComponent* AASC);
+	void TakeFromAbilitySystem(UAdvancedAbilityComponent* AASC)
+	{
+		check(AASC);
+
+		if (!AASC->IsOwnerActorAuthoritative())
+		{
+			// Must be authoritative to give or take ability sets.
+			return;
+		}
+
+		for (const FGameplayAbilitySpecHandle& Handle : AbilitySpecHandles)
+		{
+			if (Handle.IsValid())
+			{
+				AASC->ClearAbility(Handle);
+			}
+		}
+
+		for (const FActiveGameplayEffectHandle& Handle : GameplayEffectHandles)
+		{
+			if (Handle.IsValid())
+			{
+				AASC->RemoveActiveGameplayEffect(Handle);
+			}
+		}
+
+		for (UAttributeSet* Set : GrantedAttributeSets)
+		{
+			AASC->RemoveSpawnedAttribute(Set);
+		}
+
+		AbilitySpecHandles.Reset();
+		GameplayEffectHandles.Reset();
+		GrantedAttributeSets.Reset();
+	}
 
 	template<class T>
 	T* FindAttributeSetByClass() const
