@@ -9,7 +9,6 @@
 
 UEIAttachmentSwap::UEIAttachmentSwap()
 {
-	AbilityInputID = EAbilityInputID::None;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerExecution;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.AttachmentSwap"))));

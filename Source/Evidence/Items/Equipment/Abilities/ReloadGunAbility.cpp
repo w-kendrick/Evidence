@@ -8,7 +8,6 @@
 
 UReloadGunAbility::UReloadGunAbility()
 {
-	AbilityInputID = EAbilityInputID::Reload;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Reload"))));

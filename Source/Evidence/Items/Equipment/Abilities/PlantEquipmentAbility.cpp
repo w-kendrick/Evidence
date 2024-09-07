@@ -8,7 +8,6 @@
 
 UPlantEquipmentAbility::UPlantEquipmentAbility()
 {
-	AbilityInputID = EAbilityInputID::Use;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Use"))));
