@@ -92,7 +92,7 @@ uint8 UInventoryManagerComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> Amm
 
 			if (isSlotExhausted)
 			{
-				Pickup(nullptr, Index);
+				Drop(Index);
 				Equipment->Destroy();
 			}
 		}
