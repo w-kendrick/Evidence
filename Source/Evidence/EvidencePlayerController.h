@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "MoreMovementPlayerController.h"
 #include "Evidence/Delegates.h"
 #include "EvidencePlayerController.generated.h"
 
 class UInputMappingContext;
 
 UCLASS()
-class EVIDENCE_API AEvidencePlayerController : public APlayerController
+class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerController
 {
 	GENERATED_BODY()
 

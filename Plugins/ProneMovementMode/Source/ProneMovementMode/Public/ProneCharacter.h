@@ -129,7 +129,7 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	UAbilitySetupComponent* AbilitySetupComponent;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(VisibleDefaultsOnly)
 	UCameraComponent* CameraComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Effects|Movement")
