@@ -23,7 +23,7 @@ AEquipment::AEquipment()
 	WorldMesh->SetGenerateOverlapEvents(true);
 	WorldMesh->bOwnerNoSee = true;
 	WorldMesh->bOnlyOwnerSee = false;
-	//WorldMesh->SetIsReplicated(true);
+	WorldMesh->SetIsReplicated(true);
 
 	LocalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("LocalMesh"));
 	LocalMesh->SetupAttachment(RootComponent);
@@ -32,7 +32,7 @@ AEquipment::AEquipment()
 	LocalMesh->SetGenerateOverlapEvents(false);
 	LocalMesh->bOwnerNoSee = false;
 	LocalMesh->bOnlyOwnerSee = true;
-	//LocalMesh->SetIsReplicated(true);
+	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
 }
