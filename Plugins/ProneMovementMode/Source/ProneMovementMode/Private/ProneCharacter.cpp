@@ -140,6 +140,7 @@ void AProneCharacter::OnStartProne(float HeightAdjust, float ScaledHeightAdjust)
 
 	if (AbilitySystemComponent)
 	{
+		checkf(ProneEffectClass, TEXT("ProneEffectClass is null"));
 		const UGameplayEffect* ProneEffect = ProneEffectClass->GetDefaultObject<UGameplayEffect>();
 		ProneHandle = AbilitySystemComponent->ApplyGameplayEffectToSelf(ProneEffect, 1, AbilitySystemComponent->MakeEffectContext());
 	}
@@ -151,6 +152,7 @@ void AProneCharacter::OnStartCrouch(float HalfHeightAdjust, float ScaledHalfHeig
 
 	if (AbilitySystemComponent)
 	{
+		checkf(CrouchEffectClass, TEXT("CrouchEffectClass is null"));
 		const UGameplayEffect* CrouchEffect = CrouchEffectClass->GetDefaultObject<UGameplayEffect>();
 		CrouchHandle = AbilitySystemComponent->ApplyGameplayEffectToSelf(CrouchEffect, 1, AbilitySystemComponent->MakeEffectContext());
 	}
@@ -172,6 +174,7 @@ void AProneCharacter::OnJumped_Implementation()
 
 	if (AbilitySystemComponent)
 	{
+		checkf(JumpEffectClass, TEXT("JumpEffectClass is null"));
 		const UGameplayEffect* JumpEffect = JumpEffectClass->GetDefaultObject<UGameplayEffect>();
 		JumpHandle = AbilitySystemComponent->ApplyGameplayEffectToSelf(JumpEffect, 1, AbilitySystemComponent->MakeEffectContext());
 	}
