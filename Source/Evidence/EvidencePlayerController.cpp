@@ -46,3 +46,8 @@ void AEvidencePlayerController::ClientSetAttachmentWidgetVisibility_Implementati
 {
 	OnSetAttachmentWidgetVisibility.ExecuteIfBound(bVisibility);
 }
+
+void AEvidencePlayerController::SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString)
+{
+	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
+}

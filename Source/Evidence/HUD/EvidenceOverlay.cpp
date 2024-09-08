@@ -17,18 +17,6 @@ void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (GetOwningPlayer())
-	{
-		if (GetOwningPlayer()->GetCharacter())
-		{
-			SetupDelegates(nullptr, GetOwningPlayer()->GetCharacter());
-		}
-		else
-		{
-			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegates);
-		}
-	}
-
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (EPC)
 	{
@@ -119,14 +107,5 @@ void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 	else
 	{
 		AttachmentWidget->Disable();
-	}
-}
-
-void UEvidenceOverlay::SetupDelegates(APawn* OldPawn, APawn* NewPawn)
-{
-	ABaseCharacter* const PlayerChar = Cast<ABaseCharacter>(NewPawn);
-	if (PlayerChar)
-	{
-		PlayerChar->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 	}
 }

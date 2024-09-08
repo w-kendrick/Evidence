@@ -15,6 +15,8 @@ class ABILITYINPUTSYSTEM_API UAdvancedAbilityComponent : public UAbilitySystemCo
 	GENERATED_BODY()
 
 public:
+	virtual void InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor) override;
+
 	void AbilityInputTagPressed(const FGameplayTag& InputTag);
 	void AbilityInputTagReleased(const FGameplayTag& InputTag);
 
@@ -47,6 +49,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "GameplayCue", Meta = (AutoCreateRefTerm = "GameplayCueParameters", GameplayTagFilter = "GameplayCue"))
 	void RemoveGameplayCueLocal(const FGameplayTag GameplayCueTag, const FGameplayCueParameters& GameplayCueParameters);
+
+protected:
+	void TryActivateAbilitiesOnSpawn();
 
 private:
 	virtual void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;

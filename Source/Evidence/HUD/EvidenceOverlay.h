@@ -57,8 +57,4 @@ protected:
 
 	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetAttachmentVisibility(bool bVisibility);
-
-private:
-	UFUNCTION()
-	void SetupDelegates(APawn* OldPawn, APawn* NewPawn);
 };

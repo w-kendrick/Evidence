@@ -6,6 +6,13 @@
 #include "AbilitySystemGlobals.h"
 #include "GameplayCueManager.h"
 
+void UAdvancedAbilityComponent::InitAbilityActorInfo(AActor* InOwnerActor, AActor* InAvatarActor)
+{
+	Super::InitAbilityActorInfo(InOwnerActor, InAvatarActor);
+
+	TryActivateAbilitiesOnSpawn();
+}
+
 void UAdvancedAbilityComponent::AbilityInputTagPressed(const FGameplayTag& InputTag)
 {
 	if (InputTag.IsValid())
@@ -141,3 +148,13 @@ void UAdvancedAbilityComponent::RemoveGameplayCueLocal(const FGameplayTag Gamepl
 }
 
 #pragma endregion
+
+void UAdvancedAbilityComponent::TryActivateAbilitiesOnSpawn()
+{
+	ABILITYLIST_SCOPE_LOCK();
+	for (const FGameplayAbilitySpec& AbilitySpec : ActivatableAbilities.Items)
+	{
+		const UAdvancedGameplayAbility* AbilityCDO = CastChecked<UAdvancedGameplayAbility>(AbilitySpec.Ability);
+		AbilityCDO->TryActivateAbilityOnSpawn(AbilityActorInfo.Get(), AbilitySpec);
+	}
+}

@@ -24,8 +24,12 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
 
+	UFUNCTION(BlueprintCallable)
+	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
+
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
+	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 	
 protected:
 
