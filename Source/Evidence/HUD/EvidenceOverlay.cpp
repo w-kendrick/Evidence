@@ -22,6 +22,7 @@ void UEvidenceOverlay::NativeConstruct()
 	{
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetAttachmentWidgetVisibility.BindUObject(this, &ThisClass::SetAttachmentVisibility);
+		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);

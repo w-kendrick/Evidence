@@ -47,8 +47,6 @@ protected:
 
 	bool bInventoryWidgetVisible = false;
 
-	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
-
 	UPROPERTY(meta = (BindWidget))
 	UTerminalMenu* TerminalMenu;
 
@@ -57,4 +55,5 @@ protected:
 
 	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetAttachmentVisibility(bool bVisibility);
+	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 };
