@@ -30,6 +30,10 @@ AProneCharacter::AProneCharacter(const FObjectInitializer& FObjectInitializer)
 	CameraComponent->SetupAttachment(RootComponent);
 	CameraComponent->bUsePawnControlRotation = true;
 
+	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh1P"));
+	Mesh1P->SetupAttachment(CameraComponent);
+	Mesh1P->bOnlyOwnerSee = true;
+
 	PronedEyeHeight = 30.f;
 }
 
