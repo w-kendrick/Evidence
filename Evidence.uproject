@@ -12,7 +12,8 @@
 				"Engine",
 				"GameplayAbilities",
 				"UMG",
-				"AIModule"
+				"AIModule",
+				"ProneMovementMode"
 			]
 		}
 	],
@@ -30,6 +31,14 @@
 		},
 		{
 			"Name": "FunctionalTestingEditor",
+			"Enabled": true
+		},
+		{
+			"Name": "AbilityInputSystem",
+			"Enabled": true
+		},
+		{
+			"Name": "ProneMovementMode",
 			"Enabled": true
 		}
 	]

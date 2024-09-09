@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/PlayerController.h"
+#include "MoreMovementPlayerController.h"
 #include "Evidence/Delegates.h"
 #include "EvidencePlayerController.generated.h"
 
 class UInputMappingContext;
 
 UCLASS()
-class EVIDENCE_API AEvidencePlayerController : public APlayerController
+class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerController
 {
 	GENERATED_BODY()
 
@@ -24,8 +24,12 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
 
+	UFUNCTION(BlueprintCallable)
+	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
+
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
+	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 	
 protected:
 
@@ -37,7 +41,6 @@ protected:
 protected:
 
 	virtual void BeginPlay() override;
-	virtual void AcknowledgePossession(APawn* P) override;
 
 	// End Actor interface
 };

@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "EIGameplayAbility.h"
+#include "Abilities/AdvancedGameplayAbility.h"
 #include "EIDropAbility.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API UEIDropAbility : public UEIGameplayAbility
+class EVIDENCE_API UEIDropAbility : public UAdvancedGameplayAbility
 {
 	GENERATED_BODY()
 

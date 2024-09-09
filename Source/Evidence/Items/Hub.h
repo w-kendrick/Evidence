@@ -18,7 +18,7 @@ class AEvidenceCaptureEquipment;
 class AEvidenceGameState;
 class USphereComponent;
 class UStaticMeshComponent;
-class AEvidencePlayerCharacter;
+class ABaseCharacter;
 	
 UCLASS()
 class EVIDENCE_API AHub : public AActor, public IInteractable
@@ -64,7 +64,7 @@ protected:
 	TArray<FShopItem> ShopItems;
 
 	UPROPERTY(Replicated)
-	AEvidencePlayerCharacter* Interactor;
+	ABaseCharacter* Interactor;
 
 	UFUNCTION(Server, Reliable)
 	void ServerRelinquishTerminal();

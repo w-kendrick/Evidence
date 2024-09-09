@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Abilities/AdvancedGameplayAbility.h"
 #include "EIAttachmentSwap.generated.h"
 
 UCLASS()
-class EVIDENCE_API UEIAttachmentSwap : public UEIGameplayAbility
+class EVIDENCE_API UEIAttachmentSwap : public UAdvancedGameplayAbility
 {
 	GENERATED_BODY()
 

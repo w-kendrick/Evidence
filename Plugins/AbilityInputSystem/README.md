@@ -1,0 +1,12 @@
+HOWTO:
+- Add files to the project Plugins folder
+- Add AbilityInputSystem component to the project's Build.cs file as a PublicDependencyModule
+- Set project input component class to be AbilityInputComponent
+- Create subclass of ACharacter for the project
+- Add UAdvancedAbilityComponent and UAbilitySetupComponent to the subclass of ACharacter
+	- Override PossessedBy and call function InitializeAbilitySystem on UAbilitySetupComponent
+	- Override SetupPlayerInputComponent and call function InitializePlayerInput on UAbilitySetupComponent
+- Create subclassof APlayerController
+	- Override PostProcessInput and call function ProcessAbilityInput on UAdvancedAbilityComponent 
+	- Override AcknowledgePossession and call function InitializeAbilitySystem on UAbilitySetupComponent
+	- Override BeginPlay and call function AddInputMappingContext on UAbilitySetupComponent

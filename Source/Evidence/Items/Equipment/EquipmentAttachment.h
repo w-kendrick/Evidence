@@ -5,10 +5,9 @@
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment.h"
 #include "Evidence/Enums/AttachmentType.h"
-#include "Evidence/Structs/GrantedAbility.h"
 #include "EquipmentAttachment.generated.h"
 
-class UEIGameplayAbility;
+class UAbilitySet;
 
 UCLASS()
 class EVIDENCE_API AEquipmentAttachment : public AEquipment
@@ -31,11 +30,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	EAttachmentType AttachmentType;
 
-	UPROPERTY(EditDefaultsOnly)
-	TArray<TSubclassOf<UEIGameplayAbility>> AttachmentAbilities;
-
-	UPROPERTY()
-	TArray<FGrantedAbility> GrantedAttachmentAbilities;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability")
+	TObjectPtr<const UAbilitySet> AttachmentAbilitySet;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<AEquipment> PermittedClass;

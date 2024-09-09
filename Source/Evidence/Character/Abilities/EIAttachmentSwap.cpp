@@ -2,14 +2,13 @@
 
 
 #include "EIAttachmentSwap.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Enums/AttachmentType.h"
 #include "Evidence/Items/Equipment/EquipmentAttachment.h"
 
 UEIAttachmentSwap::UEIAttachmentSwap()
 {
-	AbilityInputID = EAbilityInputID::None;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerExecution;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.AttachmentSwap"))));
@@ -21,7 +20,7 @@ void UEIAttachmentSwap::Activate(const FGameplayEventData& EventData)
 	const uint8 Index = Data->GetHitResult()->FaceIndex;
 	const EAttachmentType AttachmentType = static_cast<EAttachmentType>(Data->GetHitResult()->ElementIndex);
 
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetAvatarActorFromActorInfo());
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(GetAvatarActorFromActorInfo());
 
 	if (!Char)
 	{

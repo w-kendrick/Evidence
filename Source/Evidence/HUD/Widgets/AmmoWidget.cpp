@@ -4,7 +4,6 @@
 #include "AmmoWidget.h"
 #include "Components/TextBlock.h"
 #include "Evidence/Items/Equipment/Ammunition/Ammunition.h"
-#include "Evidence/Character/EvidenceCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 void UAmmoWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)

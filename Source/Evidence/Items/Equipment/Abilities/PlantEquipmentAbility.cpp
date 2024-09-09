@@ -2,13 +2,12 @@
 
 
 #include "PlantEquipmentAbility.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Items/Equipment/PlantableEquipment.h"
 #include "AbilitySystemBlueprintLibrary.h"
 
 UPlantEquipmentAbility::UPlantEquipmentAbility()
 {
-	AbilityInputID = EAbilityInputID::Use;
 	InstancingPolicy = EGameplayAbilityInstancingPolicy::InstancedPerActor;
 	NetExecutionPolicy = EGameplayAbilityNetExecutionPolicy::LocalPredicted;
 	AbilityTags.AddTag(FGameplayTag::RequestGameplayTag(FName(TEXT("Ability.Use"))));
@@ -55,7 +54,7 @@ bool UPlantEquipmentAbility::CanActivateAbility(const FGameplayAbilitySpecHandle
 
 void UPlantEquipmentAbility::ApplyCost(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo) const
 {
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetCurrentActorInfo()->AvatarActor);
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(GetCurrentActorInfo()->AvatarActor);
 	if (!Char)
 	{
 		return;

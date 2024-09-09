@@ -7,33 +7,22 @@
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
 #include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
+#include "Evidence/Character/BaseCharacter.h"
 
 void UEvidenceOverlay::NativeConstruct()
 {
 	Super::NativeConstruct();
-
-	if (GetOwningPlayer())
-	{
-		if (GetOwningPlayer()->GetCharacter())
-		{
-			SetupDelegates(nullptr, GetOwningPlayer()->GetCharacter());
-		}
-		else
-		{
-			GetOwningPlayer()->OnPossessedPawnChanged.AddDynamic(this, &ThisClass::SetupDelegates);
-		}
-	}
 
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (EPC)
 	{
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetAttachmentWidgetVisibility.BindUObject(this, &ThisClass::SetAttachmentVisibility);
+		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
@@ -119,14 +108,5 @@ void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
 	else
 	{
 		AttachmentWidget->Disable();
-	}
-}
-
-void UEvidenceOverlay::SetupDelegates(APawn* OldPawn, APawn* NewPawn)
-{
-	AEvidencePlayerCharacter* const PlayerChar = Cast<AEvidencePlayerCharacter>(NewPawn);
-	if (PlayerChar)
-	{
-		PlayerChar->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 	}
 }

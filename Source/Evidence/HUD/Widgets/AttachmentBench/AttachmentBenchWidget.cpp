@@ -3,7 +3,7 @@
 
 #include "AttachmentBenchWidget.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/Character/EvidenceCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Items/Equipment.h"
 #include "AttachmentWidget.h"
 #include "Components/VerticalBox.h"
@@ -40,7 +40,7 @@ void UAttachmentBenchWidget::UpdateAttachments()
 {
 	AttachmentBox->ClearChildren();
 
-	Character = Cast<AEvidenceCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
+	Character = Cast<ABaseCharacter>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 
 	if (Character)
 	{

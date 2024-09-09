@@ -3,7 +3,7 @@
 
 #include "GAT_WaitInteractableTarget.h"
 #include "Evidence/Interfaces/Interactable.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "DrawDebugHelpers.h"
 #include "TimerManager.h"
 #include "Evidence/Evidence.h"
@@ -22,7 +22,7 @@ UGAT_WaitInteractableTarget* UGAT_WaitInteractableTarget::WaitForInteractableTar
 	MyObj->TimerPeriod = TimerPeriod;
 	MyObj->bShowDebug = bShowDebug;
 	
-	AEvidencePlayerCharacter* const Char = Cast<AEvidencePlayerCharacter>(OwningAbility->GetCurrentActorInfo()->AvatarActor);
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(OwningAbility->GetCurrentActorInfo()->AvatarActor);
 
 	MyObj->StartLocation = FGameplayAbilityTargetingLocationInfo();
 	MyObj->StartLocation.LocationType = EGameplayAbilityTargetingLocationType::ActorTransform;

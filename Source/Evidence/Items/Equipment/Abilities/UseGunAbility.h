@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Abilities/AdvancedGameplayAbility.h"
 #include "UseGunAbility.generated.h"
 
 class ATrueProjectile;
 class ACosmeticProjectile;
 
 UCLASS()
-class EVIDENCE_API UUseGunAbility : public UEIGameplayAbility
+class EVIDENCE_API UUseGunAbility : public UAdvancedGameplayAbility
 {
 	GENERATED_BODY()
 

@@ -3,7 +3,6 @@
 
 #include "EvidencePlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "Character/EvidenceCharacter.h"
 #include "HUD/EvidenceHUD.h"
 
 void AEvidencePlayerController::BeginPlay()
@@ -17,17 +16,6 @@ void AEvidencePlayerController::BeginPlay()
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 
 		UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
-	}
-}
-
-void AEvidencePlayerController::AcknowledgePossession(APawn* P)
-{
-	Super::AcknowledgePossession(P);
-
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(P);
-	if (Char)
-	{
-		Char->GetAbilitySystemComponent()->InitAbilityActorInfo(Char, Char);
 	}
 }
 
@@ -57,4 +45,9 @@ void AEvidencePlayerController::ClientSetTerminalMenuVisibility_Implementation(c
 void AEvidencePlayerController::ClientSetAttachmentWidgetVisibility_Implementation(const bool bVisibility)
 {
 	OnSetAttachmentWidgetVisibility.ExecuteIfBound(bVisibility);
+}
+
+void AEvidencePlayerController::SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString)
+{
+	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
 }

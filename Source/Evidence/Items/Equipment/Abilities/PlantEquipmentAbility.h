@@ -3,11 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Abilities/AdvancedGameplayAbility.h"
 #include "PlantEquipmentAbility.generated.h"
 
 UCLASS()
-class EVIDENCE_API UPlantEquipmentAbility : public UEIGameplayAbility
+class EVIDENCE_API UPlantEquipmentAbility : public UAdvancedGameplayAbility
 {
 	GENERATED_BODY()
 

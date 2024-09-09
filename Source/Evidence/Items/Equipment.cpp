@@ -4,10 +4,9 @@
 #include "Equipment.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Evidence/Evidence.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
-#include "Kismet/KismetSystemLibrary.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Evidence/Character/BaseCharacter.h"
 #include "Equipment/EquipmentAttachment.h"
+#include "AdvancedAbilityComponent.h"
 
 AEquipment::AEquipment()
 {
@@ -23,7 +22,7 @@ AEquipment::AEquipment()
 	WorldMesh->SetGenerateOverlapEvents(true);
 	WorldMesh->bOwnerNoSee = true;
 	WorldMesh->bOnlyOwnerSee = false;
-	//WorldMesh->SetIsReplicated(true);
+	WorldMesh->SetIsReplicated(true);
 
 	LocalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("LocalMesh"));
 	LocalMesh->SetupAttachment(RootComponent);
@@ -32,7 +31,7 @@ AEquipment::AEquipment()
 	LocalMesh->SetGenerateOverlapEvents(false);
 	LocalMesh->bOwnerNoSee = false;
 	LocalMesh->bOnlyOwnerSee = true;
-	//LocalMesh->SetIsReplicated(true);
+	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
 }
@@ -61,37 +60,6 @@ void AEquipment::RemoveAttachment(const EAttachmentType Type)
 	OnAttachmentsUpdated.Broadcast();
 }
 
-FGameplayAbilitySpecHandle AEquipment::AddAttachmentAbility(const TSubclassOf<UEIGameplayAbility>& Ability)
-{
-	Abilities.Add(Ability);
-
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
-	if (Char)
-	{
-		if (Char->GetEquipped() == this)
-		{
-			UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
-
-			return ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this));
-		}
-	}
-
-	return FGameplayAbilitySpecHandle();
-}
-
-void AEquipment::RemoveAttachmentAbility(const FGameplayAbilitySpecHandle& Handle, const TSubclassOf<UEIGameplayAbility>& Ability)
-{
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner());
-	if (Char)
-	{
-		UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
-
-		ASC->ClearAbility(Handle);
-	}
-
-	Abilities.Remove(Ability);
-}
-
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
 {
 	return !bIsPickedUp;
@@ -99,7 +67,7 @@ bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* I
 
 void AEquipment::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
-	AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(InteractingActor);
+	ABaseCharacter* const Char = Cast<ABaseCharacter>(InteractingActor);
 	if (Char)
 	{
 		Char->Pickup(this);
@@ -111,7 +79,7 @@ FString AEquipment::GetInteractionString_Implementation()
 	return FString("Pickup ") + GetEquipmentName();
 }
 
-void AEquipment::Pickup(AEvidenceCharacter* Char)
+void AEquipment::Pickup(ABaseCharacter* Char)
 {
 	Attach(Char, true);
 
@@ -120,7 +88,7 @@ void AEquipment::Pickup(AEvidenceCharacter* Char)
 
 void AEquipment::Drop()
 {
-	if (AEvidenceCharacter* const Char = Cast<AEvidenceCharacter>(GetOwner()))
+	if (ABaseCharacter* const Char = Cast<ABaseCharacter>(GetOwner()))
 	{
 		RemoveAbilities(Char);
 	}
@@ -140,7 +108,7 @@ void AEquipment::Drop()
 	SetActorRotation(Rotation);
 }
 
-void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
+void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
 {
 	SetOwner(Char);
 	bIsPickedUp = true;
@@ -150,10 +118,10 @@ void AEquipment::Attach(AEvidenceCharacter* Char, const bool isVisible)
 	//WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
 	WorldMesh->SetVisibility(isVisible);
 
-	AEvidencePlayerCharacter* PlayerChar = Cast<AEvidencePlayerCharacter>(Char);
+	ABaseCharacter* PlayerChar = Cast<ABaseCharacter>(Char);
 	if (PlayerChar)
 	{
-		USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
+		//USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
 		//LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
@@ -174,36 +142,28 @@ void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
 	Rotation = GetActorRotation();
 }
 
-void AEquipment::AddAbilities(AEvidenceCharacter* Char)
+void AEquipment::AddAbilities(ABaseCharacter* Char)
 {
-	UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+	UAdvancedAbilityComponent* const ASC = Cast<UAdvancedAbilityComponent>(Char->GetAbilitySystemComponent());
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
 		return;
 	}
 
-	for (const TSubclassOf<UEIGameplayAbility>& Ability : Abilities)
-	{
-		GrantedAbilities.Add(ASC->GiveAbility(FGameplayAbilitySpec(Ability, 0, static_cast<int32>(Ability.GetDefaultObject()->AbilityInputID), this)));
-	}
+	AbilitySet->GiveToAbilitySystem(ASC, &GrantedHandles, this);
 }
 
-void AEquipment::RemoveAbilities(AEvidenceCharacter* Char)
+void AEquipment::RemoveAbilities(ABaseCharacter* Char)
 {
-	UCharacterAbilitySystemComponent* const ASC = Char->GetCharacterAbilitySystemComponent();
+	UAdvancedAbilityComponent* const ASC = Cast<UAdvancedAbilityComponent>(Char->GetAbilitySystemComponent());
 
 	if (GetLocalRole() != ROLE_Authority || !ASC)
 	{
 		return;
 	}
 
-	for (const FGameplayAbilitySpecHandle& Handle : GrantedAbilities)
-	{
-		ASC->ClearAbility(Handle);
-	}
-
-	GrantedAbilities.Empty();
+	GrantedHandles.TakeFromAbilitySystem(ASC);
 }
 
 AEquipmentAttachment* AEquipment::GetAttachment(const EAttachmentType Type) const

@@ -5,7 +5,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/EvidenceGameState.h"
 #include "Evidence/Items/Hub.h"
-#include "Evidence/Character/EvidencePlayerCharacter.h"
 #include "Components/Button.h"
 #include "TerminalShopMenu.h"
 

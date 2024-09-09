@@ -1,0 +1,13 @@
+// Copyright Epic Games, Inc. All Rights Reserved.
+
+#pragma once
+
+#include "NativeGameplayTags.h"
+
+namespace BasicGameplayTags
+{
+	ABILITYINPUTSYSTEM_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Move);
+	ABILITYINPUTSYSTEM_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Look_Mouse);
+	ABILITYINPUTSYSTEM_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Jump);
+	ABILITYINPUTSYSTEM_API	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_Crouch);
+};

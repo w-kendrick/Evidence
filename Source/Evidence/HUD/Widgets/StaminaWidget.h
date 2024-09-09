@@ -15,7 +15,7 @@ protected:
 	virtual void NativeConstruct() override;
 
 	UPROPERTY()
-	class AEvidenceCharacter* Char;
+	class ABaseCharacter* Char;
 
 	UPROPERTY(meta = (BindWidget))
 	class UProgressBar* StaminaBar;

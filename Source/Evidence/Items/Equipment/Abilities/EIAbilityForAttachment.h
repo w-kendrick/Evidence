@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Character/Abilities/EIGameplayAbility.h"
+#include "Abilities/AdvancedGameplayAbility.h"
 #include "Evidence/Enums/AttachmentType.h"
 #include "EIAbilityForAttachment.generated.h"
 
@@ -13,7 +13,7 @@ class AEquipmentAttachment;
  * 
  */
 UCLASS()
-class EVIDENCE_API UEIAbilityForAttachment : public UEIGameplayAbility
+class EVIDENCE_API UEIAbilityForAttachment : public UAdvancedGameplayAbility
 {
 	GENERATED_BODY()
 
