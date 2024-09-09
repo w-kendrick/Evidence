@@ -29,6 +29,9 @@ protected:
 
 	friend class FSavedMove_Character_Prone;
 
+	UPROPERTY(VisibleDefaultsOnly)
+	TObjectPtr<USkeletalMeshComponent> Mesh1P;
+
 	void SetupAttributeSetReferences();
 
 	UFUNCTION(Client, Reliable)
@@ -50,6 +53,7 @@ public:
 	UAbilitySetupComponent* GetAbilitySetupComponent() const { return AbilitySetupComponent; }
 	UFUNCTION(BlueprintCallable)
 	UCameraComponent* GetCameraComponent() const { return CameraComponent; }
+	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 
 	float GetMoveSpeed() const;
 

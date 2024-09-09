@@ -121,8 +121,8 @@ void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
 	ABaseCharacter* PlayerChar = Cast<ABaseCharacter>(Char);
 	if (PlayerChar)
 	{
-		//USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
-		//LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
+		USkeletalMeshComponent* const CharLocalMesh = PlayerChar->GetMesh1P();
+		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
 }
