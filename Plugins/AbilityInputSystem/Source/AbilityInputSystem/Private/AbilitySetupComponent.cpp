@@ -64,6 +64,7 @@ void UAbilitySetupComponent::AddInputMappingContext(ULocalPlayer* LocalPlayer)
 {
 	if (UEnhancedInputLocalPlayerSubsystem* const Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(LocalPlayer))
 	{
+		checkf(InputMappingContext, TEXT("InputMappingContext is null"));
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 	}
 }
