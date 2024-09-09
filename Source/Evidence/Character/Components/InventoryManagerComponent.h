@@ -9,6 +9,7 @@
 #include "InventoryManagerComponent.generated.h"
 
 class AAmmunition;
+class ABaseCharacter;
 
 /*
  Manages a character's stored equipment
@@ -40,6 +41,9 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UPROPERTY()
+	ABaseCharacter* CharacterOwner;
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_EquipmentList)

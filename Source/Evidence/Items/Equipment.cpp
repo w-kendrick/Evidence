@@ -115,7 +115,7 @@ void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
 
 	USkeletalMeshComponent* const CharWorldMesh = Char->GetMesh();
 	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-	//WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
+	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
 	WorldMesh->SetVisibility(isVisible);
 
 	ABaseCharacter* PlayerChar = Cast<ABaseCharacter>(Char);

@@ -18,9 +18,15 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 
 	Pickup(Equipment, SelectedIndex);
 
+	if (!CharacterOwner)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Invalid character owner");
+		return;
+	}
+
 	if (Equipment)
 	{
-		Equipment->Pickup(Cast<ABaseCharacter>(GetOwner()));
+		Equipment->Pickup(CharacterOwner);
 	}
 
 	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
@@ -104,6 +110,8 @@ uint8 UInventoryManagerComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> Amm
 void UInventoryManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	CharacterOwner = Cast<ABaseCharacter>(GetOwner());
 }
 
 void UInventoryManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

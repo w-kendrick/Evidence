@@ -66,7 +66,6 @@ public:
 	{
 		RemoveEntry(Index);
 		Entries[Index] = FEquipmentItem(Equipment);
-		Equipment->Attach(OwningCharacter, false);
 	}
 
 	void RemoveEntry(const uint8 Index)
