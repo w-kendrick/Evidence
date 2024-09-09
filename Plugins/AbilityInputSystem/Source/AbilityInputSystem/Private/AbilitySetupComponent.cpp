@@ -30,6 +30,7 @@ void UAbilitySetupComponent::InitializeAbilitySystem(const bool bApplyDefaultAbi
 
 	AASC->InitAbilityActorInfo(OwningActor, OwningActor);
 
+	checkf(DefaultAbilitySet, TEXT("DefaultAbilitySet is null"));
 	if (bApplyDefaultAbilitySet)
 	{
 		AddAbilitySet(DefaultAbilitySet);
@@ -48,8 +49,10 @@ void UAbilitySetupComponent::AddAbilitySet(TObjectPtr<const UAbilitySet> Set)
 void UAbilitySetupComponent::InitializePlayerInput(UInputComponent* PlayerInputComponent)
 {
 	UAbilityInputComponent* AbilityInputComponent = Cast<UAbilityInputComponent>(PlayerInputComponent);
+	checkf(AbilityInputComponent, TEXT("Not using UAbilityInputComponent (set in Project Settings)"));
 	if (AbilityInputComponent)
 	{
+		checkf(InputConfig, TEXT("InputConfig is null"));
 		AbilityInputComponent->BindAbilityActions(InputConfig, this, &ThisClass::Input_AbilityInputTagPressed, &ThisClass::Input_AbilityInputTagReleased);
 
 		AbilityInputComponent->BindNativeAction(InputConfig, BasicGameplayTags::InputTag_Move, ETriggerEvent::Triggered, this, &ThisClass::Input_Move);
