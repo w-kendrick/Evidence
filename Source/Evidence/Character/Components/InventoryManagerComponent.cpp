@@ -107,11 +107,39 @@ uint8 UInventoryManagerComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> Amm
 	return Amount;
 }
 
+void UInventoryManagerComponent::IncrementSelectedIndex()
+{
+	const uint8 PrevIndex = SelectedIndex;
+	SelectedIndex = (SelectedIndex + 1) % INVENTORY_SIZE;
+
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+}
+
+void UInventoryManagerComponent::DecrementSelectedIndex()
+{
+	const uint8 PrevIndex = SelectedIndex;
+
+	if (SelectedIndex == 0)
+	{
+		SelectedIndex = INVENTORY_SIZE - 1;
+	}
+	else
+	{
+		SelectedIndex -= 1;
+	}
+
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+}
+
 void UInventoryManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
 	CharacterOwner = Cast<ABaseCharacter>(GetOwner());
+
+	OnInventoryChanged.Broadcast(EquipmentList);
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, 0);
+	OnEquippedChanged.Broadcast(GetEquipped(), nullptr);
 }
 
 void UInventoryManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

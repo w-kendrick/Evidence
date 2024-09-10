@@ -62,4 +62,6 @@ void UInventoryHotbar::OnInventoryChanged(FEquipmentList EquipmentList)
 
 void UInventoryHotbar::OnEquippedIndexChanged(uint8 SelectedIndex, uint8 PrevIndex)
 {
+	HotbarSlots[PrevIndex]->SelectSlot(false);
+	HotbarSlots[SelectedIndex]->SelectSlot(true);
 }
