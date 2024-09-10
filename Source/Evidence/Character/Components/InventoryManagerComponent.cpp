@@ -136,6 +136,10 @@ void UInventoryManagerComponent::BeginPlay()
 	Super::BeginPlay();
 
 	CharacterOwner = Cast<ABaseCharacter>(GetOwner());
+
+	OnInventoryChanged.Broadcast(EquipmentList);
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, 0);
+	OnEquippedChanged.Broadcast(GetEquipped(), nullptr);
 }
 
 void UInventoryManagerComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
