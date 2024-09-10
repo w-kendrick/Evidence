@@ -119,11 +119,13 @@ void UInventoryManagerComponent::DecrementSelectedIndex()
 {
 	const uint8 PrevIndex = SelectedIndex;
 
-	SelectedIndex -= 1;
-
-	if (SelectedIndex < 0)
+	if (SelectedIndex == 0)
 	{
-		SelectedIndex += INVENTORY_SIZE;
+		SelectedIndex = INVENTORY_SIZE - 1;
+	}
+	else
+	{
+		SelectedIndex -= 1;
 	}
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);

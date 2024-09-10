@@ -3,6 +3,7 @@
 
 #include "InventoryHotbarSlot.h"
 #include "Components/TextBlock.h"
+#include "Components/Image.h"
 #include "Evidence/Items/Equipment.h"
 
 void UInventoryHotbarSlot::NativeConstruct()
@@ -10,6 +11,7 @@ void UInventoryHotbarSlot::NativeConstruct()
 	Super::NativeConstruct();
 
 	UpdateSlot(nullptr);
+	SelectSlot(false);
 }
 
 void UInventoryHotbarSlot::UpdateSlot(const AEquipment* const Equipment)
@@ -22,4 +24,9 @@ void UInventoryHotbarSlot::UpdateSlot(const AEquipment* const Equipment)
 	{
 		NameText->SetText(FText::FromString(FString(TEXT("Empty"))));
 	}
+}
+
+void UInventoryHotbarSlot::SelectSlot(const bool Status)
+{
+	SelectedBorder->SetVisibility(Status ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
 }

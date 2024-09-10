@@ -19,9 +19,14 @@ class EVIDENCE_API UInventoryHotbarSlot : public UUserWidget
 public:
 	void UpdateSlot(const AEquipment* const Equipment);
 
+	void SelectSlot(const bool Status);
+
 protected:
 	virtual void NativeConstruct() override;
 	
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* NameText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* SelectedBorder;
 };
