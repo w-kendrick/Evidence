@@ -38,6 +38,9 @@ public:
 	bool IsAmmoAvailable(const TSubclassOf<AAmmunition>& AmmoType) const;
 	uint8 ConsumeAmmo(const TSubclassOf<AAmmunition> AmmoType, const uint8 Required);
 
+	void IncrementSelectedIndex();
+	void DecrementSelectedIndex();
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;

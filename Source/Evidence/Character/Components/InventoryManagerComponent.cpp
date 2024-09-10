@@ -107,6 +107,28 @@ uint8 UInventoryManagerComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> Amm
 	return Amount;
 }
 
+void UInventoryManagerComponent::IncrementSelectedIndex()
+{
+	const uint8 PrevIndex = SelectedIndex;
+	SelectedIndex = (SelectedIndex + 1) % INVENTORY_SIZE;
+
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+}
+
+void UInventoryManagerComponent::DecrementSelectedIndex()
+{
+	const uint8 PrevIndex = SelectedIndex;
+
+	SelectedIndex -= 1;
+
+	if (SelectedIndex < 0)
+	{
+		SelectedIndex += INVENTORY_SIZE;
+	}
+
+	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+}
+
 void UInventoryManagerComponent::BeginPlay()
 {
 	Super::BeginPlay();
