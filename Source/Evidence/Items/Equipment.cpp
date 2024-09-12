@@ -86,6 +86,13 @@ void AEquipment::Pickup(ABaseCharacter* Char)
 	AddAbilities(Char);
 }
 
+void AEquipment::Stow(ABaseCharacter* Char)
+{
+	Attach(Char, false);
+
+	RemoveAbilities(Char);
+}
+
 void AEquipment::Drop()
 {
 	if (ABaseCharacter* const Char = Cast<ABaseCharacter>(GetOwner()))
@@ -155,7 +162,7 @@ void AEquipment::AddAbilities(ABaseCharacter* Char)
 	{
 		return;
 	}
-
+	
 	AbilitySet->GiveToAbilitySystem(ASC, &GrantedHandles, this);
 }
 
@@ -167,7 +174,7 @@ void AEquipment::RemoveAbilities(ABaseCharacter* Char)
 	{
 		return;
 	}
-
+	
 	GrantedHandles.TakeFromAbilitySystem(ASC);
 }
 

@@ -31,7 +31,11 @@ public:
 	virtual FString GetInteractionString_Implementation() override;
 
 	void Pickup(ABaseCharacter* Char);
+	void Stow(ABaseCharacter* Char);
 	void Drop();
+
+	void Attach(ABaseCharacter* Char, const bool isVisible);
+	void Detach();
 
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
@@ -62,9 +66,6 @@ protected:
 	UPROPERTY()
 	TMap<EAttachmentType, AEquipmentAttachment*> Attachments;
 
-	void Attach(ABaseCharacter* Char, const bool isVisible);
-	void Detach();
-
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;
 
@@ -73,5 +74,5 @@ private:
 
 	void AddAbilities(ABaseCharacter* Char);
 	void RemoveAbilities(ABaseCharacter* Char);
-	
+
 };
