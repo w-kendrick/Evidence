@@ -104,13 +104,7 @@ const FVector ABaseCharacter::GetTraceStart() const
 
 const FVector ABaseCharacter::GetTraceDirection() const
 {
-	const AEquipment* const Equipped = GetEquipped();
-	if (Equipped)
-	{
-		return Equipped->GetWorldMesh()->GetSocketRotation(FName(TEXT("Muzzle"))).Vector();
-	}
-
-	return FVector();
+	return GetViewRotation().Vector();
 }
 
 #pragma endregion

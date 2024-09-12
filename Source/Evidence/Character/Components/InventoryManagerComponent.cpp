@@ -113,6 +113,7 @@ void UInventoryManagerComponent::IncrementSelectedIndex()
 	SelectedIndex = (SelectedIndex + 1) % INVENTORY_SIZE;
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+	OnEquippedChanged.Broadcast(GetEquipped(), EquipmentList[PrevIndex].GetEquipment());
 }
 
 void UInventoryManagerComponent::DecrementSelectedIndex()
@@ -129,6 +130,7 @@ void UInventoryManagerComponent::DecrementSelectedIndex()
 	}
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
+	OnEquippedChanged.Broadcast(GetEquipped(), EquipmentList[PrevIndex].GetEquipment());
 }
 
 void UInventoryManagerComponent::BeginPlay()
