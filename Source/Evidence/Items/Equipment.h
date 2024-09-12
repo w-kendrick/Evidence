@@ -33,8 +33,6 @@ public:
 	void Pickup(ABaseCharacter* Char);
 	void Drop();
 
-	void Attach(ABaseCharacter* Char, const bool isVisible);
-
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
 	FORCEINLINE const TMap<EAttachmentType, AEquipmentAttachment*>& GetAttachments() const { return Attachments; };
@@ -63,6 +61,9 @@ protected:
 
 	UPROPERTY()
 	TMap<EAttachmentType, AEquipmentAttachment*> Attachments;
+
+	void Attach(ABaseCharacter* Char, const bool isVisible);
+	void Detach();
 
 private:
 	void FindGround(FVector& Location, FRotator& Rotation) const;

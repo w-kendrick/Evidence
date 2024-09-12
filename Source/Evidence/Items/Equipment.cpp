@@ -93,19 +93,7 @@ void AEquipment::Drop()
 		RemoveAbilities(Char);
 	}
 
-	SetOwner(nullptr);
-	bIsPickedUp = false;
-
-	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
-	WorldMesh->DetachFromComponent(Rule);
-	LocalMesh->DetachFromComponent(Rule);
-
-	FVector Location;
-	FRotator Rotation;
-	FindGround(Location, Rotation);
-
-	SetActorLocation(Location);
-	SetActorRotation(Rotation);
+	Detach();
 }
 
 void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
@@ -125,6 +113,23 @@ void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
 		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
+}
+
+void AEquipment::Detach()
+{
+	SetOwner(nullptr);
+	bIsPickedUp = false;
+
+	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
+	WorldMesh->DetachFromComponent(Rule);
+	LocalMesh->DetachFromComponent(Rule);
+
+	FVector Location;
+	FRotator Rotation;
+	FindGround(Location, Rotation);
+
+	SetActorLocation(Location);
+	SetActorRotation(Rotation);
 }
 
 void AEquipment::FindGround(FVector& Location, FRotator& Rotation) const
