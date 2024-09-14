@@ -18,18 +18,7 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 
 	Pickup(Equipment, SelectedIndex);
 
-	if (!CharacterOwner)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Invalid character owner");
-		return;
-	}
-
-	if (Equipment)
-	{
-		Equipment->Pickup(CharacterOwner);
-	}
-
-	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
+	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8 Index)
@@ -50,7 +39,7 @@ void UInventoryManagerComponent::DropEquipped()
 
 	Drop(SelectedIndex);
 
-	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
+	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
 const FEquipmentList& UInventoryManagerComponent::GetInventory() const
