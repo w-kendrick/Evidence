@@ -18,18 +18,7 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 
 	Pickup(Equipment, SelectedIndex);
 
-	if (!CharacterOwner)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Invalid character owner");
-		return;
-	}
-
-	if (Equipment)
-	{
-		Equipment->Pickup(CharacterOwner);
-	}
-
-	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
+	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8 Index)
@@ -46,7 +35,11 @@ void UInventoryManagerComponent::Drop(const uint8 Index)
 
 void UInventoryManagerComponent::DropEquipped()
 {
+	AEquipment* const PrevEquipped = GetEquipped();
+
 	Drop(SelectedIndex);
+
+	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
 const FEquipmentList& UInventoryManagerComponent::GetInventory() const
@@ -113,7 +106,7 @@ void UInventoryManagerComponent::IncrementSelectedIndex()
 	SelectedIndex = (SelectedIndex + 1) % INVENTORY_SIZE;
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
-	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment());
+	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment(), EUnequipType::Stow);
 }
 
 void UInventoryManagerComponent::DecrementSelectedIndex()
@@ -130,10 +123,10 @@ void UInventoryManagerComponent::DecrementSelectedIndex()
 	}
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
-	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment());
+	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment(), EUnequipType::Stow);
 }
 
-void UInventoryManagerComponent::UpdateEquipped(AEquipment* const PrevEquipped)
+void UInventoryManagerComponent::UpdateEquipped(AEquipment* const PrevEquipped, const EUnequipType Type)
 {
 	AEquipment* const Equipped = GetEquipped();
 	if (Equipped)
@@ -143,7 +136,15 @@ void UInventoryManagerComponent::UpdateEquipped(AEquipment* const PrevEquipped)
 
 	if (PrevEquipped)
 	{
-		PrevEquipped->Stow(CharacterOwner);
+		switch (Type)
+		{
+		case EUnequipType::Stow:
+			PrevEquipped->Stow(CharacterOwner);
+			break;
+		case EUnequipType::Drop:
+			PrevEquipped->Drop();
+			break;
+		}
 	}
 
 	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
@@ -174,12 +175,12 @@ void UInventoryManagerComponent::OnRep_EquipmentList(const FEquipmentList PrevLi
 
 	if (PrevList[SelectedIndex] != EquipmentList[SelectedIndex])
 	{
-		UpdateEquipped(PrevList[SelectedIndex].GetEquipment());
+		UpdateEquipped(PrevList[SelectedIndex].GetEquipment(), EUnequipType::Drop);
 	}
 }
 
 void UInventoryManagerComponent::OnRep_SelectedIndex(const uint8 PrevIndex)
 {
-	UpdateEquipped(GetEquipmentAtIndex(PrevIndex));
+	UpdateEquipped(GetEquipmentAtIndex(PrevIndex), EUnequipType::Stow);
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
 }
