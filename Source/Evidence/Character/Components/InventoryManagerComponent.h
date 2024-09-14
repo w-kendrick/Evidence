@@ -8,6 +8,12 @@
 #include "Evidence/Delegates.h"
 #include "InventoryManagerComponent.generated.h"
 
+enum class EUnequipType : uint8
+{
+	Stow,
+	Drop
+};
+
 class AAmmunition;
 class ABaseCharacter;
 
@@ -45,7 +51,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	void UpdateEquipped(AEquipment* const PrevEquipped);
+	void UpdateEquipped(AEquipment* const PrevEquipped, const EUnequipType Type);
 
 	UPROPERTY()
 	ABaseCharacter* CharacterOwner;
