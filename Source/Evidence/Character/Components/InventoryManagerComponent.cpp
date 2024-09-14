@@ -46,7 +46,11 @@ void UInventoryManagerComponent::Drop(const uint8 Index)
 
 void UInventoryManagerComponent::DropEquipped()
 {
+	AEquipment* const PrevEquipped = GetEquipped();
+
 	Drop(SelectedIndex);
+
+	OnEquippedChanged.Broadcast(GetEquipped(), PrevEquipped);
 }
 
 const FEquipmentList& UInventoryManagerComponent::GetInventory() const
