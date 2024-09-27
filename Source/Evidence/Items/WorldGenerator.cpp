@@ -33,10 +33,7 @@ void AWorldGenerator::SpawnClasses()
 		const float& Rate = SpawnClass.SpawnRate;
 
 		const float& Area = Box->GetScaledBoxExtent().X * Box->GetScaledBoxExtent().Y;
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::SanitizeFloat(Area));
-
 		const int32 Count = FMath::RoundToInt(Area * Rate * FMath::Pow(10.0f, -8.0f));
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString::FromInt(Count));
 
 		for (uint8 I = 0; I < Count; I++)
 		{
