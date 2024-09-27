@@ -4,6 +4,7 @@
 #include "WorldGenerator.h"
 #include "Components/BoxComponent.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Evidence/Evidence.h"
 
 AWorldGenerator::AWorldGenerator()
 {
@@ -64,7 +65,7 @@ bool AWorldGenerator::GetGroundPoint(const FVector& OriginalPoint, FVector& NewP
 
 	FHitResult Hit;
 	const FVector EndPoint = OriginalPoint - 10 * FVector::UpVector * Box->GetScaledBoxExtent().Z;
-	if (GetWorld()->LineTraceSingleByChannel(Hit, OriginalPoint, EndPoint, ECollisionChannel::ECC_Visibility))
+	if (GetWorld()->LineTraceSingleByChannel(Hit, OriginalPoint, EndPoint, COLLISION_SPAWN))
 	{
 		NewPoint = Hit.ImpactPoint;
 		bResult = true;
