@@ -25,9 +25,10 @@ public class MultiplayerSessions : ModuleRules
 		PublicDependencyModuleNames.AddRange(
 			new string[]
 			{
-				"Core", 
-				"OnlineSubsystem", 
+				"Core",
+				"OnlineSubsystem",
 				"OnlineSubsystemSteam", 
+				"OnlineSubsystemUtils",
 				"UMG", 
 				"Slate", 
 				"SlateCore"
@@ -43,6 +44,7 @@ public class MultiplayerSessions : ModuleRules
 				"Engine",
 				"Slate",
 				"SlateCore",
+				
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);
