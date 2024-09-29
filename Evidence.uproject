@@ -14,7 +14,8 @@
 				"UMG",
 				"AIModule",
 				"ProneMovementMode",
-				"AbilityInputSystem"
+				"AbilityInputSystem",
+				"MultiplayerSessions"
 			]
 		}
 	],
@@ -40,6 +41,10 @@
 		},
 		{
 			"Name": "ProneMovementMode",
+			"Enabled": true
+		},
+		{
+			"Name": "MultiplayerSessions",
 			"Enabled": true
 		},
 		{
