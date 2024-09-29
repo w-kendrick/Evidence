@@ -13,6 +13,11 @@ class AEvidenceGameMode : public AGameModeBase
 
 public:
 	AEvidenceGameMode();
+
+	void SaveGame();
+
+private:
+	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 };
 
 
