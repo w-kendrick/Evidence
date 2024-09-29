@@ -3,7 +3,7 @@
 
 #include "EvidenceSaveGame.h"
 
-void UEvidenceSaveGame::SetNight(const int32& NewNight)
+void UEvidenceSaveGame::SetNight(const uint32& NewNight)
 {
 	Night = NewNight;
 }

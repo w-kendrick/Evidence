@@ -6,6 +6,8 @@
 #include "GameFramework/GameModeBase.h"
 #include "EvidenceGameMode.generated.h"
 
+class AEvidenceGameState;
+
 UCLASS(minimalapi)
 class AEvidenceGameMode : public AGameModeBase
 {
@@ -13,12 +15,14 @@ class AEvidenceGameMode : public AGameModeBase
 
 public:
 	AEvidenceGameMode();
+	virtual void InitGameState() override;
 
 	void SaveGame();
 
 private:
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
+
+	UPROPERTY()
+	TObjectPtr<AEvidenceGameState> EvidenceGameState;
 };
-
-
 

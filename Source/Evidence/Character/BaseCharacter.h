@@ -38,6 +38,7 @@ public:
 	void SetInteractPromptVisibility(const bool bVisibility, const float Duration, const FString DisplayString);
 
 	UInventoryManagerComponent* GetInventoryComponent() const { return InventoryManagerComponent; }
+	FEquipmentList GetEquipmentList() const;
 
 protected:
 	UPROPERTY(EditDefaultsOnly)

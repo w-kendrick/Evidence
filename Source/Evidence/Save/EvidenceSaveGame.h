@@ -16,13 +16,13 @@ class EVIDENCE_API UEvidenceSaveGame : public USaveGame
 	GENERATED_BODY()
 
 public:
-	void SetNight(const int32& NewNight);
+	void SetNight(const uint32& NewNight);
 	void SetCash(const double& NewCash);
 	void AddPlayerSave(const FPlayerSave& Save);
 
 private:
-	int32 Night;
-	double Cash;
+	uint32 Night;
+	float Cash;
 
 	UPROPERTY()
 	TArray<FPlayerSave> PlayerSaves;

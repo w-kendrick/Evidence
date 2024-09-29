@@ -3,3 +3,7 @@
 
 #include "EvidenceGameInstance.h"
 
+UEvidenceGameInstance::UEvidenceGameInstance(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+}
