@@ -3,17 +3,25 @@
 
 #include "EvidenceLobbyMenu.h"
 #include "Components/Button.h"
+#include "SaveSelectWidget.h"
 
 void UEvidenceLobbyMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	if (LoadButton)
+	if (SelectSaveButton)
 	{
-		LoadButton->OnClicked.AddDynamic(this, &ThisClass::LoadButtonClicked);
+		SelectSaveButton->OnClicked.AddDynamic(this, &ThisClass::SelectSaveButtonClicked);
 	}
 }
 
-void UEvidenceLobbyMenu::LoadButtonClicked()
+void UEvidenceLobbyMenu::SelectSaveButtonClicked()
+{
+	USaveSelectWidget* const SaveSelectWidget = CreateWidget<USaveSelectWidget>(this, SaveSelectWidgetClass);
+	SaveSelectWidget->OnSaveSelected.BindUObject(this, &ThisClass::OnSaveSelected);
+	SaveSelectWidget->AddToViewport();
+}
+
+void UEvidenceLobbyMenu::OnSaveSelected(FString SaveSlot)
 {
 }

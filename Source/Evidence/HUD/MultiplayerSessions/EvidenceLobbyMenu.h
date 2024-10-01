@@ -7,6 +7,7 @@
 #include "EvidenceLobbyMenu.generated.h"
 
 class UButton;
+class USaveSelectWidget;
 
 /**
  * 
@@ -19,11 +20,16 @@ class EVIDENCE_API UEvidenceLobbyMenu : public ULobbyMenu
 protected:
 	virtual void NativeConstruct() override;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<USaveSelectWidget> SaveSelectWidgetClass;
+
 private:
 	UPROPERTY(meta = (BindWidget))
-	UButton* LoadButton;
+	UButton* SelectSaveButton;
 
 	UFUNCTION()
-	void LoadButtonClicked();
+	void SelectSaveButtonClicked();
+
+	void OnSaveSelected(FString SaveSlot);
 	
 };
