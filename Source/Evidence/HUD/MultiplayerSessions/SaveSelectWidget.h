@@ -7,6 +7,8 @@
 #include "SaveSelectWidget.generated.h"
 
 class UButton;
+class UVerticalBox;
+class USaveSlotWidget;
 
 DECLARE_DELEGATE_OneParam(FOnSaveSelected, FString)
 
@@ -31,9 +33,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	uint8 SaveCount;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<USaveSlotWidget> SaveSlotWidgetClass;
+
 private:
 	UPROPERTY(meta = (BindWidget))
 	UButton* ConfirmButton;
+
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* SlotBox;
 
 	UFUNCTION()
 	void ConfirmButtonClicked();
