@@ -7,6 +7,7 @@
 #include "EvidenceGameMode.generated.h"
 
 class AEvidenceGameState;
+class USaveGame;
 
 UCLASS(minimalapi)
 class AEvidenceGameMode : public AGameModeBase
@@ -26,6 +27,7 @@ private:
 	void LoadSelectedGame();
 
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
+	void OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);
 
 	UPROPERTY()
 	TObjectPtr<AEvidenceGameState> EvidenceGameState;

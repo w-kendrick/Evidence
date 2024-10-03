@@ -63,10 +63,21 @@ void AEvidenceGameMode::LoadSelectedGame()
 	UEvidenceGameInstance* const EvidenceGameInstance = GetGameInstance<UEvidenceGameInstance>();
 	if (EvidenceGameInstance)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Loaded ") + EvidenceGameInstance->GetSlotName());
+		const FString& SlotName = EvidenceGameInstance->GetSlotName();
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Loading ") + SlotName);
+
+		FAsyncLoadGameFromSlotDelegate LoadedDelegate;
+		LoadedDelegate.BindUObject(this, &ThisClass::OnLoadGameComplete);
+		UGameplayStatics::AsyncLoadGameFromSlot(SlotName, 0, LoadedDelegate);
 	}
 }
 
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
+}
+
+void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Successfully loaded ") + SlotName);
 }
