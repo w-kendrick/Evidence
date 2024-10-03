@@ -19,7 +19,12 @@ public:
 
 	void SaveGame();
 
+protected:
+	virtual void BeginPlay();
+
 private:
+	void LoadSelectedGame();
+
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 
 	UPROPERTY()

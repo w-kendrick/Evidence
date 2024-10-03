@@ -4,6 +4,7 @@
 #include "EvidenceLobbyMenu.h"
 #include "Components/Button.h"
 #include "SaveSelectWidget.h"
+#include "Evidence/EvidenceGameInstance.h"
 
 void UEvidenceLobbyMenu::NativeConstruct()
 {
@@ -26,4 +27,11 @@ void UEvidenceLobbyMenu::SelectSaveButtonClicked()
 void UEvidenceLobbyMenu::OnSaveConfirmed(uint8 SaveSlot)
 {
 	SelectedSlot = SaveSlot;
+	const FString& SelectedSlotName = FString("Save") + FString::FromInt(SaveSlot + 1);
+
+	UEvidenceGameInstance* const EvidenceGameInstance = GetGameInstance<UEvidenceGameInstance>();
+	if (EvidenceGameInstance)
+	{
+		EvidenceGameInstance->SetSlotName(SelectedSlotName);
+	}
 }

@@ -50,6 +50,24 @@ void AEvidenceGameMode::SaveGame()
 	}
 }
 
+void AEvidenceGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	LoadSelectedGame();
+}
+
+void AEvidenceGameMode::LoadSelectedGame()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Load game");
+
+	UEvidenceGameInstance* const EvidenceGameInstance = GetGameInstance<UEvidenceGameInstance>();
+	if (EvidenceGameInstance)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Loaded ") + EvidenceGameInstance->GetSlotName());
+	}
+}
+
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
 }
