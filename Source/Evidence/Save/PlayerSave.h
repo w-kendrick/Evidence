@@ -11,7 +11,6 @@ struct FPlayerSave
 {
 	GENERATED_BODY()
 
-	FUniqueNetIdRepl PlayerID;
 	FEquipmentList EquipmentList;
 
 	FPlayerSave()

@@ -13,7 +13,7 @@ void UEvidenceSaveGame::SetCash(const double& NewCash)
 	Cash = NewCash;
 }
 
-void UEvidenceSaveGame::AddPlayerSave(const FPlayerSave& Save)
+void UEvidenceSaveGame::AddPlayerSave(const FUniqueNetIdRepl& ID, const FPlayerSave& Save)
 {
-	PlayerSaves.Add(Save);
+	PlayerSaves[ID] = Save;
 }

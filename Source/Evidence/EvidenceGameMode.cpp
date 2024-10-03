@@ -34,14 +34,13 @@ void AEvidenceGameMode::SaveGame()
 			for (const APlayerState* const PlayerState : EvidenceGameState->PlayerArray)
 			{
 				FPlayerSave PlayerSave;
-				PlayerSave.PlayerID = PlayerState->UniqueId;
 
 				if (ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerState->GetPlayerController()->GetPawn()))
 				{
 					PlayerSave.EquipmentList = Character->GetEquipmentList();
 				}
 
-				SaveGameInstance->AddPlayerSave(PlayerSave);
+				SaveGameInstance->AddPlayerSave(PlayerState->UniqueId, PlayerSave);
 			}
 
 			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
