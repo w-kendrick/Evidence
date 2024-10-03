@@ -9,6 +9,8 @@
 class UButton;
 class UTextBlock;
 
+DECLARE_DELEGATE_OneParam(FOnSaveSelected, uint8)
+
 /**
  * 
  */
@@ -18,12 +20,15 @@ class EVIDENCE_API USaveSlotWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetName(const FString& Name);
+	void SetStatus(const bool bStatus);
+	void SetIndex(const uint8 Index);
+
+	FOnSaveSelected OnSaveSelected;
 
 protected:
 	virtual void NativeConstruct() override;
 
-	FString SlotName;
+	uint8 SlotIndex;
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -31,6 +36,9 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* SlotNameText;
+
+	UPROPERTY(meta = (BindWidget))
+	class UImage* SelectedBorder;
 
 	UFUNCTION()
 	void SelectButtonClicked();

@@ -10,7 +10,7 @@ USaveSelectWidget::USaveSelectWidget(const FObjectInitializer& ObjectInitializer
 	: Super(ObjectInitializer)
 {
 	SaveCount = 5;
-	SelectedSaveSlot = FString("Save1");
+	SelectedSaveSlot = 0;
 }
 
 void USaveSelectWidget::NativeConstruct()
@@ -26,18 +26,41 @@ void USaveSelectWidget::NativeConstruct()
 	{
 		for (uint8 i = 0; i < SaveCount; i++)
 		{
-			const FString SlotName = FString("Save") + FString::FromInt(i + 1);
-
 			USaveSlotWidget* const SaveSlotWidget = CreateWidget<USaveSlotWidget>(this, SaveSlotWidgetClass);
-			SaveSlotWidget->SetName(SlotName);
+			SaveSlotWidget->OnSaveSelected.BindUObject(this, &ThisClass::OnSaveSelected);
+			SaveSlotWidget->SetIndex(i);
 			SlotBox->AddChildToVerticalBox(SaveSlotWidget);
+			SaveSlotWidget->SetStatus(false);
 		}
+
+		SelectSaveWidget(0U);
 	}
 }
 
 void USaveSelectWidget::ConfirmButtonClicked()
 {
-	OnSaveSelected.ExecuteIfBound(SelectedSaveSlot);
+	OnSaveConfirmed.ExecuteIfBound(SelectedSaveSlot);
 
 	RemoveFromParent();
+}
+
+void USaveSelectWidget::OnSaveSelected(uint8 Index)
+{
+	SelectSaveWidget(Index);
+}
+
+void USaveSelectWidget::SelectSaveWidget(const uint8 Index)
+{
+	if (SlotBox)
+	{
+		const uint8 PrevIndex = SelectedSaveSlot;
+
+		SelectedSaveSlot = Index;
+
+		USaveSlotWidget* const PrevSlotWidget = Cast<USaveSlotWidget>(SlotBox->GetChildAt(PrevIndex));
+		USaveSlotWidget* const NewSlotWidget = Cast<USaveSlotWidget>(SlotBox->GetChildAt(SelectedSaveSlot));
+
+		PrevSlotWidget->SetStatus(false);
+		NewSlotWidget->SetStatus(true);
+	}
 }

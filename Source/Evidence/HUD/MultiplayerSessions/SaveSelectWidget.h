@@ -10,7 +10,7 @@ class UButton;
 class UVerticalBox;
 class USaveSlotWidget;
 
-DECLARE_DELEGATE_OneParam(FOnSaveSelected, FString)
+DECLARE_DELEGATE_OneParam(FOnSaveConfirmed, uint8)
 
 /**
  * 
@@ -23,12 +23,12 @@ class EVIDENCE_API USaveSelectWidget : public UUserWidget
 public:
 	USaveSelectWidget(const FObjectInitializer& ObjectInitializer);
 
-	FOnSaveSelected OnSaveSelected;
+	FOnSaveConfirmed OnSaveConfirmed;
 
 protected:
 	virtual void NativeConstruct() override;
 
-	FString SelectedSaveSlot;
+	uint8 SelectedSaveSlot;
 
 	UPROPERTY(EditDefaultsOnly)
 	uint8 SaveCount;
@@ -45,5 +45,9 @@ private:
 
 	UFUNCTION()
 	void ConfirmButtonClicked();
+
+	void OnSaveSelected(uint8 Index);
+
+	void SelectSaveWidget(const uint8 Index);
 	
 };

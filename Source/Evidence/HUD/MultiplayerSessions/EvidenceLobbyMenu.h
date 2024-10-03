@@ -30,6 +30,6 @@ private:
 	UFUNCTION()
 	void SelectSaveButtonClicked();
 
-	void OnSaveSelected(FString SaveSlot);
+	void OnSaveConfirmed(uint8 SaveSlot);
 	
 };
