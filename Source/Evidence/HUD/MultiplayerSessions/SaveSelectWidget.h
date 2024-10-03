@@ -22,6 +22,7 @@ class EVIDENCE_API USaveSelectWidget : public UUserWidget
 
 public:
 	USaveSelectWidget(const FObjectInitializer& ObjectInitializer);
+	void SetSelectedIndex(const uint8 Index);
 
 	FOnSaveConfirmed OnSaveConfirmed;
 

@@ -13,6 +13,11 @@ USaveSelectWidget::USaveSelectWidget(const FObjectInitializer& ObjectInitializer
 	SelectedSaveSlot = 0;
 }
 
+void USaveSelectWidget::SetSelectedIndex(const uint8 Index)
+{
+	SelectedSaveSlot = Index;
+}
+
 void USaveSelectWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
@@ -33,7 +38,7 @@ void USaveSelectWidget::NativeConstruct()
 			SaveSlotWidget->SetStatus(false);
 		}
 
-		SelectSaveWidget(0U);
+		SelectSaveWidget(SelectedSaveSlot);
 	}
 }
 

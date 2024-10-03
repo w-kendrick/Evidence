@@ -31,5 +31,7 @@ private:
 	void SelectSaveButtonClicked();
 
 	void OnSaveConfirmed(uint8 SaveSlot);
+
+	uint8 SelectedSlot;
 	
 };

@@ -19,10 +19,11 @@ void UEvidenceLobbyMenu::SelectSaveButtonClicked()
 {
 	USaveSelectWidget* const SaveSelectWidget = CreateWidget<USaveSelectWidget>(this, SaveSelectWidgetClass);
 	SaveSelectWidget->OnSaveConfirmed.BindUObject(this, &ThisClass::OnSaveConfirmed);
+	SaveSelectWidget->SetSelectedIndex(SelectedSlot);
 	SaveSelectWidget->AddToViewport();
 }
 
 void UEvidenceLobbyMenu::OnSaveConfirmed(uint8 SaveSlot)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, FString("Confirmed ") + FString::FromInt(SaveSlot));
+	SelectedSlot = SaveSlot;
 }
