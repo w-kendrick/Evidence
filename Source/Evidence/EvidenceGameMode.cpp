@@ -58,16 +58,28 @@ void AEvidenceGameMode::BeginPlay()
 	GetWorldTimerManager().SetTimer(SaveHandle, this, &ThisClass::SaveGame, 20.f, true);
 }
 
+void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController* PlayerController)
+{
+	Super::HandleStartingNewPlayer_Implementation(PlayerController);
+
+	const FUniqueNetIdRepl NewPlayerID = PlayerController->PlayerState->GetUniqueId();
+
+	if (EvidenceSaveGame)
+	{
+		LoadPlayer(NewPlayerID);
+	}
+	else
+	{
+		PendingPlayerLoads.Add(NewPlayerID);
+	}
+}
+
 void AEvidenceGameMode::LoadSelectedGame()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Load game");
-
 	UEvidenceGameInstance* const EvidenceGameInstance = GetGameInstance<UEvidenceGameInstance>();
 	if (EvidenceGameInstance)
 	{
 		const FString& SlotName = EvidenceGameInstance->GetSlotName();
-
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Loading ") + SlotName);
 
 		FAsyncLoadGameFromSlotDelegate LoadedDelegate;
 		LoadedDelegate.BindUObject(this, &ThisClass::OnLoadGameComplete);
@@ -77,7 +89,26 @@ void AEvidenceGameMode::LoadSelectedGame()
 
 void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Load player ") + ID.ToString());
 
+	FPlayerSave PlayerSave;
+	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave))
+	{
+		const FEquipmentList& EquipmentList = PlayerSave.EquipmentList;
+
+		for (uint8 i = 0; i < INVENTORY_SIZE; i++)
+		{
+			AEquipment* const Equipment = EquipmentList[i].GetEquipment();
+			if (Equipment)
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, Equipment->GetEquipmentName());
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Equipment is null"));
+			}
+		}
+	}
 }
 
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
@@ -87,8 +118,6 @@ void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 
 
 void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Successfully loaded ") + SlotName);
-
 	EvidenceSaveGame = Cast<UEvidenceSaveGame>(LoadedGameData);
 
 	for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)

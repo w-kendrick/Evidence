@@ -23,7 +23,7 @@ public:
 
 protected:
 	virtual void BeginPlay();
-	//virtual void HandleNewStartingPlayer_Implementation(APlayerController* PlayerController) override;
+	virtual void HandleStartingNewPlayer_Implementation(APlayerController* PlayerController) override;
 
 private:
 	void LoadSelectedGame();
