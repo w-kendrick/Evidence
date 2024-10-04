@@ -4,11 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
+#include "Evidence/Structs/EquipmentToID.h"
 #include "EvidenceGameMode.generated.h"
 
 class AEvidenceGameState;
 class UEvidenceSaveGame;
 class USaveGame;
+class AEquipment;
 
 UCLASS(minimalapi)
 class AEvidenceGameMode : public AGameMode
@@ -24,6 +26,12 @@ public:
 protected:
 	virtual void BeginPlay();
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* PlayerController) override;
+
+	UPROPERTY(EditDefaultsOnly)
+	TArray<FEquipmentToID> EquipmentClassMap;
+
+	uint8 GetEquipmentID(const AEquipment* const Equipment) const;
+	TSubclassOf<AEquipment> GetEquipmentClass(const uint8 ID) const;
 
 private:
 	void LoadSelectedGame();

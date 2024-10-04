@@ -3,7 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Structs/EquipmentList.h"
+#include "Evidence/Save/ActorSaveData.h"
+#include "Evidence/Items/Equipment.h"
+#include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 #include "PlayerSave.generated.h"
 
 USTRUCT()
@@ -11,16 +13,27 @@ struct FPlayerSave
 {
 	GENERATED_BODY()
 
-	FEquipmentList EquipmentList;
+	TArray<FEquipmentSaveData> SavedEquipment;
 
 	FPlayerSave()
 	{
 
 	}
 
-	FPlayerSave(FEquipmentList List)
-		: EquipmentList(List)
+	void AddEquipment(AEquipment* const Equipment, const uint8 EquipmentID)
 	{
+		FEquipmentSaveData ActorData;
+		ActorData.EquipmentID = EquipmentID;
 
+		// Pass the array to fill with data from Actor
+		FMemoryWriter MemWriter(ActorData.ByteData);
+
+		FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+		// Find only variables with UPROPERTY(SaveGame)
+		Ar.ArIsSaveGame = true;
+		// Converts Actor's SaveGame UPROPERTIES into binary array
+		Equipment->Serialize(Ar);
+
+		SavedEquipment.Add(ActorData);
 	}
 };
