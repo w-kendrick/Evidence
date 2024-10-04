@@ -31,5 +31,7 @@ private:
 
 	UPROPERTY()
 	TObjectPtr<AEvidenceGameState> EvidenceGameState;
+
+	FTimerHandle SaveHandle;
 };
 

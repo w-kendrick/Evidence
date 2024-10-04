@@ -18,7 +18,7 @@ class EVIDENCE_API UEvidenceSaveGame : public USaveGame
 public:
 	void SetNight(const uint32& NewNight);
 	void SetCash(const double& NewCash);
-	void AddPlayerSave(const FUniqueNetIdRepl& ID, const FPlayerSave& Save);
+	void AddPlayerSave(const FUniqueNetIdRepl ID, const FPlayerSave Save);
 
 private:
 	uint32 Night;

@@ -54,6 +54,8 @@ void AEvidenceGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	LoadSelectedGame();
+
+	GetWorldTimerManager().SetTimer(SaveHandle, this, &ThisClass::SaveGame, 20.f, true);
 }
 
 void AEvidenceGameMode::LoadSelectedGame()
@@ -75,6 +77,7 @@ void AEvidenceGameMode::LoadSelectedGame()
 
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Successfully saved ") + SlotName);
 }
 
 void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
