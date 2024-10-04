@@ -136,9 +136,16 @@ void AEvidenceGameMode::LoadSelectedGame()
 	{
 		const FString& SlotName = EvidenceGameInstance->GetSlotName();
 
-		FAsyncLoadGameFromSlotDelegate LoadedDelegate;
-		LoadedDelegate.BindUObject(this, &ThisClass::OnLoadGameComplete);
-		UGameplayStatics::AsyncLoadGameFromSlot(SlotName, 0, LoadedDelegate);
+		if (UGameplayStatics::DoesSaveGameExist(SlotName, 0))
+		{
+			FAsyncLoadGameFromSlotDelegate LoadedDelegate;
+			LoadedDelegate.BindUObject(this, &ThisClass::OnLoadGameComplete);
+			UGameplayStatics::AsyncLoadGameFromSlot(SlotName, 0, LoadedDelegate);
+		}
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 30.f, FColor::Red, FString("SAVE GAME DOES NOT EXIST"));
+		}
 	}
 }
 
@@ -179,7 +186,7 @@ void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
 
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Successfully saved ") + SlotName);
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, (bSuccess ? FString("Successfully") : FString("Unsuccessfully")) + FString(" saved ") + SlotName);
 }
 
 void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
