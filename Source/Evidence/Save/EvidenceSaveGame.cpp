@@ -17,3 +17,16 @@ void UEvidenceSaveGame::AddPlayerSave(const FUniqueNetIdRepl ID, const FPlayerSa
 {
 	PlayerSaves.Add(ID, Save);
 }
+
+bool UEvidenceSaveGame::GetPlayerSave(const FUniqueNetIdRepl& ID, FPlayerSave& Save)
+{
+	bool bFound = false;
+
+	if (PlayerSaves.Contains(ID))
+	{
+		bFound = true;
+		Save = PlayerSaves[ID];
+	}
+
+	return bFound;
+}

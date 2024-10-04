@@ -7,6 +7,7 @@
 #include "EvidenceGameMode.generated.h"
 
 class AEvidenceGameState;
+class UEvidenceSaveGame;
 class USaveGame;
 
 UCLASS(minimalapi)
@@ -22,15 +23,23 @@ public:
 
 protected:
 	virtual void BeginPlay();
+	//virtual void HandleNewStartingPlayer_Implementation(APlayerController* PlayerController) override;
 
 private:
 	void LoadSelectedGame();
+	void LoadPlayer(const FUniqueNetIdRepl& ID);
 
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 	void OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);
 
 	UPROPERTY()
 	TObjectPtr<AEvidenceGameState> EvidenceGameState;
+
+	UPROPERTY()
+	UEvidenceSaveGame* EvidenceSaveGame;
+
+	UPROPERTY()
+	TArray<FUniqueNetIdRepl> PendingPlayerLoads;
 
 	FTimerHandle SaveHandle;
 };

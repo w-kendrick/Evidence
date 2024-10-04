@@ -19,6 +19,7 @@ public:
 	void SetNight(const uint32& NewNight);
 	void SetCash(const double& NewCash);
 	void AddPlayerSave(const FUniqueNetIdRepl ID, const FPlayerSave Save);
+	bool GetPlayerSave(const FUniqueNetIdRepl& ID, FPlayerSave& Save);
 
 private:
 	uint32 Night;

@@ -75,6 +75,11 @@ void AEvidenceGameMode::LoadSelectedGame()
 	}
 }
 
+void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
+{
+
+}
+
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Successfully saved ") + SlotName);
@@ -83,4 +88,11 @@ void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 
 void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Successfully loaded ") + SlotName);
+
+	EvidenceSaveGame = Cast<UEvidenceSaveGame>(LoadedGameData);
+
+	for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
+	{
+		LoadPlayer(ID);
+	}
 }
