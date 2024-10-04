@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameStateBase.h"
+#include "GameFramework/GameState.h"
 #include "Delegates.h"
 #include "EvidenceGameState.generated.h"
 
 class AHub;
 
 UCLASS()
-class EVIDENCE_API AEvidenceGameState : public AGameStateBase
+class EVIDENCE_API AEvidenceGameState : public AGameState
 {
 	GENERATED_BODY()
 

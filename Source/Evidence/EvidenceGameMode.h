@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
+#include "GameFramework/GameMode.h"
 #include "EvidenceGameMode.generated.h"
 
 class AEvidenceGameState;
@@ -11,7 +11,7 @@ class UEvidenceSaveGame;
 class USaveGame;
 
 UCLASS(minimalapi)
-class AEvidenceGameMode : public AGameModeBase
+class AEvidenceGameMode : public AGameMode
 {
 	GENERATED_BODY()
 
