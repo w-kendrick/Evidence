@@ -30,7 +30,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	uint8 MaxQuantity;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Quantity)
+	UPROPERTY(ReplicatedUsing = OnRep_Quantity, SaveGame)
 	uint8 Quantity;
 
 	UFUNCTION()

@@ -31,7 +31,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	uint8 MaxCaptures;
 
-	UPROPERTY(ReplicatedUsing = OnRep_RemainingCaptures)
+	UPROPERTY(ReplicatedUsing = OnRep_RemainingCaptures, SaveGame)
 	uint8 RemainingCaptures;
 
 	UFUNCTION()

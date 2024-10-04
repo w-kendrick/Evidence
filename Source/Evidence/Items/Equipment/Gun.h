@@ -30,7 +30,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	uint8 MaxClipSize;
 
-	UPROPERTY(ReplicatedUsing = OnRep_CurrentClip)
+	UPROPERTY(ReplicatedUsing = OnRep_CurrentClip, SaveGame)
 	uint8 CurrentClip;
 
 	UFUNCTION()
