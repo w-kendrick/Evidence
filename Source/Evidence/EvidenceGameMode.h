@@ -50,5 +50,8 @@ private:
 	TArray<FUniqueNetIdRepl> PendingPlayerLoads;
 
 	FTimerHandle SaveHandle;
+
+	UPROPERTY(EditDefaultsOnly)
+	FTransform DefaultTransform;
 };
 

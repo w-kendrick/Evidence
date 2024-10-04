@@ -62,7 +62,7 @@ void AEvidenceGameMode::SaveGame()
 					}
 				}
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Adding PlayerSave for ") + PlayerState->UniqueId.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" instances of equipment"));
-				SaveGameInstance->AddPlayerSave(PlayerState->UniqueId, PlayerSave);
+				SaveGameInstance->AddPlayerSave(PlayerState->GetUniqueId(), PlayerSave);
 			}
 
 			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
@@ -165,7 +165,7 @@ void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
 			{
 				FActorSpawnParameters Params;
 				Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AEquipment* const NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, FTransform());
+				AEquipment* const NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, DefaultTransform);
 
 				FMemoryReader MemReader(EquipmentData.ByteData);
 
@@ -195,12 +195,15 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 
 	if (EvidenceSaveGame)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame"));
 		for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
 		{
 			LoadPlayer(ID);
 		}
 	}
+	else
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded default save game"));
 		EvidenceSaveGame = Cast<UEvidenceSaveGame>(UGameplayStatics::CreateSaveGameObject(UEvidenceSaveGame::StaticClass()));
 	}
 }

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Save/ActorSaveData.h"
+#include "Evidence/Save/EquipmentSaveData.h"
 #include "Evidence/Items/Equipment.h"
 #include "Serialization/ObjectAndNameAsStringProxyArchive.h"
 #include "PlayerSave.generated.h"
@@ -13,6 +13,7 @@ struct FPlayerSave
 {
 	GENERATED_BODY()
 
+	UPROPERTY()
 	TArray<FEquipmentSaveData> SavedEquipment;
 
 	FPlayerSave()
