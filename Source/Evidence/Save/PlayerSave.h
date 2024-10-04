@@ -20,20 +20,8 @@ struct FPlayerSave
 
 	}
 
-	void AddEquipment(AEquipment* const Equipment, const uint8 EquipmentID)
+	void AddEquipment(FEquipmentSaveData EquipmentData)
 	{
-		FEquipmentSaveData ActorData;
-		ActorData.EquipmentID = EquipmentID;
-
-		// Pass the array to fill with data from Actor
-		FMemoryWriter MemWriter(ActorData.ByteData);
-
-		FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
-		// Find only variables with UPROPERTY(SaveGame)
-		Ar.ArIsSaveGame = true;
-		// Converts Actor's SaveGame UPROPERTIES into binary array
-		Equipment->Serialize(Ar);
-
-		SavedEquipment.Add(ActorData);
+		SavedEquipment.Add(EquipmentData);
 	}
 };

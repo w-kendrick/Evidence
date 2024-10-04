@@ -37,14 +37,31 @@ void AEvidenceGameMode::SaveGame()
 
 				if (ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerState->GetPlayerController()->GetPawn()))
 				{
+					const FEquipmentList& EquipmentList = Character->GetEquipmentList();
 					for (uint8 i = 0; i < INVENTORY_SIZE; i++)
 					{
-						AEquipment* const Equipment = Character->GetEquipmentList()[i].GetEquipment();
+						const FEquipmentItem& EquipmentItem = EquipmentList[i];
+						AEquipment* const Equipment = EquipmentItem.GetEquipment();
 
-						PlayerSave.AddEquipment(Equipment, GetEquipmentID(Equipment));
+						FEquipmentSaveData EquipmentData;
+						EquipmentData.EquipmentID = GetEquipmentID(Equipment);
+
+						if (Equipment)
+						{
+							// Pass the array to fill with data from Actor
+							FMemoryWriter MemWriter(EquipmentData.ByteData);
+
+							FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+							// Find only variables with UPROPERTY(SaveGame)
+							Ar.ArIsSaveGame = true;
+							// Converts Actor's SaveGame UPROPERTIES into binary array
+							Equipment->Serialize(Ar);
+						}
+
+						PlayerSave.AddEquipment(EquipmentData);
 					}
 				}
-
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Adding PlayerSave for ") + PlayerState->UniqueId.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" instances of equipment"));
 				SaveGameInstance->AddPlayerSave(PlayerState->UniqueId, PlayerSave);
 			}
 
@@ -132,22 +149,30 @@ void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
 	FPlayerSave PlayerSave;
 	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave))
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Found save for player ") + ID.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" equipment instances found"));
 		for (const FEquipmentSaveData& EquipmentData : PlayerSave.SavedEquipment)
 		{
 			const TSubclassOf<AEquipment>& EquipmentClass = GetEquipmentClass(EquipmentData.EquipmentID);
 
-			FActorSpawnParameters Params;
-			Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-			AEquipment* const NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, FTransform());
+			if (EquipmentClass)
+			{
+				FActorSpawnParameters Params;
+				Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+				AEquipment* const NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, FTransform());
 
-			FMemoryReader MemReader(EquipmentData.ByteData);
+				FMemoryReader MemReader(EquipmentData.ByteData);
 
-			FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
-			Ar.ArIsSaveGame = true;
-			// Convert binary array back into actor's variables
-			NewEquipment->Serialize(Ar);
+				FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
+				Ar.ArIsSaveGame = true;
+				// Convert binary array back into actor's variables
+				NewEquipment->Serialize(Ar);
 
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
+			}
+			else
+			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("No need to spawn null equipment"));
+			}
 		}
 	}
 }
@@ -161,8 +186,14 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 {
 	EvidenceSaveGame = Cast<UEvidenceSaveGame>(LoadedGameData);
 
-	for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
+	if (EvidenceSaveGame)
 	{
-		LoadPlayer(ID);
+		for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
+		{
+			LoadPlayer(ID);
+		}
+	}
+	{
+		EvidenceSaveGame = Cast<UEvidenceSaveGame>(UGameplayStatics::CreateSaveGameObject(UEvidenceSaveGame::StaticClass()));
 	}
 }
