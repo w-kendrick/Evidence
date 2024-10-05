@@ -6,22 +6,15 @@
 
 ANoiseBait::ANoiseBait()
 {
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-
 	EventDelay = 2.5f;
 }
 
-UPowerComponent* ANoiseBait::GetPowerComponent() const
-{
-	return PowerComponent;
-}
-
-void ANoiseBait::Activate()
+void ANoiseBait::ActivatePower()
 {
 	GetWorldTimerManager().SetTimer(SoundHandle, this, &ThisClass::SoundEvent, EventDelay, true);
 }
 
-void ANoiseBait::Deactivate()
+void ANoiseBait::DeactivatePower()
 {
 	GetWorldTimerManager().ClearTimer(SoundHandle);
 }

@@ -6,19 +6,11 @@
 
 AMovementSensor::AMovementSensor()
 {
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-	PowerComponent->ActiveDrainRate = 0.1f;
-
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
 }
 
-UPowerComponent* AMovementSensor::GetPowerComponent() const
-{
-	return PowerComponent;
-}
-
-void AMovementSensor::Activate()
+void AMovementSensor::ActivatePower()
 {
 	if (HasAuthority())
 	{
@@ -26,7 +18,7 @@ void AMovementSensor::Activate()
 	}
 }
 
-void AMovementSensor::Deactivate()
+void AMovementSensor::DeactivatePower()
 {
 	if (HasAuthority())
 	{

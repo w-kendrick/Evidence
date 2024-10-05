@@ -6,19 +6,11 @@
 
 ARadialSensor::ARadialSensor()
 {
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-	PowerComponent->ActiveDrainRate = 0.1f;
-
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
 }
 
-UPowerComponent* ARadialSensor::GetPowerComponent() const
-{
-	return PowerComponent;
-}
-
-void ARadialSensor::Activate()
+void ARadialSensor::ActivatePower()
 {
 	if (HasAuthority())
 	{
@@ -26,7 +18,7 @@ void ARadialSensor::Activate()
 	}
 }
 
-void ARadialSensor::Deactivate()
+void ARadialSensor::DeactivatePower()
 {
 	if (HasAuthority())
 	{
