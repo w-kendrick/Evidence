@@ -6,6 +6,8 @@
 
 APowerEquipment::APowerEquipment()
 {
+	PrimaryActorTick.bCanEverTick = true;
+
 	isPowerActive = false;
 	MaxPower = 100;
 	ActiveDrainRate = 1;
