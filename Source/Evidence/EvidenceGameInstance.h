@@ -13,5 +13,14 @@ UCLASS()
 class EVIDENCE_API UEvidenceGameInstance : public UMultiplayerGameInstance
 {
 	GENERATED_BODY()
+
+public:
+	UEvidenceGameInstance(const FObjectInitializer& ObjectInitializer);
+
+	void SetSlotName(const FString& Name);
+	FString GetSlotName() const { return SlotName; }
+
+private:
+	FString SlotName;
 	
 };

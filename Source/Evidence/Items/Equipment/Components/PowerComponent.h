@@ -37,7 +37,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	float MaxPower;
 
-	UPROPERTY(ReplicatedUsing = OnRep_Power)
+	UPROPERTY(ReplicatedUsing = OnRep_Power, SaveGame)
 	float Power;
 
 	bool isPowerActive;
