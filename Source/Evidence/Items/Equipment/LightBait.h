@@ -3,28 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Items/Equipment.h"
-#include "Evidence/Interfaces/PowerInterface.h"
+#include "Evidence/Items/Equipment/PowerEquipment.h"
 #include "LightBait.generated.h"
 
 class UAIPerceptionStimuliSourceComponent;
 class UPointLightComponent;
 
 UCLASS()
-class EVIDENCE_API ALightBait : public AEquipment, public IPowerInterface
+class EVIDENCE_API ALightBait : public APowerEquipment
 {
 	GENERATED_BODY()
 
 public:
 	ALightBait();
 
-	virtual UPowerComponent* GetPowerComponent() const override;
-
 protected:
 	virtual void BeginPlay() override;
-
-	UPROPERTY(VisibleDefaultsOnly)
-	UPowerComponent* PowerComponent;
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UAIPerceptionStimuliSourceComponent* Stimulus;
@@ -32,8 +26,8 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	UPointLightComponent* LightComponent;
 
-	virtual void Activate() override;
-	virtual void Deactivate() override;
+	virtual void ActivatePower() override;
+	virtual void DeactivatePower() override;
 
 	UPROPERTY(EditDefaultsOnly)
 	float EventDelay;

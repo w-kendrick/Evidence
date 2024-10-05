@@ -12,22 +12,15 @@ ATorch::ATorch()
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
 
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-
 	EquipmentName = FString(TEXT("Torch"));
 }
 
-UPowerComponent* ATorch::GetPowerComponent() const
-{
-	return PowerComponent;
-}
-
-void ATorch::Activate()
+void ATorch::ActivatePower()
 {
 	LightComponent->SetVisibility(true);
 }
 
-void ATorch::Deactivate()
+void ATorch::DeactivatePower()
 {
 	LightComponent->SetVisibility(false);
 }

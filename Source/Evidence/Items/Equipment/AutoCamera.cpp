@@ -7,19 +7,11 @@
 
 AAutoCamera::AAutoCamera()
 {
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-	PowerComponent->ActiveDrainRate = 0.1f;
-
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
 }
 
-UPowerComponent* AAutoCamera::GetPowerComponent() const
-{
-	return PowerComponent;
-}
-
-void AAutoCamera::Activate()
+void AAutoCamera::StartSensing()
 {
 	if (HasAuthority())
 	{
@@ -27,13 +19,14 @@ void AAutoCamera::Activate()
 	}
 }
 
-void AAutoCamera::Deactivate()
+void AAutoCamera::StopSensing()
 {
 	if (HasAuthority())
 	{
 		GetWorldTimerManager().ClearTimer(SenseHandle);
 	}
 }
+
 
 void AAutoCamera::Sense()
 {

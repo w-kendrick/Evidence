@@ -12,14 +12,7 @@ AGunTorch::AGunTorch()
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
 
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-
 	EquipmentName = FString(TEXT("GunTorch"));
-}
-
-UPowerComponent* AGunTorch::GetPowerComponent() const
-{
-	return PowerComponent;
 }
 
 void AGunTorch::Activate()

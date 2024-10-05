@@ -3,18 +3,21 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
-#include "Evidence/Delegates.h"
-#include "PowerComponent.generated.h"
+#include "Evidence/Items/Equipment.h"
+#include "PowerEquipment.generated.h"
 
-
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class EVIDENCE_API UPowerComponent : public UActorComponent
+/**
+ * 
+ */
+UCLASS()
+class EVIDENCE_API APowerEquipment : public AEquipment
 {
 	GENERATED_BODY()
 
-public:	
-	UPowerComponent();
+public:
+	APowerEquipment();
+
+	virtual void Tick(float DeltaTime) override;
 
 	FOnPowerChanged OnPowerChanged;
 	FOnActiveChanged OnActiveChanged;
@@ -48,11 +51,7 @@ protected:
 	UFUNCTION(NetMulticast, Reliable)
 	void MulticastSetPowerActive(const bool NewActive);
 
-	void ActivatePower();
-	void DeactivatePower();
-
-public:	
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-		
+	virtual void ActivatePower();
+	virtual void DeactivatePower();
+	
 };

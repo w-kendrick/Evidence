@@ -15,14 +15,7 @@ ALightBait::ALightBait()
 	LightComponent->IntensityUnits = ELightUnits::Unitless;
 	LightComponent->SetVisibility(false);
 
-	PowerComponent = CreateDefaultSubobject<UPowerComponent>(TEXT("PowerComponent"));
-
 	EventDelay = 0.5f;
-}
-
-UPowerComponent* ALightBait::GetPowerComponent() const
-{
-	return PowerComponent;
 }
 
 void ALightBait::BeginPlay()
@@ -34,12 +27,12 @@ void ALightBait::BeginPlay()
 	Stimulus->SetActive(false);
 }
 
-void ALightBait::Activate()
+void ALightBait::ActivatePower()
 {
 	GetWorldTimerManager().SetTimer(StrobeHandle, this, &ThisClass::StrobeEvent, EventDelay, true);
 }
 
-void ALightBait::Deactivate()
+void ALightBait::DeactivatePower()
 {
 	GetWorldTimerManager().ClearTimer(StrobeHandle);
 
