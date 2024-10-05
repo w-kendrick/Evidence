@@ -4,18 +4,18 @@
 #include "PowerWidget.h"
 #include "Components/ProgressBar.h"
 #include "Components/TextBlock.h"
-#include "Evidence/Interfaces/PowerInterface.h"
+#include "Evidence/Items/Equipment/PowerEquipment.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 
 void UPowerWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryComponent)
 {
-	const IPowerInterface* const Powered = Cast<IPowerInterface>(InventoryComponent->GetEquipped());
+	const APowerEquipment* const Powered = Cast<APowerEquipment>(InventoryComponent->GetEquipped());
 
 	if (Powered)
 	{
-		PowerBar->SetPercent(Powered->GetPowerComponent()->GetPower() / Powered->GetPowerComponent()->GetMaxPower());
-		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPowerComponent()->GetPower())));
+		PowerBar->SetPercent(Powered->GetPower() / Powered->GetMaxPower());
+		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPower())));
 		SetVisibility(ESlateVisibility::Visible);
 	}
 	else
@@ -26,20 +26,20 @@ void UPowerWidget::EquipmentSetup(UInventoryManagerComponent* const InventoryCom
 
 void UPowerWidget::OnEquippedChanged(AEquipment* Current, AEquipment* Previous)
 {
-	IPowerInterface* const PrevPowered = Cast<IPowerInterface>(Previous);
+	APowerEquipment* const PrevPowered = Cast<APowerEquipment>(Previous);
 	if (PrevPowered)
 	{
-		PrevPowered->GetPowerComponent()->OnPowerChanged.Remove(PoweredHandle);
+		PrevPowered->OnPowerChanged.Remove(PoweredHandle);
 	}
 
-	IPowerInterface* const Powered = Cast<IPowerInterface>(Current);
+	APowerEquipment* const Powered = Cast<APowerEquipment>(Current);
 
 	if (Powered)
 	{
-		PoweredHandle = Powered->GetPowerComponent()->OnPowerChanged.AddUObject(this, &ThisClass::OnPowerChanged);
+		PoweredHandle = Powered->OnPowerChanged.AddUObject(this, &ThisClass::OnPowerChanged);
 		SetVisibility(ESlateVisibility::Visible);
-		PowerBar->SetPercent(Powered->GetPowerComponent()->GetPower() / Powered->GetPowerComponent()->GetMaxPower());
-		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPowerComponent()->GetPower())));
+		PowerBar->SetPercent(Powered->GetPower() / Powered->GetMaxPower());
+		PowerText->SetText(FText::FromString(FString::FromInt(Powered->GetPower())));
 	}
 	else
 	{
