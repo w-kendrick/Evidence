@@ -4,28 +4,22 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Equipment/EquipmentAttachment.h"
-#include "Evidence/Interfaces/PowerInterface.h"
 #include "GunTorch.generated.h"
 
 class USpotLightComponent;
 
 UCLASS()
-class EVIDENCE_API AGunTorch : public AEquipmentAttachment, public IPowerInterface
+class EVIDENCE_API AGunTorch : public AEquipmentAttachment
 {
 	GENERATED_BODY()
 
 public:
 	AGunTorch();
 
-	virtual UPowerComponent* GetPowerComponent() const override;
-
 protected:
-	virtual void Activate() override;
-	virtual void Deactivate() override;
+	void Activate();
+	void Deactivate();
 
 	UPROPERTY(EditDefaultsOnly)
 	USpotLightComponent* LightComponent;
-	
-	UPROPERTY(VisibleDefaultsOnly)
-	UPowerComponent* PowerComponent;
 };
