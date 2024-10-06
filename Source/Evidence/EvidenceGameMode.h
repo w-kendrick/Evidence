@@ -35,7 +35,7 @@ protected:
 
 private:
 	void LoadSelectedGame();
-	void LoadPlayer(const FUniqueNetIdRepl& ID);
+	void LoadPlayer(const APlayerController* const PlayerController);
 
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 	void OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);
@@ -47,7 +47,7 @@ private:
 	UEvidenceSaveGame* EvidenceSaveGame;
 
 	UPROPERTY()
-	TArray<FUniqueNetIdRepl> PendingPlayerLoads;
+	TArray<APlayerController*> PendingPlayerLoads;
 
 	FTimerHandle SaveHandle;
 

@@ -23,8 +23,15 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8 Index)
 {
+	AEquipment* const PrevEquipped = GetEquipped();
+
 	EquipmentList.AddEntry(Equipment, Index);
 	OnInventoryChanged.Broadcast(EquipmentList);
+
+	if (Index == SelectedIndex)
+	{
+		UpdateEquipped(PrevEquipped, EUnequipType::Drop);
+	}
 }
 
 void UInventoryManagerComponent::Drop(const uint8 Index)

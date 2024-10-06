@@ -84,15 +84,13 @@ void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController
 {
 	Super::HandleStartingNewPlayer_Implementation(PlayerController);
 
-	const FUniqueNetIdRepl NewPlayerID = PlayerController->PlayerState->GetUniqueId();
-
 	if (EvidenceSaveGame)
 	{
-		LoadPlayer(NewPlayerID);
+		LoadPlayer(PlayerController);
 	}
 	else
 	{
-		PendingPlayerLoads.Add(NewPlayerID);
+		PendingPlayerLoads.Add(PlayerController);
 	}
 }
 
@@ -149,16 +147,19 @@ void AEvidenceGameMode::LoadSelectedGame()
 	}
 }
 
-void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
+void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerController)
 {
+	const FUniqueNetIdRepl& ID = PlayerController->PlayerState->GetUniqueId();
+	ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerController->GetPawn());
+
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Load player ") + ID.ToString());
 
 	FPlayerSave PlayerSave;
-	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave))
+	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave) && Character)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Found save for player ") + ID.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" equipment instances found"));
-		for (const FEquipmentSaveData& EquipmentData : PlayerSave.SavedEquipment)
+		for (uint8 i = 0; i < PlayerSave.SavedEquipment.Num(); i++)
 		{
+			const FEquipmentSaveData& EquipmentData = PlayerSave.SavedEquipment[i];
 			const TSubclassOf<AEquipment>& EquipmentClass = GetEquipmentClass(EquipmentData.EquipmentID);
 
 			if (EquipmentClass)
@@ -173,6 +174,8 @@ void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
 				Ar.ArIsSaveGame = true;
 				// Convert binary array back into actor's variables
 				NewEquipment->Serialize(Ar);
+
+				Character->Pickup(NewEquipment, i);
 
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
 			}
@@ -196,9 +199,9 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 	if (EvidenceSaveGame)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame"));
-		for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
+		for (const APlayerController* const PlayerController : PendingPlayerLoads)
 		{
-			LoadPlayer(ID);
+			LoadPlayer(PlayerController);
 		}
 	}
 	else

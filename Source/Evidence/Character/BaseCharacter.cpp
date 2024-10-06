@@ -69,6 +69,14 @@ void ABaseCharacter::Pickup(AEquipment* const Equipment)
 	}
 }
 
+void ABaseCharacter::Pickup(AEquipment* const Equipment, const uint8 Index)
+{
+	if (InventoryManagerComponent && Equipment)
+	{
+		InventoryManagerComponent->Pickup(Equipment, Index);
+	}
+}
+
 void ABaseCharacter::Drop()
 {
 	if (InventoryManagerComponent)

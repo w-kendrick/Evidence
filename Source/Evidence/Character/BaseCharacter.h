@@ -28,6 +28,7 @@ public:
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 
 	virtual void Pickup(AEquipment* const Equipment);
+	virtual void Pickup(AEquipment* const Equipment, const uint8 Index);
 	virtual void Drop();
 
 	AEquipment* GetEquipped() const;
