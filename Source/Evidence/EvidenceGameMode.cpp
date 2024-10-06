@@ -150,15 +150,16 @@ void AEvidenceGameMode::LoadSelectedGame()
 void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerController)
 {
 	const FUniqueNetIdRepl& ID = PlayerController->PlayerState->GetUniqueId();
+	ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerController->GetPawn());
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Load player ") + ID.ToString());
 
 	FPlayerSave PlayerSave;
-	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave))
+	if (EvidenceSaveGame->GetPlayerSave(ID, PlayerSave) && Character)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Found save for player ") + ID.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" equipment instances found"));
-		for (const FEquipmentSaveData& EquipmentData : PlayerSave.SavedEquipment)
+		for (uint8 i = 0; i < PlayerSave.SavedEquipment.Num(); i++)
 		{
+			const FEquipmentSaveData& EquipmentData = PlayerSave.SavedEquipment[i];
 			const TSubclassOf<AEquipment>& EquipmentClass = GetEquipmentClass(EquipmentData.EquipmentID);
 
 			if (EquipmentClass)
@@ -173,6 +174,8 @@ void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerControll
 				Ar.ArIsSaveGame = true;
 				// Convert binary array back into actor's variables
 				NewEquipment->Serialize(Ar);
+
+				Character->Pickup(NewEquipment, i);
 
 				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
 			}
