@@ -84,15 +84,13 @@ void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController
 {
 	Super::HandleStartingNewPlayer_Implementation(PlayerController);
 
-	const FUniqueNetIdRepl NewPlayerID = PlayerController->PlayerState->GetUniqueId();
-
 	if (EvidenceSaveGame)
 	{
-		LoadPlayer(NewPlayerID);
+		LoadPlayer(PlayerController);
 	}
 	else
 	{
-		PendingPlayerLoads.Add(NewPlayerID);
+		PendingPlayerLoads.Add(PlayerController);
 	}
 }
 
@@ -149,8 +147,10 @@ void AEvidenceGameMode::LoadSelectedGame()
 	}
 }
 
-void AEvidenceGameMode::LoadPlayer(const FUniqueNetIdRepl& ID)
+void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerController)
 {
+	const FUniqueNetIdRepl& ID = PlayerController->PlayerState->GetUniqueId();
+
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Purple, FString("Load player ") + ID.ToString());
 
 	FPlayerSave PlayerSave;
@@ -196,9 +196,9 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 	if (EvidenceSaveGame)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame"));
-		for (const FUniqueNetIdRepl& ID : PendingPlayerLoads)
+		for (const APlayerController* const PlayerController : PendingPlayerLoads)
 		{
-			LoadPlayer(ID);
+			LoadPlayer(PlayerController);
 		}
 	}
 	else
