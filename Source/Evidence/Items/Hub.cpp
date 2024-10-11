@@ -12,7 +12,7 @@
 #include "Evidence/Items/Equipment/EvidenceCaptureEquipment.h"
 #include "Evidence/Libraries/EvidentialFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/EvidenceGameState.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "Components/SphereComponent.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/EvidencePlayerController.h"

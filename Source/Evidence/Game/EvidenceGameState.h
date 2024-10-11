@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
-#include "Delegates.h"
+#include "Evidence/Delegates.h"
 #include "EvidenceGameState.generated.h"
 
 class AHub;

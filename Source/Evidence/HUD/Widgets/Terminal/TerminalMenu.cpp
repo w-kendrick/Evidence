@@ -3,7 +3,7 @@
 
 #include "TerminalMenu.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/EvidenceGameState.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "Evidence/Items/Hub.h"
 #include "Components/Button.h"
 #include "TerminalShopMenu.h"
