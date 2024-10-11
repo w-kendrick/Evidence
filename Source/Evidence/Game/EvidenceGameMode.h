@@ -42,6 +42,8 @@ protected:
 	TSubclassOf<AEquipment> GetEquipmentClass(const uint8 ID) const;
 
 private:
+	void StartNight();
+
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
 
@@ -58,8 +60,12 @@ private:
 	TArray<APlayerController*> PendingPlayerLoads;
 
 	FTimerHandle SaveHandle;
+	FTimerHandle SetupHandle;
 
 	UPROPERTY(EditDefaultsOnly)
 	FTransform DefaultTransform;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxSetupTime;
 };
 
