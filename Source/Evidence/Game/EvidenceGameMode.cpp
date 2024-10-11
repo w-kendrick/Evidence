@@ -4,8 +4,8 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Evidence/Save/EvidenceSaveGame.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/EvidenceGameInstance.h"
-#include "Evidence/EvidenceGameState.h"
+#include "Evidence/Game/EvidenceGameInstance.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "GameFramework/PlayerState.h"
 
 AEvidenceGameMode::AEvidenceGameMode()

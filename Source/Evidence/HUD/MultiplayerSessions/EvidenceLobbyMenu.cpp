@@ -4,7 +4,7 @@
 #include "EvidenceLobbyMenu.h"
 #include "Components/Button.h"
 #include "SaveSelectWidget.h"
-#include "Evidence/EvidenceGameInstance.h"
+#include "Evidence/Game/EvidenceGameInstance.h"
 
 void UEvidenceLobbyMenu::NativeConstruct()
 {
