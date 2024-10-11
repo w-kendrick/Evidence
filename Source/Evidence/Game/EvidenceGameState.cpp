@@ -6,6 +6,18 @@
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 
+AEvidenceGameState::AEvidenceGameState()
+{
+	NetUpdateFrequency = 10;
+}
+
+void AEvidenceGameState::OnRep_MatchState()
+{
+	Super::OnRep_MatchState();
+
+	OnMatchStateChanged.Broadcast(MatchState);
+}
+
 AHub* AEvidenceGameState::GetHub()
 {
 	if (Hub)

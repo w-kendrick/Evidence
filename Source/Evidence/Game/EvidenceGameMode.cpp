@@ -94,6 +94,11 @@ void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController
 	}
 }
 
+void AEvidenceGameMode::OnMatchStateSet()
+{
+	Super::OnMatchStateSet();
+}
+
 uint8 AEvidenceGameMode::GetEquipmentID(const AEquipment* const Equipment) const
 {
 	uint8 Result = 0;
