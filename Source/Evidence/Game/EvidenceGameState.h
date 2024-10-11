@@ -7,6 +7,8 @@
 #include "Evidence/Delegates.h"
 #include "EvidenceGameState.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChanged, FName)
+
 class AHub;
 
 UCLASS()
@@ -15,6 +17,11 @@ class EVIDENCE_API AEvidenceGameState : public AGameState
 	GENERATED_BODY()
 
 public:
+	AEvidenceGameState();
+	virtual void OnRep_MatchState() override;
+
+	FOnMatchStateChanged OnMatchStateChanged;
+
 	AHub* GetHub();
 
 	FOnCashChanged OnCashChanged;

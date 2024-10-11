@@ -33,6 +33,7 @@ public:
 protected:
 	virtual void BeginPlay();
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* PlayerController) override;
+	virtual void OnMatchStateSet() override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FEquipmentToID> EquipmentClassMap;
