@@ -11,12 +11,91 @@
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
 {
-
+	MaxSetupTime = 600.f;
 }
 
 void AEvidenceGameMode::InitGameState()
 {
 	EvidenceGameState = Cast<AEvidenceGameState>(GameState);
+}
+
+void AEvidenceGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	LoadSelectedGame();
+
+	GetWorldTimerManager().SetTimer(SaveHandle, this, &ThisClass::SaveGame, 20.f, true);
+}
+
+void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController* PlayerController)
+{
+	Super::HandleStartingNewPlayer_Implementation(PlayerController);
+
+	if (EvidenceSaveGame)
+	{
+		LoadPlayer(PlayerController);
+	}
+	else
+	{
+		PendingPlayerLoads.Add(PlayerController);
+	}
+}
+
+#pragma region Match State
+
+void AEvidenceGameMode::OnMatchStateSet()
+{
+	Super::OnMatchStateSet();
+
+	if (MatchState == MatchState::Setup)
+	{
+		GetWorldTimerManager().SetTimer(SetupHandle, this, &ThisClass::StartNight, MaxSetupTime, false);
+	}
+}
+
+void AEvidenceGameMode::StartNight()
+{
+	GetWorldTimerManager().ClearTimer(SetupHandle);
+
+	
+}
+
+#pragma endregion
+
+#pragma region Save and Load
+
+uint8 AEvidenceGameMode::GetEquipmentID(const AEquipment* const Equipment) const
+{
+	uint8 Result = 0;
+
+	if (Equipment)
+	{
+		for (const FEquipmentToID& Elem : EquipmentClassMap)
+		{
+			if (Equipment->GetClass() == Elem.Class)
+			{
+				Result = Elem.ID;
+			}
+		}
+	}
+
+	return Result;
+}
+
+TSubclassOf<AEquipment> AEvidenceGameMode::GetEquipmentClass(const uint8 ID) const
+{
+	TSubclassOf<AEquipment> Result = nullptr;
+
+	for (const FEquipmentToID& Elem : EquipmentClassMap)
+	{
+		if (ID == Elem.ID)
+		{
+			Result = Elem.Class;
+		}
+	}
+
+	return Result;
 }
 
 void AEvidenceGameMode::SaveGame()
@@ -69,67 +148,6 @@ void AEvidenceGameMode::SaveGame()
 			UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotNameString, 0, SavedDelegate);
 		}
 	}
-}
-
-void AEvidenceGameMode::BeginPlay()
-{
-	Super::BeginPlay();
-
-	LoadSelectedGame();
-
-	GetWorldTimerManager().SetTimer(SaveHandle, this, &ThisClass::SaveGame, 20.f, true);
-}
-
-void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController* PlayerController)
-{
-	Super::HandleStartingNewPlayer_Implementation(PlayerController);
-
-	if (EvidenceSaveGame)
-	{
-		LoadPlayer(PlayerController);
-	}
-	else
-	{
-		PendingPlayerLoads.Add(PlayerController);
-	}
-}
-
-void AEvidenceGameMode::OnMatchStateSet()
-{
-	Super::OnMatchStateSet();
-}
-
-uint8 AEvidenceGameMode::GetEquipmentID(const AEquipment* const Equipment) const
-{
-	uint8 Result = 0;
-
-	if (Equipment)
-	{
-		for (const FEquipmentToID& Elem : EquipmentClassMap)
-		{
-			if (Equipment->GetClass() == Elem.Class)
-			{
-				Result = Elem.ID;
-			}
-		}
-	}
-
-	return Result;
-}
-
-TSubclassOf<AEquipment> AEvidenceGameMode::GetEquipmentClass(const uint8 ID) const
-{
-	TSubclassOf<AEquipment> Result = nullptr;
-
-	for (const FEquipmentToID& Elem : EquipmentClassMap)
-	{
-		if (ID == Elem.ID)
-		{
-			Result = Elem.Class;
-		}
-	}
-
-	return Result;
 }
 
 void AEvidenceGameMode::LoadSelectedGame()
@@ -215,3 +233,5 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 		EvidenceSaveGame = Cast<UEvidenceSaveGame>(UGameplayStatics::CreateSaveGameObject(UEvidenceSaveGame::StaticClass()));
 	}
 }
+
+#pragma endregion
