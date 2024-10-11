@@ -12,6 +12,13 @@ class UEvidenceSaveGame;
 class USaveGame;
 class AEquipment;
 
+namespace MatchState
+{
+	const FName Setup = FName("Setup"); //Setup period
+	const FName Night = FName("Night"); //Night is ongoing with enemies active and evidence available
+	const FName PostNight = FName("PostNight"); //After the night has ended
+}
+
 UCLASS(minimalapi)
 class AEvidenceGameMode : public AGameMode
 {
