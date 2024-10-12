@@ -56,7 +56,8 @@ void UMultiplayerGameInstance::OnJoinSession(EOnJoinSessionCompleteResult::Type 
 			FString Address;
 			SessionInterface->GetResolvedConnectString(NAME_GameSession, Address);
 
-			if (APlayerController* PlayerController = GetFirstLocalPlayerController())
+			APlayerController* PlayerController = GetFirstLocalPlayerController();
+			if (PlayerController)
 			{
 				PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 			}

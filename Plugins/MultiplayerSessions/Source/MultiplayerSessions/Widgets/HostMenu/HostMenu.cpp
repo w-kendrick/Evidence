@@ -40,7 +40,8 @@ void UHostMenu::NativeConstruct()
 		MaxPlayerCount = DefaultPlayerCount;
 	}
 
-	if (const UGameInstance* GameInstance = GetGameInstance())
+	const UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance)
 	{
 		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
 	}
@@ -55,7 +56,8 @@ void UHostMenu::ShowLoadingWidget()
 {
 	if (LoadingWidgetClass)
 	{
-		if (UUserWidget* LoadingWidgetRef = CreateWidget<UUserWidget>(this, LoadingWidgetClass))
+		UUserWidget* LoadingWidgetRef = CreateWidget<UUserWidget>(this, LoadingWidgetClass);
+		if (LoadingWidgetRef)
 		{
 			LoadingWidgetRef->AddToViewport();
 		}
@@ -66,9 +68,13 @@ void UHostMenu::BackButtonClicked()
 {
 	if (MenuClass)
 	{
-		if (UMultiplayerMainMenu* Menu = CreateWidget<UMultiplayerMainMenu>(this, MenuClass))
+		UMultiplayerMainMenu* Menu = CreateWidget<UMultiplayerMainMenu>(this, MenuClass);
+		if (Menu)
 		{
-			if (BackButton) BackButton->SetIsEnabled(false);
+			if (BackButton)
+			{
+				BackButton->SetIsEnabled(false);
+			}
 			Menu->AddToViewport();
 			Menu->MenuSetup();
 			RemoveFromParent();
@@ -99,7 +105,8 @@ void UHostMenu::OnCreateSession(bool bWasSuccessful)
 {
 	if (bWasSuccessful)
 	{
-		if (UWorld* World = GetWorld())
+		UWorld* World = GetWorld();
+		if (World)
 		{
 			World->ServerTravel(LobbyMapAddress+ "?listen");
 		}

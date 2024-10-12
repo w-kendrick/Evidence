@@ -160,6 +160,7 @@ void UMultiplayerSessionsSubsystem::OnDestroySessionComplete(FName SessionName, 
 
 void UMultiplayerSessionsSubsystem::OnStartSessionComplete(FName SessionName, bool bWasSuccessful)
 {
+	// Created in case of later implementation
 }
 
 void UMultiplayerSessionsSubsystem::OnSessionParticipantsChanged(FName SessionName, const FUniqueNetId& UniqueId,

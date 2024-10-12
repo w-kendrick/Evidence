@@ -25,8 +25,8 @@ class MULTIPLAYERSESSIONS_API UServerBrowser : public UUserWidget
 {
 	GENERATED_BODY()
 protected:
-	virtual void NativeConstruct() override;
-	virtual void NativeDestruct() override;
+	void NativeConstruct() override;
+	void NativeDestruct() override;
 
 private:
 	UPROPERTY(meta = (BindWidget))

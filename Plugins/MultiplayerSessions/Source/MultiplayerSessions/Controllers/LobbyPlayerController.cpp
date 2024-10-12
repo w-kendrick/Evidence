@@ -40,9 +40,10 @@ void ALobbyPlayerController::ClientCreateLobbyScreen_Implementation()
 
 void ALobbyPlayerController::ClientUpdatePlayerList_Implementation()
 {
-	if (LobbyMenu && LobbyMenu->PlayerListBox)
+	UPlayerListBox* PlayerListBox = LobbyMenu->GetPlayerListBox();
+	if (LobbyMenu && PlayerListBox)
 	{
-		LobbyMenu->PlayerListBox->Refresh();
+		PlayerListBox->Refresh();
 	}
 }
 

@@ -24,30 +24,16 @@ void UModeSelector::NativeConstruct()
 		ModeComboBox->OnSelectionChanged.AddDynamic(this, &UModeSelector::OnSelectedModeChanged);
 	}
 	
-	if (const IOnlineSubsystem* OnlineSubsystem = IOnlineSubsystem::Get())
+	const IOnlineSubsystem* OnlineSubsystem = IOnlineSubsystem::Get();
+	if (OnlineSubsystem)
 	{
-		if (SessionInterface = OnlineSubsystem->GetSessionInterface(); SessionInterface.IsValid())
+		SessionInterface = OnlineSubsystem->GetSessionInterface();
+		if (SessionInterface.IsValid())
 		{
 			CurrentSession = SessionInterface->GetNamedSession(NAME_GameSession);
 			if (CurrentSession)
 			{
-				if (GetOwningPlayer()->HasAuthority())
-				{
-					CurrentSession->SessionSettings.Set(FName("MatchType"), ModeComboBox->GetSelectedOption(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
-					SessionInterface->UpdateSession(NAME_GameSession, CurrentSession->SessionSettings, true);
-					ModeComboBox->SetIsEnabled(true);
-				}
-				else
-				{
-					FString NewMatchType;
-					CurrentSession->SessionSettings.Get(FName("MatchType"), NewMatchType);
-					if (ModeNamesAndURLs.Contains(NewMatchType)) ModeComboBox->SetSelectedOption(NewMatchType);
-					if (ALobbyGameState* LobbyGameState = Cast<ALobbyGameState>(GetWorld()->GetGameState()))
-					{
-						LobbyGameState->OnSessionSettingsChangedDelegate.AddDynamic(this, &UModeSelector::OnSessionSettingsChanged);
-					}
-					ModeComboBox->SetIsEnabled(false);
-				}
+				Setup();
 			}
 		}
 	}
@@ -76,4 +62,25 @@ void UModeSelector::OnSessionSettingsChanged()
 	FString NewMatchType;
 	CurrentSession->SessionSettings.Get(FName("MatchType"), NewMatchType);
 	if (ModeNamesAndURLs.Contains(NewMatchType)) ModeComboBox->SetSelectedOption(NewMatchType);
+}
+
+void UModeSelector::Setup()
+{
+	if (GetOwningPlayer()->HasAuthority())
+	{
+		CurrentSession->SessionSettings.Set(FName("MatchType"), ModeComboBox->GetSelectedOption(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+		SessionInterface->UpdateSession(NAME_GameSession, CurrentSession->SessionSettings, true);
+		ModeComboBox->SetIsEnabled(true);
+	}
+	else
+	{
+		FString NewMatchType;
+		CurrentSession->SessionSettings.Get(FName("MatchType"), NewMatchType);
+		if (ModeNamesAndURLs.Contains(NewMatchType)) ModeComboBox->SetSelectedOption(NewMatchType);
+		if (ALobbyGameState* LobbyGameState = Cast<ALobbyGameState>(GetWorld()->GetGameState()))
+		{
+			LobbyGameState->OnSessionSettingsChangedDelegate.AddDynamic(this, &UModeSelector::OnSessionSettingsChanged);
+		}
+		ModeComboBox->SetIsEnabled(false);
+	}
 }

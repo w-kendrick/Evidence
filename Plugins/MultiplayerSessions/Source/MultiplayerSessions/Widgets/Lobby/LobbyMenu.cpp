@@ -72,14 +72,6 @@ void ULobbyMenu::StartButtonClicked()
 		{
 			StartButton->SetIsEnabled(false);
 		}
-		
-		if (GetWorld())
-		{
-			if (ALobbyGameState* LobbyGameState = Cast<ALobbyGameState>(UGameplayStatics::GetGameState(GetWorld())))
-			{
-				//LobbyGameState->ServerRemoveMenu();
-			}
-		}
 
 		if (GetWorld())
 		{

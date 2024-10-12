@@ -90,7 +90,8 @@ void UServerListRow::ShowLoadingWidget()
 {
 	if (LoadingWidgetClass)
 	{
-		if (UUserWidget* LoadingWidgetRef = CreateWidget<UUserWidget>(this, LoadingWidgetClass))
+		UUserWidget* LoadingWidgetRef = CreateWidget<UUserWidget>(this, LoadingWidgetClass);
+		if (LoadingWidgetRef)
 		{
 			LoadingWidgetRef->AddToViewport();
 		}
@@ -109,7 +110,8 @@ void UServerListRow::JoinButtonClicked()
 	}
 	else if (PasswordEntryWidgetClass)
 	{
-		if (UServerPasswordEntry* PasswordEntryWidgetRef = CreateWidget<UServerPasswordEntry>(this, PasswordEntryWidgetClass))
+		UServerPasswordEntry* PasswordEntryWidgetRef = CreateWidget<UServerPasswordEntry>(this, PasswordEntryWidgetClass);
+		if (PasswordEntryWidgetRef)
 		{
 			PasswordEntryWidgetRef->SpawnInit(Password);
 			PasswordEntryWidgetRef->AddToViewport();
@@ -135,16 +137,23 @@ void UServerListRow::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
 		return;
 	}
 	
-	if (const IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get())
+	const IOnlineSubsystem* Subsystem = IOnlineSubsystem::Get();
+	if (Subsystem)
 	{
-		if (const IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface(); SessionInterface.IsValid())
+		const IOnlineSessionPtr SessionInterface = Subsystem->GetSessionInterface();
+		if (SessionInterface.IsValid())
 		{
 			FString Address;
 			SessionInterface->GetResolvedConnectString(NAME_GameSession, Address);
 
-			if (APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController())
+			APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
+			if (PlayerController)
 			{
-				if (OwningBrowser) OwningBrowser->RemoveFromParent();
+				if (OwningBrowser)
+				{
+					OwningBrowser->RemoveFromParent();
+				}
+
 				PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 			}
 		}

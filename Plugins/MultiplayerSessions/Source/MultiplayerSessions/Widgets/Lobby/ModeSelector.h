@@ -25,7 +25,7 @@ public:
 	TMap<FString, FString> ModeNamesAndURLs; //Maps mode name to its URL
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -38,4 +38,6 @@ private:
 
 	FNamedOnlineSession* CurrentSession;
 	IOnlineSessionPtr SessionInterface;
+
+	void Setup();
 };

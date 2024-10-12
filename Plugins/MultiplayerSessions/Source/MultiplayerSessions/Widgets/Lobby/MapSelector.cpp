@@ -36,30 +36,16 @@ void UMapSelector::NativeConstruct()
 		MapComboBox->OnSelectionChanged.AddDynamic(this, &UMapSelector::OnSelectedMapChanged);
 	}
 	
-	if (const IOnlineSubsystem* OnlineSubsystem = IOnlineSubsystem::Get())
+	const IOnlineSubsystem* OnlineSubsystem = IOnlineSubsystem::Get();
+	if (OnlineSubsystem)
 	{
-		if (SessionInterface = OnlineSubsystem->GetSessionInterface(); SessionInterface.IsValid())
+		SessionInterface = OnlineSubsystem->GetSessionInterface();
+		if (SessionInterface.IsValid())
 		{
 			CurrentSession = SessionInterface->GetNamedSession(NAME_GameSession);
 			if (CurrentSession)
 			{
-				if (GetOwningPlayer()->HasAuthority())
-				{
-					CurrentSession->SessionSettings.Set(FName("Map"), MapComboBox->GetSelectedOption(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
-					SessionInterface->UpdateSession(NAME_GameSession, CurrentSession->SessionSettings, true);
-					MapComboBox->SetIsEnabled(true);
-				}
-				else
-				{
-					FString MapName;
-					CurrentSession->SessionSettings.Get(FName("Map"), MapName);
-					if (MapNames.Contains(MapName)) MapComboBox->SetSelectedOption(MapName);
-					if (ALobbyGameState* LobbyGameState = Cast<ALobbyGameState>(GetWorld()->GetGameState()))
-					{
-						LobbyGameState->OnSessionSettingsChangedDelegate.AddDynamic(this, &UMapSelector::OnSessionSettingsChanged);
-					}
-					MapComboBox->SetIsEnabled(false);
-				}
+				Setup();
 			}
 		}
 	}
@@ -78,4 +64,25 @@ void UMapSelector::OnSessionSettingsChanged()
 	FString MapName;
 	CurrentSession->SessionSettings.Get(FName("Map"), MapName);
 	if (MapNames.Contains(MapName)) MapComboBox->SetSelectedOption(MapName);
+}
+
+void UMapSelector::Setup()
+{
+	if (GetOwningPlayer()->HasAuthority())
+	{
+		CurrentSession->SessionSettings.Set(FName("Map"), MapComboBox->GetSelectedOption(), EOnlineDataAdvertisementType::ViaOnlineServiceAndPing);
+		SessionInterface->UpdateSession(NAME_GameSession, CurrentSession->SessionSettings, true);
+		MapComboBox->SetIsEnabled(true);
+	}
+	else
+	{
+		FString MapName;
+		CurrentSession->SessionSettings.Get(FName("Map"), MapName);
+		if (MapNames.Contains(MapName)) MapComboBox->SetSelectedOption(MapName);
+		if (ALobbyGameState* LobbyGameState = Cast<ALobbyGameState>(GetWorld()->GetGameState()))
+		{
+			LobbyGameState->OnSessionSettingsChangedDelegate.AddDynamic(this, &UMapSelector::OnSessionSettingsChanged);
+		}
+		MapComboBox->SetIsEnabled(false);
+	}
 }

@@ -16,7 +16,7 @@ class MULTIPLAYERSESSIONS_API ALobbyPlayerController : public APlayerController
 public:
 	ALobbyPlayerController();
 
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 	UFUNCTION(Client, Reliable)
 	void ClientCreateLobbyScreen();
@@ -27,12 +27,11 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientRemoveMenu();
 
-protected:
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ULobbyMenu> LobbyClass;
-
 private:
 	UPROPERTY()
 	ULobbyMenu* LobbyMenu;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ULobbyMenu> LobbyClass;
 	
 };

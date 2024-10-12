@@ -21,7 +21,7 @@ public:
 	void SpawnInitialize(APlayerState* Ref);
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
 private:
 	UPROPERTY(meta = (BindWidget))

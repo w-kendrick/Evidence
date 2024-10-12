@@ -26,14 +26,8 @@ public:
 	
 protected:
 
-	virtual bool Initialize() override;
-	virtual void NativeDestruct() override;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UServerBrowser> BrowserClass;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UHostMenu> HostMenuClass;
+	bool Initialize() override;
+	void NativeDestruct() override;
 
 	void MenuTearDown();
 private:
@@ -56,4 +50,10 @@ private:
 	int32 NumPublicConnections{4};
 	FString MatchType{TEXT("FreeForAll")};
 	FString PathToLobby{TEXT("/Game/Tag/Maps/TestMap")};
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UServerBrowser> BrowserClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UHostMenu> HostMenuClass;
 };
