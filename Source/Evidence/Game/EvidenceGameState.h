@@ -18,7 +18,7 @@ class EVIDENCE_API AEvidenceGameState : public AGameState
 
 public:
 	AEvidenceGameState();
-	virtual void Tick(float DeltaTime) override;
+	void Tick(float DeltaTime) override;
 	void SetMatchState(const FName& State);
 	virtual void OnRep_MatchState() override;
 
