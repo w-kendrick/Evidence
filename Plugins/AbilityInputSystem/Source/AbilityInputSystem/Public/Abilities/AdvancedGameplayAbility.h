@@ -33,12 +33,13 @@ public:
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	EAbilityActivationPolicy ActivationPolicy;
-
 	UFUNCTION(BlueprintCallable)
 	void CancelAbilityWithTags(const FGameplayTagContainer Tags);
 
-	virtual void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+	void OnGiveAbility(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) override;
+
+private:
+	UPROPERTY(EditDefaultsOnly)
+	EAbilityActivationPolicy ActivationPolicy;
 	
 };
