@@ -63,5 +63,7 @@ private:
 	void JoinButtonClicked();
 	UFUNCTION()
 	void OnServerPasswordSubmitted(FString SubmittedPassword);
+
+	void TravelToNewMap(const FString& Address);
 	
 };

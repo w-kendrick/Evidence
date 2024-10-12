@@ -146,16 +146,21 @@ void UServerListRow::OnJoinSession(EOnJoinSessionCompleteResult::Type Result)
 			FString Address;
 			SessionInterface->GetResolvedConnectString(NAME_GameSession, Address);
 
-			APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
-			if (PlayerController)
-			{
-				if (OwningBrowser)
-				{
-					OwningBrowser->RemoveFromParent();
-				}
-
-				PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
-			}
+			TravelToNewMap(Address);
 		}
+	}
+}
+
+void UServerListRow::TravelToNewMap(const FString& Address)
+{
+	APlayerController* PlayerController = GetGameInstance()->GetFirstLocalPlayerController();
+	if (PlayerController)
+	{
+		if (OwningBrowser)
+		{
+			OwningBrowser->RemoveFromParent();
+		}
+
+		PlayerController->ClientTravel(Address, ETravelType::TRAVEL_Absolute);
 	}
 }
