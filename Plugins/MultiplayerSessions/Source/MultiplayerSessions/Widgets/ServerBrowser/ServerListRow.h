@@ -26,10 +26,8 @@ public:
 	void SpawnInitialize(FOnlineSessionSearchResult Result, UServerBrowser* Browser);
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> LoadingWidgetClass;
 	void ShowLoadingWidget();
 
 private:
@@ -56,6 +54,9 @@ private:
 	UServerBrowser* OwningBrowser;
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UServerPasswordEntry> PasswordEntryWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> LoadingWidgetClass;
 
 	void OnJoinSession(EOnJoinSessionCompleteResult::Type Result);
 	UFUNCTION()

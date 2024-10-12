@@ -21,12 +21,9 @@ public:
 	void Refresh();
 	
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
 	void OnSessionParticipantsChanged(FName SessionName, const FUniqueNetId& UniqueId, bool bJoined);
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ULobbyPlayerRow> PlayerRowClass;
 
 private:
 	UPROPERTY(meta = (BindWidget))
@@ -42,4 +39,7 @@ private:
 	void RefreshButtonPressed();
 
 	FTimerHandle RefreshTimerHandle;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ULobbyPlayerRow> PlayerRowClass;
 };

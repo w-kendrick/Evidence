@@ -17,9 +17,11 @@ void UMultiplayerMainMenu::MenuSetup()
 	SetVisibility(ESlateVisibility::Visible);
 	bIsFocusable = true;
 
-	if (const UWorld* World = GetWorld())
+	const UWorld* World = GetWorld();
+	if (World)
 	{
-		if (APlayerController* PlayerController = World->GetFirstPlayerController())
+		APlayerController* PlayerController = World->GetFirstPlayerController();
+		if (PlayerController)
 		{
 			FInputModeUIOnly InputModeData;
 			InputModeData.SetWidgetToFocus(TakeWidget());
@@ -29,7 +31,8 @@ void UMultiplayerMainMenu::MenuSetup()
 		}
 	}
 
-	if (const UGameInstance* GameInstance = GetGameInstance())
+	const UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance)
 	{
 		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
 	}
@@ -61,9 +64,11 @@ void UMultiplayerMainMenu::NativeDestruct()
 
 void UMultiplayerMainMenu::MenuTearDown()
 {
-	if (const UWorld* World = GetWorld())
+	const UWorld* World = GetWorld();
+	if (World)
 	{
-		if (APlayerController* PlayerController = World->GetFirstPlayerController())
+		APlayerController* PlayerController = World->GetFirstPlayerController();
+		if (PlayerController)
 		{
 			const FInputModeGameOnly InputModeData;
 			PlayerController->SetInputMode(InputModeData);
@@ -77,7 +82,8 @@ void UMultiplayerMainMenu::HostButtonClicked()
 {
 	if (HostMenuClass)
 	{
-		if (UHostMenu* HostMenu = CreateWidget<UHostMenu>(this, HostMenuClass))
+		UHostMenu* HostMenu = CreateWidget<UHostMenu>(this, HostMenuClass);
+		if (HostMenu)
 		{
 			if (HostButton)
 			{
@@ -93,7 +99,8 @@ void UMultiplayerMainMenu::JoinButtonClicked()
 {
 	if (BrowserClass)
 	{
-		if (UServerBrowser* Browser = CreateWidget<UServerBrowser>(this, BrowserClass))
+		UServerBrowser* Browser = CreateWidget<UServerBrowser>(this, BrowserClass);
+		if (Browser)
 		{
 			if (JoinButton)
 			{

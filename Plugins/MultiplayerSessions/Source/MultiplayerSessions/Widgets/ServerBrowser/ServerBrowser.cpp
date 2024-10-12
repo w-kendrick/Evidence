@@ -39,7 +39,8 @@ void UServerBrowser::NativeConstruct()
 		SearchStatusText->SetText(FText::FromString(FString("Search")));
 	}
 
-	if (const UGameInstance* GameInstance = GetGameInstance())
+	const UGameInstance* GameInstance = GetGameInstance();
+	if (GameInstance)
 	{
 		MultiplayerSessionsSubsystem = GameInstance->GetSubsystem<UMultiplayerSessionsSubsystem>();
 	}
@@ -66,9 +67,13 @@ void UServerBrowser::BackButtonClicked()
 {
 	if (MenuClass)
 	{
-		if (UMultiplayerMainMenu* Menu = CreateWidget<UMultiplayerMainMenu>(this, MenuClass))
+		UMultiplayerMainMenu* Menu = CreateWidget<UMultiplayerMainMenu>(this, MenuClass);
+		if (Menu)
 		{
-			if (BackButton) BackButton->SetIsEnabled(false);
+			if (BackButton)
+			{
+				BackButton->SetIsEnabled(false);
+			}
 			Menu->AddToViewport();
 			Menu->MenuSetup();
 			RemoveFromParent();
@@ -92,7 +97,8 @@ void UServerBrowser::OnFindSessions(const TArray<FOnlineSessionSearchResult>& Se
 	{
 		if (!FilterResult(Result)) break;
 			
-		if (UServerListRow* Row = CreateWidget<UServerListRow>(this, RowClass))
+		UServerListRow* Row = CreateWidget<UServerListRow>(this, RowClass);
+		if (Row)
 		{
 			Row->SpawnInitialize(Result, this);
 			BrowserBox->AddChild(Row);
@@ -142,10 +148,16 @@ void UServerBrowser::EndSearch()
 
 void UServerBrowser::Search()
 {
-	if (BrowserBox) BrowserBox->ClearChildren();
+	if (BrowserBox)
+	{
+		BrowserBox->ClearChildren();
+	}
 	StartSearch();
 	MultiplayerSessionsSubsystem->FindSessions(10000);
-	if (FindText) FindText->SetText(FText::FromString(FString("Refresh")));
+	if (FindText)
+	{
+		FindText->SetText(FText::FromString(FString("Refresh")));
+	}
 }
 
 bool UServerBrowser::FilterResult(const FOnlineSessionSearchResult& SessionSearchResult)
@@ -153,17 +165,26 @@ bool UServerBrowser::FilterResult(const FOnlineSessionSearchResult& SessionSearc
 	//Filter by invite only
 	bool bInviteOnly;
 	SessionSearchResult.Session.SessionSettings.Get(FName("InviteOnly"), bInviteOnly);
-	if (bInviteOnly) return false;
+	if (bInviteOnly)
+	{
+		return false;
+	}
 	
 	//Filter by mode
 	FString MatchType;
 	SessionSearchResult.Session.SessionSettings.Get(FName("MatchType"), MatchType);
-	if (ModeFilter->GetSelectedOption() != "Any" && MatchType != ModeFilter->GetSelectedOption()) return false;
+	if (ModeFilter->GetSelectedOption() != "Any" && MatchType != ModeFilter->GetSelectedOption())
+	{
+		return false;
+	}
 	
 	//Filter by map
 	FString MapName;
 	SessionSearchResult.Session.SessionSettings.Get(FName("Map"), MapName);
-	if (MapFilter->GetSelectedOption() != "Any" && MapName != MapFilter->GetSelectedOption()) return false;
+	if (MapFilter->GetSelectedOption() != "Any" && MapName != MapFilter->GetSelectedOption())
+	{
+		return false;
+	}
 	
 	return true;
 }

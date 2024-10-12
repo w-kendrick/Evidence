@@ -25,10 +25,7 @@ public:
 	UHostMenu(const FObjectInitializer& ObjectInitializer);
 
 protected:
-	virtual void NativeConstruct() override;
-
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> LoadingWidgetClass;
+	void NativeConstruct() override;
 	void ShowLoadingWidget();
 	
 private:
@@ -56,6 +53,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UMultiplayerMainMenu> MenuClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> LoadingWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	FString LobbyMapAddress;

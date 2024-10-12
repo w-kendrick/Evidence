@@ -38,4 +38,5 @@ void ULobbyPlayerRow::NativeConstruct()
 
 void ULobbyPlayerRow::KickButtonClicked()
 {
+	//To be implemented
 }

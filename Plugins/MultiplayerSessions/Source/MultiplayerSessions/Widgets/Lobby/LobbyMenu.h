@@ -21,14 +21,11 @@ class MULTIPLAYERSESSIONS_API ULobbyMenu : public UUserWidget
 {
 	GENERATED_BODY()
 public:
-	UPROPERTY(meta = (BindWidget))
-	UPlayerListBox* PlayerListBox;
+	UPlayerListBox* GetPlayerListBox() const { return PlayerListBox; }
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
-	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UUserWidget> LoadingWidgetClass;
 	void ShowLoadingWidget();
 	
 private:
@@ -50,6 +47,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<UHostMenu> HostMenuClass;
+
+	UPROPERTY(meta = (BindWidget))
+	UPlayerListBox* PlayerListBox;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UUserWidget> LoadingWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	FString StartMapAddress = FString("Game/Maps/GameStartMap");

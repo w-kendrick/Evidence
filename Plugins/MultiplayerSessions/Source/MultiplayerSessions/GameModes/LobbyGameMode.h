@@ -16,10 +16,10 @@ class MULTIPLAYERSESSIONS_API ALobbyGameMode : public AGameMode
 
 public:
 	ALobbyGameMode();
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 protected:
-	virtual void PostLogin(APlayerController* NewPlayer) override;
+	void PostLogin(APlayerController* NewPlayer) override;
 
 private:
 	FDelegateHandle OnUpdateSessionCompleteDelegate;

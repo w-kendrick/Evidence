@@ -26,7 +26,14 @@ public:
 	void SpawnInit(FString SessionPassword);
 	FOnPasswordSubmitted OnPasswordSubmittedDelegate;
 
-protected:
+private:
+	UFUNCTION()
+	void OnJoinButtonClicked();
+	UFUNCTION()
+	void OnCancelButtonClicked();
+
+	FString Password;
+
 	UPROPERTY(meta = (BindWidget))
 	UEditableTextBox* PasswordTextBox;
 	UPROPERTY(meta = (BindWidget))
@@ -35,13 +42,5 @@ protected:
 	UButton* CancelButton;
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* PasswordStatusText;
-
-private:
-	UFUNCTION()
-	void OnJoinButtonClicked();
-	UFUNCTION()
-	void OnCancelButtonClicked();
-
-	FString Password;
 	
 };
