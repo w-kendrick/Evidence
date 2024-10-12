@@ -43,6 +43,7 @@ protected:
 
 private:
 	void StartNight();
+	void EndNight();
 
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
@@ -61,11 +62,15 @@ private:
 
 	FTimerHandle SaveHandle;
 	FTimerHandle SetupHandle;
+	FTimerHandle NightHandle;
 
 	UPROPERTY(EditDefaultsOnly)
 	FTransform DefaultTransform;
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxSetupTime;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxNightTime;
 };
 
