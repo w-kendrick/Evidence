@@ -87,6 +87,7 @@ void UAbilitySetupComponent::Input_AbilityInputTagReleased(FGameplayTag InputTag
 
 void UAbilitySetupComponent::Input_Move(const FInputActionValue& InputActionValue)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Input_Move"));
 	APawn* Pawn = Cast<APawn>(GetOwner());
 	AController* Controller = Pawn ? Pawn->GetController() : nullptr;
 
