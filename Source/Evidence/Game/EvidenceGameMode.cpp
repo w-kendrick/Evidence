@@ -18,6 +18,11 @@ AEvidenceGameMode::AEvidenceGameMode()
 void AEvidenceGameMode::InitGameState()
 {
 	EvidenceGameState = Cast<AEvidenceGameState>(GameState);
+
+	if (EvidenceGameState)
+	{
+		EvidenceGameState->SetSetupCountdownLength(MaxSetupTime);
+	}
 }
 
 void AEvidenceGameMode::BeginPlay()
@@ -49,7 +54,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 {
 	Super::OnMatchStateSet();
 
-	UE_LOG(LogTemp, Warning, TEXT("Match State: %s"), *MatchState.ToString());
+	EvidenceGameState->SetMatchState(MatchState);
 
 	if (MatchState == MatchState::InProgress)
 	{

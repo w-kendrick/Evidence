@@ -5,10 +5,40 @@
 #include "Evidence/Items/Hub.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
+#include "Evidence/Game/EvidenceGameMode.h"
+
+#pragma region Core
 
 AEvidenceGameState::AEvidenceGameState()
 {
 	NetUpdateFrequency = 10;
+}
+
+void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME(AEvidenceGameState, SetupCountdown);
+	DOREPLIFETIME(AEvidenceGameState, Cash);
+}
+
+void AEvidenceGameState::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (MatchState == MatchState::Setup)
+	{
+		SetupCountdown -= DeltaTime;
+	}
+}
+
+#pragma endregion
+
+#pragma region Match State
+
+void AEvidenceGameState::SetMatchState(const FName& State)
+{
+	MatchState = State;
 }
 
 void AEvidenceGameState::OnRep_MatchState()
@@ -17,6 +47,13 @@ void AEvidenceGameState::OnRep_MatchState()
 
 	OnMatchStateChanged.Broadcast(MatchState);
 }
+
+void AEvidenceGameState::SetSetupCountdownLength(const float InCountdownLength)
+{
+	SetupCountdown = InCountdownLength;
+}
+
+#pragma endregion
 
 AHub* AEvidenceGameState::GetHub()
 {
@@ -29,12 +66,7 @@ AHub* AEvidenceGameState::GetHub()
 	return Hub;
 }
 
-void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
-{
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(AEvidenceGameState, Cash);
-}
+#pragma region Cash
 
 void AEvidenceGameState::AwardCash(const float Amount)
 {
@@ -56,3 +88,5 @@ void AEvidenceGameState::OnRep_Cash(float PrevCash)
 {
 	OnCashChanged.Broadcast(Cash);
 }
+
+#pragma endregion

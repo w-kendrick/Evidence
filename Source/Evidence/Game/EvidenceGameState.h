@@ -18,7 +18,11 @@ class EVIDENCE_API AEvidenceGameState : public AGameState
 
 public:
 	AEvidenceGameState();
+	virtual void Tick(float DeltaTime) override;
+	void SetMatchState(const FName& State);
 	virtual void OnRep_MatchState() override;
+
+	void SetSetupCountdownLength(const float InCountdownLength);
 
 	FOnMatchStateChanged OnMatchStateChanged;
 
@@ -32,6 +36,9 @@ public:
 
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+
+	UPROPERTY(Replicated)
+	float SetupCountdown;
 
 	UPROPERTY()
 	AHub* Hub;
