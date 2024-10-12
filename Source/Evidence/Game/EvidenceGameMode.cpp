@@ -12,6 +12,7 @@ AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
 {
 	MaxSetupTime = 600.f;
+	MaxNightTime = 1800.f;
 }
 
 void AEvidenceGameMode::InitGameState()
@@ -48,9 +49,19 @@ void AEvidenceGameMode::OnMatchStateSet()
 {
 	Super::OnMatchStateSet();
 
-	if (MatchState == MatchState::Setup)
+	UE_LOG(LogTemp, Warning, TEXT("Match State: %s"), *MatchState.ToString());
+
+	if (MatchState == MatchState::InProgress)
+	{
+		SetMatchState(MatchState::Setup);
+	}
+	else if (MatchState == MatchState::Setup)
 	{
 		GetWorldTimerManager().SetTimer(SetupHandle, this, &ThisClass::StartNight, MaxSetupTime, false);
+	}
+	else if (MatchState == MatchState::Night)
+	{
+		GetWorldTimerManager().SetTimer(NightHandle, this, &ThisClass::EndNight, MaxNightTime, false);
 	}
 }
 
@@ -58,7 +69,14 @@ void AEvidenceGameMode::StartNight()
 {
 	GetWorldTimerManager().ClearTimer(SetupHandle);
 
-	
+	SetMatchState(MatchState::Night);
+}
+
+void AEvidenceGameMode::EndNight()
+{
+	GetWorldTimerManager().ClearTimer(NightHandle);
+
+	SetMatchState(MatchState::PostNight);
 }
 
 #pragma endregion
