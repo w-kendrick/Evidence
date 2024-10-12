@@ -158,7 +158,7 @@ class ABILITYINPUTSYSTEM_API UAbilitySet : public UPrimaryDataAsset
 public:
 	void GiveToAbilitySystem(UAdvancedAbilityComponent* AASC, FAbilitySet_GrantedHandles* OutGrantedHandles, UObject* SourceObject = nullptr) const;
 
-protected:
+private:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FAbilitySet_GameplayAbility> Abilities;
 

@@ -54,8 +54,8 @@ protected:
 	void TryActivateAbilitiesOnSpawn();
 
 private:
-	virtual void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;
-	virtual void AbilitySpecInputReleased(FGameplayAbilitySpec& Spec) override;
+	void AbilitySpecInputPressed(FGameplayAbilitySpec& Spec) override;
+	void AbilitySpecInputReleased(FGameplayAbilitySpec& Spec) override;
 
 	// Handles to abilities that had their input pressed this frame.
 	TArray<FGameplayAbilitySpecHandle> InputPressedSpecHandles;

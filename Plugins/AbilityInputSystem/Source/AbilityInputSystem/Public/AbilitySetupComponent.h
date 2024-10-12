@@ -28,7 +28,7 @@ public:
 	void AddInputMappingContext(ULocalPlayer* LocalPlayer);
 
 protected:
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 	void Input_AbilityInputTagPressed(FGameplayTag InputTag);
 	void Input_AbilityInputTagReleased(FGameplayTag InputTag);

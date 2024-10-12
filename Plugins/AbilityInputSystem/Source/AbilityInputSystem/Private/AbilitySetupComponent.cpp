@@ -135,7 +135,8 @@ UAdvancedAbilityComponent* UAbilitySetupComponent::GetAbilitySystemComponent() c
 {
 	UAdvancedAbilityComponent* Comp = nullptr;
 
-	if (AActor* OwningActor = GetOwner())
+	AActor* OwningActor = GetOwner();
+	if (OwningActor)
 	{
 		Comp = OwningActor->FindComponentByClass<UAdvancedAbilityComponent>();
 	}
