@@ -16,17 +16,7 @@ AWorldGenerator::AWorldGenerator()
 	Box->SetVisibility(true);
 }
 
-void AWorldGenerator::BeginPlay()
-{
-	Super::BeginPlay();
-	
-	if (HasAuthority())
-	{
-		SpawnClasses();
-	}
-}
-
-void AWorldGenerator::SpawnClasses()
+void AWorldGenerator::SetupWorld()
 {
 	for (const FEvidentialSpawn& SpawnClass : ClassesToSpawn)
 	{
@@ -44,6 +34,16 @@ void AWorldGenerator::SpawnClasses()
 	}
 }
 
+void AWorldGenerator::ResetWorld()
+{
+	for (AActor* const Actor : SpawnedActors)
+	{
+		Actor->Destroy();
+	}
+
+	SpawnedActors.Empty();
+}
+
 void AWorldGenerator::SpawnClassAtLocation(const TSubclassOf<AActor>& Class, const FVector& Location)
 {
 	FVector GroundPoint;
@@ -55,6 +55,8 @@ void AWorldGenerator::SpawnClassAtLocation(const TSubclassOf<AActor>& Class, con
 		FActorSpawnParameters Params;
 
 		AActor* const Spawned = GetWorld()->SpawnActor<AActor>(Class, Transform, Params);
+
+		SpawnedActors.Add(Spawned);
 	}
 }
 

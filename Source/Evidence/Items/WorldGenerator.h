@@ -17,16 +17,20 @@ class EVIDENCE_API AWorldGenerator : public AActor
 public:	
 	AWorldGenerator();
 
-protected:
-	virtual void BeginPlay() override;
+	void SetupWorld();
+	void ResetWorld();
 
+protected:
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FEvidentialSpawn> ClassesToSpawn;
 
 	UPROPERTY(VisibleDefaultsOnly)
 	TObjectPtr<UBoxComponent> Box;
 
-	void SpawnClasses();
 	void SpawnClassAtLocation(const TSubclassOf<AActor>& Class, const FVector& Location);
 	bool GetGroundPoint(const FVector& OriginalPoint, FVector& NewPoint) const;
+
+private:
+	UPROPERTY()
+	TArray<AActor*> SpawnedActors;
 };
