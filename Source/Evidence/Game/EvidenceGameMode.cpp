@@ -58,7 +58,11 @@ void AEvidenceGameMode::OnMatchStateSet()
 
 	if (MatchState == MatchState::InProgress)
 	{
-		SetMatchState(MatchState::Setup);
+		SetMatchState(MatchState::PreSetup);
+	}
+	else if (MatchState == MatchState::PreSetup)
+	{
+		//Pre-setup begin
 	}
 	else if (MatchState == MatchState::Setup)
 	{

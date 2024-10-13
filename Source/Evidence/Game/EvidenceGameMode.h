@@ -15,6 +15,7 @@ class AWorldGenerator;
 
 namespace MatchState
 {
+	const FName PreSetup = FName("PreSetup"); //Pre-Setup period (only exited by player input)
 	const FName Setup = FName("Setup"); //Setup period
 	const FName Night = FName("Night"); //Night is ongoing with enemies active and evidence available
 	const FName PostNight = FName("PostNight"); //After the night has ended
