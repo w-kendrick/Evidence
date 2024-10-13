@@ -45,7 +45,7 @@ protected:
 private:
 	void StartNight();
 	void EndNight();
-	void TriggerWorldGeneration();
+	void SetupWorld();
 	void ResetWorld();
 	void FetchWorldGenerators();
 
