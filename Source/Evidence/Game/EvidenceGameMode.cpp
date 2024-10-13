@@ -14,6 +14,7 @@ AEvidenceGameMode::AEvidenceGameMode()
 {
 	MaxSetupTime = 60.f; //60 for testing, 600 actual
 	MaxNightTime = 180.f; //180 for testing, 1800 actual
+	PostNightTime = 10.f;
 }
 
 void AEvidenceGameMode::InitGameState()
@@ -70,8 +71,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 	}
 	else if (MatchState == MatchState::PostNight)
 	{
-		ResetWorld();
-		SaveGame();
+		GetWorldTimerManager().SetTimer(PostNightHandle, this, &ThisClass::StartSetup, PostNightTime, false);
 	}
 }
 
@@ -87,6 +87,14 @@ void AEvidenceGameMode::EndNight()
 	GetWorldTimerManager().ClearTimer(NightHandle);
 
 	SetMatchState(MatchState::PostNight);
+}
+
+void AEvidenceGameMode::StartSetup()
+{
+	ResetWorld();
+	SaveGame();
+
+	SetMatchState(MatchState::Setup);
 }
 
 #pragma endregion
