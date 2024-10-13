@@ -5,7 +5,6 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Evidence/Evidence.h"
 #include "Evidence/Character/BaseCharacter.h"
-#include "Equipment/EquipmentAttachment.h"
 #include "AdvancedAbilityComponent.h"
 
 AEquipment::AEquipment()
@@ -34,30 +33,6 @@ AEquipment::AEquipment()
 	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
-}
-
-void AEquipment::AddAttachment(AEquipmentAttachment* const Attachment, const EAttachmentType Type)
-{
-	Attachments[Type] = Attachment;
-	OnAttachmentsUpdated.Broadcast();
-
-	if (Attachment)
-	{
-		Attachment->AttachTo(this);
-	}
-}
-
-void AEquipment::RemoveAttachment(const EAttachmentType Type)
-{
-	AEquipmentAttachment* const Attachment = Attachments[Type];
-
-	if (Attachment)
-	{
-		Attachment->DetachFrom();
-	}
-
-	Attachments[Type] = nullptr;
-	OnAttachmentsUpdated.Broadcast();
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
@@ -176,9 +151,4 @@ void AEquipment::RemoveAbilities(ABaseCharacter* Char)
 	}
 	
 	GrantedHandles.TakeFromAbilitySystem(ASC);
-}
-
-AEquipmentAttachment* AEquipment::GetAttachment(const EAttachmentType Type) const
-{
-	return Attachments[Type];
 }

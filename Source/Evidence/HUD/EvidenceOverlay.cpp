@@ -9,7 +9,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
-#include "Widgets/AttachmentBench/AttachmentBenchWidget.h"
 #include "Evidence/EvidencePlayerController.h"
 #include "Evidence/Character/BaseCharacter.h"
 
@@ -21,12 +20,10 @@ void UEvidenceOverlay::NativeConstruct()
 	if (EPC)
 	{
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
-		EPC->OnSetAttachmentWidgetVisibility.BindUObject(this, &ThisClass::SetAttachmentVisibility);
 		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
-	AttachmentWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration, const FString DisplayString)
@@ -94,19 +91,5 @@ void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 	else
 	{
 		TerminalMenu->Disable();
-	}
-}
-
-void UEvidenceOverlay::SetAttachmentVisibility(bool bVisibility)
-{
-	AttachmentWidget->SetVisibility(bVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
-
-	if (bVisibility)
-	{
-		AttachmentWidget->Enable();
-	}
-	else
-	{
-		AttachmentWidget->Disable();
 	}
 }
