@@ -12,8 +12,8 @@
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
 {
-	MaxSetupTime = 600.f;
-	MaxNightTime = 1800.f;
+	MaxSetupTime = 60.f; //60 for testing, 600 actual
+	MaxNightTime = 180.f; //180 for testing, 1800 actual
 }
 
 void AEvidenceGameMode::InitGameState()
@@ -31,8 +31,6 @@ void AEvidenceGameMode::BeginPlay()
 	Super::BeginPlay();
 
 	LoadSelectedGame();
-
-	GetWorldTimerManager().SetTimer(SaveHandle, this, &ThisClass::SaveGame, 20.f, true);
 }
 
 void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController* PlayerController)
@@ -73,6 +71,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 	else if (MatchState == MatchState::PostNight)
 	{
 		ResetWorld();
+		SaveGame();
 	}
 }
 
@@ -207,7 +206,7 @@ void AEvidenceGameMode::SaveGame()
 						PlayerSave.AddEquipment(EquipmentData);
 					}
 				}
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString("Adding PlayerSave for ") + PlayerState->UniqueId.ToString() + FString(" with ") + FString::FromInt(PlayerSave.SavedEquipment.Num()) + FString(" instances of equipment"));
+				UE_LOG(LogTemp, Warning, TEXT("Adding PlayerSave for %s with %d instances of equipment"), *PlayerState->UniqueId.ToString(), PlayerSave.SavedEquipment.Num());
 				SaveGameInstance->AddPlayerSave(PlayerState->GetUniqueId(), PlayerSave);
 			}
 
