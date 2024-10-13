@@ -9,7 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
-#include "Evidence/EvidencePlayerController.h"
+#include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Character/BaseCharacter.h"
 
 void UEvidenceOverlay::NativeConstruct()

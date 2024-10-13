@@ -15,7 +15,7 @@
 #include "Evidence/Game/EvidenceGameState.h"
 #include "Components/SphereComponent.h"
 #include "Evidence/Character/BaseCharacter.h"
-#include "Evidence/EvidencePlayerController.h"
+#include "Evidence/Player/EvidencePlayerController.h"
 
 AHub::AHub()
 {

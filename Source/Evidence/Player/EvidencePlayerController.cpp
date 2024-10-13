@@ -3,7 +3,7 @@
 
 #include "EvidencePlayerController.h"
 #include "EnhancedInputSubsystems.h"
-#include "HUD/EvidenceHUD.h"
+#include "Evidence/HUD/EvidenceHUD.h"
 
 void AEvidencePlayerController::BeginPlay()
 {
