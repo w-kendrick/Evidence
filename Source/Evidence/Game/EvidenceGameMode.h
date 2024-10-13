@@ -31,6 +31,7 @@ public:
 	virtual void InitGameState() override;
 
 	void SaveGame();
+	void EndPreSetup();
 
 protected:
 	virtual void BeginPlay();
@@ -46,7 +47,7 @@ protected:
 private:
 	void StartNight();
 	void EndNight();
-	void StartSetup();
+	void StartPreSetup();
 	void SetupWorld();
 	void ResetWorld();
 	void FetchWorldGenerators();
@@ -84,5 +85,7 @@ private:
 
 	UPROPERTY()
 	TArray<AWorldGenerator*> WorldGenerators;
+
+	uint16 Night;
 };
 
