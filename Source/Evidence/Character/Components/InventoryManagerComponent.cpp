@@ -14,8 +14,6 @@ UInventoryManagerComponent::UInventoryManagerComponent()
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 {
-	AEquipment* const PrevEquipped = GetEquipped();
-
 	Pickup(Equipment, SelectedIndex);
 }
 
