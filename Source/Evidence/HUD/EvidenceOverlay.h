@@ -50,10 +50,6 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTerminalMenu* TerminalMenu;
 
-	UPROPERTY(meta = (BindWidget))
-	UAttachmentBenchWidget* AttachmentWidget;
-
 	void SetTerminalMenuVisibility(bool bVisibility);
-	void SetAttachmentVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 };

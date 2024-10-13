@@ -3,16 +3,11 @@
 
 #include "Gun.h"
 #include "Net/UnrealNetwork.h"
-#include "Attachments/ExtendedMagazine.h"
 
 AGun::AGun()
 {
 	EquipmentName = FString(TEXT("Gun"));
 	MaxClipSize = 8;
-
-	Attachments.Add(EAttachmentType::Underbarrel, nullptr);
-	Attachments.Add(EAttachmentType::Scope, nullptr);
-	Attachments.Add(EAttachmentType::Magazine, nullptr);
 }
 
 void AGun::BeginPlay()
@@ -47,12 +42,5 @@ void AGun::SetCurrentClip(const uint8 NewClip)
 
 uint8 AGun::GetMaxClipSize() const
 {
-	const AExtendedMagazine* const ExtendedMagazine = Cast<AExtendedMagazine>(GetAttachment(EAttachmentType::Magazine));
-
-	if (ExtendedMagazine)
-	{
-		return ExtendedMagazine->GetExtendedMagazineSize();
-	}
-
 	return MaxClipSize;
 }
