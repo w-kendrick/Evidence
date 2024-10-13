@@ -45,6 +45,7 @@ protected:
 private:
 	void StartNight();
 	void EndNight();
+	void StartSetup();
 	void SetupWorld();
 	void ResetWorld();
 	void FetchWorldGenerators();
@@ -66,6 +67,7 @@ private:
 
 	FTimerHandle SetupHandle;
 	FTimerHandle NightHandle;
+	FTimerHandle PostNightHandle;
 
 	UPROPERTY(EditDefaultsOnly)
 	FTransform DefaultTransform;
@@ -75,6 +77,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxNightTime;
+
+	UPROPERTY(EditDefaultsOnly)
+	float PostNightTime;
 
 	UPROPERTY()
 	TArray<AWorldGenerator*> WorldGenerators;
