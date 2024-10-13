@@ -3,6 +3,12 @@
 
 #include "EvidenceSaveGame.h"
 
+UEvidenceSaveGame::UEvidenceSaveGame()
+{
+	Night = 1U;
+	Cash = 0.0f;
+}
+
 void UEvidenceSaveGame::SetNight(const uint32& NewNight)
 {
 	Night = NewNight;
