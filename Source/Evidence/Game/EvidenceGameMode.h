@@ -64,7 +64,6 @@ private:
 	UPROPERTY()
 	TArray<APlayerController*> PendingPlayerLoads;
 
-	FTimerHandle SaveHandle;
 	FTimerHandle SetupHandle;
 	FTimerHandle NightHandle;
 
