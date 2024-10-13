@@ -69,6 +69,9 @@ void AEvidenceGameMode::OnMatchStateSet()
 	else if (MatchState == MatchState::Night)
 	{
 		GetWorldTimerManager().SetTimer(NightHandle, this, &ThisClass::EndNight, MaxNightTime, false);
+	}
+	else if (MatchState == MatchState::PostNight)
+	{
 		ResetWorld();
 	}
 }
