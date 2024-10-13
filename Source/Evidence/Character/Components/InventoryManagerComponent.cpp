@@ -30,6 +30,10 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8
 	{
 		UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 	}
+	else if (Equipment)
+	{
+		Equipment->Stow(CharacterOwner);
+	}
 }
 
 void UInventoryManagerComponent::Drop(const uint8 Index)
