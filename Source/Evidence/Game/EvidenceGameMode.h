@@ -11,6 +11,7 @@ class AEvidenceGameState;
 class UEvidenceSaveGame;
 class USaveGame;
 class AEquipment;
+class AWorldGenerator;
 
 namespace MatchState
 {
@@ -44,6 +45,9 @@ protected:
 private:
 	void StartNight();
 	void EndNight();
+	void TriggerWorldGeneration();
+	void ResetWorld();
+	void FetchWorldGenerators();
 
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
@@ -72,5 +76,8 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxNightTime;
+
+	UPROPERTY()
+	TArray<AWorldGenerator*> WorldGenerators;
 };
 

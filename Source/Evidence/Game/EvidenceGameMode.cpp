@@ -7,6 +7,7 @@
 #include "Evidence/Game/EvidenceGameInstance.h"
 #include "Evidence/Game/EvidenceGameState.h"
 #include "GameFramework/PlayerState.h"
+#include "Evidence/Items/WorldGenerator.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -82,6 +83,44 @@ void AEvidenceGameMode::EndNight()
 	GetWorldTimerManager().ClearTimer(NightHandle);
 
 	SetMatchState(MatchState::PostNight);
+}
+
+#pragma endregion
+
+#pragma region World Generation
+
+void AEvidenceGameMode::TriggerWorldGeneration()
+{
+	FetchWorldGenerators();
+
+	for (AWorldGenerator* const WorldGenerator : WorldGenerators)
+	{
+		WorldGenerator->SetupWorld();
+	}
+}
+
+void AEvidenceGameMode::ResetWorld()
+{
+	FetchWorldGenerators();
+
+	for (AWorldGenerator* const WorldGenerator : WorldGenerators)
+	{
+		WorldGenerator->ResetWorld();
+	}
+}
+
+void AEvidenceGameMode::FetchWorldGenerators()
+{
+	WorldGenerators.Empty();
+
+	TArray<AActor*> FoundActors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AWorldGenerator::StaticClass(), FoundActors);
+
+	for (AActor* const Actor : FoundActors)
+	{
+		AWorldGenerator* const WorldGenerator = Cast<AWorldGenerator>(Actor);
+		WorldGenerators.Add(WorldGenerator);
+	}
 }
 
 #pragma endregion
