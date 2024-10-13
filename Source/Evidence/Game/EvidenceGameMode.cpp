@@ -65,6 +65,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 	else if (MatchState == MatchState::PreSetup)
 	{
 		//Pre-setup begin
+		UE_LOG(LogTemp, Warning, TEXT("Night: %d"), Night);
 	}
 	else if (MatchState == MatchState::Setup)
 	{
@@ -100,8 +101,6 @@ void AEvidenceGameMode::StartPreSetup()
 	Night++;
 	ResetWorld();
 	SaveGame();
-
-	UE_LOG(LogTemp, Warning, TEXT("Night: %d"), Night);
 
 	SetMatchState(MatchState::PreSetup);
 }
@@ -196,7 +195,7 @@ void AEvidenceGameMode::SaveGame()
 			SavedDelegate.BindUObject(this, &ThisClass::OnSaveGameComplete);
 
 			SaveGameInstance->SetCash(EvidenceGameState->GetCash());
-			SaveGameInstance->SetNight(0U);
+			SaveGameInstance->SetNight(Night);
 
 			for (const APlayerState* const PlayerState : EvidenceGameState->PlayerArray)
 			{
@@ -309,7 +308,9 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 
 	if (EvidenceSaveGame)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame"));
+		Night = EvidenceSaveGame->GetNight();
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame - Night ") + FString::FromInt(Night));
 		for (const APlayerController* const PlayerController : PendingPlayerLoads)
 		{
 			LoadPlayer(PlayerController);

@@ -86,6 +86,6 @@ private:
 	UPROPERTY()
 	TArray<AWorldGenerator*> WorldGenerators;
 
-	uint16 Night;
+	uint32 Night;
 };
 
