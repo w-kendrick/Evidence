@@ -15,6 +15,8 @@ AEvidenceGameMode::AEvidenceGameMode()
 	MaxSetupTime = 60.f; //60 for testing, 600 actual
 	MaxNightTime = 180.f; //180 for testing, 1800 actual
 	PostNightTime = 10.f;
+
+	Night = 1;
 }
 
 void AEvidenceGameMode::InitGameState()
@@ -75,7 +77,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 	}
 	else if (MatchState == MatchState::PostNight)
 	{
-		GetWorldTimerManager().SetTimer(PostNightHandle, this, &ThisClass::StartSetup, PostNightTime, false);
+		GetWorldTimerManager().SetTimer(PostNightHandle, this, &ThisClass::StartPreSetup, PostNightTime, false);
 	}
 }
 
@@ -93,11 +95,19 @@ void AEvidenceGameMode::EndNight()
 	SetMatchState(MatchState::PostNight);
 }
 
-void AEvidenceGameMode::StartSetup()
+void AEvidenceGameMode::StartPreSetup()
 {
+	Night++;
 	ResetWorld();
 	SaveGame();
 
+	UE_LOG(LogTemp, Warning, TEXT("Night: %d"), Night);
+
+	SetMatchState(MatchState::PreSetup);
+}
+
+void AEvidenceGameMode::EndPreSetup()
+{
 	SetMatchState(MatchState::Setup);
 }
 
