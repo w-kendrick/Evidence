@@ -64,10 +64,12 @@ void AEvidenceGameMode::OnMatchStateSet()
 	else if (MatchState == MatchState::Setup)
 	{
 		GetWorldTimerManager().SetTimer(SetupHandle, this, &ThisClass::StartNight, MaxSetupTime, false);
+		SetupWorld();
 	}
 	else if (MatchState == MatchState::Night)
 	{
 		GetWorldTimerManager().SetTimer(NightHandle, this, &ThisClass::EndNight, MaxNightTime, false);
+		ResetWorld();
 	}
 }
 
@@ -89,7 +91,7 @@ void AEvidenceGameMode::EndNight()
 
 #pragma region World Generation
 
-void AEvidenceGameMode::TriggerWorldGeneration()
+void AEvidenceGameMode::SetupWorld()
 {
 	FetchWorldGenerators();
 
