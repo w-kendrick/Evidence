@@ -17,8 +17,6 @@ void UInventoryManagerComponent::Pickup(AEquipment* const Equipment)
 	AEquipment* const PrevEquipped = GetEquipped();
 
 	Pickup(Equipment, SelectedIndex);
-
-	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
 void UInventoryManagerComponent::Pickup(AEquipment* const Equipment, const uint8 Index)
