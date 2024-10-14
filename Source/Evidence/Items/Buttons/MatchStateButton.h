@@ -4,15 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/Buttons/PhysicalButton.h"
-#include "PreSetupButton.generated.h"
+#include "MatchStateButton.generated.h"
 
 UCLASS()
-class EVIDENCE_API APreSetupButton : public APhysicalButton
+class EVIDENCE_API AMatchStateButton : public APhysicalButton
 {
 	GENERATED_BODY()
 	
 public:	
-	APreSetupButton();
+	AMatchStateButton();
 
 protected:
 	void BeginPlay() override;
