@@ -28,12 +28,27 @@ void APhysicalButton::PostInteract_Implementation(AActor* InteractingActor, UPri
 	Interact();
 }
 
+float APhysicalButton::GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const
+{
+	return InteractDuration;
+}
+
 FString APhysicalButton::GetInteractionString_Implementation()
 {
-	return DisplayString;
+	return InteractString;
 }
 
 void APhysicalButton::SetIsAvailable(const bool bNewValue)
 {
 	bIsAvailable = bNewValue;
+}
+
+void APhysicalButton::SetInteractString(const FString& NewString)
+{
+	InteractString = NewString;
+}
+
+void APhysicalButton::SetInteractDuration(const float NewDuration)
+{
+	InteractDuration = NewDuration;
 }

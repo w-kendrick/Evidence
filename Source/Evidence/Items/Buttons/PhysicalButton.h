@@ -17,19 +17,22 @@ public:
 
 	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
 	void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+	float GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const;
 	FString GetInteractionString_Implementation() override;
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
-	FString DisplayString;
-
 	void SetIsAvailable(const bool bNewValue);
+	void SetInteractString(const FString& NewString);
+	void SetInteractDuration(const float NewDuration);
 
 	virtual void Interact() {};
 
 private:
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* Mesh;
+
+	FString InteractString;
+	float InteractDuration;
 
 	bool bIsAvailable;
 };

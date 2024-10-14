@@ -8,7 +8,8 @@
 
 AMatchStateButton::AMatchStateButton()
 {
-	DisplayString = FString("Begin");
+	SetInteractString(FString("Begin"));
+	SetInteractDuration(0.0f);
 }
 
 void AMatchStateButton::BeginPlay()
@@ -24,7 +25,28 @@ void AMatchStateButton::BeginPlay()
 
 void AMatchStateButton::OnMatchStateChanged(FName State)
 {
-	SetIsAvailable((State == MatchState::PreSetup) || (State == MatchState::InProgress));
+	if (State == MatchState::PreSetup || State == MatchState::InProgress)
+	{
+		SetIsAvailable(true);
+		SetInteractString(FString("Begin"));
+		SetInteractDuration(0.0f);
+	}
+	else if (State == MatchState::Setup)
+	{
+		SetIsAvailable(true);
+		SetInteractString(FString("End Setup Period"));
+		SetInteractDuration(1.0f);
+	}
+	else if (State == MatchState::Night)
+	{
+		SetIsAvailable(true);
+		SetInteractString(FString("End Night"));
+		SetInteractDuration(2.5f);
+	}
+	else
+	{
+		SetIsAvailable(false);
+	}
 }
 
 void AMatchStateButton::Interact()
