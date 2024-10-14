@@ -32,6 +32,8 @@ public:
 
 	void SaveGame();
 	void EndPreSetup();
+	void StartNight();
+	void EndNight();
 
 protected:
 	virtual void BeginPlay();
@@ -45,8 +47,6 @@ protected:
 	TSubclassOf<AEquipment> GetEquipmentClass(const uint8 ID) const;
 
 private:
-	void StartNight();
-	void EndNight();
 	void StartPreSetup();
 	void SetupWorld();
 	void ResetWorld();

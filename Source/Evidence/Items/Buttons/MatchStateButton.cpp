@@ -25,19 +25,21 @@ void AMatchStateButton::BeginPlay()
 
 void AMatchStateButton::OnMatchStateChanged(FName State)
 {
-	if (State == MatchState::PreSetup || State == MatchState::InProgress)
+	MatchState = State;
+
+	if (MatchState == MatchState::PreSetup || MatchState == MatchState::InProgress)
 	{
 		SetIsAvailable(true);
 		SetInteractString(FString("Begin"));
 		SetInteractDuration(0.0f);
 	}
-	else if (State == MatchState::Setup)
+	else if (MatchState == MatchState::Setup)
 	{
 		SetIsAvailable(true);
 		SetInteractString(FString("End Setup Period"));
 		SetInteractDuration(1.0f);
 	}
-	else if (State == MatchState::Night)
+	else if (MatchState == MatchState::Night)
 	{
 		SetIsAvailable(true);
 		SetInteractString(FString("End Night"));
@@ -51,7 +53,18 @@ void AMatchStateButton::OnMatchStateChanged(FName State)
 
 void AMatchStateButton::Interact()
 {
-	ServerEndPreSetup();
+	if (MatchState == MatchState::PreSetup || MatchState == MatchState::InProgress)
+	{
+		ServerEndPreSetup();
+	}
+	else if (MatchState == MatchState::Setup)
+	{
+		ServerEndSetup();
+	}
+	else if (MatchState == MatchState::Night)
+	{
+		ServerEndNight();
+	}
 }
 
 void AMatchStateButton::ServerEndPreSetup_Implementation()
@@ -60,5 +73,25 @@ void AMatchStateButton::ServerEndPreSetup_Implementation()
 	if (EvidenceGameMode)
 	{
 		EvidenceGameMode->EndPreSetup();
+	}
+}
+
+void AMatchStateButton::ServerEndSetup_Implementation()
+{
+	AEvidenceGameMode* const EvidenceGameMode = Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (EvidenceGameMode)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Start Night");
+		EvidenceGameMode->StartNight();
+	}
+}
+
+void AMatchStateButton::ServerEndNight_Implementation()
+{
+	AEvidenceGameMode* const EvidenceGameMode = Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (EvidenceGameMode)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "End Night");
+		EvidenceGameMode->EndNight();
 	}
 }

@@ -21,6 +21,14 @@ protected:
 
 	void Interact() override;
 
+	FName MatchState;
+
 	UFUNCTION(Server, Reliable)
 	void ServerEndPreSetup();
+
+	UFUNCTION(Server, Reliable)
+	void ServerEndSetup();
+
+	UFUNCTION(Server, Reliable)
+	void ServerEndNight();
 };
