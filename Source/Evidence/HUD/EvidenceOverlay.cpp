@@ -28,7 +28,8 @@ void UEvidenceOverlay::NativeConstruct()
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration, const FString DisplayString)
 {
-	InteractText->SetText(FText::FromString(DisplayString));
+	InstantInteractText->SetText(FText::FromString(DisplayString));
+	DurationInteractText->SetText(FText::FromString(DisplayString));
 
 	if (Duration > 0)
 	{
