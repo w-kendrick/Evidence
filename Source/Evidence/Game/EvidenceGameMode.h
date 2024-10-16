@@ -35,9 +35,12 @@ public:
 	void StartNight();
 	void EndNight();
 
+	void OnPlayerDeath(APlayerController* Player);
+
 protected:
 	virtual void BeginPlay();
 	virtual void HandleStartingNewPlayer_Implementation(APlayerController* PlayerController) override;
+	void Logout(AController* Controller) override;
 	virtual void OnMatchStateSet() override;
 
 	UPROPERTY(EditDefaultsOnly)
@@ -87,5 +90,11 @@ private:
 	TArray<AWorldGenerator*> WorldGenerators;
 
 	uint32 Night;
+
+	UPROPERTY()
+	TArray<APlayerController*> LivingPlayers;
+
+	void AddLivingPlayer(APlayerController* Player);
+	void RemoveLivingPlayer(APlayerController* Player);
 };
 

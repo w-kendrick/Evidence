@@ -48,6 +48,20 @@ void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController
 	{
 		PendingPlayerLoads.Add(PlayerController);
 	}
+
+	AddLivingPlayer(PlayerController);
+}
+
+void AEvidenceGameMode::Logout(AController* Controller)
+{
+	APlayerController* PlayerController = Cast<APlayerController>(Controller);
+
+	if (PlayerController)
+	{
+		RemoveLivingPlayer(PlayerController);
+	}
+
+	Super::Logout(Controller);
 }
 
 #pragma region Match State
@@ -321,6 +335,25 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded default save game"));
 		EvidenceSaveGame = Cast<UEvidenceSaveGame>(UGameplayStatics::CreateSaveGameObject(UEvidenceSaveGame::StaticClass()));
 	}
+}
+
+#pragma endregion
+
+#pragma region Living Players
+
+void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
+{
+	RemoveLivingPlayer(Player);
+}
+
+void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
+{
+	LivingPlayers.Add(Player);
+}
+
+void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player)
+{
+	LivingPlayers.Remove(Player);
 }
 
 #pragma endregion
