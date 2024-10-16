@@ -5,6 +5,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
 #include "Kismet/GameplayStatics.h"
+#include "Evidence/Game/EvidenceGameMode.h"
 
 UHealthSet::UHealthSet()
 {
@@ -59,4 +60,10 @@ void UHealthSet::DeathEvent(const FGameplayEffectModCallbackData& Data)
 	Payload.TargetTags = *Data.EffectSpec.CapturedTargetTags.GetAggregatedTags();
 
 	GetOwningAbilitySystemComponentChecked()->HandleGameplayEvent(Payload.EventTag, &Payload);
+
+	AEvidenceGameMode* const EvidenceGameMode = Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(GetWorld()));
+	if (EvidenceGameMode)
+	{
+		EvidenceGameMode->OnPlayerDeath(GetActorInfo()->PlayerController.Get());
+	}
 }
