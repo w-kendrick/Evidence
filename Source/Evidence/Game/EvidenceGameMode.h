@@ -30,7 +30,6 @@ public:
 	AEvidenceGameMode();
 	virtual void InitGameState() override;
 
-	void SaveGame();
 	void EndPreSetup();
 	void StartNight();
 	void EndNight();
@@ -55,8 +54,10 @@ private:
 	void ResetWorld();
 	void FetchWorldGenerators();
 
+	void SaveGame();
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
+	void WipeSave();
 
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);
 	void OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);

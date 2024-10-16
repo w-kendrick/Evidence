@@ -311,6 +311,21 @@ void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerControll
 	}
 }
 
+void AEvidenceGameMode::WipeSave()
+{
+	if (const UEvidenceGameInstance* const EvidenceGameInstance = Cast<UEvidenceGameInstance>(UGameplayStatics::GetGameInstance(GetWorld())))
+	{
+		if (UEvidenceSaveGame* const SaveGameInstance = Cast<UEvidenceSaveGame>(UGameplayStatics::CreateSaveGameObject(UEvidenceSaveGame::StaticClass())))
+		{
+			FAsyncSaveGameToSlotDelegate SavedDelegate;
+			SavedDelegate.BindUObject(this, &ThisClass::OnSaveGameComplete);
+
+			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
+			UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotNameString, 0, SavedDelegate);
+		}
+	}
+}
+
 void AEvidenceGameMode::OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, (bSuccess ? FString("Successfully") : FString("Unsuccessfully")) + FString(" saved ") + SlotName);
@@ -354,6 +369,15 @@ void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
 void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player)
 {
 	LivingPlayers.Remove(Player);
+
+	if (LivingPlayers.Num() == 0)
+	{
+		Night = 0;
+		ResetWorld();
+		WipeSave();
+
+		SetMatchState(MatchState::PreSetup);
+	}
 }
 
 #pragma endregion
