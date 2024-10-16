@@ -21,24 +21,6 @@ void AEvidencePlayerController::BeginPlay()
 	}
 }
 
-void AEvidencePlayerController::StartInteractionTimer(const float Duration)
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->StartInteractionTimer(Duration);
-	}
-}
-
-void AEvidencePlayerController::StopInteractionTimer()
-{
-	AEvidenceHUD* const EHUD = Cast<AEvidenceHUD>(MyHUD);
-	if (EHUD)
-	{
-		EHUD->StopInteractionTimer();
-	}
-}
-
 void AEvidencePlayerController::ClientSetTerminalMenuVisibility_Implementation(const bool bVisibility)
 {
 	OnSetTerminalMenuVisibility.ExecuteIfBound(bVisibility);
@@ -52,4 +34,9 @@ void AEvidencePlayerController::ClientSetAttachmentWidgetVisibility_Implementati
 void AEvidencePlayerController::SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString)
 {
 	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
+}
+
+void AEvidencePlayerController::SetInteractTimerState(const bool bState, const float Duration)
+{
+	OnInteractTimerStateChanged.ExecuteIfBound(bState, Duration);
 }

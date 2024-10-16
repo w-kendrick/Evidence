@@ -15,9 +15,6 @@ class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerControl
 	GENERATED_BODY()
 
 public:
-	void StartInteractionTimer(const float Duration);
-	void StopInteractionTimer();
-
 	UFUNCTION(Client, Reliable)
 	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
@@ -27,9 +24,13 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
 
+	UFUNCTION(BlueprintCallable)
+	void SetInteractTimerState(const bool bState, const float Duration);
+
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
+	FOnInteractTimerStateChanged OnInteractTimerStateChanged;
 	
 protected:
 

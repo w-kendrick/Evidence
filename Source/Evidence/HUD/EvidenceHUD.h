@@ -26,8 +26,5 @@ protected:
 public:
 	UEvidenceOverlay* GetOverlay() const;
 	void AddOverlay();
-
-	void StartInteractionTimer(const float Duration);
-	void StopInteractionTimer();
 	
 };
