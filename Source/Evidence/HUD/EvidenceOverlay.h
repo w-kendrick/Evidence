@@ -14,14 +14,12 @@ class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 {
 	GENERATED_BODY()
 
-public:
-	void StartInteractionTimer(const float Duration);
-	void StopInteractionTimer();
-
 protected:
 	virtual void NativeConstruct() override;
 	void ShowInteractPrompt(const float Duration, const FString DisplayString);
 	void HideInteractPrompt();
+	void StartInteractionTimer(const float Duration);
+	void StopInteractionTimer();
 
 	UPROPERTY(meta = (BindWidget))
 	class UCanvasPanel* InteractCanvas;
@@ -55,4 +53,5 @@ protected:
 
 	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
+	void SetInteractTimerState(bool bState, float Duration);
 };

@@ -21,6 +21,7 @@ void UEvidenceOverlay::NativeConstruct()
 	{
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
+		EPC->OnInteractTimerStateChanged.BindUObject(this, &ThisClass::SetInteractTimerState);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
@@ -80,6 +81,18 @@ void UEvidenceOverlay::SetInteractPromptVisibility(bool bVisibility, float Durat
 	else
 	{
 		HideInteractPrompt();
+	}
+}
+
+void UEvidenceOverlay::SetInteractTimerState(bool bState, float Duration)
+{
+	if (bState)
+	{
+		StartInteractionTimer(Duration);
+	}
+	else
+	{
+		StopInteractionTimer();
 	}
 }
 

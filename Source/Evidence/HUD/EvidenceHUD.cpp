@@ -25,22 +25,6 @@ void AEvidenceHUD::AddOverlay()
 	}
 }
 
-void AEvidenceHUD::StartInteractionTimer(const float Duration)
-{
-	if (Overlay)
-	{
-		Overlay->StartInteractionTimer(Duration);
-	}
-}
-
-void AEvidenceHUD::StopInteractionTimer()
-{
-	if (Overlay)
-	{
-		Overlay->StopInteractionTimer();
-	}
-}
-
 UEvidenceOverlay* AEvidenceHUD::GetOverlay() const
 {
 	return Overlay;
