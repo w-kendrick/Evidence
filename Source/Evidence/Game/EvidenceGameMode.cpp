@@ -64,6 +64,12 @@ void AEvidenceGameMode::Logout(AController* Controller)
 	Super::Logout(Controller);
 }
 
+void AEvidenceGameMode::SetNight(const uint32 NewNight)
+{
+	Night = NewNight;
+	EvidenceGameState->SetNight(Night);
+}
+
 #pragma region Match State
 
 void AEvidenceGameMode::OnMatchStateSet()
@@ -112,7 +118,7 @@ void AEvidenceGameMode::EndNight()
 
 void AEvidenceGameMode::StartPreSetup()
 {
-	Night++;
+	SetNight(Night + 1);
 	ResetWorld();
 	SaveGame();
 
@@ -338,7 +344,7 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 
 	if (EvidenceSaveGame)
 	{
-		Night = EvidenceSaveGame->GetNight();
+		SetNight(EvidenceSaveGame->GetNight());
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame - Night ") + FString::FromInt(Night));
 		for (const APlayerController* const PlayerController : PendingPlayerLoads)
@@ -373,7 +379,7 @@ void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPla
 
 	if (LivingPlayers.Num() == 0 && LossType == EPlayerLossType::Death)
 	{
-		Night = 1;
+		SetNight(1U);
 		ResetWorld();
 		WipeSave();
 

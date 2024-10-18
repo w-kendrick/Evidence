@@ -55,6 +55,8 @@ protected:
 	TSubclassOf<AEquipment> GetEquipmentClass(const uint8 ID) const;
 
 private:
+	void SetNight(const uint32 NewNight);
+
 	void StartPreSetup();
 	void SetupWorld();
 	void ResetWorld();

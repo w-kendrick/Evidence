@@ -28,7 +28,11 @@ public:
 
 	AHub* GetHub();
 
+	FOnNightChanged OnNightChanged;
 	FOnCashChanged OnCashChanged;
+
+	uint32 GetNight() const { return Night; }
+	void SetNight(const uint32 NewNight);
 
 	float GetCash() const { return Cash; }
 	void AwardCash(const float Amount);
@@ -42,6 +46,12 @@ protected:
 
 	UPROPERTY()
 	AHub* Hub;
+
+	UPROPERTY(ReplicatedUsing = OnRep_Night)
+	uint32 Night = 1U;
+
+	UFUNCTION()
+	void OnRep_Night(uint32 PrevNight);
 
 	UPROPERTY(ReplicatedUsing=OnRep_Cash)
 	float Cash = 100.f;

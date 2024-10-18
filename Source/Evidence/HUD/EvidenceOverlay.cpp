@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Character/BaseCharacter.h"
 
@@ -22,6 +23,12 @@ void UEvidenceOverlay::NativeConstruct()
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 		EPC->OnInteractTimerStateChanged.BindUObject(this, &ThisClass::SetInteractTimerState);
+	}
+
+	AEvidenceGameState* const EvidenceGameState = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if (EvidenceGameState)
+	{
+		EvidenceGameState->OnNightChanged.AddUObject(this, &ThisClass::OnNightChanged);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
@@ -106,4 +113,9 @@ void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 	{
 		TerminalMenu->Disable();
 	}
+}
+
+void UEvidenceOverlay::OnNightChanged(uint32 Night)
+{
+	NightText->SetText(FText::FromString(FString::FromInt(Night)));
 }
