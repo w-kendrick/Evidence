@@ -49,8 +49,7 @@ void USaveSelectWidget::NativeConstruct()
 			}
 			else
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "No such save slot");
-				SaveSlotWidget->SetNight(0U);
+				SaveSlotWidget->SetNight(1U);
 				SaveSlotWidget->SetCash(0.0f);
 			}
 		}
@@ -94,17 +93,12 @@ void USaveSelectWidget::OnLoadGameComplete(const FString& SlotName, const int32 
 	if (EvidenceSaveGame)
 	{
 		const uint8 Index = SlotMap[SlotName];
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::FromInt(Index));
 
 		USaveSlotWidget* const SlotWidget = Cast<USaveSlotWidget>(SlotBox->GetChildAt(Index));
 		if (SlotWidget)
 		{
 			SlotWidget->SetNight(EvidenceSaveGame->GetNight());
 			SlotWidget->SetCash(EvidenceSaveGame->GetCash());
-		}
-		else
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Invalid slot widget");
 		}
 	}
 }
