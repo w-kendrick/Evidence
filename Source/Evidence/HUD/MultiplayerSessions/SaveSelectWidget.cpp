@@ -7,6 +7,7 @@
 #include "SaveSlotWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Save/EvidenceSaveGame.h"
+#include "Evidence/Evidence.h"
 
 USaveSelectWidget::USaveSelectWidget(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -49,8 +50,8 @@ void USaveSelectWidget::NativeConstruct()
 			}
 			else
 			{
-				SaveSlotWidget->SetNight(1U);
-				SaveSlotWidget->SetCash(0.0f);
+				SaveSlotWidget->SetNight(DEFAULT_STARTING_NIGHT);
+				SaveSlotWidget->SetCash(DEFAULT_STARTING_CASH);
 			}
 		}
 

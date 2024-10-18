@@ -35,6 +35,7 @@ public:
 	void SetNight(const uint32 NewNight);
 
 	float GetCash() const { return Cash; }
+	void SetCash(const float NewCash);
 	void AwardCash(const float Amount);
 	bool SpendCash(const float Amount);
 
@@ -48,13 +49,13 @@ protected:
 	AHub* Hub;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Night)
-	uint32 Night = 1U;
+	uint32 Night;
 
 	UFUNCTION()
 	void OnRep_Night(uint32 PrevNight);
 
 	UPROPERTY(ReplicatedUsing=OnRep_Cash)
-	float Cash = 100.f;
+	float Cash;
 
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);
