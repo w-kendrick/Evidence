@@ -3,6 +3,7 @@
 
 #include "EvidenceLobbyMenu.h"
 #include "Components/Button.h"
+#include "Kismet/KismetSystemLibrary.h"
 #include "SaveSelectWidget.h"
 #include "Evidence/Game/EvidenceGameInstance.h"
 
@@ -13,6 +14,7 @@ void UEvidenceLobbyMenu::NativeConstruct()
 	if (SelectSaveButton)
 	{
 		SelectSaveButton->OnClicked.AddDynamic(this, &ThisClass::SelectSaveButtonClicked);
+		SelectSaveButton->SetIsEnabled(UKismetSystemLibrary::IsServer(GetWorld()));
 	}
 }
 
