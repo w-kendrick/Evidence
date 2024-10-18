@@ -386,14 +386,23 @@ void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPla
 {
 	LivingPlayers.Remove(Player);
 
-	if (LivingPlayers.Num() == 0 && LossType == EPlayerLossType::Death)
+	if (LossType == EPlayerLossType::Death)
 	{
-		SetNight(DEFAULT_STARTING_NIGHT);
-		EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
-		ResetWorld();
-		WipeSave();
+		DeadPlayers.Add(Player);
 
-		SetMatchState(MatchState::PreSetup);
+		if (LivingPlayers.Num() == 0)
+		{
+			SetNight(DEFAULT_STARTING_NIGHT);
+			EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
+			ResetWorld();
+			WipeSave();
+
+			SetMatchState(MatchState::PreSetup);
+		}
+	}
+	else if (LossType == EPlayerLossType::Logout && DeadPlayers.Contains(Player))
+	{
+		DeadPlayers.Remove(Player);
 	}
 }
 

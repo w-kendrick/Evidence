@@ -103,6 +103,9 @@ private:
 	UPROPERTY()
 	TArray<APlayerController*> LivingPlayers;
 
+	UPROPERTY()
+	TArray<APlayerController*> DeadPlayers;
+
 	void AddLivingPlayer(APlayerController* Player);
 	void RemoveLivingPlayer(APlayerController* Player, const EPlayerLossType LossType);
 };
