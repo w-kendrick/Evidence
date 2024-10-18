@@ -31,3 +31,13 @@ void USaveSlotWidget::SetIndex(const uint8 Index)
 	SlotIndex = Index;
 	SlotNameText->SetText(FText::FromString(FString("Save") + FString::FromInt(Index + 1)));
 }
+
+void USaveSlotWidget::SetNight(const uint32 Night)
+{
+	SlotNightText->SetText(FText::FromString(FString("Night: ") + FString::FromInt(Night)));
+}
+
+void USaveSlotWidget::SetCash(const float Cash)
+{
+	SlotCashText->SetText(FText::FromString(FString("Cash: $") + FString::SanitizeFloat(Cash)));
+}

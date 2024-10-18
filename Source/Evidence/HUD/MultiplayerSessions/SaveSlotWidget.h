@@ -22,6 +22,8 @@ class EVIDENCE_API USaveSlotWidget : public UUserWidget
 public:
 	void SetStatus(const bool bStatus);
 	void SetIndex(const uint8 Index);
+	void SetNight(const uint32 Night);
+	void SetCash(const float Cash);
 
 	FOnSaveSelected OnSaveSelected;
 
@@ -36,6 +38,12 @@ private:
 
 	UPROPERTY(meta = (BindWidget))
 	UTextBlock* SlotNameText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* SlotNightText;
+
+	UPROPERTY(meta = (BindWidget))
+	UTextBlock* SlotCashText;
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* SelectedBorder;
