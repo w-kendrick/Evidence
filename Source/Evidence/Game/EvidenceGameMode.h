@@ -65,6 +65,8 @@ private:
 	void SaveGame();
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
+
+	void TeamWipe();
 	void WipeSave();
 
 	void OnSaveGameComplete(const FString& SlotName, const int32 UserIndex, bool bSuccess);

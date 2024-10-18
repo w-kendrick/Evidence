@@ -88,6 +88,25 @@ void AEvidenceGameMode::OnMatchStateSet()
 	{
 		//Pre-setup begin
 		UE_LOG(LogTemp, Warning, TEXT("Night: %d"), Night);
+
+		for (APlayerController* const DeadPlayer : DeadPlayers)
+		{
+			AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(DeadPlayer);
+			if (EvidencePlayerController)
+			{
+				EvidencePlayerController->ClientSetInputEnabled(true);
+			}
+
+			ABaseCharacter* const BaseCharacter = Cast<ABaseCharacter>(DeadPlayer->GetPawn());
+			if (BaseCharacter)
+			{
+				BaseCharacter->ResetAttributes();
+			}
+
+			LivingPlayers.Add(DeadPlayer);
+		}
+
+		DeadPlayers.Empty();
 	}
 	else if (MatchState == MatchState::Setup)
 	{
@@ -130,6 +149,18 @@ void AEvidenceGameMode::StartPreSetup()
 void AEvidenceGameMode::EndPreSetup()
 {
 	SetMatchState(MatchState::Setup);
+}
+
+void AEvidenceGameMode::TeamWipe()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "Wipe reset");
+
+	SetNight(DEFAULT_STARTING_NIGHT);
+	EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
+	ResetWorld();
+	WipeSave();
+
+	SetMatchState(MatchState::PreSetup);
 }
 
 #pragma endregion
@@ -392,12 +423,9 @@ void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPla
 
 		if (LivingPlayers.Num() == 0)
 		{
-			SetNight(DEFAULT_STARTING_NIGHT);
-			EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
-			ResetWorld();
-			WipeSave();
-
-			SetMatchState(MatchState::PreSetup);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Blue, "All players dead");
+			FTimerHandle WipeTimer;
+			GetWorldTimerManager().SetTimer(WipeTimer, this, &ThisClass::TeamWipe, 5.0f, false);
 		}
 	}
 	else if (LossType == EPlayerLossType::Logout && DeadPlayers.Contains(Player))

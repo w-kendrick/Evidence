@@ -122,6 +122,11 @@ void ABaseCharacter::SetInteractPromptVisibility(const bool bVisibility, const f
 	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);
 }
 
+void ABaseCharacter::ResetAttributes()
+{
+
+}
+
 FEquipmentList ABaseCharacter::GetEquipmentList() const
 {
 	return InventoryManagerComponent->GetInventory();
