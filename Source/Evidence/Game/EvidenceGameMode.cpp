@@ -247,7 +247,7 @@ void AEvidenceGameMode::SaveGame()
 						PlayerSave.AddEquipment(EquipmentData);
 					}
 				}
-				UE_LOG(LogTemp, Warning, TEXT("Adding PlayerSave for %s with %d instances of equipment"), *PlayerState->UniqueId.ToString(), PlayerSave.SavedEquipment.Num());
+				UE_LOG(LogTemp, Warning, TEXT("Adding PlayerSave for %s with %d instances of equipment"), *PlayerState->GetUniqueId().ToString(), PlayerSave.SavedEquipment.Num());
 				SaveGameInstance->AddPlayerSave(PlayerState->GetUniqueId(), PlayerSave);
 			}
 
