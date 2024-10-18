@@ -29,6 +29,7 @@ void UEvidenceOverlay::NativeConstruct()
 	if (EvidenceGameState)
 	{
 		EvidenceGameState->OnNightChanged.AddUObject(this, &ThisClass::OnNightChanged);
+		EvidenceGameState->OnCashChanged.AddUObject(this, &ThisClass::OnCashChanged);
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
@@ -118,4 +119,9 @@ void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 void UEvidenceOverlay::OnNightChanged(uint32 Night)
 {
 	NightText->SetText(FText::FromString(FString("Night: ") + FString::FromInt(Night)));
+}
+
+void UEvidenceOverlay::OnCashChanged(float Cash)
+{
+	CashText->SetText(FText::FromString(FString("Cash: $") + FString::SanitizeFloat(Cash)));
 }

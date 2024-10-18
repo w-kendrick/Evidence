@@ -54,7 +54,11 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* NightText;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* CashText;
+
 	void OnNightChanged(uint32 Night);
+	void OnCashChanged(float Cash);
 
 	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
