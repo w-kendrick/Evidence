@@ -24,6 +24,9 @@ class EVIDENCE_API UHealthSet : public UAttributeSet
 public:
 	UHealthSet();
 
+	bool IsAlive() const { return isAlive; }
+	void Respawn();
+
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual void PostGameplayEffectExecute(const struct FGameplayEffectModCallbackData& Data) override;
 

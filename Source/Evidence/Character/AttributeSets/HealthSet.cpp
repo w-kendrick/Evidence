@@ -13,6 +13,11 @@ UHealthSet::UHealthSet()
 	DeathEventTag = FGameplayTag::RequestGameplayTag("GameplayEvent.Death");
 }
 
+void UHealthSet::Respawn()
+{
+	isAlive = true;
+}
+
 void UHealthSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
