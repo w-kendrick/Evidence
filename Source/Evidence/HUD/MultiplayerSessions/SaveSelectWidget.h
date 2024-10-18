@@ -9,6 +9,7 @@
 class UButton;
 class UVerticalBox;
 class USaveSlotWidget;
+class USaveGame;
 
 DECLARE_DELEGATE_OneParam(FOnSaveConfirmed, uint8)
 
@@ -50,5 +51,16 @@ private:
 	void OnSaveSelected(uint8 Index);
 
 	void SelectSaveWidget(const uint8 Index);
+
+	void OnLoadGameComplete(const FString& SlotName, const int32 UserIndex, USaveGame* LoadedGameData);
+
+	TMap<FString, uint8> SlotMap =
+	{ 
+		{ FString("Save1"), 0U },
+		{ FString("Save2"), 1U },
+		{ FString("Save3"), 2U },
+		{ FString("Save4"), 3U },
+		{ FString("Save5"), 4U }
+	};
 	
 };
