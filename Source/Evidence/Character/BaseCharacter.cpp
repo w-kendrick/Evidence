@@ -7,6 +7,7 @@
 #include "Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 #include "AttributeSets/StaminaSet.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -17,6 +18,8 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 
 	GetMesh()->bOwnerNoSee = true;
 	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);
+
+	DefaultsTag = FGameplayTag::RequestGameplayTag("GameplayEvent.Defaults");
 }
 
 #pragma region Attributes
@@ -124,7 +127,9 @@ void ABaseCharacter::SetInteractPromptVisibility(const bool bVisibility, const f
 
 void ABaseCharacter::ResetAttributes()
 {
+	FGameplayEventData Data;
 
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, DefaultsTag, Data);
 }
 
 FEquipmentList ABaseCharacter::GetEquipmentList() const

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "ProneCharacter.h"
 #include "Evidence/Delegates.h"
+#include "GameplayTagContainer.h"
 #include "BaseCharacter.generated.h"
 
 class UInventoryManagerComponent;
@@ -52,5 +53,6 @@ protected:
 	void SetupAttributeDelegates();
 
 	void OnStaminaChanged(const FOnAttributeChangeData& Data);
-	
+
+	FGameplayTag DefaultsTag;
 };
