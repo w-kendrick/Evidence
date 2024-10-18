@@ -117,5 +117,5 @@ void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 
 void UEvidenceOverlay::OnNightChanged(uint32 Night)
 {
-	NightText->SetText(FText::FromString(FString::FromInt(Night)));
+	NightText->SetText(FText::FromString(FString("Night: ") + FString::FromInt(Night)));
 }
