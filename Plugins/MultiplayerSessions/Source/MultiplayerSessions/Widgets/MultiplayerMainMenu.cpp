@@ -53,6 +53,10 @@ bool UMultiplayerMainMenu::Initialize()
 	{
 		JoinButton->OnClicked.AddDynamic(this, &ThisClass::JoinButtonClicked);
 	}
+	if (QuitButton)
+	{
+		QuitButton->OnClicked.AddDynamic(this, &ThisClass::QuitButtonClicked);
+	}
 
 	return true;
 }
@@ -110,4 +114,9 @@ void UMultiplayerMainMenu::JoinButtonClicked()
 			RemoveFromParent();
 		}
 	}
+}
+
+void UMultiplayerMainMenu::QuitButtonClicked()
+{
+	UKismetSystemLibrary::QuitGame(GetWorld(), GetOwningPlayer(), EQuitPreference::Quit, true);
 }
