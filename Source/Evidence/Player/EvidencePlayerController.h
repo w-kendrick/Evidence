@@ -16,6 +16,9 @@ class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerControl
 
 public:
 	UFUNCTION(Client, Reliable)
+	void ClientSetInputEnabled(const bool bEnabled);
+
+	UFUNCTION(Client, Reliable)
 	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
 	UFUNCTION(Client, Reliable)

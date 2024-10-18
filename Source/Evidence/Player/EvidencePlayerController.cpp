@@ -21,6 +21,22 @@ void AEvidencePlayerController::BeginPlay()
 	}
 }
 
+void AEvidencePlayerController::ClientSetInputEnabled_Implementation(const bool bEnabled)
+{
+	APawn* const MyPawn = GetPawn();
+	if (MyPawn)
+	{
+		if (bEnabled)
+		{
+			MyPawn->EnableInput(this);
+		}
+		else
+		{
+			MyPawn->DisableInput(this);
+		}
+	}
+}
+
 void AEvidencePlayerController::ClientSetTerminalMenuVisibility_Implementation(const bool bVisibility)
 {
 	OnSetTerminalMenuVisibility.ExecuteIfBound(bVisibility);
