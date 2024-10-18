@@ -9,6 +9,7 @@
 #include "GameFramework/PlayerState.h"
 #include "Evidence/Items/WorldGenerator.h"
 #include "Evidence/Evidence.h"
+#include "Evidence/Player/EvidencePlayerController.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -368,6 +369,12 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
 {
 	RemoveLivingPlayer(Player, EPlayerLossType::Death);
+
+	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Player);
+	if (EvidencePlayerController)
+	{
+		EvidencePlayerController->ClientSetInputEnabled(false);
+	}
 }
 
 void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
