@@ -24,6 +24,7 @@ public:
 	bool GetPlayerSave(const FUniqueNetIdRepl& ID, FPlayerSave& Save);
 
 	uint32 GetNight() const { return Night; }
+	float GetCash() const { return Cash; }
 
 private:
 	UPROPERTY()
