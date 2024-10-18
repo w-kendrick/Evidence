@@ -58,7 +58,7 @@ void AEvidenceGameMode::Logout(AController* Controller)
 
 	if (PlayerController)
 	{
-		RemoveLivingPlayer(PlayerController);
+		RemoveLivingPlayer(PlayerController, EPlayerLossType::Logout);
 	}
 
 	Super::Logout(Controller);
@@ -322,6 +322,7 @@ void AEvidenceGameMode::WipeSave()
 
 			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
 			UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotNameString, 0, SavedDelegate);
+			UE_LOG(LogTemp, Warning, TEXT("Wiped Save"));
 		}
 	}
 }
@@ -358,7 +359,7 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 
 void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
 {
-	RemoveLivingPlayer(Player);
+	RemoveLivingPlayer(Player, EPlayerLossType::Death);
 }
 
 void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
@@ -366,13 +367,13 @@ void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
 	LivingPlayers.Add(Player);
 }
 
-void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player)
+void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPlayerLossType LossType)
 {
 	LivingPlayers.Remove(Player);
 
-	if (LivingPlayers.Num() == 0)
+	if (LivingPlayers.Num() == 0 && LossType == EPlayerLossType::Death)
 	{
-		Night = 0;
+		Night = 1;
 		ResetWorld();
 		WipeSave();
 

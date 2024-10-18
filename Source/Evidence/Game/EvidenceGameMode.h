@@ -13,6 +13,12 @@ class USaveGame;
 class AEquipment;
 class AWorldGenerator;
 
+enum class EPlayerLossType : uint8
+{
+	Death,
+	Logout
+};
+
 namespace MatchState
 {
 	const FName PreSetup = FName("PreSetup"); //Pre-Setup period (only exited by player input)
@@ -96,6 +102,6 @@ private:
 	TArray<APlayerController*> LivingPlayers;
 
 	void AddLivingPlayer(APlayerController* Player);
-	void RemoveLivingPlayer(APlayerController* Player);
+	void RemoveLivingPlayer(APlayerController* Player, const EPlayerLossType LossType);
 };
 
