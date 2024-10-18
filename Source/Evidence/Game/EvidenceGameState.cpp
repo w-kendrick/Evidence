@@ -19,6 +19,7 @@ void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(AEvidenceGameState, SetupCountdown);
+	DOREPLIFETIME(AEvidenceGameState, Night);
 	DOREPLIFETIME(AEvidenceGameState, Cash);
 }
 
@@ -66,11 +67,27 @@ AHub* AEvidenceGameState::GetHub()
 	return Hub;
 }
 
+#pragma region Night
+
+void AEvidenceGameState::SetNight(const uint32 NewNight)
+{
+	Night = NewNight;
+	OnNightChanged.Broadcast(Night);
+}
+
+void AEvidenceGameState::OnRep_Night(uint32 PrevNight)
+{
+	OnNightChanged.Broadcast(Night);
+}
+
+#pragma endregion
+
 #pragma region Cash
 
 void AEvidenceGameState::AwardCash(const float Amount)
 {
 	Cash += Amount;
+	OnCashChanged.Broadcast(Cash);
 }
 
 bool AEvidenceGameState::SpendCash(const float Amount)
@@ -81,6 +98,7 @@ bool AEvidenceGameState::SpendCash(const float Amount)
 	}
 
 	Cash -= Amount;
+	OnCashChanged.Broadcast(Cash);
 	return true;
 }
 

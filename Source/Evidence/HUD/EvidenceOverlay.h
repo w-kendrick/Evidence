@@ -51,6 +51,11 @@ protected:
 	UPROPERTY(meta = (BindWidget))
 	UTerminalMenu* TerminalMenu;
 
+	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* NightText;
+
+	void OnNightChanged(uint32 Night);
+
 	void SetTerminalMenuVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 	void SetInteractTimerState(bool bState, float Duration);
