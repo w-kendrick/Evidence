@@ -8,6 +8,7 @@
 #include "Evidence/Game/EvidenceGameState.h"
 #include "GameFramework/PlayerState.h"
 #include "Evidence/Items/WorldGenerator.h"
+#include "Evidence/Evidence.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -16,7 +17,7 @@ AEvidenceGameMode::AEvidenceGameMode()
 	MaxNightTime = 180.f; //180 for testing, 1800 actual
 	PostNightTime = 10.f;
 
-	Night = 1;
+	Night = DEFAULT_STARTING_NIGHT;
 }
 
 void AEvidenceGameMode::InitGameState()
@@ -379,7 +380,8 @@ void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPla
 
 	if (LivingPlayers.Num() == 0 && LossType == EPlayerLossType::Death)
 	{
-		SetNight(1U);
+		SetNight(DEFAULT_STARTING_NIGHT);
+		EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
 		ResetWorld();
 		WipeSave();
 

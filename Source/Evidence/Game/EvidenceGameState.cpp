@@ -6,12 +6,16 @@
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Game/EvidenceGameMode.h"
+#include "Evidence/Evidence.h"
 
 #pragma region Core
 
 AEvidenceGameState::AEvidenceGameState()
 {
 	NetUpdateFrequency = 10;
+
+	Night = DEFAULT_STARTING_NIGHT;
+	Cash = DEFAULT_STARTING_CASH;
 }
 
 void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -84,10 +88,15 @@ void AEvidenceGameState::OnRep_Night(uint32 PrevNight)
 
 #pragma region Cash
 
+void AEvidenceGameState::SetCash(const float NewCash)
+{
+	Cash = NewCash;
+	OnCashChanged.Broadcast(Cash);
+}
+
 void AEvidenceGameState::AwardCash(const float Amount)
 {
-	Cash += Amount;
-	OnCashChanged.Broadcast(Cash);
+	SetCash(Cash + Amount);
 }
 
 bool AEvidenceGameState::SpendCash(const float Amount)
@@ -97,8 +106,7 @@ bool AEvidenceGameState::SpendCash(const float Amount)
 		return false;
 	}
 
-	Cash -= Amount;
-	OnCashChanged.Broadcast(Cash);
+	SetCash(Cash - Amount);
 	return true;
 }
 

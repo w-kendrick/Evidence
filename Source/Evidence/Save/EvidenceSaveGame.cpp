@@ -2,11 +2,12 @@
 
 
 #include "EvidenceSaveGame.h"
+#include "Evidence/Evidence.h"
 
 UEvidenceSaveGame::UEvidenceSaveGame()
 {
-	Night = 1U;
-	Cash = 0.0f;
+	Night = DEFAULT_STARTING_NIGHT;
+	Cash = DEFAULT_STARTING_CASH;
 }
 
 void UEvidenceSaveGame::SetNight(const uint32& NewNight)
