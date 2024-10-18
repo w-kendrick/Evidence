@@ -346,6 +346,7 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 	if (EvidenceSaveGame)
 	{
 		SetNight(EvidenceSaveGame->GetNight());
+		EvidenceGameState->SetCash(EvidenceSaveGame->GetCash());
 
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Loaded UEvidenceSaveGame - Night ") + FString::FromInt(Night));
 		for (const APlayerController* const PlayerController : PendingPlayerLoads)
