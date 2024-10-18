@@ -10,6 +10,7 @@
 
 class UInventoryManagerComponent;
 class AEquipment;
+class UHealthSet;
 
 /**
  * 
@@ -47,6 +48,9 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly)
 	UInventoryManagerComponent* InventoryManagerComponent;
+
+	UPROPERTY()
+	UHealthSet* HealthSet;
 
 	virtual void AttributeSetup();
 

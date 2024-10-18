@@ -7,6 +7,7 @@
 #include "Components/InventoryManagerComponent.h"
 #include "Evidence/Items/Equipment.h"
 #include "AttributeSets/StaminaSet.h"
+#include "AttributeSets/HealthSet.h"
 #include "AbilitySystemBlueprintLibrary.h"
 
 ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
@@ -28,6 +29,8 @@ void ABaseCharacter::AttributeSetup()
 {
 	Super::AttributeSetup();
 
+	HealthSet = AbilitySystemComponent->GetSpawnedAttribute<UHealthSet>();
+
 	SetupAttributeDelegates();
 }
 
@@ -48,7 +51,11 @@ void ABaseCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
 
 bool ABaseCharacter::IsAlive() const
 {
-	return true;
+	if (HealthSet)
+	{
+		return HealthSet->IsAlive();
+	}
+	return false;
 }
 
 float ABaseCharacter::GetMaxStamina() const
@@ -127,6 +134,11 @@ void ABaseCharacter::SetInteractPromptVisibility(const bool bVisibility, const f
 
 void ABaseCharacter::ResetAttributes()
 {
+	if (HealthSet)
+	{
+		HealthSet->Respawn();
+	}
+
 	FGameplayEventData Data;
 
 	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(this, DefaultsTag, Data);
