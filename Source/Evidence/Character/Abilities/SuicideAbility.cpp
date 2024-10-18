@@ -13,4 +13,6 @@ void USuicideAbility::ActivateAbility(const FGameplayAbilitySpecHandle Handle, c
 
 	const FGameplayEffectSpecHandle DamageEffectSpecHandle = MakeOutgoingGameplayEffectSpec(DamageEffect, GetAbilityLevel());
 	ApplyGameplayEffectSpecToOwner(Handle, ActorInfo, ActivationInfo, DamageEffectSpecHandle);
+
+	EndAbility(Handle, ActorInfo, ActivationInfo, false, false);
 }
