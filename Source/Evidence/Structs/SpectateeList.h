@@ -8,7 +8,7 @@
 #include "Evidence/Character/BaseCharacter.h"
 #include "SpectateeList.generated.h"
 
-DECLARE_DELEGATE_OneParam(FOnEntryRemoved, int32)
+DECLARE_DELEGATE_OneParam(FOnEntryRemoved, APawn*)
 
 /*
 Manages list of spectatees
@@ -38,7 +38,9 @@ public:
 	{
 		for (const int32 Index : RemovedIndices)
 		{
-			OnEntryRemoved.ExecuteIfBound(Index);
+			const FSpectateeItem& Entry = Entries[Index];
+
+			OnEntryRemoved.ExecuteIfBound(Entry.GetSpectatee());
 		}
 	}
 
