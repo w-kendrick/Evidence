@@ -75,6 +75,10 @@ void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool 
 	{
 		SpectateNext();
 	}
+	else
+	{
+		SetViewTarget(GetPawn());
+	}
 }
 
 void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& SpectateeList)
