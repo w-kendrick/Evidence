@@ -18,6 +18,13 @@ AEvidenceGameState::AEvidenceGameState()
 	Cash = DEFAULT_STARTING_CASH;
 }
 
+void AEvidenceGameState::BeginPlay()
+{
+	Super::BeginPlay();
+
+	CandidateSpectatees.OnEntryRemoved.BindUObject(this, &ThisClass::OnCandidateSpectateeRemoved);
+}
+
 void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -25,6 +32,7 @@ void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& O
 	DOREPLIFETIME(AEvidenceGameState, SetupCountdown);
 	DOREPLIFETIME(AEvidenceGameState, Night);
 	DOREPLIFETIME(AEvidenceGameState, Cash);
+	DOREPLIFETIME(AEvidenceGameState, CandidateSpectatees);
 }
 
 void AEvidenceGameState::Tick(float DeltaTime)
@@ -118,5 +126,20 @@ void AEvidenceGameState::OnRep_Cash(float PrevCash)
 #pragma endregion
 
 #pragma region Spectatees
+
+void AEvidenceGameState::AddLivingPlayer(APlayerController* const PlayerController)
+{
+	CandidateSpectatees.AddEntry(PlayerController->GetPawn());
+}
+
+void AEvidenceGameState::RemoveLivingPlayer(APlayerController* const PlayerController)
+{
+	CandidateSpectatees.RemoveEntry(PlayerController->GetPawn());
+}
+
+void AEvidenceGameState::OnCandidateSpectateeRemoved(int32 Index)
+{
+
+}
 
 #pragma endregion

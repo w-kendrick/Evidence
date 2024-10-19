@@ -411,11 +411,13 @@ void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
 void AEvidenceGameMode::AddLivingPlayer(APlayerController* Player)
 {
 	LivingPlayers.Add(Player);
+	EvidenceGameState->AddLivingPlayer(Player);
 }
 
 void AEvidenceGameMode::RemoveLivingPlayer(APlayerController* Player, const EPlayerLossType LossType)
 {
 	LivingPlayers.Remove(Player);
+	EvidenceGameState->RemoveLivingPlayer(Player);
 
 	if (LossType == EPlayerLossType::Death)
 	{

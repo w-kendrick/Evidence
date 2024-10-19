@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameState.h"
 #include "Evidence/Delegates.h"
+#include "Evidence/Structs/SpectateeList.h"
 #include "EvidenceGameState.generated.h"
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChanged, FName)
@@ -40,7 +41,11 @@ public:
 	void AwardCash(const float Amount);
 	bool SpendCash(const float Amount);
 
+	void AddLivingPlayer(APlayerController* const PlayerController);
+	void RemoveLivingPlayer(APlayerController* const PlayerController);
+
 protected:
+	void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
@@ -61,4 +66,9 @@ private:
 
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);
+
+	UPROPERTY(Replicated)
+	FSpectateeList CandidateSpectatees;
+
+	void OnCandidateSpectateeRemoved(int32 Index);
 };
