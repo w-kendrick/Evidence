@@ -97,6 +97,7 @@ void AEvidenceGameMode::OnMatchStateSet()
 			if (EvidencePlayerController)
 			{
 				EvidencePlayerController->ClientSetInputEnabled(true);
+				EvidencePlayerController->ClientSetIsSpectating(false);
 			}
 
 			ABaseCharacter* const BaseCharacter = Cast<ABaseCharacter>(DeadPlayer->GetPawn());
