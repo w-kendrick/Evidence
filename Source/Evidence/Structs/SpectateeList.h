@@ -8,8 +8,6 @@
 #include "Evidence/Character/BaseCharacter.h"
 #include "SpectateeList.generated.h"
 
-DECLARE_DELEGATE_OneParam(FOnEntryRemoved, APawn*)
-
 /*
 Manages list of spectatees
 */
@@ -34,26 +32,6 @@ public:
 		return Entries[Index];
 	}
 
-	void PreReplicatedRemove(const TArrayView<int32> RemovedIndices, int32 FinalSize)
-	{
-		for (const int32 Index : RemovedIndices)
-		{
-			const FSpectateeItem& Entry = Entries[Index];
-
-			OnEntryRemoved.ExecuteIfBound(Entry.GetSpectatee());
-		}
-	}
-
-	void PostReplicatedAdd(const TArrayView<int32> AddedIndices, int32 FinalSize)
-	{
-
-	}
-
-	void PostReplicatedChange(const TArrayView<int32> ChangedIndices, int32 FinalSize)
-	{
-
-	}
-
 	bool NetDeltaSerialize(FNetDeltaSerializeInfo& DeltaParms)
 	{
 		return FFastArraySerializer::FastArrayDeltaSerialize<FSpectateeItem, FSpectateeList>(Entries, DeltaParms, *this);
@@ -66,6 +44,7 @@ public:
 
 	void RemoveEntry(APawn* const Spectatee)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Remove entry"));
 		for (FSpectateeItem& Entry : Entries)
 		{
 			if (Entry.GetSpectatee() == Spectatee)
@@ -75,8 +54,6 @@ public:
 			}
 		}
 	}
-
-	FOnEntryRemoved OnEntryRemoved;
 
 private:
 	UPROPERTY()

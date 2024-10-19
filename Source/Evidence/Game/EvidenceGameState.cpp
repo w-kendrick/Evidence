@@ -18,13 +18,6 @@ AEvidenceGameState::AEvidenceGameState()
 	Cash = DEFAULT_STARTING_CASH;
 }
 
-void AEvidenceGameState::BeginPlay()
-{
-	Super::BeginPlay();
-
-	CandidateSpectatees.OnEntryRemoved.BindUObject(this, &ThisClass::OnCandidateSpectateeRemoved);
-}
-
 void AEvidenceGameState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -135,12 +128,11 @@ void AEvidenceGameState::AddLivingPlayer(APlayerController* const PlayerControll
 void AEvidenceGameState::RemoveLivingPlayer(APlayerController* const PlayerController)
 {
 	CandidateSpectatees.RemoveEntry(PlayerController->GetPawn());
-	OnCandidateSpectateeRemoved(PlayerController->GetPawn());
 }
 
-void AEvidenceGameState::OnCandidateSpectateeRemoved(APawn* Pawn)
+void AEvidenceGameState::OnRep_CandidateSpectatees()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "OnCandidateSpectateeRemoved");
+
 }
 
 #pragma endregion

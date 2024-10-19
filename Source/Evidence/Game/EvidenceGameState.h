@@ -45,7 +45,6 @@ public:
 	void RemoveLivingPlayer(APlayerController* const PlayerController);
 
 protected:
-	void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 private:
@@ -67,8 +66,9 @@ private:
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_CandidateSpectatees)
 	FSpectateeList CandidateSpectatees;
 
-	void OnCandidateSpectateeRemoved(APawn* Pawn);
+	UFUNCTION()
+	void OnRep_CandidateSpectatees();
 };
