@@ -65,7 +65,53 @@ void AEvidencePlayerController::SetInteractTimerState(const bool bState, const f
 	OnInteractTimerStateChanged.ExecuteIfBound(bState, Duration);
 }
 
+#pragma region Spectating
+
+void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool bInIsSpectating)
+{
+	bIsSpectating = bInIsSpectating;
+
+	if (bIsSpectating)
+	{
+		SpectateNext();
+	}
+}
+
 void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& SpectateeList)
 {
+	CandidateSpectatees = SpectateeList;
 
+	if (SpectateIndex >= CandidateSpectatees.GetNum())
+	{
+		SpectateNext();
+	}
 }
+
+void AEvidencePlayerController::SpectateNext()
+{
+	const int32 MaxSpectateIndex = CandidateSpectatees.GetNum() - 1;
+	const int32 NewSpectateIndex = FMath::Clamp(SpectateIndex + 1, 0, MaxSpectateIndex);
+	SpectateIndex = NewSpectateIndex;
+	UpdateSpectatee();
+}
+
+void AEvidencePlayerController::SpectatePrevious()
+{
+	const int32 MaxSpectateIndex = CandidateSpectatees.GetNum() - 1;
+	const int32 NewSpectateIndex = FMath::Clamp(SpectateIndex - 1, 0, MaxSpectateIndex);
+	SpectateIndex = NewSpectateIndex;
+	UpdateSpectatee();
+}
+
+void AEvidencePlayerController::UpdateSpectatee()
+{
+	if (SpectateIndex < CandidateSpectatees.GetNum())
+	{
+		const FSpectateeItem& Entry = CandidateSpectatees[SpectateIndex];
+		APawn* const SpectateePawn = Entry.GetSpectatee();
+
+		SetViewTarget(SpectateePawn);
+	}
+}
+
+#pragma endregion

@@ -406,6 +406,7 @@ void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
 	if (EvidencePlayerController)
 	{
 		EvidencePlayerController->ClientSetInputEnabled(false);
+		EvidencePlayerController->ClientSetIsSpectating(true);
 	}
 }
 
