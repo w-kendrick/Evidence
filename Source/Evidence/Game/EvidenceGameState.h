@@ -10,6 +10,7 @@
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMatchStateChanged, FName)
 
 class AHub;
+class ABaseCharacter;
 
 UCLASS()
 class EVIDENCE_API AEvidenceGameState : public AGameState
@@ -42,6 +43,7 @@ public:
 protected:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+private:
 	UPROPERTY(Replicated)
 	float SetupCountdown;
 
@@ -59,5 +61,4 @@ protected:
 
 	UFUNCTION()
 	void OnRep_Cash(float PrevCash);
-	
 };
