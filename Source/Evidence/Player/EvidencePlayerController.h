@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "MoreMovementPlayerController.h"
 #include "Evidence/Delegates.h"
+#include "Evidence/Structs/SpectateeList.h"
 #include "EvidencePlayerController.generated.h"
 
 class UInputMappingContext;
@@ -15,6 +16,9 @@ class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerControl
 	GENERATED_BODY()
 
 public:
+	UFUNCTION(Client, Reliable)
+	void ClientSetIsSpectating(const bool bInIsSpectating);
+
 	UFUNCTION(Client, Reliable)
 	void ClientSetInputEnabled(const bool bEnabled);
 
@@ -50,4 +54,14 @@ protected:
 
 private:
 	void OnCandidateSpectateesChanged(FSpectateeList& SpectateeList);
+
+	UPROPERTY()
+	FSpectateeList CandidateSpectatees;
+
+	bool bIsSpectating;
+	int32 SpectateIndex;
+
+	void SpectateNext();
+	void SpectatePrevious();
+	void UpdateSpectatee();
 };

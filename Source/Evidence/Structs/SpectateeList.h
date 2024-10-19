@@ -61,6 +61,11 @@ public:
 		}
 	}
 
+	int32 GetNum() const
+	{
+		return Entries.Num();
+	}
+
 private:
 	UPROPERTY()
 	TArray<FSpectateeItem> Entries;
