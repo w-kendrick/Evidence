@@ -44,14 +44,20 @@ public:
 
 	void RemoveEntry(APawn* const Spectatee)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Remove entry"));
-		for (FSpectateeItem& Entry : Entries)
+		int32 FoundIndex = -1;
+		for (int32 Index = 0; Index < Entries.Num(); Index++)
 		{
+			const FSpectateeItem& Entry = Entries[Index];
+
 			if (Entry.GetSpectatee() == Spectatee)
 			{
-				Entries.Remove(Entry);
-				break;
+				FoundIndex = Index;
 			}
+		}
+
+		if (FoundIndex != -1)
+		{
+			Entries.RemoveAt(FoundIndex);
 		}
 	}
 
