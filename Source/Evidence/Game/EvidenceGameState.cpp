@@ -116,3 +116,7 @@ void AEvidenceGameState::OnRep_Cash(float PrevCash)
 }
 
 #pragma endregion
+
+#pragma region Spectatees
+
+#pragma endregion
