@@ -34,7 +34,7 @@ DECLARE_DELEGATE_OneParam(FOnSetAttachmentWidgetVisibility, bool)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnNightChanged, uint32)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCashChanged, float)
-DECLARE_MULTICAST_DELEGATE_OneParam(FOnCandidateSpectateesChanged, FSpectateeList)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnCandidateSpectateesChanged, FSpectateeList&)
 
 DECLARE_MULTICAST_DELEGATE(FOnAttachmentsUpdated)
 

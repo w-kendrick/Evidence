@@ -47,4 +47,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	// End Actor interface
+
+private:
+	void OnCandidateSpectateesChanged(FSpectateeList& SpectateeList);
 };

@@ -2,8 +2,10 @@
 
 
 #include "EvidencePlayerController.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "EnhancedInputSubsystems.h"
 #include "Evidence/HUD/EvidenceHUD.h"
+#include "Kismet/GameplayStatics.h"
 
 void AEvidencePlayerController::BeginPlay()
 {
@@ -18,6 +20,12 @@ void AEvidencePlayerController::BeginPlay()
 		Subsystem->AddMappingContext(InputMappingContext, 0);
 
 		UE_LOG(LogTemp, Warning, TEXT("BeginPlay"));
+	}
+
+	AEvidenceGameState* const EvidenceGameState = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
+	if (EvidenceGameState)
+	{
+		EvidenceGameState->OnCandidateSpectateesChanged.AddUObject(this, &ThisClass::OnCandidateSpectateesChanged);
 	}
 }
 
@@ -55,4 +63,9 @@ void AEvidencePlayerController::SetInteractWidgetVisibility(const bool bVisibili
 void AEvidencePlayerController::SetInteractTimerState(const bool bState, const float Duration)
 {
 	OnInteractTimerStateChanged.ExecuteIfBound(bState, Duration);
+}
+
+void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& SpectateeList)
+{
+
 }
