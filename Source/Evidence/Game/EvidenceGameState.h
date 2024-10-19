@@ -32,6 +32,7 @@ public:
 
 	FOnNightChanged OnNightChanged;
 	FOnCashChanged OnCashChanged;
+	FOnCandidateSpectateesChanged OnCandidateSpectateesChanged;
 
 	uint32 GetNight() const { return Night; }
 	void SetNight(const uint32 NewNight);
