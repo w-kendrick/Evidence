@@ -135,11 +135,12 @@ void AEvidenceGameState::AddLivingPlayer(APlayerController* const PlayerControll
 void AEvidenceGameState::RemoveLivingPlayer(APlayerController* const PlayerController)
 {
 	CandidateSpectatees.RemoveEntry(PlayerController->GetPawn());
+	OnCandidateSpectateeRemoved(PlayerController->GetPawn());
 }
 
-void AEvidenceGameState::OnCandidateSpectateeRemoved(int32 Index)
+void AEvidenceGameState::OnCandidateSpectateeRemoved(APawn* Pawn)
 {
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, "OnCandidateSpectateeRemoved");
 }
 
 #pragma endregion

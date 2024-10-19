@@ -70,5 +70,5 @@ private:
 	UPROPERTY(Replicated)
 	FSpectateeList CandidateSpectatees;
 
-	void OnCandidateSpectateeRemoved(int32 Index);
+	void OnCandidateSpectateeRemoved(APawn* Pawn);
 };
