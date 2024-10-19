@@ -44,6 +44,7 @@ void AEvidenceGameMode::HandleStartingNewPlayer_Implementation(APlayerController
 
 	if (EvidenceSaveGame)
 	{
+		RestartPlayer(PlayerController);
 		LoadPlayer(PlayerController);
 	}
 	else
