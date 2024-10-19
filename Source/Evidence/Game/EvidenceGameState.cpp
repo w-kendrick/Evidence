@@ -123,16 +123,18 @@ void AEvidenceGameState::OnRep_Cash(float PrevCash)
 void AEvidenceGameState::AddLivingPlayer(APlayerController* const PlayerController)
 {
 	CandidateSpectatees.AddEntry(PlayerController->GetPawn());
+	OnCandidateSpectateesChanged.Broadcast(CandidateSpectatees);
 }
 
 void AEvidenceGameState::RemoveLivingPlayer(APlayerController* const PlayerController)
 {
 	CandidateSpectatees.RemoveEntry(PlayerController->GetPawn());
+	OnCandidateSpectateesChanged.Broadcast(CandidateSpectatees);
 }
 
 void AEvidenceGameState::OnRep_CandidateSpectatees()
 {
-
+	OnCandidateSpectateesChanged.Broadcast(CandidateSpectatees);
 }
 
 #pragma endregion
