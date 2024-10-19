@@ -9,7 +9,7 @@
 #include "SpectateeList.generated.h"
 
 /*
-Manages list of spectators
+Manages list of spectatees
 */
 USTRUCT(BlueprintType)
 struct FSpectateeList : public FFastArraySerializer
