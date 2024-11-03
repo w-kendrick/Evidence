@@ -50,6 +50,11 @@
 		{
 			"Name": "Water",
 			"Enabled": true
+		},
+		{
+			"Name": "MPTestHelpers",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/bda071d06e214383b7d47c60ebddb48f"
 		}
 	]
 }
