@@ -109,25 +109,26 @@ uint8 UInventoryManagerComponent::ConsumeAmmo(const TSubclassOf<AAmmunition> Amm
 
 void UInventoryManagerComponent::IncrementSelectedIndex()
 {
-	const uint8 PrevIndex = SelectedIndex;
-	SelectedIndex = (SelectedIndex + 1) % INVENTORY_SIZE;
-
-	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
-	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment(), EUnequipType::Stow);
+	SetSelectedIndex((SelectedIndex + 1) % INVENTORY_SIZE);
 }
 
 void UInventoryManagerComponent::DecrementSelectedIndex()
 {
-	const uint8 PrevIndex = SelectedIndex;
-
 	if (SelectedIndex == 0)
 	{
-		SelectedIndex = INVENTORY_SIZE - 1;
+		SetSelectedIndex(INVENTORY_SIZE - 1);
 	}
 	else
 	{
-		SelectedIndex -= 1;
+		SetSelectedIndex(SelectedIndex - 1);
 	}
+}
+
+void UInventoryManagerComponent::SetSelectedIndex(const uint8 Index)
+{
+	const uint8 PrevIndex = SelectedIndex;
+
+	SelectedIndex = Index;
 
 	OnEquippedIndexChanged.Broadcast(SelectedIndex, PrevIndex);
 	UpdateEquipped(EquipmentList[PrevIndex].GetEquipment(), EUnequipType::Stow);

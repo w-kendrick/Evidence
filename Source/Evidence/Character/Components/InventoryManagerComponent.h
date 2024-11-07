@@ -47,6 +47,8 @@ public:
 	void IncrementSelectedIndex();
 	void DecrementSelectedIndex();
 
+	void SetSelectedIndex(const uint8 Index);
+
 protected:
 	virtual void BeginPlay() override;
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
