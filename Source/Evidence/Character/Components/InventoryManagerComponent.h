@@ -48,6 +48,7 @@ public:
 	void DecrementSelectedIndex();
 
 	void SetSelectedIndex(const uint8 Index);
+	uint8 GetSelectedIndex() const { return SelectedIndex; }
 
 protected:
 	virtual void BeginPlay() override;

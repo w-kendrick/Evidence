@@ -15,7 +15,8 @@
 				"AIModule",
 				"ProneMovementMode",
 				"AbilityInputSystem",
-				"MultiplayerSessions"
+				"MultiplayerSessions",
+				"FunctionalTesting"
 			]
 		}
 	],
