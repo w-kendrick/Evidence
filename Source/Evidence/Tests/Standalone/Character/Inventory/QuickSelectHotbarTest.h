@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Character/CharacterTest.h"
+#include "Evidence/Tests/Standalone/Character/CharacterTest.h"
 #include "QuickSelectHotbarTest.generated.h"
 
 class UInputAction;
