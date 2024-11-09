@@ -54,16 +54,19 @@ ABaseCharacter* AClientCharacterTest::GetAltClientBaseCharacter() const
 
 	if (AltClientPlayerController)
 	{
-		TArray<AActor*> Actors;
-		UMPTestHelpersBPLibrary::GetAllClientActorsOfClass(ABaseCharacter::StaticClass(), Actors, 1);
-
-		for (AActor* Actor : Actors)
+		if (AltClientPlayerController->GetPawn())
 		{
-			ABaseCharacter* BaseCharacter = Cast<ABaseCharacter>(Actor);
+			TArray<AActor*> Actors;
+			UMPTestHelpersBPLibrary::GetAllClientActorsOfClass(ABaseCharacter::StaticClass(), Actors, 1);
 
-			if (BaseCharacter != AltClientPlayerController->GetPawn())
+			for (AActor* Actor : Actors)
 			{
-				ReturnCharacter = BaseCharacter;
+				ABaseCharacter* BaseCharacter = Cast<ABaseCharacter>(Actor);
+
+				if (BaseCharacter != AltClientPlayerController->GetPawn())
+				{
+					ReturnCharacter = BaseCharacter;
+				}
 			}
 		}
 	}
