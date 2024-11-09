@@ -14,7 +14,7 @@ void AClientQuickSelectHotbarTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (BaseCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1) && AltClientBaseCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1))
+	if (BaseCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1))
 	{
 		TestNextSlot();
 	}

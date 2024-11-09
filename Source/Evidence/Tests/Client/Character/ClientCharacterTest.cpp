@@ -2,34 +2,28 @@
 
 
 #include "ClientCharacterTest.h"
-#include "MPTestHelpersBPLibrary.h"
 #include "EnhancedInputSubsystems.h"
 
 bool AClientCharacterTest::IsReady_Implementation()
 {
 	bool _bIsReady = false;
 
-	APlayerController* const _PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
 
-	if (_PlayerController)
+	if (PlayerController)
 	{
-		APawn* const Pawn = _PlayerController->GetPawn();
+		BaseCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
 
-		if (Pawn)
+		if (BaseCharacter)
 		{
-			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(_PlayerController->GetLocalPlayer());
+			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 
 			if (InputSubsystem)
 			{
-				_bIsReady = true;
-
-				PlayerController = _PlayerController;
-				BaseCharacter = Cast<ABaseCharacter>(Pawn);
-				//AltClientBaseCharacter = Cast<ABaseCharacter>(UMPTestHelpersBPLibrary::GetClientActorOfClassWithTag(ABaseCharacter::StaticClass(), FName("TestCharacter"), 1));
+				_bIsReady = true;;
 
 				checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
 				checkf(BaseCharacter != nullptr, TEXT("BaseCharacter is invalid"));
-				checkf(AltClientBaseCharacter != nullptr, TEXT("AltClientBaseCharacter is invalid"));
 			}
 		}
 	}
