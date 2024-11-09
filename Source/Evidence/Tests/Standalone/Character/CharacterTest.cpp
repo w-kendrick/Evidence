@@ -9,27 +9,30 @@ bool ACharacterTest::IsReady_Implementation()
 {
 	bool _bIsReady = false;
 
-	const APlayerController* const _PlayerController = Cast<APlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerController::StaticClass()));
+	APlayerController* const _PlayerController = Cast<APlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerController::StaticClass()));
 
 	if (_PlayerController)
 	{
-		const APawn* const Pawn = _PlayerController->GetPawn();
+		APawn* const Pawn = _PlayerController->GetPawn();
 
 		if (Pawn)
 		{
-			_bIsReady = true;
+			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(_PlayerController->GetLocalPlayer());
+
+			if (InputSubsystem)
+			{
+				_bIsReady = true;
+
+				PlayerController = _PlayerController;
+				BaseCharacter = Cast<ABaseCharacter>(Pawn);
+
+				checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
+				checkf(BaseCharacter != nullptr, TEXT("BaseCharacter is invalid"));
+			}
 		}
 	}
 
 	return _bIsReady;
-}
-
-void ACharacterTest::StartTest()
-{
-	PlayerController = Cast<APlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerController::StaticClass()));
-	BaseCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
-
-	checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
 }
 
 void ACharacterTest::InjectInput(const UInputAction* Action, FVector Value)
