@@ -20,9 +20,10 @@ class EVIDENCE_API ACharacterTest : public AFunctionalTest
 
 public:
 	bool IsReady_Implementation() override;
-	void StartTest() override;
 
 protected:
+	bool bSetupComplete = false;
+
 	UPROPERTY()
 	APlayerController* PlayerController;
 

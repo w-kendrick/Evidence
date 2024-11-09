@@ -9,27 +9,32 @@ bool AClientCharacterTest::IsReady_Implementation()
 {
 	bool _bIsReady = false;
 
-	const APlayerController* const _PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	APlayerController* const _PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
 
 	if (_PlayerController)
 	{
-		const APawn* const Pawn = _PlayerController->GetPawn();
+		APawn* const Pawn = _PlayerController->GetPawn();
 
 		if (Pawn)
 		{
-			_bIsReady = true;
+			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(_PlayerController->GetLocalPlayer());
+
+			if (InputSubsystem)
+			{
+				_bIsReady = true;
+
+				PlayerController = _PlayerController;
+				BaseCharacter = Cast<ABaseCharacter>(Pawn);
+				//AltClientBaseCharacter = Cast<ABaseCharacter>(UMPTestHelpersBPLibrary::GetClientActorOfClassWithTag(ABaseCharacter::StaticClass(), FName("TestCharacter"), 1));
+
+				checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
+				checkf(BaseCharacter != nullptr, TEXT("BaseCharacter is invalid"));
+				checkf(AltClientBaseCharacter != nullptr, TEXT("AltClientBaseCharacter is invalid"));
+			}
 		}
 	}
 
 	return _bIsReady;
-}
-
-void AClientCharacterTest::StartTest()
-{
-	PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
-	BaseCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
-
-	checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
 }
 
 void AClientCharacterTest::InjectInput(const UInputAction* Action, FVector Value)

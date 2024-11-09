@@ -20,7 +20,6 @@ class EVIDENCE_API AClientCharacterTest : public AFunctionalTest
 
 public:
 	bool IsReady_Implementation() override;
-	void StartTest() override;
 
 protected:
 	UPROPERTY()
@@ -28,6 +27,9 @@ protected:
 
 	UPROPERTY()
 	ABaseCharacter* BaseCharacter;
+
+	UPROPERTY()
+	ABaseCharacter* AltClientBaseCharacter;
 
 	void InjectInput(const UInputAction* Action, FVector Value);
 	
