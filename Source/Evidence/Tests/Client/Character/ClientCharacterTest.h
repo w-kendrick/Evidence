@@ -29,6 +29,11 @@ protected:
 	UPROPERTY()
 	ABaseCharacter* TestCharacter;
 
+	UPROPERTY()
+	ABaseCharacter* AltClientTestCharacter;
+
 	void InjectInput(const UInputAction* Action, FVector Value);
 	
+private:
+	ABaseCharacter* GetAltClientBaseCharacter() const;
 };

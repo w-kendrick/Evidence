@@ -6,6 +6,7 @@
 void AClientQuickSelectHotbarTest::StartTest()
 {
 	Super::StartTest();
+	bHasStarted = true;
 
 	InjectInput(HotbarSlot8, FVector(1, 0, 0));
 }
@@ -14,9 +15,13 @@ void AClientQuickSelectHotbarTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (TestCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1))
+	if (bHasStarted)
 	{
-		TestNextSlot();
+		if (TestCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1) &&
+			AltClientTestCharacter->GetInventoryComponent()->GetSelectedIndex() == (CurrentSlotToTest - 1))
+		{
+			TestNextSlot();
+		}
 	}
 }
 
