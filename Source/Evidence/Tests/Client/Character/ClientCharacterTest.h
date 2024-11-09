@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "FunctionalTest.h"
+#include "MPTestHelpersBPLibrary.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "ClientCharacterTest.generated.h"
@@ -27,9 +28,6 @@ protected:
 
 	UPROPERTY()
 	ABaseCharacter* BaseCharacter;
-
-	UPROPERTY()
-	ABaseCharacter* AltClientBaseCharacter;
 
 	void InjectInput(const UInputAction* Action, FVector Value);
 	

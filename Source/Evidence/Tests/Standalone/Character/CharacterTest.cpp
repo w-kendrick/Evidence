@@ -9,22 +9,19 @@ bool ACharacterTest::IsReady_Implementation()
 {
 	bool _bIsReady = false;
 
-	APlayerController* const _PlayerController = Cast<APlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerController::StaticClass()));
+	PlayerController = Cast<APlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), APlayerController::StaticClass()));
 
-	if (_PlayerController)
+	if (PlayerController)
 	{
-		APawn* const Pawn = _PlayerController->GetPawn();
+		BaseCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
 
-		if (Pawn)
+		if (BaseCharacter)
 		{
-			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(_PlayerController->GetLocalPlayer());
+			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 
 			if (InputSubsystem)
 			{
 				_bIsReady = true;
-
-				PlayerController = _PlayerController;
-				BaseCharacter = Cast<ABaseCharacter>(Pawn);
 
 				checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
 				checkf(BaseCharacter != nullptr, TEXT("BaseCharacter is invalid"));
