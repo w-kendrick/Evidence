@@ -9,6 +9,8 @@
 #include "AttributeSets/StaminaSet.h"
 #include "AttributeSets/HealthSet.h"
 #include "AbilitySystemBlueprintLibrary.h"
+#include "Kismet/KismetSystemLibrary.h"
+#include "Camera/CameraComponent.h"
 
 ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
@@ -21,6 +23,13 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjectInitializer)
 	GetMesh()->SetCollisionResponseToChannel(COLLISION_SENSE, ECollisionResponse::ECR_Block);
 
 	DefaultsTag = FGameplayTag::RequestGameplayTag("GameplayEvent.Defaults");
+}
+
+void ABaseCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	SetLookRotation();
 }
 
 #pragma region Attributes
@@ -148,3 +157,42 @@ FEquipmentList ABaseCharacter::GetEquipmentList() const
 {
 	return InventoryManagerComponent->GetInventory();
 }
+
+#pragma region Spectating
+
+void ABaseCharacter::SetLookRotation()
+{
+	if (GetWorld())
+	{
+		if (UKismetSystemLibrary::IsServer(GetWorld()))
+		{
+			MulticastSetLookRotation(GetControlRotation());
+		}
+
+		if (CameraComponent)
+		{
+			if (!IsLocallyControlled())
+			{
+				CameraComponent->bUsePawnControlRotation = false;
+				CameraComponent->SetWorldRotation(LookRotation);
+			}
+			else
+			{
+				CameraComponent->bUsePawnControlRotation = true;
+			}
+		}
+	}
+}
+
+void ABaseCharacter::MulticastSetLookRotation_Implementation(FRotator Rotation)
+{
+	if (GetWorld())
+	{
+		if (!IsLocallyControlled())
+		{
+			LookRotation = Rotation;
+		}
+	}
+}
+
+#pragma endregion

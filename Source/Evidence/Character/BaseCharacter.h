@@ -22,6 +22,7 @@ class EVIDENCE_API ABaseCharacter : public AProneCharacter
 
 public:
 	ABaseCharacter(const FObjectInitializer& ObjectInitializer);
+	void Tick(float DeltaTime) override;
 
 	bool IsAlive() const;
 	float GetMaxStamina() const;
@@ -59,4 +60,12 @@ protected:
 	void OnStaminaChanged(const FOnAttributeChangeData& Data);
 
 	FGameplayTag DefaultsTag;
+
+private:
+	void SetLookRotation();
+
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastSetLookRotation(FRotator Rotation);
+
+	FRotator LookRotation;
 };
