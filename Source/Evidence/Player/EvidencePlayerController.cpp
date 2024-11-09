@@ -81,7 +81,17 @@ void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool 
 
 void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& SpectateeList)
 {
-	CandidateSpectatees = SpectateeList;
+	CandidateSpectatees.Empty();
+
+	for (uint8 Index = 0; Index < SpectateeList.GetNum(); Index++)
+	{
+		const FSpectateeItem& Entry = SpectateeList[Index];
+
+		if (Entry.GetSpectatee() != GetPawn())
+		{
+			CandidateSpectatees.AddEntry(Entry);
+		}
+	}
 
 	if (SpectateIndex >= CandidateSpectatees.GetNum())
 	{
