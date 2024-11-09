@@ -44,5 +44,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly)
 	UInputAction* HotbarSlot8;
+
+private:
+	bool bHasStarted = false;
 	
 };
