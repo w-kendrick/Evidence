@@ -13,9 +13,9 @@ bool ACharacterTest::IsReady_Implementation()
 
 	if (PlayerController)
 	{
-		BaseCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
+		TestCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
 
-		if (BaseCharacter)
+		if (TestCharacter)
 		{
 			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 
@@ -24,7 +24,7 @@ bool ACharacterTest::IsReady_Implementation()
 				_bIsReady = true;
 
 				checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
-				checkf(BaseCharacter != nullptr, TEXT("BaseCharacter is invalid"));
+				checkf(TestCharacter != nullptr, TEXT("TestCharacter is invalid"));
 			}
 		}
 	}

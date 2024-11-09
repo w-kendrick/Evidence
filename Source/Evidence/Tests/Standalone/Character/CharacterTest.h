@@ -28,7 +28,7 @@ protected:
 	APlayerController* PlayerController;
 
 	UPROPERTY()
-	ABaseCharacter* BaseCharacter;
+	ABaseCharacter* TestCharacter;
 
 	void InjectInput(const UInputAction* Action, FVector Value);
 	
