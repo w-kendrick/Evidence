@@ -42,6 +42,11 @@ public:
 		Entries.Add(FSpectateeItem(Spectatee));
 	}
 
+	void AddEntry(const FSpectateeItem& Item)
+	{
+		Entries.Add(Item);
+	}
+
 	void RemoveEntry(APawn* const Spectatee)
 	{
 		int32 FoundIndex = -1;
@@ -64,6 +69,11 @@ public:
 	int32 GetNum() const
 	{
 		return Entries.Num();
+	}
+
+	void Empty()
+	{
+		Entries.Empty();
 	}
 
 private:
