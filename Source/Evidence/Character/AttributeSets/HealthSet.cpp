@@ -11,6 +11,7 @@ UHealthSet::UHealthSet()
 {
 	isAlive = true;
 	DeathEventTag = FGameplayTag::RequestGameplayTag("GameplayEvent.Death");
+	DamageImmunityTag = FGameplayTag::RequestGameplayTag("Gameplay.DamageImmunity");
 }
 
 void UHealthSet::Respawn()
@@ -32,12 +33,19 @@ void UHealthSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData&
 
 	if (Data.EvaluatedData.Attribute == GetDamageAttribute())
 	{
-		const float NewHealth = GetHealth() - GetDamage();
-		SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
-
-		if (GetHealth() == 0.0f && isAlive)
+		if (!Data.Target.HasMatchingGameplayTag(DamageImmunityTag))
 		{
-			DeathEvent(Data);
+			const float NewHealth = GetHealth() - GetDamage();
+			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
+
+			if (GetHealth() == 0.0f && isAlive)
+			{
+				DeathEvent(Data);
+			}
+		}
+		else
+		{
+			SetDamage(0.0f);
 		}
 	}
 }

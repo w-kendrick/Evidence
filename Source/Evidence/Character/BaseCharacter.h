@@ -22,6 +22,7 @@ class EVIDENCE_API ABaseCharacter : public AProneCharacter
 
 public:
 	ABaseCharacter(const FObjectInitializer& ObjectInitializer);
+	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
 	bool IsAlive() const;
@@ -68,4 +69,13 @@ private:
 	void MulticastSetLookRotation(FRotator Rotation);
 
 	FRotator LookRotation;
+
+	void OnMatchStateChanged(FName State);
+	void EnableDamageImmunity();
+	void DisableDamageImmunity();
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UGameplayEffect> DamageImmunityEffectClass;
+
+	FActiveGameplayEffectHandle DamageImmunityHandle;
 };
