@@ -53,4 +53,5 @@ private:
 
 	bool isAlive;
 	FGameplayTag DeathEventTag;
+	FGameplayTag DamageImmunityTag;
 };
