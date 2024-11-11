@@ -240,6 +240,7 @@ void ABaseCharacter::DisableDamageImmunity()
 	if (DamageImmunityHandle.IsValid())
 	{
 		AbilitySystemComponent->RemoveActiveGameplayEffect(DamageImmunityHandle);
+		DamageImmunityHandle.Invalidate();
 	}
 }
 
