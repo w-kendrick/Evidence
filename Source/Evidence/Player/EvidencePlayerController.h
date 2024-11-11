@@ -34,6 +34,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void SetInteractTimerState(const bool bState, const float Duration);
 
+	FOnSpectatingChanged OnSpectatingChanged;
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;

@@ -3,29 +3,63 @@
 
 #include "EvidenceHUD.h"
 #include "EvidenceOverlay.h"
-#include "GameFramework/PlayerController.h"
+#include "SpectatorOverlay.h"
+#include "Evidence/Player/EvidencePlayerController.h"
+#include "Evidence/Delegates.h"
 
 void AEvidenceHUD::BeginPlay()
 {
 	Super::BeginPlay();
-	AddOverlay();
+	AddEvidenceOverlay();
+	AddSpectatorOverlay();
+
+	OnSpectatingChanged(false);
+
+	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(GetOwningPlayerController());
+	if (EvidencePlayerController)
+	{
+		EvidencePlayerController->OnSpectatingChanged.AddUObject(this, &ThisClass::OnSpectatingChanged);
+	}
 }
 
-void AEvidenceHUD::AddOverlay()
+void AEvidenceHUD::AddEvidenceOverlay()
 {
 	if (Overlay)
 	{
 		return;
 	}
 
-	Overlay = CreateWidget<UEvidenceOverlay>(GetOwningPlayerController(), OverlayClass);
+	Overlay = CreateWidget<UEvidenceOverlay>(GetOwningPlayerController(), EvidenceOverlayClass);
 	if (Overlay)
 	{
 		Overlay->AddToViewport();
 	}
 }
 
-UEvidenceOverlay* AEvidenceHUD::GetOverlay() const
+void AEvidenceHUD::AddSpectatorOverlay()
 {
-	return Overlay;
+	if (SpectatorOverlay)
+	{
+		return;
+	}
+
+	SpectatorOverlay = CreateWidget<USpectatorOverlay>(GetOwningPlayerController(), SpectatorOverlayClass);
+	if (SpectatorOverlay)
+	{
+		SpectatorOverlay->AddToViewport();
+	}
+}
+
+void AEvidenceHUD::OnSpectatingChanged(bool bIsSpectating)
+{
+	if (bIsSpectating)
+	{
+		Overlay->SetVisibility(ESlateVisibility::Hidden);
+		SpectatorOverlay->SetVisibility(ESlateVisibility::Visible);
+	}
+	else
+	{
+		Overlay->SetVisibility(ESlateVisibility::Visible);
+		SpectatorOverlay->SetVisibility(ESlateVisibility::Hidden);
+	}
 }
