@@ -123,6 +123,7 @@ void AEvidencePlayerController::UpdateSpectatee()
 		const FSpectateeItem& Entry = CandidateSpectatees[SpectateIndex];
 		APawn* const SpectateePawn = Entry.GetSpectatee();
 
+		OnSpectateeChanged.Broadcast(SpectateePawn);
 		SetViewTarget(SpectateePawn);
 	}
 }

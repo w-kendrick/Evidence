@@ -28,6 +28,7 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArra
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpectatingChanged, bool)
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpectateeChanged, APawn*)
 DECLARE_DELEGATE_ThreeParams(FOnSetInteractWidgetVisibility, bool, float, FString)
 DECLARE_DELEGATE_TwoParams(FOnInteractTimerStateChanged, bool, float)
 DECLARE_DELEGATE_OneParam(FOnSetTerminalMenuVisibility, bool)
