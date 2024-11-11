@@ -68,6 +68,7 @@ void AEvidencePlayerController::SetInteractTimerState(const bool bState, const f
 void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool bInIsSpectating)
 {
 	bIsSpectating = bInIsSpectating;
+	OnSpectatingChanged.Broadcast(bIsSpectating);
 
 	if (bIsSpectating)
 	{
