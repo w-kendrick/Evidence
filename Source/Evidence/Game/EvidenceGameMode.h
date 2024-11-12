@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameMode.h"
 #include "Evidence/Structs/EquipmentToID.h"
+#include "Evidence/Save/EquipmentSaveData.h"
 #include "EvidenceGameMode.generated.h"
 
 class AEvidenceGameState;
@@ -63,6 +64,8 @@ private:
 	void FetchWorldGenerators();
 
 	void SaveGame();
+	void SaveLocker(UEvidenceSaveGame* const SaveGame) const;
+	void SaveEquipment(FEquipmentSaveData& EquipmentData, AEquipment* const Equipment) const;
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
 
