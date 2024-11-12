@@ -22,6 +22,7 @@ public:
 	void SetCash(const double& NewCash);
 	void AddPlayerSave(const FUniqueNetIdRepl ID, const FPlayerSave Save);
 	bool GetPlayerSave(const FUniqueNetIdRepl& ID, FPlayerSave& Save);
+	void AddLockerEquipment(const FEquipmentSaveData Save);
 
 	uint32 GetNight() const { return Night; }
 	float GetCash() const { return Cash; }
@@ -35,4 +36,7 @@ private:
 
 	UPROPERTY()
 	TMap<FUniqueNetIdRepl, FPlayerSave> PlayerSaves;
+
+	UPROPERTY()
+	TArray<FEquipmentSaveData> LockerEquipment;
 };

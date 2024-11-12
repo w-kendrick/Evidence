@@ -10,6 +10,7 @@
 #include "Evidence/Items/WorldGenerator.h"
 #include "Evidence/Evidence.h"
 #include "Evidence/Player/EvidencePlayerController.h"
+#include "Evidence/Hub/Locker.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -266,19 +267,7 @@ void AEvidenceGameMode::SaveGame()
 						AEquipment* const Equipment = EquipmentItem.GetEquipment();
 
 						FEquipmentSaveData EquipmentData;
-						EquipmentData.EquipmentID = GetEquipmentID(Equipment);
-
-						if (Equipment)
-						{
-							// Pass the array to fill with data from Actor
-							FMemoryWriter MemWriter(EquipmentData.ByteData);
-
-							FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
-							// Find only variables with UPROPERTY(SaveGame)
-							Ar.ArIsSaveGame = true;
-							// Converts Actor's SaveGame UPROPERTIES into binary array
-							Equipment->Serialize(Ar);
-						}
+						SaveEquipment(EquipmentData, Equipment);
 
 						PlayerSave.AddEquipment(EquipmentData);
 					}
@@ -287,9 +276,46 @@ void AEvidenceGameMode::SaveGame()
 				SaveGameInstance->AddPlayerSave(PlayerState->GetUniqueId(), PlayerSave);
 			}
 
+			SaveLocker(SaveGameInstance);
+
 			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
 			UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotNameString, 0, SavedDelegate);
 		}
+	}
+}
+
+void AEvidenceGameMode::SaveLocker(UEvidenceSaveGame* const SaveGame) const
+{
+	ALocker* const Locker = Cast<ALocker>(UGameplayStatics::GetActorOfClass(GetWorld(), ALocker::StaticClass()));
+
+	if (Locker)
+	{
+		const TArray<AEquipment*>& LockerStorage = Locker->GetStorage();
+
+		for (AEquipment* const Equipment : LockerStorage)
+		{
+			FEquipmentSaveData EquipmentData;
+			SaveEquipment(EquipmentData, Equipment);
+
+			SaveGame->AddLockerEquipment(EquipmentData);
+		}
+	}
+}
+
+void AEvidenceGameMode::SaveEquipment(FEquipmentSaveData& EquipmentData, AEquipment* const Equipment) const
+{
+	EquipmentData.EquipmentID = GetEquipmentID(Equipment);
+
+	if (Equipment)
+	{
+		// Pass the array to fill with data from Actor
+		FMemoryWriter MemWriter(EquipmentData.ByteData);
+
+		FObjectAndNameAsStringProxyArchive Ar(MemWriter, true);
+		// Find only variables with UPROPERTY(SaveGame)
+		Ar.ArIsSaveGame = true;
+		// Converts Actor's SaveGame UPROPERTIES into binary array
+		Equipment->Serialize(Ar);
 	}
 }
 

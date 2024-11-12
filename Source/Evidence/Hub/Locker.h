@@ -17,6 +17,8 @@ public:
 	ALocker();
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	const TArray<AEquipment*>& GetStorage() const { return Storage; }
+
 protected:
 	virtual void BeginPlay() override;
 
