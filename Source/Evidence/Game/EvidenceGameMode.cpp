@@ -371,12 +371,15 @@ void AEvidenceGameMode::LoadLocker() const
 	{
 		const TArray<FEquipmentSaveData>& LockerEquipment = EvidenceSaveGame->GetLockerEquipment();
 
-		for (uint8 Index = 0; Index < ALocker::STORAGE_CAPACITY; Index++)
+		uint8 Index = 0;
+		while (Index < ALocker::STORAGE_CAPACITY && Index < LockerEquipment.Num())
 		{
 			const FEquipmentSaveData& EquipmentSaveData = LockerEquipment[Index];
 
 			AEquipment* const NewEquipment = LoadEquipment(EquipmentSaveData);
 			Locker->SetLockerStorage(NewEquipment, Index);
+
+			Index++;
 		}
 	}
 }
