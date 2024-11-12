@@ -352,31 +352,59 @@ void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerControll
 		for (uint8 i = 0; i < PlayerSave.SavedEquipment.Num(); i++)
 		{
 			const FEquipmentSaveData& EquipmentData = PlayerSave.SavedEquipment[i];
-			const TSubclassOf<AEquipment>& EquipmentClass = GetEquipmentClass(EquipmentData.EquipmentID);
 
-			if (EquipmentClass)
-			{
-				FActorSpawnParameters Params;
-				Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-				AEquipment* const NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, DefaultTransform);
+			AEquipment* const NewEquipment = LoadEquipment(EquipmentData);
 
-				FMemoryReader MemReader(EquipmentData.ByteData);
-
-				FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
-				Ar.ArIsSaveGame = true;
-				// Convert binary array back into actor's variables
-				NewEquipment->Serialize(Ar);
-
-				Character->Pickup(NewEquipment, i);
-
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
-			}
-			else
-			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("No need to spawn null equipment"));
-			}
+			Character->Pickup(NewEquipment, i);
 		}
 	}
+}
+
+void AEvidenceGameMode::LoadLocker()
+{
+	ALocker* const Locker = Cast<ALocker>(UGameplayStatics::GetActorOfClass(GetWorld(), ALocker::StaticClass()));
+
+	if (Locker)
+	{
+		const TArray<FEquipmentSaveData>& LockerEquipment = EvidenceSaveGame->GetLockerEquipment();
+
+		for (uint8 Index = 0; Index < ALocker::STORAGE_CAPACITY; Index++)
+		{
+			const FEquipmentSaveData& EquipmentSaveData = LockerEquipment[Index];
+
+			AEquipment* const NewEquipment = LoadEquipment(EquipmentSaveData);
+			Locker->SetLockerStorage(NewEquipment, Index);
+		}
+	}
+}
+
+AEquipment* AEvidenceGameMode::LoadEquipment(const FEquipmentSaveData EquipmentSaveData) const
+{
+	AEquipment* NewEquipment = nullptr;
+
+	const TSubclassOf<AEquipment>& EquipmentClass = GetEquipmentClass(EquipmentSaveData.EquipmentID);
+
+	if (EquipmentClass)
+	{
+		FActorSpawnParameters Params;
+		Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		NewEquipment = GetWorld()->SpawnActor<AEquipment>(EquipmentClass, DefaultTransform);
+
+		FMemoryReader MemReader(EquipmentSaveData.ByteData);
+
+		FObjectAndNameAsStringProxyArchive Ar(MemReader, true);
+		Ar.ArIsSaveGame = true;
+		// Convert binary array back into actor's variables
+		NewEquipment->Serialize(Ar);
+
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("Spawned and reloaded ") + NewEquipment->GetEquipmentName());
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, FString("No need to spawn null equipment"));
+	}
+
+	return NewEquipment;
 }
 
 void AEvidenceGameMode::WipeSave()
@@ -414,6 +442,8 @@ void AEvidenceGameMode::OnLoadGameComplete(const FString& SlotName, const int32 
 		{
 			LoadPlayer(PlayerController);
 		}
+
+		LoadLocker();
 	}
 	else
 	{
