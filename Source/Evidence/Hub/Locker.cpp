@@ -17,6 +17,11 @@ void ALocker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	DOREPLIFETIME(ALocker, Storage);
 }
 
+void ALocker::SetLockerStorage(AEquipment* const Equipment, const uint8 Index)
+{
+	
+}
+
 void ALocker::BeginPlay()
 {
 	Super::BeginPlay();

@@ -17,7 +17,10 @@ public:
 	ALocker();
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
+	void SetLockerStorage(AEquipment* const Equipment, const uint8 Index);
 	const TArray<AEquipment*>& GetStorage() const { return Storage; }
+
+	static constexpr uint8 STORAGE_CAPACITY = 16U;
 
 protected:
 	virtual void BeginPlay() override;

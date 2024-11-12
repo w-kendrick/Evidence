@@ -26,6 +26,7 @@ public:
 
 	uint32 GetNight() const { return Night; }
 	float GetCash() const { return Cash; }
+	const TArray<FEquipmentSaveData>& GetLockerEquipment() const { return LockerEquipment; }
 
 private:
 	UPROPERTY()
