@@ -11,6 +11,7 @@
 #include "Evidence/Evidence.h"
 #include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Hub/Locker.h"
+#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -261,7 +262,7 @@ void AEvidenceGameMode::SaveGame()
 				if (ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerState->GetPlayerController()->GetPawn()))
 				{
 					const FEquipmentList& EquipmentList = Character->GetEquipmentList();
-					for (uint8 i = 0; i < INVENTORY_SIZE; i++)
+					for (uint8 i = 0; i < UInventoryManagerComponent::INVENTORY_SIZE; i++)
 					{
 						const FEquipmentItem& EquipmentItem = EquipmentList[i];
 						AEquipment* const Equipment = EquipmentItem.GetEquipment();
@@ -290,10 +291,12 @@ void AEvidenceGameMode::SaveLocker(UEvidenceSaveGame* const SaveGame) const
 
 	if (Locker)
 	{
-		const TArray<AEquipment*>& LockerStorage = Locker->GetStorage();
+		const FEquipmentList& LockerStorage = Locker->GetStorage();
 
-		for (AEquipment* const Equipment : LockerStorage)
+		for (uint8 Index = 0; Index < ALocker::STORAGE_CAPACITY; Index++)
 		{
+			AEquipment* const Equipment = LockerStorage[Index].GetEquipment();
+
 			FEquipmentSaveData EquipmentData;
 			SaveEquipment(EquipmentData, Equipment);
 

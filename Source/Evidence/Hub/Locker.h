@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Evidence/Structs/EquipmentList.h"
 #include "Locker.generated.h"
 
 class AEquipment;
@@ -18,7 +19,7 @@ public:
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
 	void SetLockerStorage(AEquipment* const Equipment, const uint8 Index);
-	const TArray<AEquipment*>& GetStorage() const { return Storage; }
+	const FEquipmentList& GetStorage() const { return Storage; }
 
 	static constexpr uint8 STORAGE_CAPACITY = 16U;
 
@@ -27,7 +28,7 @@ protected:
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Storage)
-	TArray<AEquipment*> Storage;
+	FEquipmentList Storage;
 
 	UFUNCTION()
 	void OnRep_Storage();
