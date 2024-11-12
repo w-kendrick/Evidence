@@ -67,8 +67,8 @@ private:
 	void SaveLocker(UEvidenceSaveGame* const SaveGame) const;
 	void SaveEquipment(FEquipmentSaveData& EquipmentData, AEquipment* const Equipment) const;
 	void LoadSelectedGame();
-	void LoadPlayer(const APlayerController* const PlayerController);
-	void LoadLocker();
+	void LoadPlayer(const APlayerController* const PlayerController) const;
+	void LoadLocker() const;
 	AEquipment* LoadEquipment(const FEquipmentSaveData EquipmentSaveData) const;
 
 	void TeamWipe();
