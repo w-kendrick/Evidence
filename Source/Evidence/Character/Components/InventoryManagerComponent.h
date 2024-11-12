@@ -17,6 +17,8 @@ enum class EUnequipType : uint8
 class AAmmunition;
 class ABaseCharacter;
 
+constexpr uint8 INVENTORY_SIZE = 8;
+
 /*
  Manages a character's stored equipment
 */

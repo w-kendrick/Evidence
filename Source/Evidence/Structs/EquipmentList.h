@@ -9,8 +9,6 @@
 #include "Evidence/Character/BaseCharacter.h"
 #include "EquipmentList.generated.h"
 
-constexpr uint8 INVENTORY_SIZE = 8;
-
 /*
 Manages list of equipment items
 */
@@ -21,15 +19,14 @@ struct FEquipmentList : public FFastArraySerializer
 
 public:
 	FEquipmentList()
-		: FEquipmentList(nullptr)
+		: FEquipmentList(0U)
 	{
-		
+
 	}
 
-	FEquipmentList(AActor* const OwningActor)
-		: OwningCharacter(Cast<ABaseCharacter>(OwningActor))
+	FEquipmentList(const uint8 SIZE)
 	{
-		Entries.SetNum(INVENTORY_SIZE);
+		Entries.SetNum(SIZE);
 	}
 
 	FEquipmentItem& operator[](int Index)
@@ -82,7 +79,4 @@ public:
 private:
 	UPROPERTY()
 	TArray<FEquipmentItem> Entries;
-
-	UPROPERTY()
-	ABaseCharacter* OwningCharacter;
 };
