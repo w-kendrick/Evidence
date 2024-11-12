@@ -6,7 +6,7 @@
 #include "Evidence/Items/Equipment/Ammunition/Ammunition.h"
 
 UInventoryManagerComponent::UInventoryManagerComponent()
-	: EquipmentList(GetOwner())
+	: EquipmentList(INVENTORY_SIZE)
 {
 	PrimaryComponentTick.bCanEverTick = false;
 	SetIsReplicatedByDefault(true);
