@@ -5,6 +5,7 @@
 #include "Net/UnrealNetwork.h"
 
 ALocker::ALocker()
+	: Storage(STORAGE_CAPACITY)
 {
 	PrimaryActorTick.bCanEverTick = false;
 	bReplicates = true;

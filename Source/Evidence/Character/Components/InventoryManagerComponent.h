@@ -17,8 +17,6 @@ enum class EUnequipType : uint8
 class AAmmunition;
 class ABaseCharacter;
 
-constexpr uint8 INVENTORY_SIZE = 8;
-
 /*
  Manages a character's stored equipment
 */
@@ -51,6 +49,8 @@ public:
 
 	void SetSelectedIndex(const uint8 Index);
 	uint8 GetSelectedIndex() const { return SelectedIndex; }
+
+	static constexpr uint8 INVENTORY_SIZE = 8;
 
 protected:
 	virtual void BeginPlay() override;
