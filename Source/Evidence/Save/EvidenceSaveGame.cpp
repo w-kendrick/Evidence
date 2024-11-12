@@ -37,3 +37,8 @@ bool UEvidenceSaveGame::GetPlayerSave(const FUniqueNetIdRepl& ID, FPlayerSave& S
 
 	return bFound;
 }
+
+void UEvidenceSaveGame::AddLockerEquipment(const FEquipmentSaveData Save)
+{
+	LockerEquipment.Add(Save);
+}
