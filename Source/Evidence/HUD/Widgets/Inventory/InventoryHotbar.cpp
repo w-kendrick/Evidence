@@ -43,7 +43,7 @@ void UInventoryHotbar::SetupDelegate(APawn* OldPawn, APawn* NewPawn)
 
 void UInventoryHotbar::InitializeSlots()
 {
-	for (uint8 Index = 0; Index < INVENTORY_SIZE; Index++)
+	for (uint8 Index = 0; Index < UInventoryManagerComponent::INVENTORY_SIZE; Index++)
 	{
 		UInventoryHotbarSlot* const InventorySlot = CreateWidget<UInventoryHotbarSlot>(this, SlotClass);
 		Hotbar->AddChild(InventorySlot);
@@ -53,7 +53,7 @@ void UInventoryHotbar::InitializeSlots()
 
 void UInventoryHotbar::OnInventoryChanged(FEquipmentList EquipmentList)
 {
-	for (uint8 Index = 0; Index < INVENTORY_SIZE; Index++)
+	for (uint8 Index = 0; Index < UInventoryManagerComponent::INVENTORY_SIZE; Index++)
 	{
 		const AEquipment* const Equipment = EquipmentList[Index].GetEquipment();
 		HotbarSlots[Index]->UpdateSlot(Equipment);
