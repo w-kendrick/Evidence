@@ -68,6 +68,8 @@ private:
 	void SaveEquipment(FEquipmentSaveData& EquipmentData, AEquipment* const Equipment) const;
 	void LoadSelectedGame();
 	void LoadPlayer(const APlayerController* const PlayerController);
+	void LoadLocker();
+	AEquipment* LoadEquipment(const FEquipmentSaveData EquipmentSaveData) const;
 
 	void TeamWipe();
 	void WipeSave();
