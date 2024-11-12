@@ -339,7 +339,7 @@ void AEvidenceGameMode::LoadSelectedGame()
 	}
 }
 
-void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerController)
+void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerController) const
 {
 	const FUniqueNetIdRepl& ID = PlayerController->PlayerState->GetUniqueId();
 	ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerController->GetPawn());
@@ -360,7 +360,7 @@ void AEvidenceGameMode::LoadPlayer(const APlayerController* const PlayerControll
 	}
 }
 
-void AEvidenceGameMode::LoadLocker()
+void AEvidenceGameMode::LoadLocker() const
 {
 	ALocker* const Locker = Cast<ALocker>(UGameplayStatics::GetActorOfClass(GetWorld(), ALocker::StaticClass()));
 
