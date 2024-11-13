@@ -3,15 +3,18 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "Evidence/HUD/Widgets/DisableInputWidget.h"
 #include "LockerWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API ULockerWidget : public UUserWidget
+class EVIDENCE_API ULockerWidget : public UDisableInputWidget
 {
 	GENERATED_BODY()
+
+protected:
+	void LeaveEvent() override;
 	
 };
