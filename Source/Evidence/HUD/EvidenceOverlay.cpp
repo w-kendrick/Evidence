@@ -8,18 +8,11 @@
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "Widgets/Terminal/TerminalMenu.h"
+#include "Widgets/Locker/LockerWidget.h"
 #include "Evidence/Game/EvidenceGameState.h"
 #include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Character/BaseCharacter.h"
-
-#include "Widgets/Terminal/TerminalMenu.h"
-#include "Widgets/Locker/LockerWidget.h"
-#include "Widgets/Inventory/InventoryHotbar.h"
-#include "Widgets/StaminaWidget.h"
-#include "Widgets/AmmoWidget.h"
-#include "Widgets/GunWidget.h"
-#include "Widgets/PowerWidget.h"
-#include "Widgets/PacketLossWidget.h"
 
 void UEvidenceOverlay::NativeConstruct()
 {
@@ -146,18 +139,4 @@ void UEvidenceOverlay::OnNightChanged(uint32 Night)
 void UEvidenceOverlay::OnCashChanged(float Cash)
 {
 	CashText->SetText(FText::FromString(FString("Cash: $") + FString::SanitizeFloat(Cash)));
-}
-
-void UEvidenceOverlay::SetCoreWidgetVisibility(const bool bVisibility)
-{
-	const ESlateVisibility NewVisibility = bVisibility ? ESlateVisibility::Visible : ESlateVisibility::Hidden;
-
-	NightText->SetVisibility(NewVisibility);
-	CashText->SetVisibility(NewVisibility);
-	StaminaWidget->SetVisibility(NewVisibility);
-	AmmoWidget->SetVisibility(NewVisibility);
-	GunWidget->SetVisibility(NewVisibility);
-	PowerWidget->SetVisibility(NewVisibility);
-	PacketLossWidget->SetVisibility(NewVisibility);
-	InventoryHotbar->SetVisibility(NewVisibility);
 }
