@@ -30,7 +30,6 @@ DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
 DECLARE_DELEGATE_ThreeParams(FOnSetInteractWidgetVisibility, bool, float, FString)
 DECLARE_DELEGATE_TwoParams(FOnInteractTimerStateChanged, bool, float)
 DECLARE_DELEGATE_OneParam(FOnSetTerminalMenuVisibility, bool)
-DECLARE_DELEGATE_OneParam(FOnSetAttachmentWidgetVisibility, bool)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnNightChanged, uint32)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnCashChanged, float)

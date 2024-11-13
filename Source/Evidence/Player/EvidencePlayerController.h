@@ -25,9 +25,6 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
-	UFUNCTION(Client, Reliable)
-	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
-
 	UFUNCTION(BlueprintCallable)
 	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
 
@@ -35,7 +32,6 @@ public:
 	void SetInteractTimerState(const bool bState, const float Duration);
 
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
-	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 	FOnInteractTimerStateChanged OnInteractTimerStateChanged;
 	
