@@ -56,51 +56,19 @@ void AHub::BeginPlay()
 	}
 }
 
-void AHub::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void AHub::OnInteract()
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
-
-	DOREPLIFETIME(AHub, Interactor);
-}
-
-bool AHub::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
-{
-	return !Interactor;
-}
-
-void AHub::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
-{
-	if (HasAuthority())
+	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());
+	if (EvidencePlayerController)
 	{
-		ABaseCharacter* const Char = Cast<ABaseCharacter>(InteractingActor);
-		if (Char)
-		{
-			Interactor = Char;
-
-			AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(Interactor->GetController());
-			if (EPC)
-			{
-				SetOwner(InteractingActor);
-				EPC->ClientSetTerminalMenuVisibility(true);
-			}
-		}
+		SetOwner(Interactor);
+		EvidencePlayerController->ClientSetTerminalMenuVisibility(true);
 	}
 }
 
 FString AHub::GetInteractionString_Implementation()
 {
 	return FString("Use terminal");
-}
-
-void AHub::RelinquishTerminal()
-{
-	ServerRelinquishTerminal();
-}
-
-void AHub::ServerRelinquishTerminal_Implementation()
-{
-	Interactor = nullptr;
-	SetOwner(nullptr);
 }
 
 void AHub::CreateInitialSpawns()
