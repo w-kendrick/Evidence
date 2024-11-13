@@ -25,9 +25,6 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
-	UFUNCTION(Client, Reliable)
-	void ClientSetAttachmentWidgetVisibility(const bool bVisibility);
-
 	UFUNCTION(BlueprintCallable)
 	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
 
@@ -37,7 +34,6 @@ public:
 	FOnSpectatingChanged OnSpectatingChanged;
 	FOnSpectateeChanged OnSpectateeChanged;
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
-	FOnSetAttachmentWidgetVisibility OnSetAttachmentWidgetVisibility;
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 	FOnInteractTimerStateChanged OnInteractTimerStateChanged;
 	
