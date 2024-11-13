@@ -40,7 +40,7 @@ void ALocker::OnInteract()
 	if (EvidencePlayerController)
 	{
 		SetOwner(Interactor);
-		//EvidencePlayerController->ClientSetTerminalMenuVisibility(true);
+		EvidencePlayerController->ClientSetLockerWidgetVisibility(true);
 	}
 }
 

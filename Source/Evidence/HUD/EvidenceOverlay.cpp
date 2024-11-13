@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Widgets/Terminal/TerminalMenu.h"
+#include "Widgets/Locker/LockerWidget.h"
 #include "Evidence/Game/EvidenceGameState.h"
 #include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Character/BaseCharacter.h"
@@ -20,6 +21,7 @@ void UEvidenceOverlay::NativeConstruct()
 	AEvidencePlayerController* const EPC = Cast<AEvidencePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 	if (EPC)
 	{
+		EPC->OnSetLockerWidgetVisibility.BindUObject(this, &ThisClass::SetLockerWidgetVisibility);
 		EPC->OnSetTerminalMenuVisibility.BindUObject(this, &ThisClass::SetTerminalMenuVisibility);
 		EPC->OnSetInteractWidgetVisibility.BindUObject(this, &ThisClass::SetInteractPromptVisibility);
 		EPC->OnInteractTimerStateChanged.BindUObject(this, &ThisClass::SetInteractTimerState);
@@ -33,6 +35,7 @@ void UEvidenceOverlay::NativeConstruct()
 	}
 
 	TerminalMenu->SetVisibility(ESlateVisibility::Hidden);
+	LockerWidget->SetVisibility(ESlateVisibility::Hidden);
 }
 
 void UEvidenceOverlay::ShowInteractPrompt(const float Duration, const FString DisplayString)
@@ -113,6 +116,18 @@ void UEvidenceOverlay::SetTerminalMenuVisibility(bool bVisibility)
 	else
 	{
 		TerminalMenu->Disable();
+	}
+}
+
+void UEvidenceOverlay::SetLockerWidgetVisibility(bool bVisibility)
+{
+	if (bVisibility)
+	{
+		LockerWidget->Enable();
+	}
+	else
+	{
+		LockerWidget->Disable();
 	}
 }
 

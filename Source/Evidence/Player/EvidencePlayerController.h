@@ -25,12 +25,16 @@ public:
 	UFUNCTION(Client, Reliable)
 	void ClientSetTerminalMenuVisibility(const bool bVisibility);
 
+	UFUNCTION(Client, Reliable)
+	void ClientSetLockerWidgetVisibility(const bool bVisibility);
+
 	UFUNCTION(BlueprintCallable)
 	void SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString);
 
 	UFUNCTION(BlueprintCallable)
 	void SetInteractTimerState(const bool bState, const float Duration);
 
+	FOnSetLockerWidgetVisibility OnSetLockerWidgetVisibility;
 	FOnSpectatingChanged OnSpectatingChanged;
 	FOnSpectateeChanged OnSpectateeChanged;
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;

@@ -48,6 +48,11 @@ void AEvidencePlayerController::ClientSetTerminalMenuVisibility_Implementation(c
 	OnSetTerminalMenuVisibility.ExecuteIfBound(bVisibility);
 }
 
+void AEvidencePlayerController::ClientSetLockerWidgetVisibility_Implementation(const bool bVisibility)
+{
+	OnSetLockerWidgetVisibility.ExecuteIfBound(bVisibility);
+}
+
 void AEvidencePlayerController::SetInteractWidgetVisibility(const bool bVisibility, const float Duration, const FString& DisplayString)
 {
 	OnSetInteractWidgetVisibility.ExecuteIfBound(bVisibility, Duration, DisplayString);

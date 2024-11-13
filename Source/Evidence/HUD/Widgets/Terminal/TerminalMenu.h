@@ -15,11 +15,11 @@ class EVIDENCE_API UTerminalMenu : public UDisableInputWidget
 	GENERATED_BODY()
 
 public:
-	virtual void Disable() override;
+	void Disable() override;
 
 protected:
 	void NativeConstruct() override;
-	virtual void LeaveEvent() override;
+	void LeaveEvent() override;
 
 	UPROPERTY(meta = (BindWidget))
 	UButton* ShopButton;

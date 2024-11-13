@@ -7,7 +7,7 @@
 #include "EvidenceOverlay.generated.h"
 
 class UTerminalMenu;
-class UAttachmentBenchWidget;
+class ULockerWidget;
 
 UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
@@ -52,6 +52,9 @@ protected:
 	UTerminalMenu* TerminalMenu;
 
 	UPROPERTY(meta = (BindWidget))
+	ULockerWidget* LockerWidget;
+
+	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* NightText;
 
 	UPROPERTY(meta = (BindWidget))
@@ -61,6 +64,7 @@ protected:
 	void OnCashChanged(float Cash);
 
 	void SetTerminalMenuVisibility(bool bVisibility);
+	void SetLockerWidgetVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 	void SetInteractTimerState(bool bState, float Duration);
 };
