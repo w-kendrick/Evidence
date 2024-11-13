@@ -4,6 +4,7 @@
 #include "Locker.h"
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Evidence.h"
+#include "Evidence/Player/EvidencePlayerController.h"
 
 ALocker::ALocker()
 	: Storage(STORAGE_CAPACITY)
@@ -23,15 +24,6 @@ void ALocker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeP
 	DOREPLIFETIME(ALocker, Storage);
 }
 
-bool ALocker::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
-{
-	return true;
-}
-
-void ALocker::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
-{
-}
-
 FString ALocker::GetInteractionString_Implementation()
 {
 	return FString("Locker");
@@ -40,6 +32,16 @@ FString ALocker::GetInteractionString_Implementation()
 void ALocker::SetLockerStorage(AEquipment* const Equipment, const uint8 Index)
 {
 	Storage.AddEntry(Equipment, Index);
+}
+
+void ALocker::OnInteract()
+{
+	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());
+	if (EvidencePlayerController)
+	{
+		SetOwner(Interactor);
+		//EvidencePlayerController->ClientSetTerminalMenuVisibility(true);
+	}
 }
 
 void ALocker::OnRep_Storage()

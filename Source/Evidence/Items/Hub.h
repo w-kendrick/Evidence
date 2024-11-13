@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Evidence/Structs/SpawnInfo.h"
 #include "Evidence/Structs/ShopItem.h"
-#include "Evidence/Interfaces/Interactable.h"
+#include "Evidence/Hub/SingleUserInteractable.h"
 #include "Hub.generated.h"
 
 class AEquipment;
@@ -21,18 +21,14 @@ class UStaticMeshComponent;
 class ABaseCharacter;
 	
 UCLASS()
-class EVIDENCE_API AHub : public AActor, public IInteractable
+class EVIDENCE_API AHub : public ASingleUserInteractable
 {
 	GENERATED_BODY()
 	
 public:	
 	AHub();
 
-	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
-	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
-	virtual FString GetInteractionString_Implementation() override;
-
-	void RelinquishTerminal();
+	FString GetInteractionString_Implementation() override;
 
 	UFUNCTION(Server, Reliable)
 	void ServerPurchaseEquipment(const FShopItem& Item);
@@ -41,8 +37,8 @@ public:
 	FORCEINLINE TArray<FShopItem> GetShopItems() const { return ShopItems; }
 
 protected:
-	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	void BeginPlay() override;
+	void OnInteract() override;
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FSpawnInfo> InitialSpawns;
@@ -62,12 +58,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	TArray<FShopItem> ShopItems;
-
-	UPROPERTY(Replicated)
-	ABaseCharacter* Interactor;
-
-	UFUNCTION(Server, Reliable)
-	void ServerRelinquishTerminal();
 
 private:
 	void CreateInitialSpawns();

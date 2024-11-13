@@ -5,14 +5,14 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Evidence/Structs/EquipmentList.h"
-#include "Evidence/Interfaces/Interactable.h"
+#include "Evidence/Hub/SingleUserInteractable.h"
 #include "Locker.generated.h"
 
 class AEquipment;
 class UStaticMeshComponent;
 
 UCLASS()
-class EVIDENCE_API ALocker : public AActor, public IInteractable
+class EVIDENCE_API ALocker : public ASingleUserInteractable
 {
 	GENERATED_BODY()
 	
@@ -20,8 +20,6 @@ public:
 	ALocker();
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
-	void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 	FString GetInteractionString_Implementation() override;
 
 	void SetLockerStorage(AEquipment* const Equipment, const uint8 Index);
@@ -32,6 +30,8 @@ public:
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* MeshComponent;
+
+	void OnInteract() override;
 
 private:
 	UPROPERTY(ReplicatedUsing = OnRep_Storage)
