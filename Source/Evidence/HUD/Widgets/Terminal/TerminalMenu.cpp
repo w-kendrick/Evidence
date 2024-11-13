@@ -26,7 +26,7 @@ void UTerminalMenu::LeaveEvent()
 		AHub* const Hub = EGS->GetHub();
 		if (Hub)
 		{
-			Hub->RelinquishTerminal();
+			Hub->Relinquish();
 		}
 	}
 
