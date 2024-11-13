@@ -8,6 +8,16 @@
 
 class UTerminalMenu;
 class ULockerWidget;
+class UTextBlock;
+class UProgressBar;
+class UWidgetSwitcher;
+class UCanvasPanel;
+class UStaminaWidget;
+class UAmmoWidget;
+class UPowerWidget;
+class UGunWidget;
+class UPacketLossWidget;
+class UInventoryHotbar;
 
 UCLASS()
 class EVIDENCE_API UEvidenceOverlay : public UUserWidget
@@ -15,26 +25,26 @@ class EVIDENCE_API UEvidenceOverlay : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 	void ShowInteractPrompt(const float Duration, const FString DisplayString);
 	void HideInteractPrompt();
 	void StartInteractionTimer(const float Duration);
 	void StopInteractionTimer();
 
 	UPROPERTY(meta = (BindWidget))
-	class UCanvasPanel* InteractCanvas;
+	UCanvasPanel* InteractCanvas;
 
 	UPROPERTY(meta = (BindWidget))
-	class UWidgetSwitcher* InteractSwitcher;
+	UWidgetSwitcher* InteractSwitcher;
 
 	UPROPERTY(meta = (BindWidget))
-	class UProgressBar* InteractBar;
+	UProgressBar* InteractBar;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* InstantInteractText;
+	UTextBlock* InstantInteractText;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* DurationInteractText;
+	UTextBlock* DurationInteractText;
 
 	float CurrentInteractionTime;
 	float InteractionDuration;
@@ -55,11 +65,30 @@ protected:
 	ULockerWidget* LockerWidget;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* NightText;
+	UTextBlock* NightText;
 
 	UPROPERTY(meta = (BindWidget))
-	class UTextBlock* CashText;
+	UTextBlock* CashText;
 
+	UPROPERTY(meta = (BindWidget))
+	UStaminaWidget* StaminaWidget;
+
+	UPROPERTY(meta = (BindWidget))
+	UAmmoWidget* AmmoWidget;
+
+	UPROPERTY(meta = (BindWidget))
+	UPowerWidget* PowerWidget;
+
+	UPROPERTY(meta = (BindWidget))
+	UGunWidget* GunWidget;
+
+	UPROPERTY(meta = (BindWidget))
+	UPacketLossWidget* PacketLossWidget;
+
+	UPROPERTY(meta = (BindWidget))
+	UInventoryHotbar* InventoryHotbar;
+
+private:
 	void OnNightChanged(uint32 Night);
 	void OnCashChanged(float Cash);
 
@@ -67,4 +96,6 @@ protected:
 	void SetLockerWidgetVisibility(bool bVisibility);
 	void SetInteractPromptVisibility(bool bVisibility, float Duration, FString DisplayString);
 	void SetInteractTimerState(bool bState, float Duration);
+
+	void SetCoreWidgetVisibility(const bool bVisibility);
 };
