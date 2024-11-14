@@ -7,6 +7,7 @@
 #include "InventoryHotbarSlot.generated.h"
 
 class AEquipment;
+class UInventoryManagerComponent;
 
 /**
  * 
@@ -17,16 +18,23 @@ class EVIDENCE_API UInventoryHotbarSlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	void SetIndex(const uint8 Index);
+
 	void UpdateSlot(const AEquipment* const Equipment);
 
 	void SelectSlot(const bool Status);
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 	
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* NameText;
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* SelectedBorder;
+
+	UPROPERTY()
+	UInventoryManagerComponent* InventoryComponent;
+
+	uint8 InventoryIndex;
 };
