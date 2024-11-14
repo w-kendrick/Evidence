@@ -22,7 +22,8 @@ public:
 
 	FString GetInteractionString_Implementation() override;
 
-	void SetLockerStorage(AEquipment* const Equipment, const uint8 Index);
+	void SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index);
+	AEquipment* GetEquipmentAtIndex(const uint8 Index) const;
 	const FEquipmentList& GetStorage() const { return Storage; }
 
 	static constexpr uint8 STORAGE_CAPACITY = 16U;
