@@ -29,9 +29,14 @@ FString ALocker::GetInteractionString_Implementation()
 	return FString("Locker");
 }
 
-void ALocker::SetLockerStorage(AEquipment* const Equipment, const uint8 Index)
+void ALocker::SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index)
 {
 	Storage.AddEntry(Equipment, Index);
+}
+
+AEquipment* ALocker::GetEquipmentAtIndex(const uint8 Index) const
+{
+	return Storage[Index].GetEquipment();
 }
 
 void ALocker::OnInteract()
