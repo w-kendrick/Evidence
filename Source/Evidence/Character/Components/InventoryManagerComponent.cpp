@@ -56,7 +56,7 @@ const FEquipmentList& UInventoryManagerComponent::GetInventory() const
 
 AEquipment* UInventoryManagerComponent::GetEquipmentAtIndex(const uint8 Index) const
 {
-	return EquipmentList[Index].GetEquipment();;
+	return EquipmentList[Index].GetEquipment();
 }
 
 AEquipment* UInventoryManagerComponent::GetEquipped() const
