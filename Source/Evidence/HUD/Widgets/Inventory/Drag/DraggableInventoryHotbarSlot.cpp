@@ -23,7 +23,7 @@ void UDraggableInventoryHotbarSlot::NativeOnDragDetected(const FGeometry& InGeom
 	UInventorySlotDragPreview* DragPreview = CreateWidget<UInventorySlotDragPreview>(this, DragPreviewClass);
 	DragPreview->SetIndex(InventoryIndex);
 	DragPreview->SetInventoryComponent(InventoryComponent);
-	DragPreview->SetColour(FColor::Black);
+	DragPreview->SetColour(FColor::White);
 
 	UInventorySlotDragDropOperation* DragOperation = Cast<UInventorySlotDragDropOperation>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragOperationClass));
 	DragOperation->DefaultDragVisual = DragPreview;
