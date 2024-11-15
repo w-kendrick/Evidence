@@ -44,12 +44,12 @@ void ULockerWidget::InitializeSlots()
 		if (Index % 8 == 0)
 		{
 			CurrentRow = WidgetTree->ConstructWidget<UHorizontalBox>(UHorizontalBox::StaticClass());
-			LockerSlots->AddChild(CurrentRow);
+			LockerRows->AddChild(CurrentRow);
 		}
 		ULockerSlotWidget* const LockerSlot = CreateWidget<ULockerSlotWidget>(this, SlotClass);
 		LockerSlot->SetIndex(Index);
 		CurrentRow->AddChild(LockerSlot);
-		HotbarSlots.Add(LockerSlot);
+		LockerSlots.Add(LockerSlot);
 	}
 }
 
@@ -58,6 +58,6 @@ void ULockerWidget::OnLockerStorageChanged(const FEquipmentList& EquipmentList)
 	for (uint8 Index = 0; Index < ALocker::STORAGE_CAPACITY; Index++)
 	{
 		const AEquipment* const Equipment = EquipmentList[Index].GetEquipment();
-		HotbarSlots[Index]->UpdateSlot(Equipment);
+		LockerSlots[Index]->UpdateSlot(Equipment);
 	}
 }
