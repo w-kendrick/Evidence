@@ -7,6 +7,7 @@
 #include "LockerSlotDragDropOperation.generated.h"
 
 class ALocker;
+class ULockerSlotWidget;
 
 /**
  * Stores information of locker slot that is dragged and dropped
@@ -17,14 +18,18 @@ class EVIDENCE_API ULockerSlotDragDropOperation : public UDragDropOperation
 	GENERATED_BODY()
 
 public:
-	void SpawnInitialize(const uint8 NewIndex, ALocker* NewLocker);
+	void SpawnInitialize(const uint8 NewIndex, ALocker* NewLocker, ULockerSlotWidget* Source);
 	uint8 GetIndex() const { return Index; }
 	ALocker* GetLocker() const { return Locker; }
+	ULockerSlotWidget* GetWidgetSource() const { return WidgetSource; }
 
 protected:
 	uint8 Index;
 
 	UPROPERTY()
 	ALocker* Locker;
+
+	UPROPERTY()
+	ULockerSlotWidget* WidgetSource;
 	
 };

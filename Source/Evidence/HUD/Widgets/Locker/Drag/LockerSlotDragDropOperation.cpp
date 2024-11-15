@@ -3,8 +3,9 @@
 
 #include "LockerSlotDragDropOperation.h"
 
-void ULockerSlotDragDropOperation::SpawnInitialize(const uint8 NewIndex, ALocker* NewLocker)
+void ULockerSlotDragDropOperation::SpawnInitialize(const uint8 NewIndex, ALocker* NewLocker, ULockerSlotWidget* Source)
 {
 	Index = NewIndex;
 	Locker = NewLocker;
+	WidgetSource = Source;
 }

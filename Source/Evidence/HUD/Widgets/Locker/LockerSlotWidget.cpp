@@ -40,7 +40,7 @@ void ULockerSlotWidget::NativeOnDragDetected(const FGeometry& InGeometry, const 
 	ULockerSlotDragDropOperation* DragOperation = Cast<ULockerSlotDragDropOperation>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragOperationClass));
 	DragOperation->DefaultDragVisual = DragPreview;
 	DragOperation->Pivot = EDragPivot::MouseDown;
-	DragOperation->SpawnInitialize(StorageIndex, Locker);
+	DragOperation->SpawnInitialize(StorageIndex, Locker, this);
 
 	OutOperation = DragOperation;
 
