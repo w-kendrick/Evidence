@@ -36,6 +36,6 @@ private:
 	void InitializeSlots();
 
 	void OnInventoryChanged(FEquipmentList EquipmentList);
-	void OnEquippedIndexChanged(uint8 SelectedIndex, uint8 PrevIndex);
+	virtual void OnEquippedIndexChanged(uint8 SelectedIndex, uint8 PrevIndex);
 	
 };
