@@ -6,6 +6,8 @@
 #include "InventorySlotDragPreview.h"
 #include "InventorySlotDragDropOperation.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "Evidence/HUD/Widgets/Locker/Drag/LockerSlotDragDropOperation.h"
+#include "Evidence/HUD/Widgets/Locker/LockerSlotWidget.h"
 
 FReply UDraggableInventoryHotbarSlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
@@ -40,4 +42,22 @@ void UDraggableInventoryHotbarSlot::NativeOnDragCancelled(const FDragDropEvent& 
 	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
 
 	SetVisibility(ESlateVisibility::Visible);
+}
+
+bool UDraggableInventoryHotbarSlot::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	ULockerSlotDragDropOperation* const LockerSlotDragDropOperation = Cast<ULockerSlotDragDropOperation>(InOperation);
+
+	if (!LockerSlotDragDropOperation)
+	{
+		return false;
+	}
+
+	const uint8 Index = LockerSlotDragDropOperation->GetIndex();
+	ULockerSlotWidget* const WidgetSource = LockerSlotDragDropOperation->GetWidgetSource();
+	WidgetSource->SetVisibility(ESlateVisibility::Visible);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Swap Locker: ") + FString::FromInt(Index) + FString(" / Inventory: ") + FString::FromInt(InventoryIndex));
+
+	return true;
 }
