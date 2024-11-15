@@ -47,6 +47,11 @@ AEquipment* ALocker::GetEquipmentAtIndex(const uint8 Index) const
 	return Storage[Index].GetEquipment();
 }
 
+void ALocker::Remove(const uint8 Index)
+{
+	Storage.RemoveEntry(Index);
+}
+
 void ALocker::OnInteract()
 {
 	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());
