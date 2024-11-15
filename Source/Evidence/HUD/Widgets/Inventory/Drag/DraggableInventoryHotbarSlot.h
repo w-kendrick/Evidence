@@ -31,5 +31,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;
-	
+
+private:
+	void PerformSwap(const uint8 InventorySlot, const uint8 LockerSlot);
 };
