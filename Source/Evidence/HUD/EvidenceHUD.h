@@ -6,6 +6,9 @@
 #include "GameFramework/HUD.h"
 #include "EvidenceHUD.generated.h"
 
+class UEvidenceOverlay;
+class USpectatorOverlay;
+
 /**
  * 
  */
@@ -15,16 +18,25 @@ class EVIDENCE_API AEvidenceHUD : public AHUD
 	GENERATED_BODY()
 
 protected:
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<class UEvidenceOverlay> OverlayClass;
+	TSubclassOf<UEvidenceOverlay> EvidenceOverlayClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<USpectatorOverlay> SpectatorOverlayClass;
 
 	UPROPERTY()
 	UEvidenceOverlay* Overlay;
 
+	UPROPERTY()
+	USpectatorOverlay* SpectatorOverlay;
+
 public:
-	UEvidenceOverlay* GetOverlay() const;
-	void AddOverlay();
+	void AddEvidenceOverlay();
+	void AddSpectatorOverlay();
+
+private:
+	void OnSpectatingChanged(bool bIsSpectating);
 	
 };

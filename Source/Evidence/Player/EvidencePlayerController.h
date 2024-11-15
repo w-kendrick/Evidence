@@ -35,6 +35,8 @@ public:
 	void SetInteractTimerState(const bool bState, const float Duration);
 
 	FOnSetLockerWidgetVisibility OnSetLockerWidgetVisibility;
+	FOnSpectatingChanged OnSpectatingChanged;
+	FOnSpectateeChanged OnSpectateeChanged;
 	FOnSetTerminalMenuVisibility OnSetTerminalMenuVisibility;
 	FOnSetInteractWidgetVisibility OnSetInteractWidgetVisibility;
 	FOnInteractTimerStateChanged OnInteractTimerStateChanged;

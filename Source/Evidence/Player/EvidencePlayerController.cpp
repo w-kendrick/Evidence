@@ -68,6 +68,7 @@ void AEvidencePlayerController::SetInteractTimerState(const bool bState, const f
 void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool bInIsSpectating)
 {
 	bIsSpectating = bInIsSpectating;
+	OnSpectatingChanged.Broadcast(bIsSpectating);
 
 	if (bIsSpectating)
 	{
@@ -122,6 +123,7 @@ void AEvidencePlayerController::UpdateSpectatee()
 		const FSpectateeItem& Entry = CandidateSpectatees[SpectateIndex];
 		APawn* const SpectateePawn = Entry.GetSpectatee();
 
+		OnSpectateeChanged.Broadcast(SpectateePawn);
 		SetViewTarget(SpectateePawn);
 	}
 }
