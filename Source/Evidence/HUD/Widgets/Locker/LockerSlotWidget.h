@@ -48,5 +48,7 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 	TSubclassOf<ULockerSlotDragDropOperation> DragOperationClass;
+
+	void PerformSwap(const uint8 InventorySlot, const uint8 LockerSlot);
 	
 };

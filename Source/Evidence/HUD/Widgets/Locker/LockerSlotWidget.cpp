@@ -11,6 +11,7 @@
 #include "Evidence/HUD/Widgets/Locker/Drag/LockerSlotDragDropOperation.h"
 #include "Evidence/HUD/Widgets/Inventory/Drag/InventorySlotDragDropOperation.h"
 #include "Evidence/HUD/Widgets/Inventory/Drag/DraggableInventoryHotbarSlot.h"
+#include "AbilitySystemBlueprintLibrary.h"
 
 void ULockerSlotWidget::NativeConstruct()
 {
@@ -69,9 +70,25 @@ bool ULockerSlotWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDro
 	UDraggableInventoryHotbarSlot* const WidgetSource = InventorySlotDragDropOperation->GetWidgetSource();
 	WidgetSource->SetVisibility(ESlateVisibility::Visible);
 
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Swap Locker: ") + FString::FromInt(StorageIndex) + FString(" / Inventory: ") + FString::FromInt(Index));
+	PerformSwap(Index, StorageIndex);
 
 	return true;
+}
+
+void ULockerSlotWidget::PerformSwap(const uint8 InventorySlot, const uint8 LockerSlot)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Swap Locker: ") + FString::FromInt(LockerSlot) + FString(" / Inventory: ") + FString::FromInt(InventorySlot));
+
+	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
+	Data->HitResult.FaceIndex = InventorySlot;
+	Data->HitResult.ElementIndex = LockerSlot;
+
+	FGameplayAbilityTargetDataHandle Handle;
+	Handle.Add(Data);
+
+	FGameplayEventData Payload;
+	Payload.TargetData = Handle;
+	UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(GetOwningPlayerPawn(), FGameplayTag::RequestGameplayTag(FName(TEXT("GameplayEvent.LockerSwap"))), Payload);
 }
 
 void ULockerSlotWidget::SetIndex(const uint8 NewIndex)
