@@ -31,6 +31,8 @@ public:
 	FOnLockerStorageChanged OnLockerStorageChanged;
 
 protected:
+	void BeginPlay() override;
+
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* MeshComponent;
 
