@@ -31,4 +31,13 @@ void UDraggableInventoryHotbarSlot::NativeOnDragDetected(const FGeometry& InGeom
 	DragOperation->SpawnInitialize(InventoryIndex, InventoryComponent);
 
 	OutOperation = DragOperation;
+
+	SetVisibility(ESlateVisibility::Hidden);
+}
+
+void UDraggableInventoryHotbarSlot::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
+
+	SetVisibility(ESlateVisibility::Visible);
 }
