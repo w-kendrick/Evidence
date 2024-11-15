@@ -30,9 +30,9 @@ private:
 	TSubclassOf<ULockerSlotWidget> SlotClass;
 
 	UPROPERTY()
-	TArray<ULockerSlotWidget*> HotbarSlots;
+	TArray<ULockerSlotWidget*> LockerSlots;
 
 	UPROPERTY(meta = (BindWidget))
-	UVerticalBox* LockerSlots;
+	UVerticalBox* LockerRows;
 	
 };
