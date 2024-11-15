@@ -17,11 +17,7 @@ class EVIDENCE_API UDraggableInventoryHotbarSlot : public UInventoryHotbarSlot
 {
 	GENERATED_BODY()
 
-public:
-	void SetIndex(const uint8 Index);
-
 protected:
-	void NativeConstruct() override;
 	FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
 	void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
 
@@ -33,10 +29,5 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;
-
-	UPROPERTY()
-	UInventoryManagerComponent* InventoryComponent;
-
-	uint8 InventoryIndex;
 	
 };
