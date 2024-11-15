@@ -6,6 +6,10 @@
 #include "Evidence/HUD/Widgets/DisableInputWidget.h"
 #include "LockerWidget.generated.h"
 
+struct FEquipmentList;
+class ULockerSlotWidget;
+class UVerticalBox;
+
 /**
  * 
  */
@@ -15,6 +19,20 @@ class EVIDENCE_API ULockerWidget : public UDisableInputWidget
 	GENERATED_BODY()
 
 protected:
+	void NativeConstruct() override;
 	void LeaveEvent() override;
+
+private:
+	void InitializeSlots();
+	void OnLockerStorageChanged(const FEquipmentList& EquipmentList);
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ULockerSlotWidget> SlotClass;
+
+	UPROPERTY()
+	TArray<ULockerSlotWidget*> HotbarSlots;
+
+	UPROPERTY(meta = (BindWidget))
+	UVerticalBox* LockerSlots;
 	
 };
