@@ -24,6 +24,7 @@ public:
 
 	void SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index);
 	AEquipment* GetEquipmentAtIndex(const uint8 Index) const;
+	void Remove(const uint8 Index);
 	const FEquipmentList& GetStorage() const { return Storage; }
 
 	static constexpr uint8 STORAGE_CAPACITY = 16U;
