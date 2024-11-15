@@ -9,6 +9,8 @@
 #include "Evidence/Hub/Locker.h"
 #include "Evidence/HUD/Widgets/Locker/Drag/LockerSlotDragPreview.h"
 #include "Evidence/HUD/Widgets/Locker/Drag/LockerSlotDragDropOperation.h"
+#include "Evidence/HUD/Widgets/Inventory/Drag/InventorySlotDragDropOperation.h"
+#include "Evidence/HUD/Widgets/Inventory/Drag/DraggableInventoryHotbarSlot.h"
 
 void ULockerSlotWidget::NativeConstruct()
 {
@@ -52,6 +54,24 @@ void ULockerSlotWidget::NativeOnDragCancelled(const FDragDropEvent& InDragDropEv
 	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
 
 	SetVisibility(ESlateVisibility::Visible);
+}
+
+bool ULockerSlotWidget::NativeOnDrop(const FGeometry& InGeometry, const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	UInventorySlotDragDropOperation* const InventorySlotDragDropOperation = Cast<UInventorySlotDragDropOperation>(InOperation);
+
+	if (!InventorySlotDragDropOperation)
+	{
+		return false;
+	}
+
+	const uint8 Index = InventorySlotDragDropOperation->GetIndex();
+	UDraggableInventoryHotbarSlot* const WidgetSource = InventorySlotDragDropOperation->GetWidgetSource();
+	WidgetSource->SetVisibility(ESlateVisibility::Visible);
+
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Swap Locker: ") + FString::FromInt(StorageIndex) + FString(" / Inventory: ") + FString::FromInt(Index));
+
+	return true;
 }
 
 void ULockerSlotWidget::SetIndex(const uint8 NewIndex)

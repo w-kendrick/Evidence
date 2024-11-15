@@ -30,7 +30,7 @@ void UDraggableInventoryHotbarSlot::NativeOnDragDetected(const FGeometry& InGeom
 	UInventorySlotDragDropOperation* DragOperation = Cast<UInventorySlotDragDropOperation>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragOperationClass));
 	DragOperation->DefaultDragVisual = DragPreview;
 	DragOperation->Pivot = EDragPivot::MouseDown;
-	DragOperation->SpawnInitialize(InventoryIndex, InventoryComponent);
+	DragOperation->SpawnInitialize(InventoryIndex, InventoryComponent, this);
 
 	OutOperation = DragOperation;
 
