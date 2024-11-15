@@ -9,7 +9,7 @@
 
 FReply UDraggableInventoryHotbarSlot::NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent)
 {
-	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton) && InventoryComponent && InventoryComponent->GetEquipmentAtIndex(InventoryIndex))
+	if (InMouseEvent.IsMouseButtonDown(LeftMouseButton) && InventoryComponent) //&& InventoryComponent->GetEquipmentAtIndex(InventoryIndex))
 	{
 		return UWidgetBlueprintLibrary::DetectDragIfPressed(InMouseEvent, this, LeftMouseButton).NativeReply;
 	}
@@ -18,5 +18,17 @@ FReply UDraggableInventoryHotbarSlot::NativeOnPreviewMouseButtonDown(const FGeom
 
 void UDraggableInventoryHotbarSlot::NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation)
 {
-	
+	Super::NativeOnDragDetected(InGeometry, InMouseEvent, OutOperation);
+
+	UInventorySlotDragPreview* DragPreview = CreateWidget<UInventorySlotDragPreview>(this, DragPreviewClass);
+	DragPreview->SetIndex(InventoryIndex);
+	DragPreview->SetInventoryComponent(InventoryComponent);
+	DragPreview->SetColour(FColor::Black);
+
+	UInventorySlotDragDropOperation* DragOperation = Cast<UInventorySlotDragDropOperation>(UWidgetBlueprintLibrary::CreateDragDropOperation(DragOperationClass));
+	DragOperation->DefaultDragVisual = DragPreview;
+	DragOperation->Pivot = EDragPivot::MouseDown;
+	DragOperation->SpawnInitialize(InventoryIndex, InventoryComponent);
+
+	OutOperation = DragOperation;
 }

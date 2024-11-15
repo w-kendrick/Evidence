@@ -25,7 +25,7 @@ protected:
 	TSubclassOf<UInventorySlotDragPreview> DragPreviewClass;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UInventorySlotDragDropOperation> DragWidgetClass;
+	TSubclassOf<UInventorySlotDragDropOperation> DragOperationClass;
 
 	UPROPERTY(EditDefaultsOnly)
 	FKey LeftMouseButton;
