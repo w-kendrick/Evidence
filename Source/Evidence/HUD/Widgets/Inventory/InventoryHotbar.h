@@ -18,7 +18,7 @@ class EVIDENCE_API UInventoryHotbar : public UUserWidget
 	GENERATED_BODY()
 
 protected:
-	virtual void NativeConstruct() override;
+	void NativeConstruct() override;
 
 	UPROPERTY(meta = (BindWidget))
 	class UHorizontalBox* Hotbar;

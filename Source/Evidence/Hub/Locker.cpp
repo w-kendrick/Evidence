@@ -17,6 +17,13 @@ ALocker::ALocker()
 	MeshComponent->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 }
 
+void ALocker::BeginPlay()
+{
+	Super::BeginPlay();
+
+	OnLockerStorageChanged.Broadcast(Storage);
+}
+
 void ALocker::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
@@ -32,6 +39,7 @@ FString ALocker::GetInteractionString_Implementation()
 void ALocker::SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index)
 {
 	Storage.AddEntry(Equipment, Index);
+	OnLockerStorageChanged.Broadcast(Storage);
 }
 
 AEquipment* ALocker::GetEquipmentAtIndex(const uint8 Index) const
