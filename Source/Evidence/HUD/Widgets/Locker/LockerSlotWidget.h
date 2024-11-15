@@ -7,6 +7,9 @@
 #include "LockerSlotWidget.generated.h"
 
 class AEquipment;
+class ALocker;
+class ULockerSlotDragPreview;
+class ULockerSlotDragDropOperation;
 
 /**
  * 
@@ -23,11 +26,25 @@ public:
 
 protected:
 	void NativeConstruct() override;
+	FReply NativeOnPreviewMouseButtonDown(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent) override;
+	void NativeOnDragDetected(const FGeometry& InGeometry, const FPointerEvent& InMouseEvent, UDragDropOperation*& OutOperation) override;
 
 private:
 	uint8 StorageIndex;
 
+	UPROPERTY()
+	ALocker* Locker;
+
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* NameText;
+
+	UPROPERTY(EditDefaultsOnly)
+	FKey LeftMouseButton;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ULockerSlotDragPreview> DragPreviewClass;
+
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<ULockerSlotDragDropOperation> DragOperationClass;
 	
 };
