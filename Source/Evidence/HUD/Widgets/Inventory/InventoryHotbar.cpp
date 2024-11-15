@@ -46,7 +46,6 @@ void UInventoryHotbar::InitializeSlots()
 	for (uint8 Index = 0; Index < UInventoryManagerComponent::INVENTORY_SIZE; Index++)
 	{
 		UInventoryHotbarSlot* const InventorySlot = CreateWidget<UInventoryHotbarSlot>(this, SlotClass);
-		InventorySlot->SetIndex(Index);
 		Hotbar->AddChild(InventorySlot);
 		HotbarSlots.Add(InventorySlot);
 	}
