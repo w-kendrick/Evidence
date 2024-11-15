@@ -18,8 +18,6 @@ class EVIDENCE_API UInventoryHotbarSlot : public UUserWidget
 	GENERATED_BODY()
 
 public:
-	void SetIndex(const uint8 Index);
-
 	void UpdateSlot(const AEquipment* const Equipment);
 
 	void SelectSlot(const bool Status);
@@ -32,9 +30,4 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	class UImage* SelectedBorder;
-
-	UPROPERTY()
-	UInventoryManagerComponent* InventoryComponent;
-
-	uint8 InventoryIndex;
 };
