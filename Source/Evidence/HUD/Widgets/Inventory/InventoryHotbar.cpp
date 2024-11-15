@@ -52,7 +52,7 @@ void UInventoryHotbar::InitializeSlots()
 	}
 }
 
-void UInventoryHotbar::OnInventoryChanged(FEquipmentList EquipmentList)
+void UInventoryHotbar::OnInventoryChanged(const FEquipmentList& EquipmentList)
 {
 	for (uint8 Index = 0; Index < UInventoryManagerComponent::INVENTORY_SIZE; Index++)
 	{

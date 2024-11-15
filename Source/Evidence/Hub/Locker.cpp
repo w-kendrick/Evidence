@@ -51,4 +51,5 @@ void ALocker::OnInteract()
 
 void ALocker::OnRep_Storage()
 {
+	OnLockerStorageChanged.Broadcast(Storage);
 }

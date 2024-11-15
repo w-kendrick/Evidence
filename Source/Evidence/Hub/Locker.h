@@ -28,6 +28,8 @@ public:
 
 	static constexpr uint8 STORAGE_CAPACITY = 16U;
 
+	FOnLockerStorageChanged OnLockerStorageChanged;
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* MeshComponent;
