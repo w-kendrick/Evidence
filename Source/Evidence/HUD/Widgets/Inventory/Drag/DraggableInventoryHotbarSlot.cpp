@@ -65,8 +65,6 @@ bool UDraggableInventoryHotbarSlot::NativeOnDrop(const FGeometry& InGeometry, co
 
 void UDraggableInventoryHotbarSlot::PerformSwap(const uint8 InventorySlot, const uint8 LockerSlot)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString("Swap Locker: ") + FString::FromInt(LockerSlot) + FString(" / Inventory: ") + FString::FromInt(InventorySlot));
-
 	FGameplayAbilityTargetData_SingleTargetHit* const Data = new FGameplayAbilityTargetData_SingleTargetHit();
 	Data->HitResult.FaceIndex = InventorySlot;
 	Data->HitResult.ElementIndex = LockerSlot;
