@@ -43,6 +43,15 @@ void ULockerSlotWidget::NativeOnDragDetected(const FGeometry& InGeometry, const 
 	DragOperation->SpawnInitialize(StorageIndex, Locker);
 
 	OutOperation = DragOperation;
+
+	SetVisibility(ESlateVisibility::Hidden);
+}
+
+void ULockerSlotWidget::NativeOnDragCancelled(const FDragDropEvent& InDragDropEvent, UDragDropOperation* InOperation)
+{
+	Super::NativeOnDragCancelled(InDragDropEvent, InOperation);
+
+	SetVisibility(ESlateVisibility::Visible);
 }
 
 void ULockerSlotWidget::SetIndex(const uint8 NewIndex)
