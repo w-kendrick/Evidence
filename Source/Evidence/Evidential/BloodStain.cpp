@@ -25,13 +25,13 @@ ABloodStain::ABloodStain()
 
 bool ABloodStain::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
-	ABaseCharacter* const InteractingCharacter = Cast<ABaseCharacter>(InteractingActor);
+	const ABaseCharacter* const InteractingCharacter = Cast<ABaseCharacter>(InteractingActor);
 
 	if (InteractingCharacter)
 	{
 		ASwab* const Swab = Cast<ASwab>(InteractingCharacter->GetEquipped());
 
-		if (Swab)
+		if (Swab && Swab->hasCapturesRemaining())
 		{
 			return true;
 		}
@@ -42,6 +42,17 @@ bool ABloodStain::IsAvailableForInteraction_Implementation(UPrimitiveComponent* 
 
 void ABloodStain::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
 {
+	const ABaseCharacter* const InteractingCharacter = Cast<ABaseCharacter>(InteractingActor);
+
+	if (InteractingCharacter)
+	{
+		ASwab* const Swab = Cast<ASwab>(InteractingCharacter->GetEquipped());
+
+		if (Swab)
+		{
+			Swab->ApplyToBloodStain(this);
+		}
+	}
 }
 
 FString ABloodStain::GetInteractionString_Implementation()
