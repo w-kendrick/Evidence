@@ -18,7 +18,7 @@ void ASingleUserInteractable::GetLifetimeReplicatedProps(TArray<FLifetimePropert
 	DOREPLIFETIME(ASingleUserInteractable, Interactor);
 }
 
-bool ASingleUserInteractable::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+bool ASingleUserInteractable::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
 	return !Interactor;
 }

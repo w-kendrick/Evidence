@@ -20,9 +20,9 @@ public:
 
 	FGameplayEffectSpecHandle DamageEffectHandle;
 
-	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
 
-	virtual void Plant() override;
+	void Plant() override;
 
 protected:
 	virtual void BeginPlay() override;

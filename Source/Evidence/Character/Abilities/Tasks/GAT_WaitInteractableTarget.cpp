@@ -73,7 +73,7 @@ void UGAT_WaitInteractableTarget::LineTrace(FHitResult& OutHitResult, const UWor
 					// Component/Actor must be available to interact
 					const bool bIsInteractable = Hit.GetActor()->Implements<UInteractable>();
 
-					if (bIsInteractable && IInteractable::Execute_IsAvailableForInteraction(Hit.GetActor(), Hit.Component.Get()))
+					if (bIsInteractable && IInteractable::Execute_IsAvailableForInteraction(Hit.GetActor(), Hit.Component.Get(), Ability->GetAvatarActorFromActorInfo()))
 					{
 						OutHitResult = Hit;
 						OutHitResult.bBlockingHit = true; // treat it as a blocking hit

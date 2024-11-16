@@ -18,7 +18,7 @@ APhysicalButton::APhysicalButton()
 	bIsAvailable = false;
 }
 
-bool APhysicalButton::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+bool APhysicalButton::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
 	return bIsAvailable;
 }

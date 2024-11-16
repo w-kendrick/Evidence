@@ -21,7 +21,7 @@ public:
 
 	FOnAttachmentsUpdated OnAttachmentsUpdated;
 
-	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
 	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 	virtual FString GetInteractionString_Implementation() override;
 

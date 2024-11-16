@@ -35,7 +35,7 @@ AEquipment::AEquipment()
 	EquipmentName = FString(TEXT("Equipment"));
 }
 
-bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
 	return !bIsPickedUp;
 }
