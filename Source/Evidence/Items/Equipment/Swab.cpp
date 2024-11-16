@@ -2,6 +2,7 @@
 
 
 #include "Swab.h"
+#include "Evidence/Evidential/BloodStain.h"
 
 ASwab::ASwab()
 {
@@ -10,12 +11,17 @@ ASwab::ASwab()
 
 void ASwab::ApplyToBloodStain(ABloodStain* const Stain)
 {
-	TArray<FEvidentialInfo> Infos;
-	FEvidentialInfo Info(EEvidentialType::Blood, 0U);
+	if (Stain)
+	{
+		TArray<FEvidentialInfo> Infos;
+		FEvidentialInfo Info(EEvidentialType::Blood, 0U);
 
-	Infos.Add(Info);
+		Infos.Add(Info);
 
-	FEvidentialCapture Capture(EEvidentialMedium::Item, Infos);
+		FEvidentialCapture Capture(EEvidentialMedium::Item, Infos);
 
-	AddCapture(Capture);
+		AddCapture(Capture);
+
+		Stain->Destroy();
+	}
 }
