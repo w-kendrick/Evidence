@@ -98,7 +98,6 @@ void AEvidenceGameMode::OnMatchStateSet()
 			AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(DeadPlayer);
 			if (EvidencePlayerController)
 			{
-				//EvidencePlayerController->ClientSetInputEnabled(true);
 				EvidencePlayerController->ClientSetIsSpectating(false);
 			}
 
@@ -469,7 +468,6 @@ void AEvidenceGameMode::OnPlayerDeath(APlayerController* Player)
 	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Player);
 	if (EvidencePlayerController)
 	{
-		//EvidencePlayerController->ClientSetInputEnabled(false);
 		EvidencePlayerController->ClientSetIsSpectating(true);
 	}
 }
