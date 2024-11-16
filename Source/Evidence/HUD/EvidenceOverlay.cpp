@@ -30,6 +30,9 @@ void UEvidenceOverlay::NativeConstruct()
 	AEvidenceGameState* const EvidenceGameState = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
 	if (EvidenceGameState)
 	{
+		OnNightChanged(EvidenceGameState->GetNight());
+		OnCashChanged(EvidenceGameState->GetCash());
+
 		EvidenceGameState->OnNightChanged.AddUObject(this, &ThisClass::OnNightChanged);
 		EvidenceGameState->OnCashChanged.AddUObject(this, &ThisClass::OnCashChanged);
 	}
