@@ -3,15 +3,22 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Items/Equipment.h"
+#include "EvidenceCaptureEquipment.h"
 #include "Swab.generated.h"
+
+class ABloodStain;
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API ASwab : public AEquipment
+class EVIDENCE_API ASwab : public AEvidenceCaptureEquipment
 {
 	GENERATED_BODY()
+
+public:
+	ASwab();
+
+	void ApplyToBloodStain(ABloodStain* const Stain);
 	
 };
