@@ -54,7 +54,7 @@ void UHealthSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
 
 void UHealthSet::OnRep_MaxHealth(const FGameplayAttributeData& OldMaxHealth)
 {
-	GAMEPLAYATTRIBUTE_REPNOTIFY(UHealthSet, Health, OldMaxHealth);
+	GAMEPLAYATTRIBUTE_REPNOTIFY(UHealthSet, MaxHealth, OldMaxHealth);
 }
 
 void UHealthSet::DeathEvent(const FGameplayEffectModCallbackData& Data)
