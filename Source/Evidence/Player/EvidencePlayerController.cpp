@@ -96,14 +96,17 @@ void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool 
 
 void AEvidencePlayerController::SwitchSpectatee(const FInputActionValue& Value)
 {
-	const float Direction = Value.Get<float>();
-	if (Direction > 0)
+	if (bIsSpectating)
 	{
-		SpectateNext();
-	}
-	else if (Direction < 0)
-	{
-		SpectatePrevious();
+		const float Direction = Value.Get<float>();
+		if (Direction > 0)
+		{
+			SpectateNext();
+		}
+		else if (Direction < 0)
+		{
+			SpectatePrevious();
+		}
 	}
 }
 
@@ -129,16 +132,18 @@ void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& Spe
 
 void AEvidencePlayerController::SpectateNext()
 {
-	const int32 MaxSpectateIndex = CandidateSpectatees.GetNum() - 1;
-	const int32 NewSpectateIndex = FMath::Clamp(SpectateIndex + 1, 0, MaxSpectateIndex);
+	const int32 NewSpectateIndex = (SpectateIndex + 1) % CandidateSpectatees.GetNum();
 	SpectateIndex = NewSpectateIndex;
 	UpdateSpectatee();
 }
 
 void AEvidencePlayerController::SpectatePrevious()
 {
-	const int32 MaxSpectateIndex = CandidateSpectatees.GetNum() - 1;
-	const int32 NewSpectateIndex = FMath::Clamp(SpectateIndex - 1, 0, MaxSpectateIndex);
+	int32 NewSpectateIndex = SpectateIndex - 1;
+	if (NewSpectateIndex < 0)
+	{
+		NewSpectateIndex += CandidateSpectatees.GetNum();
+	}
 	SpectateIndex = NewSpectateIndex;
 	UpdateSpectatee();
 }
