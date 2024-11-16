@@ -9,6 +9,8 @@
 #include "EvidencePlayerController.generated.h"
 
 class UInputMappingContext;
+class UInputAction;
+struct FInputActionValue;
 
 UCLASS()
 class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerController
@@ -16,7 +18,7 @@ class EVIDENCE_API AEvidencePlayerController : public AMoreMovementPlayerControl
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(Client, Reliable)
+	UFUNCTION(Client, Reliable) 
 	void ClientSetIsSpectating(const bool bInIsSpectating);
 
 	UFUNCTION(Client, Reliable)
@@ -42,19 +44,24 @@ public:
 	FOnInteractTimerStateChanged OnInteractTimerStateChanged;
 	
 protected:
+	void SetupInputComponent() override;
 
-	/** Input Mapping Context to be used for player input */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input)
 	UInputMappingContext* InputMappingContext;
+
+	UPROPERTY(EditDefaultsOnly)
+	UInputAction* SwitchSpectateeAction;
 
 	// Begin Actor interface
 protected:
 
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 	// End Actor interface
 
 private:
+	void SwitchSpectatee(const FInputActionValue& Value);
+
 	void OnCandidateSpectateesChanged(FSpectateeList& SpectateeList);
 
 	UPROPERTY()

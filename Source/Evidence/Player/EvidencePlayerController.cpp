@@ -6,6 +6,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Evidence/HUD/EvidenceHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "EnhancedInputComponent.h"
 
 void AEvidencePlayerController::BeginPlay()
 {
@@ -24,6 +25,19 @@ void AEvidencePlayerController::BeginPlay()
 	if (EvidenceGameState)
 	{
 		EvidenceGameState->OnCandidateSpectateesChanged.AddUObject(this, &ThisClass::OnCandidateSpectateesChanged);
+	}
+}
+
+void AEvidencePlayerController::SetupInputComponent()
+{
+	Super::SetupInputComponent();
+
+	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(InputComponent))
+	{
+		if (SwitchSpectateeAction)
+		{
+			EnhancedInputComponent->BindAction(SwitchSpectateeAction, ETriggerEvent::Started, this, &ThisClass::SwitchSpectatee);
+		}
 	}
 }
 
@@ -77,6 +91,19 @@ void AEvidencePlayerController::ClientSetIsSpectating_Implementation(const bool 
 	else
 	{
 		SetViewTarget(GetPawn());
+	}
+}
+
+void AEvidencePlayerController::SwitchSpectatee(const FInputActionValue& Value)
+{
+	const float Direction = Value.Get<float>();
+	if (Direction > 0)
+	{
+		SpectateNext();
+	}
+	else if (Direction < 0)
+	{
+		SpectatePrevious();
 	}
 }
 
