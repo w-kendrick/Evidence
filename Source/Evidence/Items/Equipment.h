@@ -21,9 +21,9 @@ public:
 
 	FOnAttachmentsUpdated OnAttachmentsUpdated;
 
-	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
-	virtual void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
-	virtual FString GetInteractionString_Implementation() override;
+	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
+	void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
+	FString GetInteractionString_Implementation() override;
 
 	void Pickup(ABaseCharacter* Char);
 	void Stow(ABaseCharacter* Char);
