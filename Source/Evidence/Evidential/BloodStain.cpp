@@ -5,6 +5,9 @@
 #include "Components/BoxComponent.h"
 #include "Perception/AISense_Sight.h"
 #include "Perception/AIPerceptionStimuliSourceComponent.h"
+#include "Evidence/Character/BaseCharacter.h"
+#include "Evidence/Items/Equipment/Swab.h"
+#include "Evidence/Evidence.h"
 
 ABloodStain::ABloodStain()
 {
@@ -12,11 +15,38 @@ ABloodStain::ABloodStain()
 	Box->bHiddenInGame = false;
 	Box->SetVisibility(true);
 	Box->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
+	Box->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
 	RootComponent = Box;
 
 	Stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
 
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+bool ABloodStain::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
+{
+	ABaseCharacter* const InteractingCharacter = Cast<ABaseCharacter>(InteractingActor);
+
+	if (InteractingCharacter)
+	{
+		ASwab* const Swab = Cast<ASwab>(InteractingCharacter->GetEquipped());
+
+		if (Swab)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void ABloodStain::PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent)
+{
+}
+
+FString ABloodStain::GetInteractionString_Implementation()
+{
+	return FString("Use swab");
 }
 
 void ABloodStain::BeginPlay()
