@@ -43,11 +43,8 @@ void UHealthSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData&
 				DeathEvent(Data);
 			}
 		}
-		else
-		{
-			SetDamage(0.0f);
-		}
 	}
+	SetDamage(0.0f);
 }
 
 void UHealthSet::OnRep_Health(const FGameplayAttributeData& OldHealth)
