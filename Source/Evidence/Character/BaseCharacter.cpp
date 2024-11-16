@@ -158,7 +158,6 @@ void ABaseCharacter::SetInteractPromptVisibility(const bool bVisibility, const f
 
 void ABaseCharacter::ResetAttributes()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Reset Attributes");
 	if (HealthSet)
 	{
 		HealthSet->Respawn();
