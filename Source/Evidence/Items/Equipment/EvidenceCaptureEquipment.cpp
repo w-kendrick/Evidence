@@ -14,6 +14,7 @@ void AEvidenceCaptureEquipment::BeginPlay()
 	Super::BeginPlay();
 
 	RemainingCaptures = MaxCaptures;
+	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
 }
 
 void AEvidenceCaptureEquipment::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
@@ -32,6 +33,7 @@ void AEvidenceCaptureEquipment::AddCapture(const FEvidentialCapture& Capture)
 {
 	Captures.Add(Capture);
 	RemainingCaptures--;
+	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
 }
 
 TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
