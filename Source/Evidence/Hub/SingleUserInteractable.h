@@ -18,7 +18,7 @@ public:
 	ASingleUserInteractable();
 	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 
-	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
 	void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 
 	void Relinquish();

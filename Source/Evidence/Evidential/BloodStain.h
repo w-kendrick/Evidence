@@ -18,11 +18,11 @@ class EVIDENCE_API ABloodStain : public AActor, public IEvidential
 public:	
 	ABloodStain();
 
-	virtual EEvidentialType GetType() const override;
-	virtual float GetBaseWorth() const override;
+	EEvidentialType GetType() const override;
+	float GetBaseWorth() const override;
 
 protected:
-	virtual void BeginPlay() override;
+	void BeginPlay() override;
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UBoxComponent* Box;

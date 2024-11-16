@@ -29,8 +29,8 @@ public:
 	* @param InteractionComponent UPrimitiveComponent in case an Actor has many separate interactable areas.
 	*/
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Interactable")
-	bool IsAvailableForInteraction(UPrimitiveComponent* InteractionComponent) const;
-	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const;
+	bool IsAvailableForInteraction(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const;
+	virtual bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const;
 
 	/**
 	* How long does the player need to hold down the interact button to interact with this?

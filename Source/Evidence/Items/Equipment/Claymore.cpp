@@ -22,7 +22,7 @@ AClaymore::AClaymore()
 	PerceptionComponent->ConfigureSense(*Sight);
 }
 
-bool AClaymore::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+bool AClaymore::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
 	if (isPlanted)
 	{
@@ -30,7 +30,7 @@ bool AClaymore::IsAvailableForInteraction_Implementation(UPrimitiveComponent* In
 	}
 	else
 	{
-		return Super::IsAvailableForInteraction_Implementation(InteractionComponent);
+		return Super::IsAvailableForInteraction_Implementation(InteractionComponent, InteractingActor);
 	}
 }
 

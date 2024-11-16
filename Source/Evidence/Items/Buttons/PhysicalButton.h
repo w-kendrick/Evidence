@@ -15,7 +15,7 @@ class EVIDENCE_API APhysicalButton : public AActor, public IInteractable
 public:	
 	APhysicalButton();
 
-	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const override;
+	bool IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const override;
 	void PostInteract_Implementation(AActor* InteractingActor, UPrimitiveComponent* InteractionComponent) override;
 	float GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const;
 	FString GetInteractionString_Implementation() override;

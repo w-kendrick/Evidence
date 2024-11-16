@@ -6,7 +6,7 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystemGlobals.h"
 
-bool IInteractable::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent) const
+bool IInteractable::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const
 {
 	return true;
 }
