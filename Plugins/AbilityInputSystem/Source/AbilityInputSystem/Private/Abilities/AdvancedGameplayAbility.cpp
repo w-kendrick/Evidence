@@ -3,6 +3,12 @@
 
 #include "Abilities/AdvancedGameplayAbility.h"
 #include "AbilitySystemComponent.h"
+#include "BasicGameplayTags.h"
+
+UAdvancedGameplayAbility::UAdvancedGameplayAbility()
+{
+	ActivationBlockedTags.AddTag(BasicGameplayTags::InputBlocked);
+}
 
 void UAdvancedGameplayAbility::CancelAbilityWithTags(const FGameplayTagContainer Tags)
 {

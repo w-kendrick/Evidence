@@ -28,6 +28,8 @@ class ABILITYINPUTSYSTEM_API UAdvancedGameplayAbility : public UGameplayAbility
 	GENERATED_BODY()
 
 public:
+	UAdvancedGameplayAbility();
+
 	EAbilityActivationPolicy GetActivationPolicy() const { return ActivationPolicy; }
 
 	void TryActivateAbilityOnSpawn(const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilitySpec& Spec) const;
