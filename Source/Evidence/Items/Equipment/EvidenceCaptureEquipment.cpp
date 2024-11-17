@@ -7,13 +7,13 @@
 AEvidenceCaptureEquipment::AEvidenceCaptureEquipment()
 {
 	MaxCaptures = 1U;
+	RemainingCaptures = MaxCaptures;
 }
 
 void AEvidenceCaptureEquipment::BeginPlay()
 {
 	Super::BeginPlay();
 
-	RemainingCaptures = MaxCaptures;
 	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
 }
 
@@ -34,6 +34,12 @@ void AEvidenceCaptureEquipment::AddCapture(const FEvidentialCapture& Capture)
 	Captures.Add(Capture);
 	RemainingCaptures--;
 	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
+}
+
+void AEvidenceCaptureEquipment::Clear()
+{
+	Captures.Empty();
+	RemainingCaptures = MaxCaptures;
 }
 
 TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
