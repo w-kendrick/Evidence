@@ -37,6 +37,7 @@ public:
 	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
 
 	FORCEINLINE TArray<FShopItem> GetShopItems() const { return ShopItems; }
+	FORCEINLINE const TArray<AEvidenceCaptureEquipment*>& GetCaptureDevices() const { return CaptureDevices; }
 
 protected:
 	void BeginPlay() override;

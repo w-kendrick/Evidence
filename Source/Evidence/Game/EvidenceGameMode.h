@@ -61,6 +61,7 @@ private:
 	void StartPreSetup();
 	void SetupWorld();
 	void ResetWorld(const bool bWasWipe);
+	void ResetEquipment(const bool bWasWipe);
 	void FetchWorldGenerators();
 
 	void SaveGame();
