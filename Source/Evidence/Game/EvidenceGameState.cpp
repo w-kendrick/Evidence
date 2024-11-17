@@ -76,7 +76,7 @@ AHub* AEvidenceGameState::GetHub()
 
 void AEvidenceGameState::EndNight()
 {
-	Hub->ConsumeCaptures();
+	GetHub()->ConsumeCaptures();
 }
 
 void AEvidenceGameState::SetNight(const uint32 NewNight)

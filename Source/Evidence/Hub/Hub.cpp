@@ -57,7 +57,10 @@ void AHub::ConsumeCaptures()
 {
 	const float Cash = CalculateStoredCash();
 
-	GameState->AwardCash(Cash);
+	if (GameState)
+	{
+		GameState->AwardCash(Cash);
+	}
 
 	for (AEvidenceCaptureEquipment* const Device : CaptureDevices)
 	{
@@ -142,15 +145,18 @@ void AHub::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 
 float AHub::CalculateStoredCash() const
 {
-	TArray<FEvidentialCapture> Captures;
+	TArray<FEvidentialCapture> Captures = {};
 
 	for (const AEvidenceCaptureEquipment* const Device : CaptureDevices)
 	{
-		const TArray<FEvidentialCapture>& DeviceCaptures = Device->GetCaptures();
-		
-		for (const FEvidentialCapture& Capture : DeviceCaptures)
+		if (Device)
 		{
-			Captures.Add(Capture);
+			const TArray<FEvidentialCapture>& DeviceCaptures = Device->GetCaptures();
+
+			for (const FEvidentialCapture& Capture : DeviceCaptures)
+			{
+				Captures.Add(Capture);
+			}
 		}
 	}
 
