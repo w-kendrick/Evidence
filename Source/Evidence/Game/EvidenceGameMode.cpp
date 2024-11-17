@@ -143,6 +143,7 @@ void AEvidenceGameMode::EndNight()
 
 void AEvidenceGameMode::StartPreSetup()
 {
+	EvidenceGameState->EndNight();
 	SetNight(Night + 1);
 	ResetWorld();
 	SaveGame();

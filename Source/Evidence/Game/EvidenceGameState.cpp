@@ -74,6 +74,11 @@ AHub* AEvidenceGameState::GetHub()
 
 #pragma region Night
 
+void AEvidenceGameState::EndNight()
+{
+	Hub->ConsumeCaptures();
+}
+
 void AEvidenceGameState::SetNight(const uint32 NewNight)
 {
 	Night = NewNight;
