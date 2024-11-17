@@ -6,7 +6,7 @@
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Game/EvidenceGameState.h"
-#include "Evidence/Items/Hub.h"
+#include "Evidence/Hub/Hub.h"
 
 void UTerminalShopItemWidget::SpawnInitialize(const FShopItem& NewItem)
 {
