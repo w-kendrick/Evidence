@@ -209,7 +209,7 @@ void AEvidenceGameMode::ResetWorld(const bool bWasWipe)
 				Equipment->Destroy();
 			}
 
-			ALocker* const Locker = UGameplayStatics::GetActorOfClass(GetWorld(), ALocker::StaticClass());
+			ALocker* const Locker = Cast<ALocker>(UGameplayStatics::GetActorOfClass(GetWorld(), ALocker::StaticClass()));
 
 			if (Locker)
 			{
