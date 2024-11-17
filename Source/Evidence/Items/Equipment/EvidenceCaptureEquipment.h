@@ -18,12 +18,13 @@ public:
 
 	FOnRemainingCapturesChanged OnRemainingCapturesChanged;
 
+	virtual void Clear();
 	TArray<FEvidentialCapture> GetCaptures() const;
 	bool hasCapturesRemaining() const;
 
 protected:
-	virtual void BeginPlay() override;
-	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
+	void BeginPlay() override;
+	void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const;
 
 	UPROPERTY()
 	TArray<FEvidentialCapture> Captures;

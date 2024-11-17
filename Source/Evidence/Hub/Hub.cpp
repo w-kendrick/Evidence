@@ -50,9 +50,18 @@ void AHub::BeginPlay()
 
 		Bounds->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 		Bounds->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnOverlapEnd);
+	}
+}
 
-		FTimerHandle Handle;
-		GetWorldTimerManager().SetTimer(Handle, this, &ThisClass::CalculateStoredCash, 10.f, true);
+void AHub::ConsumeCaptures()
+{
+	const float Cash = CalculateStoredCash();
+
+	GameState->AwardCash(Cash);
+
+	for (AEvidenceCaptureEquipment* const Device : CaptureDevices)
+	{
+		Device->Clear();
 	}
 }
 
@@ -131,7 +140,7 @@ void AHub::OnOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
 	}
 }
 
-void AHub::CalculateStoredCash()
+float AHub::CalculateStoredCash() const
 {
 	TArray<FEvidentialCapture> Captures;
 
@@ -145,8 +154,7 @@ void AHub::CalculateStoredCash()
 		}
 	}
 
-	float Cash = UEvidentialFunctionLibrary::CalculateCash(Captures);
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString(TEXT("Awarded: $")) + FString::SanitizeFloat(Cash));
+	return UEvidentialFunctionLibrary::CalculateCash(Captures);
 }
 
 FTransform AHub::MakePurchaseSpawnTransform() const

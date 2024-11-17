@@ -28,6 +28,8 @@ class EVIDENCE_API AHub : public ASingleUserInteractable
 public:	
 	AHub();
 
+	void ConsumeCaptures();
+
 	FString GetInteractionString_Implementation() override;
 
 	UFUNCTION(Server, Reliable)
@@ -74,7 +76,7 @@ private:
 	UPROPERTY()
 	TArray<AEvidenceCaptureEquipment*> CaptureDevices;
 
-	void CalculateStoredCash();
+	float CalculateStoredCash() const;
 
 	UPROPERTY()
 	AEvidenceGameState* GameState;
