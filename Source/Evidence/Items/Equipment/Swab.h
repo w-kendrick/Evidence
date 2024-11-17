@@ -20,5 +20,7 @@ public:
 	ASwab();
 
 	void ApplyToBloodStain(ABloodStain* const Stain);
+
+	void Clear() override;
 	
 };
