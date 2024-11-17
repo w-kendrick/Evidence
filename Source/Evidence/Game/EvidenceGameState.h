@@ -28,6 +28,7 @@ public:
 
 	FOnMatchStateChanged OnMatchStateChanged;
 
+	void EndNight();
 	AHub* GetHub();
 
 	FOnNightChanged OnNightChanged;

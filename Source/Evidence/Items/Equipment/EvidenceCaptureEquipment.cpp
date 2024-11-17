@@ -40,6 +40,7 @@ void AEvidenceCaptureEquipment::Clear()
 {
 	Captures.Empty();
 	RemainingCaptures = MaxCaptures;
+	OnRemainingCapturesChanged.Broadcast(RemainingCaptures);
 }
 
 TArray<FEvidentialCapture> AEvidenceCaptureEquipment::GetCaptures() const
