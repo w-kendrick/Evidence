@@ -60,7 +60,7 @@ private:
 
 	void StartPreSetup();
 	void SetupWorld();
-	void ResetWorld();
+	void ResetWorld(const bool bWasWipe);
 	void FetchWorldGenerators();
 
 	void SaveGame();

@@ -38,6 +38,7 @@ FString ALocker::GetInteractionString_Implementation()
 
 void ALocker::SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index)
 {
+	Equipment->SetOwner(this);
 	Storage.AddEntry(Equipment, Index);
 	OnLockerStorageChanged.Broadcast(Storage);
 }

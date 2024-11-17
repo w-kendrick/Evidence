@@ -145,7 +145,7 @@ void AEvidenceGameMode::StartPreSetup()
 {
 	EvidenceGameState->EndNight();
 	SetNight(Night + 1);
-	ResetWorld();
+	ResetWorld(false);
 	SaveGame();
 
 	SetMatchState(MatchState::PreSetup);
@@ -162,7 +162,7 @@ void AEvidenceGameMode::TeamWipe()
 
 	SetNight(DEFAULT_STARTING_NIGHT);
 	EvidenceGameState->SetCash(DEFAULT_STARTING_CASH);
-	ResetWorld();
+	ResetWorld(true);
 	WipeSave();
 
 	SetMatchState(MatchState::PreSetup);
@@ -182,13 +182,33 @@ void AEvidenceGameMode::SetupWorld()
 	}
 }
 
-void AEvidenceGameMode::ResetWorld()
+void AEvidenceGameMode::ResetWorld(const bool bWasWipe)
 {
 	FetchWorldGenerators();
 
 	for (AWorldGenerator* const WorldGenerator : WorldGenerators)
 	{
 		WorldGenerator->ResetWorld();
+	}
+
+	TArray<AActor*> Actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEquipment::StaticClass(), Actors);
+
+	for (AActor* const Actor : Actors)
+	{
+		AEquipment* const Equipment = Cast<AEquipment>(Actor);
+
+		if (bWasWipe)
+		{
+			Equipment->Destroy();
+		}
+		else
+		{
+			if (Equipment->GetOwner() == nullptr)
+			{
+				Equipment->Destroy();
+			}
+		}
 	}
 }
 
