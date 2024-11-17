@@ -35,6 +35,9 @@ public:
 	virtual void Pickup(AEquipment* const Equipment, const uint8 Index);
 	virtual void Drop();
 
+	UFUNCTION(BlueprintCallable)
+	void DropInventory();
+
 	AEquipment* GetEquipped() const;
 
 	virtual const FVector GetTraceStart() const;

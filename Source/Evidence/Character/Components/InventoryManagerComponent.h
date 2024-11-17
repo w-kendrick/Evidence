@@ -36,6 +36,7 @@ public:
 	void Pickup(AEquipment* const Equipment, const uint8 Index);
 	void Drop(const uint8 Index);
 	void DropEquipped();
+	void DropInventory();
 
 	const FEquipmentList& GetInventory() const;
 	AEquipment* GetEquipmentAtIndex(const uint8 Index) const;
