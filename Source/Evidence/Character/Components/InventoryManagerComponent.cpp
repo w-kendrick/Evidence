@@ -49,6 +49,18 @@ void UInventoryManagerComponent::DropEquipped()
 	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
 }
 
+void UInventoryManagerComponent::DropInventory()
+{
+	AEquipment* const PrevEquipped = GetEquipped();
+
+	for (uint8 Index = 0; Index < INVENTORY_SIZE; Index++)
+	{
+		Drop(Index);
+	}
+
+	UpdateEquipped(PrevEquipped, EUnequipType::Drop);
+}
+
 const FEquipmentList& UInventoryManagerComponent::GetInventory() const
 {
 	return EquipmentList;

@@ -119,6 +119,14 @@ void ABaseCharacter::Drop()
 	}
 }
 
+void ABaseCharacter::DropInventory()
+{
+	if (InventoryManagerComponent)
+	{
+
+	}
+}
+
 AEquipment* ABaseCharacter::GetEquipped() const
 {
 	if (!InventoryManagerComponent)
