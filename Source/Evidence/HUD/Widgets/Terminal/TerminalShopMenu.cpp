@@ -4,7 +4,7 @@
 #include "TerminalShopMenu.h"
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Game/EvidenceGameState.h"
-#include "Evidence/Items/Hub.h"
+#include "Evidence/Hub/Hub.h"
 #include "TerminalShopItemWidget.h"
 #include "Components/VerticalBox.h"
 #include "Components/Button.h"

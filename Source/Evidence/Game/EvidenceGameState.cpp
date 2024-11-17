@@ -2,7 +2,7 @@
 
 
 #include "EvidenceGameState.h"
-#include "Evidence/Items/Hub.h"
+#include "Evidence/Hub/Hub.h"
 #include "Kismet/GameplayStatics.h"
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Game/EvidenceGameMode.h"

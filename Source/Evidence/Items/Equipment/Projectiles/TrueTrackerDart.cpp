@@ -4,7 +4,7 @@
 #include "TrueTrackerDart.h"
 #include "Evidence/Game/EvidenceGameState.h"
 #include "Kismet/GameplayStatics.h"
-#include "Evidence/Items/Hub.h"
+#include "Evidence/Hub/Hub.h"
 
 ATrueTrackerDart::ATrueTrackerDart()
 {
