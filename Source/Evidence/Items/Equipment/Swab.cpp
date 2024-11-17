@@ -22,7 +22,7 @@ void ASwab::ApplyToBloodStain(ABloodStain* const Stain)
 
 		AddCapture(Capture);
 
-		Stain->Destroy();
+		Stain->Disable();
 	}
 }
 

@@ -26,6 +26,8 @@ public:
 	EEvidentialType GetType() const override;
 	float GetBaseWorth() const override;
 
+	void Disable();
+
 protected:
 	void BeginPlay() override;
 
@@ -34,5 +36,12 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UAIPerceptionStimuliSourceComponent* Stimulus;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bEnabled;
+
+private:
+	UFUNCTION(NetMulticast, Unreliable)
+	void MulticastDisable();
 
 };

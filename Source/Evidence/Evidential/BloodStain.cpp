@@ -11,6 +11,8 @@
 
 ABloodStain::ABloodStain()
 {
+	bReplicates = true;
+
 	Box = CreateDefaultSubobject<UBoxComponent>(TEXT("Box"));
 	Box->bHiddenInGame = false;
 	Box->SetVisibility(true);
@@ -19,6 +21,8 @@ ABloodStain::ABloodStain()
 	RootComponent = Box;
 
 	Stimulus = CreateDefaultSubobject<UAIPerceptionStimuliSourceComponent>(TEXT("Stimulus"));
+
+	bEnabled = true;
 
 	PrimaryActorTick.bCanEverTick = true;
 }
@@ -76,4 +80,16 @@ EEvidentialType ABloodStain::GetType() const
 float ABloodStain::GetBaseWorth() const
 {
 	return 0.0f;
+}
+
+void ABloodStain::Disable()
+{
+	MulticastDisable();
+}
+
+void ABloodStain::MulticastDisable_Implementation()
+{
+	Box->bHiddenInGame = true;
+	Box->SetVisibility(false);
+	bEnabled = false;
 }
