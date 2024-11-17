@@ -57,6 +57,11 @@ void ALocker::Remove(const uint8 Index)
 	Storage.RemoveEntry(Index);
 }
 
+void ALocker::WipeNotify()
+{
+	OnLockerStorageChanged.Broadcast(Storage);
+}
+
 void ALocker::OnInteract()
 {
 	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());

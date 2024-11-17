@@ -27,6 +27,8 @@ public:
 	void Remove(const uint8 Index);
 	const FEquipmentList& GetStorage() const { return Storage; }
 
+	void WipeNotify();
+
 	static constexpr uint8 STORAGE_CAPACITY = 16U;
 
 	FOnLockerStorageChanged OnLockerStorageChanged;
