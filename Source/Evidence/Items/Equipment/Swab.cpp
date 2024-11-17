@@ -25,3 +25,8 @@ void ASwab::ApplyToBloodStain(ABloodStain* const Stain)
 		Stain->Destroy();
 	}
 }
+
+void ASwab::Clear()
+{
+	Destroy();
+}
