@@ -12,6 +12,8 @@
 #include "Evidence/Player/EvidencePlayerController.h"
 #include "Evidence/Hub/Locker.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "Evidence/Hub/Hub.h"
+#include "Evidence/Items/Equipment/EvidenceCaptureEquipment.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -191,6 +193,14 @@ void AEvidenceGameMode::ResetWorld(const bool bWasWipe)
 		WorldGenerator->ResetWorld();
 	}
 
+	ResetEquipment(bWasWipe);
+}
+
+void AEvidenceGameMode::ResetEquipment(const bool bWasWipe)
+{
+	AHub* const Hub = EvidenceGameState->GetHub();
+	const TArray<AEvidenceCaptureEquipment*>& HubCaptureDevices = Hub->GetCaptureDevices();
+
 	TArray<AActor*> Actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEquipment::StaticClass(), Actors);
 
@@ -204,7 +214,7 @@ void AEvidenceGameMode::ResetWorld(const bool bWasWipe)
 		}
 		else
 		{
-			if (Equipment->GetOwner() == nullptr)
+			if (Equipment->GetOwner() == nullptr && !HubCaptureDevices.Contains(Equipment))
 			{
 				Equipment->Destroy();
 			}
