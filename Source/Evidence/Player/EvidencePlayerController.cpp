@@ -132,20 +132,26 @@ void AEvidencePlayerController::OnCandidateSpectateesChanged(FSpectateeList& Spe
 
 void AEvidencePlayerController::SpectateNext()
 {
-	const int32 NewSpectateIndex = (SpectateIndex + 1) % CandidateSpectatees.GetNum();
-	SpectateIndex = NewSpectateIndex;
-	UpdateSpectatee();
+	if (CandidateSpectatees.GetNum() > 0)
+	{
+		const int32 NewSpectateIndex = (SpectateIndex + 1) % CandidateSpectatees.GetNum();
+		SpectateIndex = NewSpectateIndex;
+		UpdateSpectatee();
+	}
 }
 
 void AEvidencePlayerController::SpectatePrevious()
 {
-	int32 NewSpectateIndex = SpectateIndex - 1;
-	if (NewSpectateIndex < 0)
+	if (CandidateSpectatees.GetNum() > 0)
 	{
-		NewSpectateIndex += CandidateSpectatees.GetNum();
+		int32 NewSpectateIndex = SpectateIndex - 1;
+		if (NewSpectateIndex < 0)
+		{
+			NewSpectateIndex += CandidateSpectatees.GetNum();
+		}
+		SpectateIndex = NewSpectateIndex;
+		UpdateSpectatee();
 	}
-	SpectateIndex = NewSpectateIndex;
-	UpdateSpectatee();
 }
 
 void AEvidencePlayerController::UpdateSpectatee()
