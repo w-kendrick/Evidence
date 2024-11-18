@@ -7,7 +7,16 @@
 #include "MPTestHelpersBPLibrary.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "EnhancedInputSubsystems.h"
+#include "Engine/TriggerBox.h"
 #include "ClientCharacterTest.generated.h"
+
+struct FPlayerTestInfo
+{
+	APlayerController* PlayerController;
+	ABaseCharacter* Character;
+	UEnhancedInputLocalPlayerSubsystem* InputSubsystem;
+};
 
 class UInputAction;
 
@@ -20,20 +29,28 @@ class EVIDENCE_API AClientCharacterTest : public AFunctionalTest
 	GENERATED_BODY()
 
 public:
+	AClientCharacterTest();
 	bool IsReady_Implementation() override;
 
 protected:
-	UPROPERTY()
-	APlayerController* PlayerController;
+	void BindTriggers();
 
-	UPROPERTY()
-	ABaseCharacter* TestCharacter;
+	virtual void OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	virtual void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
-	UPROPERTY()
-	ABaseCharacter* AltClientTestCharacter;
+	FPlayerTestInfo Client1TestInfo;
+	FPlayerTestInfo Client2TestInfo;
 
-	void InjectInput(const UInputAction* Action, FVector Value);
-	
+	void CheckResult();
+
+	bool bClient1Passed;
+	bool bClient2Passed;
+
+	void InjectInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value);
+	void StartInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value);
+	void StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action);
+
 private:
-	ABaseCharacter* GetAltClientBaseCharacter() const;
+	bool IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
+
 };

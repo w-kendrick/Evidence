@@ -2,74 +2,97 @@
 
 
 #include "ClientCharacterTest.h"
-#include "EnhancedInputSubsystems.h"
+
+AClientCharacterTest::AClientCharacterTest()
+{
+	bClient1Passed = false;
+	bClient2Passed = false;
+}
 
 bool AClientCharacterTest::IsReady_Implementation()
 {
-	bool _bIsReady = false;
+	bool bReady = false;
 
-	PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	bReady = IsPlayerReady(0, Client1TestInfo) && IsPlayerReady(1, Client2TestInfo);
+
+	return bReady;
+}
+
+bool AClientCharacterTest::IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const
+{
+	bool bPlayerReady = false;
+
+	APlayerController* const PlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), PlayerIndex));
 
 	if (PlayerController)
 	{
-		TestCharacter = Cast<ABaseCharacter>(PlayerController->GetPawn());
+		ABaseCharacter* const Character = Cast<ABaseCharacter>(PlayerController->GetPawn());
 
-		if (TestCharacter)
+		if (Character)
 		{
-			auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+			UEnhancedInputLocalPlayerSubsystem* const InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
 
 			if (InputSubsystem)
 			{
-				AltClientTestCharacter = GetAltClientBaseCharacter();
+				bPlayerReady = true;
 
-				if (AltClientTestCharacter)
-				{
-					_bIsReady = true;
-
-					checkf(PlayerController != nullptr, TEXT("PlayerController is invalid"));
-					checkf(TestCharacter != nullptr, TEXT("TestCharacter is invalid"));
-					checkf(AltClientTestCharacter != nullptr, TEXT("AltClientTestCharacter is invalid"));
-				}
+				PlayerTestInfo.PlayerController = PlayerController;
+				PlayerTestInfo.Character = Character;
+				PlayerTestInfo.InputSubsystem = InputSubsystem;
 			}
 		}
 	}
 
-	return _bIsReady;
+	return bPlayerReady;
 }
 
-void AClientCharacterTest::InjectInput(const UInputAction* Action, FVector Value)
+void AClientCharacterTest::BindTriggers()
 {
-	auto InputSubsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+	ATriggerBox* TriggerBox1 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	TriggerBox1->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger1BeginOverlap);
 
+	ATriggerBox* TriggerBox2 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 1));
+	TriggerBox2->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger2BeginOverlap);
+}
+
+void AClientCharacterTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	
+}
+
+void AClientCharacterTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	
+}
+
+void AClientCharacterTest::CheckResult()
+{
+	if (bClient1Passed && bClient2Passed)
+	{
+		FinishTest(EFunctionalTestResult::Succeeded, FString("Passed"));
+	}
+}
+
+void AClientCharacterTest::InjectInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
+{
 	TArray<UInputModifier*> Modifiers = {};
 	TArray<UInputTrigger*> Triggers = {};
+
 	InputSubsystem->InjectInputForAction(Action, Value, Modifiers, Triggers);
 }
 
-ABaseCharacter* AClientCharacterTest::GetAltClientBaseCharacter() const
+void AClientCharacterTest::StartInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
 {
-	ABaseCharacter* ReturnCharacter = nullptr;
+	TArray<UInputModifier*> Modifiers = {};
+	TArray<UInputTrigger*> Triggers = {};
 
-	APlayerController* AltClientPlayerController = Cast<APlayerController>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	InputSubsystem->StartContinuousInputInjectionForAction(Action, Value, Modifiers, Triggers);
+}
 
-	if (AltClientPlayerController)
-	{
-		if (AltClientPlayerController->GetPawn())
-		{
-			TArray<AActor*> Actors;
-			UMPTestHelpersBPLibrary::GetAllClientActorsOfClass(ABaseCharacter::StaticClass(), Actors, 1);
+void AClientCharacterTest::StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action)
+{
+	TArray<UInputModifier*> Modifiers = {};
+	TArray<UInputTrigger*> Triggers = {};
 
-			for (AActor* Actor : Actors)
-			{
-				ABaseCharacter* BaseCharacter = Cast<ABaseCharacter>(Actor);
-
-				if (BaseCharacter != AltClientPlayerController->GetPawn())
-				{
-					ReturnCharacter = BaseCharacter;
-				}
-			}
-		}
-	}
-
-	return ReturnCharacter;
+	InputSubsystem->StopContinuousInputInjectionForAction(Action);
 }
