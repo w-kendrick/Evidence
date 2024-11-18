@@ -35,7 +35,9 @@ public:
 protected:
 	void BindTriggers();
 
+	UFUNCTION()
 	virtual void OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	UFUNCTION()
 	virtual void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
 	FPlayerTestInfo Client1TestInfo;
@@ -53,4 +55,9 @@ protected:
 private:
 	bool IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
 
+	UPROPERTY()
+	ATriggerBox* TriggerBox1;
+
+	UPROPERTY()
+	ATriggerBox* TriggerBox2;
 };

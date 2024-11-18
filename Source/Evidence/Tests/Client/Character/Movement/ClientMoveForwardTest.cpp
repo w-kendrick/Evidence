@@ -10,6 +10,8 @@ AClientMoveForwardTest::AClientMoveForwardTest()
 
 void AClientMoveForwardTest::StartTest()
 {
+	Super::StartTest();
+
 	BindTriggers();
 
 	StartInjectContinuousInput(Client2TestInfo.InputSubsystem, MoveAction, FVector(0, 1, 0));
