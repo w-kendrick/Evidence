@@ -48,7 +48,7 @@ bool AClientCharacterTest::IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInf
 
 void AClientCharacterTest::BindTriggers()
 {
-	TriggerBox1 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 0));
+	TriggerBox1 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 0));
 	if (TriggerBox1)
 	{
 		TriggerBox1->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger1BeginOverlap);
@@ -58,7 +58,7 @@ void AClientCharacterTest::BindTriggers()
 		UE_LOG(LogTemp, Error, TEXT("TriggerBox1 is invalid"))
 	}
 
-	TriggerBox2 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(APlayerController::StaticClass(), 1));
+	TriggerBox2 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 1));
 	if (TriggerBox2)
 	{
 		TriggerBox2->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger2BeginOverlap);
