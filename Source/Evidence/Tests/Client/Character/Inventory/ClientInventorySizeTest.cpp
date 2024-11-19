@@ -2,7 +2,6 @@
 
 
 #include "ClientInventorySizeTest.h"
-#include "Evidence/Character/Components/InventoryManagerComponent.h"
 
 AClientInventorySizeTest::AClientInventorySizeTest()
 {

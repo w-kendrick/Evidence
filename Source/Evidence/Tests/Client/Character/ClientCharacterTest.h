@@ -35,6 +35,8 @@ public:
 	bool IsReady_Implementation() override;
 
 protected:
+	bool bTestHasBegun;
+
 	void BindTriggers();
 
 	UFUNCTION()
