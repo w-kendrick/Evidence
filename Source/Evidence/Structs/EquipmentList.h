@@ -76,6 +76,11 @@ public:
 		Entries[Index] = FEquipmentItem(nullptr);
 	}
 
+	int32 GetNum() const
+	{
+		return Entries.Num();
+	}
+
 private:
 	UPROPERTY()
 	TArray<FEquipmentItem> Entries;

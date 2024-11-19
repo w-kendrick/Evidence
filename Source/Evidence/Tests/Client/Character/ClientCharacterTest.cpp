@@ -109,6 +109,11 @@ void AClientCharacterTest::CheckResult()
 	{
 		FinishTest(EFunctionalTestResult::Succeeded, FString("Passed"));
 	}
+	else
+	{
+		UE_LOG(LogTemp, Display, TEXT("Client 1 %s"), bClient1Passed ? "pass" : "fail")
+		UE_LOG(LogTemp, Display, TEXT("Client 2 %s"), bClient2Passed ? "pass" : "fail")
+	}
 }
 
 void AClientCharacterTest::InjectInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
