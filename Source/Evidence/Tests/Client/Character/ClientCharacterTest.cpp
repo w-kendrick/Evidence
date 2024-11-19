@@ -5,6 +5,8 @@
 
 AClientCharacterTest::AClientCharacterTest()
 {
+	bTestHasBegun = false;
+
 	bClient1Passed = false;
 	bClient2Passed = false;
 }
@@ -22,6 +24,11 @@ bool AClientCharacterTest::IsReady_Implementation()
 	bool bReady = false;
 
 	bReady = IsPlayerReady(0, Client1TestInfo) && IsPlayerReady(1, Client2TestInfo);
+
+	if (bReady)
+	{
+		bTestHasBegun = true;
+	}
 
 	return bReady;
 }
