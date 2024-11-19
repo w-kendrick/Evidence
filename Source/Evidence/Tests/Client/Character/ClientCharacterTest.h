@@ -14,8 +14,9 @@
 struct FPlayerTestInfo
 {
 	APlayerController* PlayerController;
-	ABaseCharacter* Character;
+	ABaseCharacter* MyCharacter;
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem;
+	ABaseCharacter* OtherCharacter;
 };
 
 class UInputAction;
@@ -30,6 +31,7 @@ class EVIDENCE_API AClientCharacterTest : public AFunctionalTest
 
 public:
 	AClientCharacterTest();
+	void StartTest() override;
 	bool IsReady_Implementation() override;
 
 protected:
@@ -53,6 +55,7 @@ protected:
 	void StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action);
 
 private:
+	void GetOtherClient(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
 	bool IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
 
 	UPROPERTY()
