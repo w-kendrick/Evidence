@@ -9,6 +9,14 @@ AClientCharacterTest::AClientCharacterTest()
 	bClient2Passed = false;
 }
 
+void AClientCharacterTest::StartTest()
+{
+	Super::StartTest();
+
+	GetOtherClient(0, Client1TestInfo);
+	GetOtherClient(1, Client2TestInfo);
+}
+
 bool AClientCharacterTest::IsReady_Implementation()
 {
 	bool bReady = false;
@@ -37,13 +45,29 @@ bool AClientCharacterTest::IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInf
 				bPlayerReady = true;
 
 				PlayerTestInfo.PlayerController = PlayerController;
-				PlayerTestInfo.Character = Character;
+				PlayerTestInfo.MyCharacter = Character;
 				PlayerTestInfo.InputSubsystem = InputSubsystem;
 			}
 		}
 	}
 
 	return bPlayerReady;
+}
+
+void AClientCharacterTest::GetOtherClient(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const
+{
+	TArray<AActor*> Actors;
+	UMPTestHelpersBPLibrary::GetAllClientActorsOfClass(ABaseCharacter::StaticClass(), Actors, PlayerIndex);;
+
+	for (AActor* Actor : Actors)
+	{
+		ABaseCharacter* Character = Cast<ABaseCharacter>(Actor);
+
+		if (Character != PlayerTestInfo.MyCharacter)
+		{
+			PlayerTestInfo.OtherCharacter = Character;
+		}
+	}
 }
 
 void AClientCharacterTest::BindTriggers()
