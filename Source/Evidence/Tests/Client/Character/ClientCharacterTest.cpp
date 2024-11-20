@@ -118,8 +118,8 @@ void AClientCharacterTest::CheckResult()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Display, TEXT("Client 1 %s"), bClient1Passed ? "pass" : "fail")
-		UE_LOG(LogTemp, Display, TEXT("Client 2 %s"), bClient2Passed ? "pass" : "fail")
+		UE_LOG(LogTemp, Display, TEXT("Client 1 %s"), bClient1Passed ? *FString("pass") : *FString("fail"))
+		UE_LOG(LogTemp, Display, TEXT("Client 2 %s"), bClient2Passed ? *FString("pass") : *FString("fail"))
 	}
 }
 
