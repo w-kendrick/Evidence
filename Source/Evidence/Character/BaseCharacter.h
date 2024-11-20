@@ -25,7 +25,10 @@ public:
 	void BeginPlay() override;
 	void Tick(float DeltaTime) override;
 
+	float GetHealth() const;
+	float GetMaxHealth() const;
 	bool IsAlive() const;
+	float GetStamina() const;
 	float GetMaxStamina() const;
 
 	FOnStaminaChanged StaminaDelegate;

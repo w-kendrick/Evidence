@@ -73,6 +73,24 @@ void ABaseCharacter::OnStaminaChanged(const FOnAttributeChangeData& Data)
 	StaminaDelegate.Broadcast(Data.NewValue);
 }
 
+float ABaseCharacter::GetHealth() const
+{
+	if (HealthSet)
+	{
+		return HealthSet->GetHealth();
+	}
+	return 0.0f;
+}
+
+float ABaseCharacter::GetMaxHealth() const
+{
+	if (HealthSet)
+	{
+		return HealthSet->GetMaxHealth();
+	}
+	return 0.0f;
+}
+
 bool ABaseCharacter::IsAlive() const
 {
 	if (HealthSet)
@@ -80,6 +98,15 @@ bool ABaseCharacter::IsAlive() const
 		return HealthSet->IsAlive();
 	}
 	return false;
+}
+
+float ABaseCharacter::GetStamina() const
+{
+	if (StaminaSet)
+	{
+		return StaminaSet->GetStamina();
+	}
+	return 0.0f;
 }
 
 float ABaseCharacter::GetMaxStamina() const
