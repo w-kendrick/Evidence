@@ -9,6 +9,7 @@
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "Engine/TriggerBox.h"
+#include "Kismet/GameplayStatics.h"
 #include "ClientCharacterTest.generated.h"
 
 struct FPlayerTestInfo
