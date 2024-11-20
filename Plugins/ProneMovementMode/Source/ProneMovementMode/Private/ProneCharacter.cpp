@@ -252,3 +252,12 @@ float AProneCharacter::GetMoveSpeed() const
 	}
 	return 0.0f;
 }
+
+float AProneCharacter::GetMaxMoveSpeed() const
+{
+	if (MovementSet)
+	{
+		return MovementSet->GetMaxMovementSpeed();
+	}
+	return 0.0f;
+}

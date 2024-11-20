@@ -56,6 +56,7 @@ public:
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 
 	float GetMoveSpeed() const;
+	float GetMaxMoveSpeed() const;
 
 public:
 	/** Set by character movement to specify that this Character is currently Proned. */
