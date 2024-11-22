@@ -20,22 +20,6 @@ void ACharacterTest::StartTest()
 	ServerGetOtherPlayers();
 	ClientGetOtherPlayers(0, Client1TestInfo, Client2PlayerId);
 	ClientGetOtherPlayers(1, Client2TestInfo, Client1PlayerId);
-
-	UE_LOG(LogTemp, Display, TEXT("ServerPlayerId: %d"), ServerPlayerId);
-	UE_LOG(LogTemp, Display, TEXT("Client1PlayerId: %d"), Client1PlayerId);
-	UE_LOG(LogTemp, Display, TEXT("Client2PlayerId: %d"), Client2PlayerId);
-
-	UE_LOG(LogTemp, Display, TEXT("Server Myself: %d"), ServerTestInfo.MyCharacter->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Server Client1: %d"), ServerTestInfo.Client1Character->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Server Client2: %d"), ServerTestInfo.Client2Character->GetPlayerState()->GetPlayerId());
-
-	UE_LOG(LogTemp, Display, TEXT("Client1 Myself: %d"), Client1TestInfo.MyCharacter->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Client1 Server: %d"), Client1TestInfo.ServerCharacter->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Client1 Other Client: %d"), Client1TestInfo.OtherClientCharacter->GetPlayerState()->GetPlayerId());
-
-	UE_LOG(LogTemp, Display, TEXT("Client2 Myself: %d"), Client2TestInfo.MyCharacter->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Client2 Server: %d"), Client2TestInfo.ServerCharacter->GetPlayerState()->GetPlayerId());
-	UE_LOG(LogTemp, Display, TEXT("Client2 Other Client: %d"), Client2TestInfo.OtherClientCharacter->GetPlayerState()->GetPlayerId());
 }
 
 bool ACharacterTest::IsReady_Implementation()
