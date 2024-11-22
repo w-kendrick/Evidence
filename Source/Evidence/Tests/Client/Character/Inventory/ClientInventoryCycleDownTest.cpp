@@ -25,7 +25,7 @@ void AClientInventoryCycleDownTest::Tick(float DeltaTime)
 	if (bTestHasBegun)
 	{
 		if ((Client2TestInfo.MyCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex) &&
-			(Client1TestInfo.OtherCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex))
+			(Client1TestInfo.OtherClientCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex))
 		{
 			Cycle();
 		}
