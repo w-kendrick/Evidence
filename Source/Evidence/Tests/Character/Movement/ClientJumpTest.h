@@ -20,8 +20,8 @@ public:
 	void StartTest() override;
 
 protected:
-	void OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
-	void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
+	void OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
+	void OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 
 	UPROPERTY(EditDefaultsOnly)
 	UInputAction* JumpAction;

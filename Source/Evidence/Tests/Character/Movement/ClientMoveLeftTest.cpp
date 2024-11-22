@@ -17,7 +17,7 @@ void AClientMoveLeftTest::StartTest()
 	StartInjectContinuousInput(Client2TestInfo.InputSubsystem, MoveAction, FVector(-1, 0, 0));
 }
 
-void AClientMoveLeftTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientMoveLeftTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
@@ -28,7 +28,7 @@ void AClientMoveLeftTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor
 	}
 }
 
-void AClientMoveLeftTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientMoveLeftTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 

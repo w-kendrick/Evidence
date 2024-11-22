@@ -17,7 +17,7 @@ void AClientMoveForwardTest::StartTest()
 	StartInjectContinuousInput(Client2TestInfo.InputSubsystem, MoveAction, FVector(0, 1, 0));
 }
 
-void AClientMoveForwardTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientMoveForwardTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
@@ -28,7 +28,7 @@ void AClientMoveForwardTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AAc
 	}
 }
 
-void AClientMoveForwardTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientMoveForwardTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
