@@ -25,7 +25,8 @@ void AClientHotbarQuickSelectTest::Tick(float DeltaTime)
 	if (bTestHasBegun)
 	{
 		if ((Client2TestInfo.MyCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex) &&
-			(Client1TestInfo.OtherClientCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex))
+			(Client1TestInfo.OtherClientCharacter->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex) &&
+			(ServerTestInfo.Client2Character->GetInventoryComponent()->GetSelectedIndex() == ExpectedIndex))
 		{
 			Cycle();
 		}
