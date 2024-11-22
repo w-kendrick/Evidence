@@ -3,19 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Client/Character/ClientCharacterTest.h"
-#include "ClientJumpTest.generated.h"
+#include "Evidence/Tests/Character/ClientCharacterTest.h"
+#include "ClientMoveRightTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientJumpTest : public AClientCharacterTest
+class EVIDENCE_API AClientMoveRightTest : public AClientCharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientJumpTest();
+	AClientMoveRightTest();
 
 	void StartTest() override;
 
@@ -24,6 +24,6 @@ protected:
 	void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 
 	UPROPERTY(EditDefaultsOnly)
-	UInputAction* JumpAction;
+	UInputAction* MoveAction;
 	
 };

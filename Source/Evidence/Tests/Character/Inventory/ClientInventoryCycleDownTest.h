@@ -3,29 +3,30 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Client/Character/ClientCharacterTest.h"
-#include "ClientInventoryCycleUpTest.generated.h"
+#include "Evidence/Tests/Character/ClientCharacterTest.h"
+#include "ClientInventoryCycleDownTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientInventoryCycleUpTest : public AClientCharacterTest
+class EVIDENCE_API AClientInventoryCycleDownTest : public AClientCharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientInventoryCycleUpTest();
+	AClientInventoryCycleDownTest();
 
 	void StartTest() override;
 	void Tick(float DeltaTime) override;
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-	UInputAction* CycleUpAction;
+	UInputAction* CycleDownAction;
 
-	uint8 ExpectedIndex;
+	int32 ExpectedIndex;
 	bool bFirstCycle;
 
 	void Cycle();
+	
 };

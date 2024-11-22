@@ -3,19 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Client/Character/ClientCharacterTest.h"
-#include "ClientUncrouchBlockedTest.generated.h"
+#include "Evidence/Tests/Character/ClientCharacterTest.h"
+#include "ClientCrouchTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientUncrouchBlockedTest : public AClientCharacterTest
+class EVIDENCE_API AClientCrouchTest : public AClientCharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientUncrouchBlockedTest();
+	AClientCrouchTest();
 
 	void StartTest() override;
 
@@ -28,8 +28,5 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	UInputAction* MoveAction;
-
-private:
-	void Step2();
 	
 };

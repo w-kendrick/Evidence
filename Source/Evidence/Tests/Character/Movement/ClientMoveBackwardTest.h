@@ -3,19 +3,19 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Client/Character/ClientCharacterTest.h"
-#include "ClientMoveRightTest.generated.h"
+#include "Evidence/Tests/Character/ClientCharacterTest.h"
+#include "ClientMoveBackwardTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientMoveRightTest : public AClientCharacterTest
+class EVIDENCE_API AClientMoveBackwardTest : public AClientCharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientMoveRightTest();
+	AClientMoveBackwardTest();
 
 	void StartTest() override;
 
