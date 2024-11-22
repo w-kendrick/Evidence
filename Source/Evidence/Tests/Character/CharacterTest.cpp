@@ -204,33 +204,48 @@ void ACharacterTest::ClientGetOtherPlayers(const uint8 PlayerIndex, FClientTestI
 
 void ACharacterTest::BindTriggers()
 {
-	TriggerBox1 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 0));
-	if (TriggerBox1)
+	ServerTriggerBox = Cast<ATriggerBox>(UGameplayStatics::GetActorOfClass(GetWorld(), ATriggerBox::StaticClass()));
+	if (ServerTriggerBox)
 	{
-		TriggerBox1->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger1BeginOverlap);
+		ServerTriggerBox->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnServerTriggerBeginOverlap);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("TriggerBox1 is invalid"))
+		UE_LOG(LogTemp, Error, TEXT("ServerTriggerBox is invalid"))
 	}
 
-	TriggerBox2 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 1));
-	if (TriggerBox2)
+	Client1TriggerBox = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 0));
+	if (Client1TriggerBox)
 	{
-		TriggerBox2->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnTrigger2BeginOverlap);
+		Client1TriggerBox->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnClient1TriggerBeginOverlap);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("TriggerBox2 is invalid"))
+		UE_LOG(LogTemp, Error, TEXT("Client1TriggerBox is invalid"))
+	}
+
+	Client2TriggerBox = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 1));
+	if (Client2TriggerBox)
+	{
+		Client2TriggerBox->OnActorBeginOverlap.AddDynamic(this, &ThisClass::OnClient2TriggerBeginOverlap);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Client2TriggerBox is invalid"))
 	}
 }
 
-void ACharacterTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void ACharacterTest::OnServerTriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+
+}
+
+void ACharacterTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	
 }
 
-void ACharacterTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void ACharacterTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	
 }

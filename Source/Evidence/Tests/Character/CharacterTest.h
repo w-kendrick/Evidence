@@ -52,9 +52,11 @@ protected:
 	void BindTriggers();
 
 	UFUNCTION()
-	virtual void OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	virtual void OnServerTriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 	UFUNCTION()
-	virtual void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	virtual void OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	UFUNCTION()
+	virtual void OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
 	FServerTestInfo ServerTestInfo;
 	FClientTestInfo Client1TestInfo;
@@ -77,10 +79,13 @@ private:
 	bool IsClientReady(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, int32& ClientId) const;
 
 	UPROPERTY()
-	ATriggerBox* TriggerBox1;
+	ATriggerBox* ServerTriggerBox;
 
 	UPROPERTY()
-	ATriggerBox* TriggerBox2;
+	ATriggerBox* Client1TriggerBox;
+
+	UPROPERTY()
+	ATriggerBox* Client2TriggerBox;
 
 	int32 ServerPlayerId;
 	int32 Client1PlayerId;

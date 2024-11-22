@@ -28,7 +28,7 @@ void AClientUncrouchBlockedTest::Step2()
 	InjectInput(Client2TestInfo.InputSubsystem, CrouchAction, FVector(1, 0, 0));
 }
 
-void AClientUncrouchBlockedTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientUncrouchBlockedTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
@@ -38,7 +38,7 @@ void AClientUncrouchBlockedTest::OnTrigger1BeginOverlap(AActor* OverlappedActor,
 	}
 }
 
-void AClientUncrouchBlockedTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientUncrouchBlockedTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 

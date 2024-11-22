@@ -17,7 +17,7 @@ void AClientJumpTest::StartTest()
 	InjectInput(Client1TestInfo.InputSubsystem, JumpAction, FVector(1, 0, 0));
 }
 
-void AClientJumpTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientJumpTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
@@ -28,7 +28,7 @@ void AClientJumpTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* Ot
 	}
 }
 
-void AClientJumpTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void AClientJumpTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
