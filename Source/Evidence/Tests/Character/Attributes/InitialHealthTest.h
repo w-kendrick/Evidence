@@ -4,23 +4,23 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Tests/Character/CharacterTest.h"
-#include "InitialStaminaTest.generated.h"
+#include "InitialHealthTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AInitialStaminaTest : public ACharacterTest
+class EVIDENCE_API AInitialHealthTest : public ACharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AInitialStaminaTest();
+	AInitialHealthTest();
 
 	void Tick(float DeltaTime) override;
 
 private:
-	static constexpr float EXPECTED_STAMINA = 100.f;
-	static constexpr float EXPECTED_MAX_STAMINA = 100.f;
+	static constexpr float EXPECTED_HEALTH = 100.f;
+	static constexpr float EXPECTED_MAX_HEALTH = 100.f;
 	
 };
