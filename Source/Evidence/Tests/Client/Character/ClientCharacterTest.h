@@ -17,7 +17,18 @@ struct FPlayerTestInfo
 	APlayerController* PlayerController;
 	ABaseCharacter* MyCharacter;
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem;
-	ABaseCharacter* OtherCharacter;
+};
+
+struct FClientTestInfo : FPlayerTestInfo
+{
+	ABaseCharacter* ServerCharacter;
+	ABaseCharacter* OtherClientCharacter;
+};
+
+struct FServerTestInfo : FPlayerTestInfo
+{
+	ABaseCharacter* Client1Character;
+	ABaseCharacter* Client2Character;
 };
 
 class UInputAction;
@@ -45,11 +56,13 @@ protected:
 	UFUNCTION()
 	virtual void OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
-	FPlayerTestInfo Client1TestInfo;
-	FPlayerTestInfo Client2TestInfo;
+	FServerTestInfo ServerTestInfo;
+	FClientTestInfo Client1TestInfo;
+	FClientTestInfo Client2TestInfo;
 
 	void CheckResult();
 
+	bool bServerPassed;
 	bool bClient1Passed;
 	bool bClient2Passed;
 
@@ -58,12 +71,18 @@ protected:
 	void StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action);
 
 private:
-	void GetOtherClient(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
-	bool IsPlayerReady(const uint8 PlayerIndex, FPlayerTestInfo& PlayerTestInfo) const;
+	void ServerGetOtherPlayers();
+	bool IsServerReady();
+	void ClientGetOtherPlayers(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, const int32 OtherClientId) const;
+	bool IsClientReady(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, int32& ClientId) const;
 
 	UPROPERTY()
 	ATriggerBox* TriggerBox1;
 
 	UPROPERTY()
 	ATriggerBox* TriggerBox2;
+
+	int32 ServerPlayerId;
+	int32 Client1PlayerId;
+	int32 Client2PlayerId;
 };
