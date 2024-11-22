@@ -4,18 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Tests/Character/CharacterTest.h"
-#include "ClientInventorySizeTest.generated.h"
+#include "InventorySizeTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientInventorySizeTest : public ACharacterTest
+class EVIDENCE_API AInventorySizeTest : public ACharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientInventorySizeTest();
+	AInventorySizeTest();
 
 	void StartTest() override;
 	
