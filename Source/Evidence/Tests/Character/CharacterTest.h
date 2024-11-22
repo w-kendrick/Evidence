@@ -10,7 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Engine/TriggerBox.h"
 #include "Kismet/GameplayStatics.h"
-#include "ClientCharacterTest.generated.h"
+#include "CharacterTest.generated.h"
 
 struct FPlayerTestInfo
 {
@@ -37,12 +37,12 @@ class UInputAction;
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientCharacterTest : public AFunctionalTest
+class EVIDENCE_API ACharacterTest : public AFunctionalTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientCharacterTest();
+	ACharacterTest();
 	void StartTest() override;
 	bool IsReady_Implementation() override;
 

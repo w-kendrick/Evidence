@@ -1,10 +1,10 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ClientCharacterTest.h"
+#include "CharacterTest.h"
 #include "GameFramework/PlayerState.h"
 
-AClientCharacterTest::AClientCharacterTest()
+ACharacterTest::ACharacterTest()
 {
 	bTestHasBegun = false;
 
@@ -13,7 +13,7 @@ AClientCharacterTest::AClientCharacterTest()
 	bClient2Passed = false;
 }
 
-void AClientCharacterTest::StartTest()
+void ACharacterTest::StartTest()
 {
 	Super::StartTest();
 
@@ -38,7 +38,7 @@ void AClientCharacterTest::StartTest()
 	UE_LOG(LogTemp, Display, TEXT("Client2 Other Client: %d"), Client2TestInfo.OtherClientCharacter->GetPlayerState()->GetPlayerId());
 }
 
-bool AClientCharacterTest::IsReady_Implementation()
+bool ACharacterTest::IsReady_Implementation()
 {
 	bool bReady = true;
 
@@ -54,7 +54,7 @@ bool AClientCharacterTest::IsReady_Implementation()
 	return bReady;
 }
 
-bool AClientCharacterTest::IsServerReady()
+bool ACharacterTest::IsServerReady()
 {
 	bool bMyselfReady = false;
 
@@ -107,7 +107,7 @@ bool AClientCharacterTest::IsServerReady()
 	return bMyselfReady && (ReadyCount == 3);
 }
 
-bool AClientCharacterTest::IsClientReady(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, int32& ClientId) const
+bool ACharacterTest::IsClientReady(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, int32& ClientId) const
 {
 	bool bMyselfReady = false;
 
@@ -160,7 +160,7 @@ bool AClientCharacterTest::IsClientReady(const uint8 PlayerIndex, FClientTestInf
 	return bMyselfReady && (ReadyCount == 3);
 }
 
-void AClientCharacterTest::ServerGetOtherPlayers()
+void ACharacterTest::ServerGetOtherPlayers()
 {
 	TArray<AActor*> Actors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ABaseCharacter::StaticClass(), Actors);
@@ -181,7 +181,7 @@ void AClientCharacterTest::ServerGetOtherPlayers()
 	}
 }
 
-void AClientCharacterTest::ClientGetOtherPlayers(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, const int32 OtherClientId) const
+void ACharacterTest::ClientGetOtherPlayers(const uint8 PlayerIndex, FClientTestInfo& ClientTestInfo, const int32 OtherClientId) const
 {
 	TArray<AActor*> Actors;
 	UMPTestHelpersBPLibrary::GetAllClientActorsOfClass(ABaseCharacter::StaticClass(), Actors, PlayerIndex);
@@ -202,7 +202,7 @@ void AClientCharacterTest::ClientGetOtherPlayers(const uint8 PlayerIndex, FClien
 	}
 }
 
-void AClientCharacterTest::BindTriggers()
+void ACharacterTest::BindTriggers()
 {
 	TriggerBox1 = Cast<ATriggerBox>(UMPTestHelpersBPLibrary::GetClientActorOfClass(ATriggerBox::StaticClass(), 0));
 	if (TriggerBox1)
@@ -225,17 +225,17 @@ void AClientCharacterTest::BindTriggers()
 	}
 }
 
-void AClientCharacterTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void ACharacterTest::OnTrigger1BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	
 }
 
-void AClientCharacterTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+void ACharacterTest::OnTrigger2BeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	
 }
 
-void AClientCharacterTest::CheckResult()
+void ACharacterTest::CheckResult()
 {
 	if (bServerPassed && bClient1Passed && bClient2Passed)
 	{
@@ -249,7 +249,7 @@ void AClientCharacterTest::CheckResult()
 	}
 }
 
-void AClientCharacterTest::InjectInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
+void ACharacterTest::InjectInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
 {
 	TArray<UInputModifier*> Modifiers = {};
 	TArray<UInputTrigger*> Triggers = {};
@@ -257,7 +257,7 @@ void AClientCharacterTest::InjectInput(UEnhancedInputLocalPlayerSubsystem* Input
 	InputSubsystem->InjectInputForAction(Action, Value, Modifiers, Triggers);
 }
 
-void AClientCharacterTest::StartInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
+void ACharacterTest::StartInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action, const FVector Value)
 {
 	TArray<UInputModifier*> Modifiers = {};
 	TArray<UInputTrigger*> Triggers = {};
@@ -265,7 +265,7 @@ void AClientCharacterTest::StartInjectContinuousInput(UEnhancedInputLocalPlayerS
 	InputSubsystem->StartContinuousInputInjectionForAction(Action, Value, Modifiers, Triggers);
 }
 
-void AClientCharacterTest::StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action)
+void ACharacterTest::StopInjectContinuousInput(UEnhancedInputLocalPlayerSubsystem* InputSubsystem, UInputAction* Action)
 {
 	TArray<UInputModifier*> Modifiers = {};
 	TArray<UInputTrigger*> Triggers = {};
