@@ -27,11 +27,22 @@ void AClientUncrouchTest::Step2()
 	InjectInput(Client2TestInfo.InputSubsystem, CrouchAction, FVector(1, 0, 0));
 }
 
+void AClientUncrouchTest::OnServerTriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
+
+	if (Character == ServerTestInfo.Client2Character)
+	{
+		bServerPassed = true;
+		CheckResult();
+	}
+}
+
 void AClientUncrouchTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
-	if (Character)
+	if (Character == Client1TestInfo.OtherClientCharacter)
 	{
 		bClient1Passed = true;
 		CheckResult();
@@ -42,7 +53,7 @@ void AClientUncrouchTest::OnClient2TriggerBeginOverlap(AActor* OverlappedActor, 
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
 
-	if (Character)
+	if (Character == Client2TestInfo.MyCharacter)
 	{
 		bClient2Passed = true;
 		CheckResult();
