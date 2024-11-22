@@ -28,6 +28,16 @@ void AClientUncrouchBlockedTest::Step2()
 	InjectInput(Client2TestInfo.InputSubsystem, CrouchAction, FVector(1, 0, 0));
 }
 
+void AClientUncrouchBlockedTest::OnServerTriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
+
+	if (Character)
+	{
+		FinishTest(EFunctionalTestResult::Failed, FString("Failed"));
+	}
+}
+
 void AClientUncrouchBlockedTest::OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
 {
 	const ABaseCharacter* const Character = Cast<ABaseCharacter>(OtherActor);
