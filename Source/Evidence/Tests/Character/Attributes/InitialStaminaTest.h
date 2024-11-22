@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Tests/Character/CharacterTest.h"
-#include "ClientInitialStaminaTest.generated.h"
+#include "InitialStaminaTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientInitialStaminaTest : public ACharacterTest
+class EVIDENCE_API AInitialStaminaTest : public ACharacterTest
 {
 	GENERATED_BODY()
 
 public:
-	AClientInitialStaminaTest();
+	AInitialStaminaTest();
 
-	void StartTest() override;
+	void Tick(float DeltaTime) override;
 	
 };
