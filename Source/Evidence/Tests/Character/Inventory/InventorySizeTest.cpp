@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ClientInventorySizeTest.h"
+#include "InventorySizeTest.h"
 
-AClientInventorySizeTest::AClientInventorySizeTest()
+AInventorySizeTest::AInventorySizeTest()
 {
 	TimeLimit = 5.0f;
 }
 
-void AClientInventorySizeTest::StartTest()
+void AInventorySizeTest::StartTest()
 {
 	Super::StartTest();
 
