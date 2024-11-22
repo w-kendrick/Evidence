@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Client/Character/ClientCharacterTest.h"
+#include "Evidence/Tests/Character/ClientCharacterTest.h"
 #include "ClientInitialHealthTest.generated.h"
 
 /**
