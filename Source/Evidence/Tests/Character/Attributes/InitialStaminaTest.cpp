@@ -14,13 +14,13 @@ void AInitialStaminaTest::Tick(float DeltaTime)
 
 	if (bTestHasBegun)
 	{
-		bServerPassed = (ServerTestInfo.MyCharacter->GetStamina() == 100.f) && (ServerTestInfo.MyCharacter->GetMaxStamina() == 100.f);
+		bServerPassed = (ServerTestInfo.MyCharacter->GetStamina() == EXPECTED_STAMINA) && (ServerTestInfo.MyCharacter->GetMaxStamina() == EXPECTED_MAX_STAMINA);
 
-		bServerPassed &= (ServerTestInfo.Client1Character->GetStamina() == 100.f) && (ServerTestInfo.Client1Character->GetMaxStamina() == 100.f);
-		bClient1Passed = (Client1TestInfo.MyCharacter->GetStamina() == 100.f) && (Client1TestInfo.MyCharacter->GetMaxStamina() == 100.f);
+		bServerPassed &= (ServerTestInfo.Client1Character->GetStamina() == EXPECTED_STAMINA) && (ServerTestInfo.Client1Character->GetMaxStamina() == EXPECTED_MAX_STAMINA);
+		bClient1Passed = (Client1TestInfo.MyCharacter->GetStamina() == EXPECTED_STAMINA) && (Client1TestInfo.MyCharacter->GetMaxStamina() == EXPECTED_MAX_STAMINA);
 
-		bServerPassed &= (ServerTestInfo.Client2Character->GetStamina() == 100.f) && (ServerTestInfo.Client2Character->GetMaxStamina() == 100.f);
-		bClient2Passed = (Client2TestInfo.MyCharacter->GetStamina() == 100.f) && (Client2TestInfo.MyCharacter->GetMaxStamina() == 100.f);
+		bServerPassed &= (ServerTestInfo.Client2Character->GetStamina() == EXPECTED_STAMINA) && (ServerTestInfo.Client2Character->GetMaxStamina() == EXPECTED_MAX_STAMINA);
+		bClient2Passed = (Client2TestInfo.MyCharacter->GetStamina() == EXPECTED_STAMINA) && (Client2TestInfo.MyCharacter->GetMaxStamina() == EXPECTED_MAX_STAMINA);
 
 		CheckResult();
 	}
