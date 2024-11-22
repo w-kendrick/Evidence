@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Character/ClientCharacterTest.h"
+#include "Evidence/Tests/Character/CharacterTest.h"
 #include "ClientMoveBackwardTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientMoveBackwardTest : public AClientCharacterTest
+class EVIDENCE_API AClientMoveBackwardTest : public ACharacterTest
 {
 	GENERATED_BODY()
 
