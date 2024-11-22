@@ -20,6 +20,7 @@ public:
 	void StartTest() override;
 
 protected:
+	void OnServerTriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 	void OnClient1TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 	void OnClient2TriggerBeginOverlap(AActor* OverlappedActor, AActor* OtherActor) override;
 
