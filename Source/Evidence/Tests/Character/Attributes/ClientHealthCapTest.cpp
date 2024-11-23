@@ -21,6 +21,10 @@ void AClientHealthCapTest::StartTest()
 		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(AwardHealthEffectClass, 1, AbilityComponent->MakeEffectContext());
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
+	else
+	{
+		FinishTest(EFunctionalTestResult::Failed, FString("Character has no ability system component"));
+	}
 }
 
 void AClientHealthCapTest::Tick(float DeltaTime)

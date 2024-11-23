@@ -21,6 +21,10 @@ void AServerStaminaCapTest::StartTest()
 		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(AwardStaminaEffectClass, 1, AbilityComponent->MakeEffectContext());
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
+	else
+	{
+		FinishTest(EFunctionalTestResult::Failed, FString("Character has no ability system component"));
+	}
 }
 
 void AServerStaminaCapTest::Tick(float DeltaTime)
