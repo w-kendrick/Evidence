@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ClientStaminaCapTest.h"
+#include "ClientMovementSpeedCapTest.h"
 #include "AdvancedAbilityComponent.h"
 
-AClientStaminaCapTest::AClientStaminaCapTest()
+AClientMovementSpeedCapTest::AClientMovementSpeedCapTest()
 {
 	TimeLimit = 5.0f;
 	TimesUpResult = EFunctionalTestResult::Succeeded;
 }
 
-void AClientStaminaCapTest::StartTest()
+void AClientMovementSpeedCapTest::StartTest()
 {
 	Super::StartTest();
 
@@ -18,7 +18,7 @@ void AClientStaminaCapTest::StartTest()
 
 	if (AbilityComponent)
 	{
-		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(AwardStaminaEffectClass, 1, AbilityComponent->MakeEffectContext());
+		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(MovementSpeedEffectClass, 1, AbilityComponent->MakeEffectContext());
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
 	else
@@ -27,13 +27,13 @@ void AClientStaminaCapTest::StartTest()
 	}
 }
 
-void AClientStaminaCapTest::Tick(float DeltaTime)
+void AClientMovementSpeedCapTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	if (bTestHasBegun)
 	{
-		if (Client1TestInfo.MyCharacter->GetStamina() > MAX_STAMINA || ServerTestInfo.Client1Character->GetStamina() > MAX_STAMINA)
+		if (Client1TestInfo.MyCharacter->GetMoveSpeed() > MAX_MOVEMENT_SPEED || ServerTestInfo.Client1Character->GetMoveSpeed() > MAX_MOVEMENT_SPEED)
 		{
 			FinishTest(EFunctionalTestResult::Failed, FString("Failed"));
 		}

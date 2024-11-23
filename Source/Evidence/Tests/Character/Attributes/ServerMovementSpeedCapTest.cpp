@@ -1,16 +1,16 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ServerHealthCapTest.h"
+#include "ServerMovementSpeedCapTest.h"
 #include "AdvancedAbilityComponent.h"
 
-AServerHealthCapTest::AServerHealthCapTest()
+AServerMovementSpeedCapTest::AServerMovementSpeedCapTest()
 {
 	TimeLimit = 5.0f;
 	TimesUpResult = EFunctionalTestResult::Succeeded;
 }
 
-void AServerHealthCapTest::StartTest()
+void AServerMovementSpeedCapTest::StartTest()
 {
 	Super::StartTest();
 
@@ -18,7 +18,7 @@ void AServerHealthCapTest::StartTest()
 
 	if (AbilityComponent)
 	{
-		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(AwardHealthEffectClass, 1, AbilityComponent->MakeEffectContext());
+		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(MovementSpeedEffectClass, 1, AbilityComponent->MakeEffectContext());
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
 	else
@@ -27,13 +27,13 @@ void AServerHealthCapTest::StartTest()
 	}
 }
 
-void AServerHealthCapTest::Tick(float DeltaTime)
+void AServerMovementSpeedCapTest::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	if (bTestHasBegun)
 	{
-		if (ServerTestInfo.Client1Character->GetHealth() > MAX_HEALTH)
+		if (ServerTestInfo.Client1Character->GetMoveSpeed() > MAX_MOVEMENT_SPEED)
 		{
 			FinishTest(EFunctionalTestResult::Failed, FString("Failed"));
 		}
