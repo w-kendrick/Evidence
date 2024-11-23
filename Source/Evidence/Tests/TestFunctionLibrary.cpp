@@ -16,13 +16,18 @@ void UTestFunctionLibrary::StartSetupPeriod(UWorld* World)
 	}
 }
 
-void UTestFunctionLibrary::KillPlayer(ACharacter* Character, TSubclassOf<UGameplayEffect> KillPlayerEffectClass)
+void UTestFunctionLibrary::KillPlayer(ACharacter* Character, const TSubclassOf<UGameplayEffect>& KillPlayerEffectClass)
+{
+	ApplyGameplayEffect(Character, KillPlayerEffectClass);
+}
+
+void UTestFunctionLibrary::ApplyGameplayEffect(ACharacter* Character, const TSubclassOf<UGameplayEffect>& EffectClass)
 {
 	UAdvancedAbilityComponent* AbilityComponent = Character->GetComponentByClass<UAdvancedAbilityComponent>();
 
 	if (AbilityComponent)
 	{
-		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(KillPlayerEffectClass, 1, AbilityComponent->MakeEffectContext());
+		const FGameplayEffectSpecHandle SpecHandle = AbilityComponent->MakeOutgoingSpec(EffectClass, 1, AbilityComponent->MakeEffectContext());
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
 }
