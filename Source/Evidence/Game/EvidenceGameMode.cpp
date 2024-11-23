@@ -93,8 +93,6 @@ void AEvidenceGameMode::OnMatchStateSet()
 	else if (MatchState == MatchState::PreSetup)
 	{
 		//Pre-setup begin
-		UE_LOG(LogTemp, Warning, TEXT("Night: %d"), Night);
-
 		for (APlayerController* const DeadPlayer : DeadPlayers)
 		{
 			AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(DeadPlayer);
@@ -310,7 +308,7 @@ void AEvidenceGameMode::SaveGame()
 						PlayerSave.AddEquipment(EquipmentData);
 					}
 				}
-				UE_LOG(LogTemp, Warning, TEXT("Adding PlayerSave for %s with %d instances of equipment"), *PlayerState->GetUniqueId().ToString(), PlayerSave.SavedEquipment.Num());
+				UE_LOG(LogTemp, Display, TEXT("Adding PlayerSave for %s with %d instances of equipment"), *PlayerState->GetUniqueId().ToString(), PlayerSave.SavedEquipment.Num());
 				SaveGameInstance->AddPlayerSave(PlayerState->GetUniqueId(), PlayerSave);
 			}
 
@@ -461,7 +459,7 @@ void AEvidenceGameMode::WipeSave()
 
 			const FString& SlotNameString = EvidenceGameInstance->GetSlotName();
 			UGameplayStatics::AsyncSaveGameToSlot(SaveGameInstance, SlotNameString, 0, SavedDelegate);
-			UE_LOG(LogTemp, Warning, TEXT("Wiped Save"));
+			UE_LOG(LogTemp, Display, TEXT("Wiped Save"));
 		}
 	}
 }
