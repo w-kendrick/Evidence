@@ -10,6 +10,7 @@
 #include "EnhancedInputSubsystems.h"
 #include "Engine/TriggerBox.h"
 #include "Kismet/GameplayStatics.h"
+#include "Evidence/Tests/TestFunctionLibrary.h"
 #include "CharacterTest.generated.h"
 
 struct FPlayerTestInfo
