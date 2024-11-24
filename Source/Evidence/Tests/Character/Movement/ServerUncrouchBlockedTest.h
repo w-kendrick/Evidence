@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Character/CharacterTest.h"
+#include "Evidence/Tests/MasterTest.h"
 #include "ServerUncrouchBlockedTest.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class EVIDENCE_API AServerUncrouchBlockedTest : public ACharacterTest
+class EVIDENCE_API AServerUncrouchBlockedTest : public AMasterTest
 {
 	GENERATED_BODY()
 	

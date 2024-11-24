@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Evidence/Tests/Character/CharacterTest.h"
+#include "Evidence/Tests/MasterTest.h"
 #include "ClientStaminaCapTest.generated.h"
 
 class UGameplayEffect;
@@ -12,7 +12,7 @@ class UGameplayEffect;
  * 
  */
 UCLASS()
-class EVIDENCE_API AClientStaminaCapTest : public ACharacterTest
+class EVIDENCE_API AClientStaminaCapTest : public AMasterTest
 {
 	GENERATED_BODY()
 
