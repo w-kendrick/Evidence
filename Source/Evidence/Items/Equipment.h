@@ -29,8 +29,7 @@ public:
 	void Stow(ABaseCharacter* Char);
 	void Drop();
 
-	void Attach(ABaseCharacter* Char, const bool isVisible);
-	void Detach();
+	void Attach(AActor* Actor, UMeshComponent* Mesh, const bool isVisible);
 
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
@@ -56,6 +55,9 @@ protected:
 	FString EquipmentName;
 
 private:
+	void AttachToCharacter(ABaseCharacter* Char, const bool isVisible);
+	void Detach();
+
 	void FindGround(FVector& Location, FRotator& Rotation) const;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Pickup")

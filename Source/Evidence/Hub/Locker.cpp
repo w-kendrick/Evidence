@@ -40,7 +40,7 @@ void ALocker::SetEquipmentAtIndex(AEquipment* const Equipment, const uint8 Index
 {
 	if (Equipment)
 	{
-		Equipment->SetOwner(this);
+		Equipment->Attach(this, MeshComponent, false);
 	}
 
 	Storage.AddEntry(Equipment, Index);
