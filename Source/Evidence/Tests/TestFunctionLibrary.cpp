@@ -31,3 +31,10 @@ void UTestFunctionLibrary::ApplyGameplayEffect(ACharacter* Character, const TSub
 		AbilityComponent->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data);
 	}
 }
+
+AEquipment* UTestFunctionLibrary::SpawnEquipment(UWorld* World, const TSubclassOf<AEquipment>& EquipmentClass, const FVector& Location)
+{
+	AEquipment* NewEquipment = World->SpawnActor<AEquipment>(EquipmentClass, FTransform(Location));
+
+	return NewEquipment;
+}
