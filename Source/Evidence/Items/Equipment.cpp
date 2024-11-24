@@ -56,14 +56,14 @@ FString AEquipment::GetInteractionString_Implementation()
 
 void AEquipment::Pickup(ABaseCharacter* Char)
 {
-	Attach(Char, true);
+	AttachToCharacter(Char, true);
 
 	AddAbilities(Char);
 }
 
 void AEquipment::Stow(ABaseCharacter* Char)
 {
-	Attach(Char, false);
+	AttachToCharacter(Char, false);
 
 	RemoveAbilities(Char);
 }
@@ -78,16 +78,11 @@ void AEquipment::Drop()
 	Detach();
 }
 
-void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
+void AEquipment::AttachToCharacter(ABaseCharacter* Char, const bool isVisible)
 {
-	SetOwner(Char);
-	bIsPickedUp = true;
+	Attach(Char, Char->GetMesh(), isVisible);
 
-	USkeletalMeshComponent* const CharWorldMesh = Char->GetMesh();
 	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
-	WorldMesh->AttachToComponent(CharWorldMesh, Rule, EquipSocket);
-	WorldMesh->SetVisibility(isVisible);
-
 	ABaseCharacter* PlayerChar = Cast<ABaseCharacter>(Char);
 	if (PlayerChar)
 	{
@@ -95,6 +90,16 @@ void AEquipment::Attach(ABaseCharacter* Char, const bool isVisible)
 		LocalMesh->AttachToComponent(CharLocalMesh, Rule, EquipSocket);
 		LocalMesh->SetVisibility(isVisible);
 	}
+}
+
+void AEquipment::Attach(AActor* Actor, UMeshComponent* Mesh, const bool isVisible)
+{
+	SetOwner(Actor);
+	bIsPickedUp = true;
+
+	const FAttachmentTransformRules Rule = FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, false);
+	WorldMesh->AttachToComponent(Mesh, Rule, EquipSocket);
+	WorldMesh->SetVisibility(isVisible);
 }
 
 void AEquipment::Detach()
@@ -105,6 +110,9 @@ void AEquipment::Detach()
 	const FDetachmentTransformRules Rule = FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, false);
 	WorldMesh->DetachFromComponent(Rule);
 	LocalMesh->DetachFromComponent(Rule);
+
+	WorldMesh->SetVisibility(true);
+	LocalMesh->SetVisibility(true);
 
 	FVector Location;
 	FRotator Rotation;
