@@ -7,6 +7,7 @@
 #include "TestFunctionLibrary.generated.h"
 
 class UGameplayEffect;
+class AEquipment;
 
 /**
  * 
@@ -20,5 +21,7 @@ public:
 	static void StartSetupPeriod(UWorld* World);
 	static void KillPlayer(ACharacter* Character, const TSubclassOf<UGameplayEffect>& KillPlayerEffectClass);
 	static void ApplyGameplayEffect(ACharacter* Character, const TSubclassOf<UGameplayEffect>& EffectClass);
+
+	static AEquipment* SpawnEquipment(UWorld* World, const TSubclassOf<AEquipment>& EquipmentClass, const FVector& Location);
 	
 };
