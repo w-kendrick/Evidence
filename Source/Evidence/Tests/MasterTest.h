@@ -12,7 +12,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Evidence/Tests/TestFunctionLibrary.h"
-#include "CharacterTest.generated.h"
+#include "MasterTest.generated.h"
 
 struct FPlayerTestInfo
 {
@@ -39,12 +39,12 @@ class UInputAction;
  * 
  */
 UCLASS()
-class EVIDENCE_API ACharacterTest : public AFunctionalTest
+class EVIDENCE_API AMasterTest : public AFunctionalTest
 {
 	GENERATED_BODY()
 
 public:
-	ACharacterTest();
+	AMasterTest();
 	void StartTest() override;
 	bool IsReady_Implementation() override;
 
