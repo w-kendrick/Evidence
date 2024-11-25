@@ -16,6 +16,8 @@ class EVIDENCE_API ATorch : public APowerEquipment
 public:
 	ATorch();
 
+	FORCEINLINE USpotLightComponent* GetLightComponent() const { return LightComponent; }
+
 protected:
 	virtual void ActivatePower() override;
 	virtual void DeactivatePower() override;
