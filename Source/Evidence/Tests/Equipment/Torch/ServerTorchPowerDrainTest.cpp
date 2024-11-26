@@ -1,14 +1,14 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ClientTorchPowerDrainTest.h"
+#include "ServerTorchPowerDrainTest.h"
 #include "Evidence/Items/Equipment/Torch.h"
 
-AClientTorchPowerDrainTest::AClientTorchPowerDrainTest()
+AServerTorchPowerDrainTest::AServerTorchPowerDrainTest()
 {
 }
 
-void AClientTorchPowerDrainTest::StartTest()
+void AServerTorchPowerDrainTest::StartTest()
 {
 	Super::StartTest();
 
@@ -21,17 +21,17 @@ void AClientTorchPowerDrainTest::StartTest()
 		FinishTest(EFunctionalTestResult::Failed, FString("Torch missing from level"));
 	}
 
-	ServerTestInfo.Client1Character->Pickup(ServerTorch);
+	ServerTestInfo.MyCharacter->Pickup(ServerTorch);
 
 	FTimerHandle EquipHandle;
 	GetWorldTimerManager().SetTimer(EquipHandle, this, &ThisClass::OnEquip, 1.0f, false);
 }
 
-void AClientTorchPowerDrainTest::OnEquip()
+void AServerTorchPowerDrainTest::OnEquip()
 {
-	if ((ServerTestInfo.Client1Character->GetEquipped() != ServerTorch) ||
-		(Client1TestInfo.MyCharacter->GetEquipped() != Client1Torch) ||
-		(Client2TestInfo.OtherClientCharacter->GetEquipped() != Client2Torch))
+	if ((ServerTestInfo.MyCharacter->GetEquipped() != ServerTorch) ||
+		(Client1TestInfo.ServerCharacter->GetEquipped() != Client1Torch) ||
+		(Client2TestInfo.ServerCharacter->GetEquipped() != Client2Torch))
 	{
 		FinishTest(EFunctionalTestResult::Failed, FString("Failed to equip"));
 	}
@@ -43,13 +43,13 @@ void AClientTorchPowerDrainTest::OnEquip()
 		FinishTest(EFunctionalTestResult::Failed, FString("Torch not at 100% power"));
 	}
 
-	InjectInput(Client1TestInfo.InputSubsystem, UseAction, FVector(1, 0, 0));
+	InjectInput(ServerTestInfo.InputSubsystem, UseAction, FVector(1, 0, 0));
 
 	FTimerHandle ActivateHandle;
 	GetWorldTimerManager().SetTimer(ActivateHandle, this, &ThisClass::OnActivate, 1.0f, false);
 }
 
-void AClientTorchPowerDrainTest::OnActivate()
+void AServerTorchPowerDrainTest::OnActivate()
 {
 	if ((ServerTorch->GetPower() == 100.f) ||
 		(Client1Torch->GetPower() == 100.f) ||
@@ -58,7 +58,7 @@ void AClientTorchPowerDrainTest::OnActivate()
 		FinishTest(EFunctionalTestResult::Failed, FString("Torch has not drained power since activation"));
 	}
 
-	InjectInput(Client1TestInfo.InputSubsystem, UseAction, FVector(1, 0, 0));
+	InjectInput(ServerTestInfo.InputSubsystem, UseAction, FVector(1, 0, 0));
 
 	PowerAtDeactivation = ServerTorch->GetPower();
 
@@ -66,7 +66,7 @@ void AClientTorchPowerDrainTest::OnActivate()
 	GetWorldTimerManager().SetTimer(DeactivateHandle, this, &ThisClass::OnDeactivate, 1.0f, false);
 }
 
-void AClientTorchPowerDrainTest::OnDeactivate()
+void AServerTorchPowerDrainTest::OnDeactivate()
 {
 	if (FMath::IsNearlyEqual(ServerTorch->GetPower(), PowerAtDeactivation, 0.1f) &&
 		FMath::IsNearlyEqual(Client1Torch->GetPower(), PowerAtDeactivation, 0.1f) &&
