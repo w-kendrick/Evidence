@@ -6,5 +6,7 @@ set PROJECT_FILE="C:\Users\willk\Documents\Unreal Projects\Evidence\Evidence.upr
 
 %UNREAL_EDITOR% %PROJECT_FILE% -Deterministic -nosplash -Unattended -nopause -nosound -NullRHI -nocontentbrowser -ini:EditorPerProjectUserSettings:[/Script/UnrealEd.LevelEditorPlaySettings]:PlayNetMode=PIE_ListenServer -ExecCmds="Automation RunTests Project.Functional Tests.Tests;quit" -StdOut -ReportOutputPath="%CD%\Saved\Automation\Reports" -LogCmds="Global Warning, LogCheckSubobjects Fatal, LogAutomationController Verbose"
 
+parse_test_results.py
+
 endlocal
 @echo on
