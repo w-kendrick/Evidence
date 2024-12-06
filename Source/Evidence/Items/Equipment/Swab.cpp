@@ -7,6 +7,8 @@
 ASwab::ASwab()
 {
 	MaxCaptures = 1;
+
+	EquipmentAbbreviation = FString(TEXT("SWA"));
 }
 
 void ASwab::ApplyToBloodStain(ABloodStain* const Stain)

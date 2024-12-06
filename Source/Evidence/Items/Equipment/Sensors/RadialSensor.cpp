@@ -8,6 +8,8 @@ ARadialSensor::ARadialSensor()
 {
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
+
+	EquipmentAbbreviation = FString(TEXT("RSE"));
 }
 
 void ARadialSensor::ActivatePower()

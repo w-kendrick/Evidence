@@ -7,6 +7,8 @@
 ANoiseBait::ANoiseBait()
 {
 	EventDelay = 2.5f;
+
+	EquipmentAbbreviation = FString(TEXT("NBA"));
 }
 
 void ANoiseBait::ActivatePower()

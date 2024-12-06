@@ -8,6 +8,8 @@ AMovementSensor::AMovementSensor()
 {
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
+
+	EquipmentAbbreviation = FString(TEXT("MSE"));
 }
 
 void AMovementSensor::ActivatePower()

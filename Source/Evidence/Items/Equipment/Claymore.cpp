@@ -20,6 +20,8 @@ AClaymore::AClaymore()
 	Sight->DetectionByAffiliation.bDetectFriendlies = true;
 
 	PerceptionComponent->ConfigureSense(*Sight);
+
+	EquipmentAbbreviation = FString(TEXT("CLA"));
 }
 
 bool AClaymore::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const

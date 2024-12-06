@@ -13,11 +13,11 @@ void UInventorySlotDragPreview::NativeConstruct()
 	AEquipment* const Equipment = InventoryComponent->GetEquipmentAtIndex(Index);
 	if (Equipment)
 	{
-		SlotText->SetText(FText::FromString(Equipment->GetEquipmentName()));
+		SlotText->SetText(FText::FromString(Equipment->GetEquipmentAbbreviation()));
 	}
 	else
 	{
-		SlotText->SetText(FText::FromString(TEXT("Empty")));
+		SlotText->SetText(FText::FromString(TEXT("")));
 	}
 }
 

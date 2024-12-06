@@ -9,6 +9,8 @@
 APhotoCamera::APhotoCamera()
 {
 	MaxCaptures = 10;
+
+	EquipmentAbbreviation = FString(TEXT("PCM"));
 }
 
 void APhotoCamera::SaveFrame()

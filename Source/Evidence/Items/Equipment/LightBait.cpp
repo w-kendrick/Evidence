@@ -16,6 +16,8 @@ ALightBait::ALightBait()
 	LightComponent->SetVisibility(false);
 
 	EventDelay = 0.5f;
+
+	EquipmentAbbreviation = FString(TEXT("LBA"));
 }
 
 void ALightBait::BeginPlay()

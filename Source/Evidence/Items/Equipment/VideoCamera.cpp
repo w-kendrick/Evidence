@@ -9,6 +9,8 @@ AVideoCamera::AVideoCamera()
 	FPS = 10;
 	MaxVideoLength = 10.f;
 	isRecording = false;
+
+	EquipmentAbbreviation = FString(TEXT("VCM"));
 }
 
 void AVideoCamera::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
