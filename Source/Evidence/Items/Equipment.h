@@ -33,6 +33,7 @@ public:
 
 	FORCEINLINE USkeletalMeshComponent* GetWorldMesh() const { return WorldMesh; }
 	FORCEINLINE FString GetEquipmentName() const { return EquipmentName; }
+	FORCEINLINE FString GetEquipmentAbbreviation() const { return EquipmentAbbreviation; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Components")
@@ -53,6 +54,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly)
 	FString EquipmentName;
+
+	UPROPERTY(EditDefaultsOnly)
+	FString EquipmentAbbreviation;
 
 private:
 	void AttachToCharacter(ABaseCharacter* Char, const bool isVisible);

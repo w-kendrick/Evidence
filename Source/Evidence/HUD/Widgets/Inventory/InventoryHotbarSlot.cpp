@@ -33,11 +33,11 @@ void UInventoryHotbarSlot::UpdateSlot(const AEquipment* const Equipment)
 {
 	if (Equipment)
 	{
-		NameText->SetText(FText::FromString(Equipment->GetEquipmentName()));
+		NameText->SetText(FText::FromString(Equipment->GetEquipmentAbbreviation()));
 	}
 	else
 	{
-		NameText->SetText(FText::FromString(FString(TEXT("Empty"))));
+		NameText->SetText(FText::FromString(FString(TEXT(""))));
 	}
 }
 

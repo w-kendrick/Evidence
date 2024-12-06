@@ -13,6 +13,7 @@ ATorch::ATorch()
 	LightComponent->SetVisibility(false);
 
 	EquipmentName = FString(TEXT("Torch"));
+	EquipmentAbbreviation = FString(TEXT("TOR"));
 }
 
 void ATorch::ActivatePower()

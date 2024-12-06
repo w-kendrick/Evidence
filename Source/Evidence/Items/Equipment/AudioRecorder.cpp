@@ -23,6 +23,8 @@ AAudioRecorder::AAudioRecorder()
 
 	MaxLength = 10.f;
 	isRecording = false;
+
+	EquipmentAbbreviation = FString(TEXT("AUD"));
 }
 
 void AAudioRecorder::BeginPlay()

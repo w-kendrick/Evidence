@@ -33,6 +33,7 @@ AEquipment::AEquipment()
 	LocalMesh->SetIsReplicated(true);
 
 	EquipmentName = FString(TEXT("Equipment"));
+	EquipmentAbbreviation = FString(TEXT("EQU"));
 }
 
 bool AEquipment::IsAvailableForInteraction_Implementation(UPrimitiveComponent* InteractionComponent, AActor* InteractingActor) const

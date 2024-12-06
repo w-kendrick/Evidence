@@ -9,6 +9,8 @@ AAutoCamera::AAutoCamera()
 {
 	SenseDelay = 3.0f;
 	SenseRadius = 1000.f;
+
+	EquipmentAbbreviation = FString(TEXT("ACM"));
 }
 
 void AAutoCamera::StartSensing()
