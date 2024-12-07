@@ -3,6 +3,8 @@
 
 #include "RadialSensor.h"
 #include "Evidence/Evidence.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
+#include "Evidence/Hub/Hub.h"
 
 ARadialSensor::ARadialSensor()
 {
@@ -10,6 +12,17 @@ ARadialSensor::ARadialSensor()
 	SenseRadius = 1000.f;
 
 	EquipmentAbbreviation = FString(TEXT("RSE"));
+}
+
+void ARadialSensor::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	if (Hub)
+	{
+		Hub->RegisterRadialSensor(this);
+	}
 }
 
 void ARadialSensor::ActivatePower()

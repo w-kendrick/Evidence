@@ -18,8 +18,9 @@ public:
 	FOnRadialSense OnRadialSense;
 
 protected:
-	virtual void ActivatePower() override;
-	virtual void DeactivatePower() override;
+	void BeginPlay() override;
+	void ActivatePower() override;
+	void DeactivatePower() override;
 
 	void Sense();
 
