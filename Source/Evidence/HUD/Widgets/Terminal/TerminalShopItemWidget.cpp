@@ -4,9 +4,8 @@
 #include "TerminalShopItemWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/Button.h"
-#include "Kismet/GameplayStatics.h"
-#include "Evidence/Game/EvidenceGameState.h"
 #include "Evidence/Hub/Hub.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 
 void UTerminalShopItemWidget::SpawnInitialize(const FShopItem& NewItem)
 {
@@ -35,13 +34,9 @@ void UTerminalShopItemWidget::NativeConstruct()
 
 void UTerminalShopItemWidget::OnBuyClicked()
 {
-	AEvidenceGameState* const EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	if (EGS)
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	if (Hub)
 	{
-		AHub* const Hub = Cast<AHub>(EGS->GetHub());
-		if (Hub)
-		{
-			Hub->ServerPurchaseEquipment(Item);
-		}
+		Hub->ServerPurchaseEquipment(Item);
 	}
 }

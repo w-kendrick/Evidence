@@ -2,8 +2,7 @@
 
 
 #include "TerminalMenu.h"
-#include "Kismet/GameplayStatics.h"
-#include "Evidence/Game/EvidenceGameState.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 #include "Evidence/Hub/Hub.h"
 #include "Components/Button.h"
 #include "TerminalShopMenu.h"
@@ -20,14 +19,10 @@ void UTerminalMenu::NativeConstruct()
 
 void UTerminalMenu::LeaveEvent()
 {
-	AEvidenceGameState* const EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	if (EGS)
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	if (Hub)
 	{
-		AHub* const Hub = EGS->GetHub();
-		if (Hub)
-		{
-			Hub->Relinquish();
-		}
+		Hub->Relinquish();
 	}
 
 	Super::LeaveEvent();

@@ -29,7 +29,6 @@ public:
 	FOnMatchStateChanged OnMatchStateChanged;
 
 	void EndNight();
-	AHub* GetHub();
 
 	FOnNightChanged OnNightChanged;
 	FOnCashChanged OnCashChanged;
@@ -52,9 +51,6 @@ protected:
 private:
 	UPROPERTY(Replicated)
 	float SetupCountdown;
-
-	UPROPERTY()
-	AHub* Hub;
 
 	UPROPERTY(ReplicatedUsing = OnRep_Night)
 	uint32 Night;

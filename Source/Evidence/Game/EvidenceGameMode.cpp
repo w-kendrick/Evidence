@@ -14,6 +14,7 @@
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
 #include "Evidence/Hub/Hub.h"
 #include "Evidence/Items/Equipment/EvidenceCaptureEquipment.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 
 AEvidenceGameMode::AEvidenceGameMode()
 	: Super()
@@ -196,7 +197,7 @@ void AEvidenceGameMode::ResetWorld(const bool bWasWipe)
 
 void AEvidenceGameMode::ResetEquipment(const bool bWasWipe)
 {
-	AHub* const Hub = EvidenceGameState->GetHub();
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
 	const TArray<AEvidenceCaptureEquipment*>& HubCaptureDevices = Hub->GetCaptureDevices();
 
 	TArray<AActor*> Actors;

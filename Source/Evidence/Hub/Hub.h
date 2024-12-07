@@ -30,6 +30,9 @@ public:
 
 	void ConsumeCaptures();
 
+	void RegisterMovementSensor(AMovementSensor* const MovementSensor);
+	void RegisterRadialSensor(ARadialSensor* const RadialSensor);
+
 	FString GetInteractionString_Implementation() override;
 
 	UFUNCTION(Server, Reliable)
@@ -42,9 +45,6 @@ public:
 protected:
 	void BeginPlay() override;
 	void OnInteract() override;
-
-	UPROPERTY(EditDefaultsOnly)
-	TArray<FSpawnInfo> InitialSpawns;
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UBoxComponent* Bounds;
@@ -63,7 +63,6 @@ protected:
 	TArray<FShopItem> ShopItems;
 
 private:
-	void CreateInitialSpawns();
 	void SpawnEquipment(const FSpawnInfo& SpawnInfo);
 	void SpawnMovementSensor(const FSpawnInfo& SpawnInfo);
 	void SpawnRadialSensor(const FSpawnInfo& SpawnInfo);
