@@ -16,6 +16,7 @@
 #include "Components/SphereComponent.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Player/EvidencePlayerController.h"
+#include "Components/WidgetComponent.h"
 
 AHub::AHub()
 {
@@ -36,6 +37,9 @@ AHub::AHub()
 	Terminal = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Terminal"));
 	Terminal->SetupAttachment(RootComponent);
 	Terminal->SetCollisionResponseToChannel(COLLISION_INTERACTABLE, ECollisionResponse::ECR_Overlap);
+
+	MapWidget = CreateDefaultSubobject<UWidgetComponent>(TEXT("MapWidget"));
+	MapWidget->SetupAttachment(RootComponent);
 }
 
 void AHub::BeginPlay()

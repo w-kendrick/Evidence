@@ -20,6 +20,7 @@ class AEvidenceGameState;
 class USphereComponent;
 class UStaticMeshComponent;
 class ABaseCharacter;
+class UWidgetComponent;
 	
 UCLASS()
 class EVIDENCE_API AHub : public ASingleUserInteractable
@@ -59,6 +60,9 @@ protected:
 
 	UPROPERTY(VisibleDefaultsOnly)
 	UStaticMeshComponent* Terminal;
+
+	UPROPERTY(VisibleDefaultsOnly)
+	UWidgetComponent* MapWidget;
 
 	void OnMovementSensed(AMovementSensor* const Sensor);
 	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector>& Locations);
