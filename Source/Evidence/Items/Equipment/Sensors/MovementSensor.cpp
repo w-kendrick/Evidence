@@ -3,6 +3,8 @@
 
 #include "MovementSensor.h"
 #include "Evidence/Evidence.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
+#include "Evidence/Hub/Hub.h"
 
 AMovementSensor::AMovementSensor()
 {
@@ -10,6 +12,17 @@ AMovementSensor::AMovementSensor()
 	SenseRadius = 1000.f;
 
 	EquipmentAbbreviation = FString(TEXT("MSE"));
+}
+
+void AMovementSensor::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	if (Hub)
+	{
+		Hub->RegisterMovementSensor(this);
+	}
 }
 
 void AMovementSensor::ActivatePower()
