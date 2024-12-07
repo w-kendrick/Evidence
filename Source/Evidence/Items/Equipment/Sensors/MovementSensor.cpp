@@ -81,7 +81,7 @@ bool AMovementSensor::doArraysMatch(const TArray<FVector>& Arr1, const TArray<FV
 		VectorMatched.Add(false);
 	}
 
-	for (const FVector Vec1 : Arr1)
+	for (const FVector& Vec1 : Arr1)
 	{
 		bool isMatched = false;
 		uint8 Index = 0;
