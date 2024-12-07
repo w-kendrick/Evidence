@@ -3,7 +3,7 @@
 
 #include "EvidenceGameState.h"
 #include "Evidence/Hub/Hub.h"
-#include "Kismet/GameplayStatics.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 #include "Net/UnrealNetwork.h"
 #include "Evidence/Game/EvidenceGameMode.h"
 #include "Evidence/Evidence.h"
@@ -61,22 +61,12 @@ void AEvidenceGameState::SetSetupCountdownLength(const float InCountdownLength)
 
 #pragma endregion
 
-AHub* AEvidenceGameState::GetHub()
-{
-	if (Hub)
-	{
-		return Hub;
-	}
-
-	Hub = Cast<AHub>(UGameplayStatics::GetActorOfClass(GetWorld(), AHub::StaticClass()));
-	return Hub;
-}
-
 #pragma region Night
 
 void AEvidenceGameState::EndNight()
 {
-	GetHub()->ConsumeCaptures();
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	Hub->ConsumeCaptures();
 }
 
 void AEvidenceGameState::SetNight(const uint32 NewNight)

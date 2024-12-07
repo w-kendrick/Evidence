@@ -2,8 +2,7 @@
 
 
 #include "TerminalShopMenu.h"
-#include "Kismet/GameplayStatics.h"
-#include "Evidence/Game/EvidenceGameState.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 #include "Evidence/Hub/Hub.h"
 #include "TerminalShopItemWidget.h"
 #include "Components/VerticalBox.h"
@@ -19,22 +18,18 @@ void UTerminalShopMenu::NativeConstruct()
 {
 	Super::NativeConstruct();
 
-	AEvidenceGameState* const EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
-	if (EGS)
+	AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+	if (Hub)
 	{
-		AHub* const Hub = Cast<AHub>(EGS->GetHub());
-		if (Hub)
-		{
-			const TArray<FShopItem>& Items = Hub->GetShopItems();
+		const TArray<FShopItem>& Items = Hub->GetShopItems();
 
-			for (const FShopItem& Item : Items)
+		for (const FShopItem& Item : Items)
+		{
+			UTerminalShopItemWidget* const ItemWidget = CreateWidget<UTerminalShopItemWidget>(this, ItemWidgetClass);
+			if (ItemWidget)
 			{
-				UTerminalShopItemWidget* const ItemWidget = CreateWidget<UTerminalShopItemWidget>(this, ItemWidgetClass);
-				if (ItemWidget)
-				{
-					ItemWidget->SpawnInitialize(Item);
-					Box->AddChild(ItemWidget);
-				}
+				ItemWidget->SpawnInitialize(Item);
+				Box->AddChild(ItemWidget);
 			}
 		}
 	}

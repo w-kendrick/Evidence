@@ -2,9 +2,8 @@
 
 
 #include "TrueTrackerDart.h"
-#include "Evidence/Game/EvidenceGameState.h"
-#include "Kismet/GameplayStatics.h"
 #include "Evidence/Hub/Hub.h"
+#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 
 ATrueTrackerDart::ATrueTrackerDart()
 {
@@ -17,14 +16,10 @@ void ATrueTrackerDart::BeginPlay()
 
 	if (HasAuthority())
 	{
-		AEvidenceGameState* const EGS = Cast<AEvidenceGameState>(UGameplayStatics::GetGameState(GetWorld()));
-		if (EGS)
+		AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
+		if (Hub)
 		{
-			AHub* const Hub = EGS->GetHub();
-			if (Hub)
-			{
-				Hub->SubscribeToTrackerDart(this);
-			}
+			Hub->SubscribeToTrackerDart(this);
 		}
 	}
 }

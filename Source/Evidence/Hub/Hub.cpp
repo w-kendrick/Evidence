@@ -46,8 +46,6 @@ void AHub::BeginPlay()
 
 	if (HasAuthority())
 	{
-		CreateInitialSpawns();
-
 		Bounds->OnComponentBeginOverlap.AddDynamic(this, &ThisClass::OnOverlapBegin);
 		Bounds->OnComponentEndOverlap.AddDynamic(this, &ThisClass::OnOverlapEnd);
 	}
@@ -68,6 +66,16 @@ void AHub::ConsumeCaptures()
 	}
 }
 
+void AHub::RegisterMovementSensor(AMovementSensor* const MovementSensor)
+{
+	MovementSensor->OnMovementSense.AddUObject(this, &ThisClass::OnMovementSensed);
+}
+
+void AHub::RegisterRadialSensor(ARadialSensor* const RadialSensor)
+{
+	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
+}
+
 void AHub::OnInteract()
 {
 	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());
@@ -81,14 +89,6 @@ void AHub::OnInteract()
 FString AHub::GetInteractionString_Implementation()
 {
 	return FString("Use terminal");
-}
-
-void AHub::CreateInitialSpawns()
-{
-	for (const FSpawnInfo& SpawnInfo : InitialSpawns)
-	{
-		SpawnEquipment(SpawnInfo);
-	}
 }
 
 void AHub::SpawnEquipment(const FSpawnInfo& SpawnInfo)
@@ -111,7 +111,6 @@ void AHub::SpawnMovementSensor(const FSpawnInfo& SpawnInfo)
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
 	AMovementSensor* const MovementSensor = Cast<AMovementSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
-	MovementSensor->OnMovementSense.AddUObject(this, &ThisClass::OnMovementSensed);
 }
 
 void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
@@ -120,7 +119,6 @@ void AHub::SpawnRadialSensor(const FSpawnInfo& SpawnInfo)
 	const TSubclassOf<AEquipment>& Class = SpawnInfo.Class;
 
 	ARadialSensor* const RadialSensor = Cast<ARadialSensor>(GetWorld()->SpawnActor<AEquipment>(Class, Transform));
-	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
 void AHub::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
