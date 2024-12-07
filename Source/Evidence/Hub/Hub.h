@@ -61,7 +61,7 @@ protected:
 	UStaticMeshComponent* Terminal;
 
 	void OnMovementSensed(AMovementSensor* const Sensor);
-	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations);
+	void OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector>& Locations);
 	void OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location);
 
 	UPROPERTY(EditDefaultsOnly)

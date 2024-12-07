@@ -191,15 +191,18 @@ void AHub::ServerPurchaseEquipment_Implementation(const FShopItem& Item)
 
 void AHub::OnMovementSensed(AMovementSensor* const Sensor)
 {
+	OnMovementSense.Broadcast(Sensor);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Movement sensed");
 }
 
-void AHub::OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector> Locations)
+void AHub::OnRadiusSensed(ARadialSensor* const Sensor, const TArray<FVector>& Locations)
 {
+	OnRadialSense.Broadcast(Sensor, Locations);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Radius sensed");
 }
 
 void AHub::OnDartLocationReceived(ATrueTrackerDart* const Dart, const FVector& Location)
 {
+	OnTrackDartBroadcast.Broadcast(Dart, Location);
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, "Tracker dart location received");
 }
