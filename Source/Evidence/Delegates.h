@@ -7,6 +7,7 @@
 class AEquipment;
 class ARadialSensor;
 class AMovementSensor;
+class ATrueTrackerDart;
 struct FEquipmentList;
 struct FSpectateeList;
 
@@ -26,8 +27,8 @@ DECLARE_MULTICAST_DELEGATE_TwoParams(FOnPowerChanged, float, float)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnActiveChanged, bool)
 
 DECLARE_MULTICAST_DELEGATE_TwoParams(FOnRadialSense, ARadialSensor*, const TArray<FVector>)
-
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnMovementSense, AMovementSensor*)
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnTrackDartBroadcast, ATrueTrackerDart*, const FVector&)
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpectatingChanged, bool)
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnSpectateeChanged, APawn*)

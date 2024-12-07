@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Evidence/Items/TrueProjectile.h"
+#include "Evidence/Delegates.h"
 #include "TrueTrackerDart.generated.h"
-
-DECLARE_MULTICAST_DELEGATE_TwoParams(FOnTrackDartBroadcast, ATrueTrackerDart*, const FVector&);
 
 UCLASS()
 class EVIDENCE_API ATrueTrackerDart : public ATrueProjectile

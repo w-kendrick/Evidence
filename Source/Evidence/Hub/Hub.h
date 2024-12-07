@@ -7,6 +7,7 @@
 #include "Evidence/Structs/SpawnInfo.h"
 #include "Evidence/Structs/ShopItem.h"
 #include "Evidence/Hub/SingleUserInteractable.h"
+#include "Evidence/Delegates.h"
 #include "Hub.generated.h"
 
 class AEquipment;
@@ -28,16 +29,20 @@ class EVIDENCE_API AHub : public ASingleUserInteractable
 public:	
 	AHub();
 
+	FOnMovementSense OnMovementSense;
+	FOnRadialSense OnRadialSense;
+	FOnTrackDartBroadcast OnTrackDartBroadcast;
+
 	void ConsumeCaptures();
 
 	void RegisterMovementSensor(AMovementSensor* const MovementSensor);
 	void RegisterRadialSensor(ARadialSensor* const RadialSensor);
+	void RegisterTrackerDart(ATrueTrackerDart* Dart);
 
 	FString GetInteractionString_Implementation() override;
 
 	UFUNCTION(Server, Reliable)
 	void ServerPurchaseEquipment(const FShopItem& Item);
-	void SubscribeToTrackerDart(ATrueTrackerDart* Dart);
 
 	FORCEINLINE TArray<FShopItem> GetShopItems() const { return ShopItems; }
 	FORCEINLINE const TArray<AEvidenceCaptureEquipment*>& GetCaptureDevices() const { return CaptureDevices; }

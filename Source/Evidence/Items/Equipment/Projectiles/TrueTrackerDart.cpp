@@ -19,7 +19,7 @@ void ATrueTrackerDart::BeginPlay()
 		AHub* const Hub = UEvidenceFunctionLibrary::GetHub(GetWorld());
 		if (Hub)
 		{
-			Hub->SubscribeToTrackerDart(this);
+			Hub->RegisterTrackerDart(this);
 		}
 	}
 }

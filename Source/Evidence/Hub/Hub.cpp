@@ -76,6 +76,11 @@ void AHub::RegisterRadialSensor(ARadialSensor* const RadialSensor)
 	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
+void AHub::RegisterTrackerDart(ATrueTrackerDart* Dart)
+{
+	Dart->OnTrackDartBroadcast.AddUObject(this, &ThisClass::OnDartLocationReceived);
+}
+
 void AHub::OnInteract()
 {
 	AEvidencePlayerController* const EvidencePlayerController = Cast<AEvidencePlayerController>(Interactor->GetController());
@@ -182,11 +187,6 @@ void AHub::ServerPurchaseEquipment_Implementation(const FShopItem& Item)
 			SpawnEquipment(SpawnInfo);
 		}
 	}
-}
-
-void AHub::SubscribeToTrackerDart(ATrueTrackerDart* Dart)
-{
-	Dart->OnTrackDartBroadcast.AddUObject(this, &ThisClass::OnDartLocationReceived);
 }
 
 void AHub::OnMovementSensed(AMovementSensor* const Sensor)
