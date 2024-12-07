@@ -76,7 +76,7 @@ void AHub::RegisterRadialSensor(ARadialSensor* const RadialSensor)
 	RadialSensor->OnRadialSense.AddUObject(this, &ThisClass::OnRadiusSensed);
 }
 
-void AHub::RegisterTrackerDart(ATrueTrackerDart* Dart)
+void AHub::RegisterTrackerDart(ATrueTrackerDart* const Dart)
 {
 	Dart->OnTrackDartBroadcast.AddUObject(this, &ThisClass::OnDartLocationReceived);
 }

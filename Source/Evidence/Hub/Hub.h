@@ -37,7 +37,7 @@ public:
 
 	void RegisterMovementSensor(AMovementSensor* const MovementSensor);
 	void RegisterRadialSensor(ARadialSensor* const RadialSensor);
-	void RegisterTrackerDart(ATrueTrackerDart* Dart);
+	void RegisterTrackerDart(ATrueTrackerDart* const Dart);
 
 	FString GetInteractionString_Implementation() override;
 
