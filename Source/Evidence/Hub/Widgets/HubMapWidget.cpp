@@ -29,8 +29,8 @@ void UHubMapWidget::NativeConstruct()
 	UCanvasPanelSlot* PanelSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(MapImage);
 	const FVector2D Origin = PanelSlot->GetPosition();
 
-	TopLeftCorner = Origin + FVector2D(-PanelSlot->GetSize().X, PanelSlot->GetSize().Y);
-	BottomRightCorner = Origin + FVector2D(PanelSlot->GetSize().X, -PanelSlot->GetSize().Y);
+	TopLeftCorner = Origin + FVector2D(-PanelSlot->GetSize().X, PanelSlot->GetSize().Y) * 0.5f;
+	BottomRightCorner = Origin + FVector2D(PanelSlot->GetSize().X, -PanelSlot->GetSize().Y) * 0.5f;;
 
 	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, FString("Top Left: ") + TopLeftCorner.ToString());
 	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, FString("Bottom Right: ") + BottomRightCorner.ToString());
