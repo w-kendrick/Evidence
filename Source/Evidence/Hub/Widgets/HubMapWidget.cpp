@@ -11,7 +11,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "MapPlayerWidget.h"
-#include "Evidence/Libraries/EvidenceFunctionLibrary.h"
 #include "Evidence/Game/MapInfoActor.h"
 
 void UHubMapWidget::NativeConstruct()
