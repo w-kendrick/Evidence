@@ -7,6 +7,7 @@
 #include "EvidenceFunctionLibrary.generated.h"
 
 class AHub;
+class AMapInfoActor;
 
 /**
  * 
@@ -18,5 +19,6 @@ class EVIDENCE_API UEvidenceFunctionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	static AHub* GetHub(UWorld* World);
+	static AMapInfoActor* GetMapInfo(UWorld* World);
 	
 };
