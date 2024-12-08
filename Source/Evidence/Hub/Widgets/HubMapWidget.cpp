@@ -31,6 +31,9 @@ void UHubMapWidget::NativeConstruct()
 
 	TopLeftCorner = Origin + FVector2D(-PanelSlot->GetSize().X, PanelSlot->GetSize().Y);
 	BottomRightCorner = Origin + FVector2D(PanelSlot->GetSize().X, -PanelSlot->GetSize().Y);
+
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, FString("Top Left: ") + TopLeftCorner.ToString());
+	GEngine->AddOnScreenDebugMessage(-1, 30.0f, FColor::Blue, FString("Bottom Right: ") + BottomRightCorner.ToString());
 	
 	GetWorld()->GetTimerManager().SetTimer(PlayerHandle, this, &ThisClass::OnPlayerUpdate, PLAYER_WIDGET_UPDATE_DELAY, true);
 }
@@ -74,7 +77,7 @@ void UHubMapWidget::OnDartLocationReceived(ATrueTrackerDart* const Dart, const F
 void UHubMapWidget::SetPosition(UMapPlayerWidget* const MapPlayerWidget, const FVector2D Position)
 {
 	UCanvasPanelSlot* PanelSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(MapPlayerWidget);
-
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, Position.ToString());
 	PanelSlot->SetPosition(Position);
 }
 
@@ -99,14 +102,14 @@ FVector2D UHubMapWidget::WorldLocationToMap(const FVector& Location) const
 
 	checkf(MapInfo != nullptr, TEXT("Map doesn't have a AMapInfoActor present"))
 
-	const float WorldLengthX = FMath::Abs(MapInfo->GetBottomRightPoint().X - MapInfo->GetTopLeftPoint().X);
-	const float WorldLengthY = FMath::Abs(MapInfo->GetTopLeftPoint().Y - MapInfo->GetBottomRightPoint().Y);
+	const float WorldLengthX = MapInfo->GetBottomRightPoint().X - MapInfo->GetTopLeftPoint().X;
+	const float WorldLengthY = MapInfo->GetTopLeftPoint().Y - MapInfo->GetBottomRightPoint().Y;
 
 	const float ScaledX = (Location.X - MapInfo->GetTopLeftPoint().X) / WorldLengthX;
 	const float ScaledY = (Location.Y - MapInfo->GetBottomRightPoint().Y) / WorldLengthY;
 
-	const float MapLengthX = FMath::Abs(BottomRightCorner.X - TopLeftCorner.X);
-	const float MapLengthY = FMath::Abs(TopLeftCorner.Y - BottomRightCorner.Y);
+	const float MapLengthX = BottomRightCorner.X - TopLeftCorner.X;
+	const float MapLengthY = TopLeftCorner.Y - BottomRightCorner.Y;
 
 	const float MapPosX = (MapLengthX * ScaledX) + TopLeftCorner.X;
 	const float MapPosY = (MapLengthY * ScaledY) + BottomRightCorner.Y;
