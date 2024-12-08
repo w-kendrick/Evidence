@@ -73,7 +73,9 @@ void UHubMapWidget::OnDartLocationReceived(ATrueTrackerDart* const Dart, const F
 
 void UHubMapWidget::SetPosition(UMapPlayerWidget* const MapPlayerWidget, const FVector2D Position)
 {
+	UCanvasPanelSlot* PanelSlot = UWidgetLayoutLibrary::SlotAsCanvasSlot(MapPlayerWidget);
 
+	PanelSlot->SetPosition(Position);
 }
 
 UMapPlayerWidget* UHubMapWidget::GetPlayerWidget(const ABaseCharacter* const Character) const
