@@ -14,16 +14,15 @@ void APreSetupTest::StartTest()
 	Super::StartTest();
 
 	AEvidenceGameMode* const EvidenceGameMode = UTestFunctionLibrary::GetEvidenceGameMode(GetWorld());
-
 	if (EvidenceGameMode)
 	{
 		if (EvidenceGameMode->GetMatchState() == MatchState::PreSetup)
 		{
-			
+			FinishTest(EFunctionalTestResult::Succeeded, FString("Passed"));
 		}
 		else
 		{
-			FinishTest(EFunctionalTestResult::Failed, FString("The initial match state isn't Pre-Setup"));
+			FinishTest(EFunctionalTestResult::Failed, FString("The game mode initial match state isn't Pre-Setup"));
 		}
 	}
 	else
