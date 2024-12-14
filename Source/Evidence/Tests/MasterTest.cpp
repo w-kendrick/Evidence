@@ -58,13 +58,19 @@ bool AMasterTest::IsServerReady()
 
 				if (PlayerState)
 				{
-					bMyselfReady = true;
+					AEvidenceGameState* EvidenceGameState = Cast<AEvidenceGameState>(UGameplayStatics::GetActorOfClass(GetWorld(), AEvidenceGameState::StaticClass()));
+					
+					if (EvidenceGameState)
+					{
+						bMyselfReady = true;
 
-					ServerTestInfo.PlayerController = PlayerController;
-					ServerTestInfo.MyCharacter = Character;
-					ServerTestInfo.InputSubsystem = InputSubsystem;
+						ServerTestInfo.PlayerController = PlayerController;
+						ServerTestInfo.MyCharacter = Character;
+						ServerTestInfo.InputSubsystem = InputSubsystem;
+						ServerTestInfo.MyGameState = EvidenceGameState;
 
-					ServerPlayerId = PlayerState->GetPlayerId();
+						ServerPlayerId = PlayerState->GetPlayerId();
+					}
 				}
 			}
 		}
@@ -111,13 +117,19 @@ bool AMasterTest::IsClientReady(const uint8 PlayerIndex, FClientTestInfo& Client
 
 				if (PlayerState)
 				{
-					bMyselfReady = true;
+					AEvidenceGameState* EvidenceGameState = Cast<AEvidenceGameState>(UMPTestHelpersBPLibrary::GetClientActorOfClass(AEvidenceGameState::StaticClass(), PlayerIndex));
 
-					ClientTestInfo.PlayerController = PlayerController;
-					ClientTestInfo.MyCharacter = Character;
-					ClientTestInfo.InputSubsystem = InputSubsystem;
+					if (EvidenceGameState)
+					{
+						bMyselfReady = true;
 
-					ClientId = PlayerState->GetPlayerId();
+						ClientTestInfo.PlayerController = PlayerController;
+						ClientTestInfo.MyCharacter = Character;
+						ClientTestInfo.InputSubsystem = InputSubsystem;
+						ClientTestInfo.MyGameState = EvidenceGameState;
+
+						ClientId = PlayerState->GetPlayerId();
+					}
 				}
 			}
 		}

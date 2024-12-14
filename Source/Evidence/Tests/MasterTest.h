@@ -7,6 +7,7 @@
 #include "MPTestHelpersBPLibrary.h"
 #include "Evidence/Character/BaseCharacter.h"
 #include "Evidence/Character/Components/InventoryManagerComponent.h"
+#include "Evidence/Game/EvidenceGameState.h"
 #include "EnhancedInputSubsystems.h"
 #include "Engine/TriggerBox.h"
 #include "Kismet/GameplayStatics.h"
@@ -19,6 +20,7 @@ struct FPlayerTestInfo
 	APlayerController* PlayerController;
 	ABaseCharacter* MyCharacter;
 	UEnhancedInputLocalPlayerSubsystem* InputSubsystem;
+	AEvidenceGameState* MyGameState;
 };
 
 struct FClientTestInfo : FPlayerTestInfo
