@@ -6,8 +6,6 @@
 #include "Evidence/Tests/MasterTest.h"
 #include "PreSetupTest.generated.h"
 
-class ALocker;
-
 /**
  * 
  */

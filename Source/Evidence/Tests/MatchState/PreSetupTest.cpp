@@ -19,7 +19,7 @@ void APreSetupTest::StartTest()
 	{
 		if (EvidenceGameMode->GetMatchState() == MatchState::PreSetup)
 		{
-			FinishTest(EFunctionalTestResult::Succeeded, FString("Passed"));
+			
 		}
 		else
 		{
