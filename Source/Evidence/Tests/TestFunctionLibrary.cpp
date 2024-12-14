@@ -6,9 +6,14 @@
 #include "Evidence/Game/EvidenceGameMode.h"
 #include "AdvancedAbilityComponent.h"
 
+AEvidenceGameMode* UTestFunctionLibrary::GetEvidenceGameMode(UWorld* World)
+{
+	return Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(World));
+}
+
 void UTestFunctionLibrary::StartSetupPeriod(UWorld* World)
 {
-	AEvidenceGameMode* EvidenceGameMode = Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(World));
+	AEvidenceGameMode* EvidenceGameMode = GetEvidenceGameMode(World);
 
 	if (EvidenceGameMode)
 	{

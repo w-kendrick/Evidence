@@ -6,6 +6,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "TestFunctionLibrary.generated.h"
 
+class AEvidenceGameMode;
 class UGameplayEffect;
 class AEquipment;
 
@@ -18,6 +19,7 @@ class EVIDENCE_API UTestFunctionLibrary : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
+	static AEvidenceGameMode* GetEvidenceGameMode(UWorld* World);
 	static void StartSetupPeriod(UWorld* World);
 	static void KillPlayer(ACharacter* Character, const TSubclassOf<UGameplayEffect>& KillPlayerEffectClass);
 	static void ApplyGameplayEffect(ACharacter* Character, const TSubclassOf<UGameplayEffect>& EffectClass);
