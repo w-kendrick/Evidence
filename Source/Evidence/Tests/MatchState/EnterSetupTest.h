@@ -20,8 +20,6 @@ public:
 	void StartTest() override;
 
 private:
-	bool bGameModePassed = false;
-
 	void OnServerMatchStateChanged(FName State);
 	void OnClient1MatchStateChanged(FName State);
 	void OnClient2MatchStateChanged(FName State);

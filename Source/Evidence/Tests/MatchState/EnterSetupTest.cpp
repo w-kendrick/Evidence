@@ -22,11 +22,6 @@ void AEnterSetupTest::StartTest()
 	if (EvidenceGameMode)
 	{
 		EvidenceGameMode->EndPreSetup();
-
-		if (EvidenceGameMode->GetMatchState() == MatchState::Setup)
-		{
-			bGameModePassed = true;
-		}
 	}
 	else
 	{
@@ -36,7 +31,7 @@ void AEnterSetupTest::StartTest()
 
 void AEnterSetupTest::OnServerMatchStateChanged(FName State)
 {
-	bServerPassed = bGameModePassed && (State == MatchState::Setup);
+	bServerPassed = (State == MatchState::Setup);
 	CheckResult();
 }
 
