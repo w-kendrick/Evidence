@@ -1,17 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SetupTimeoutTest.h"
+#include "NightTimeoutTest.h"
 #include "Evidence/Game/EvidenceGameMode.h"
 #include "Evidence/Items/Buttons/MatchStateButton.h"
 #include "Evidence/Tests/TestFunctionLibrary.h"
 
-ASetupTimeoutTest::ASetupTimeoutTest()
+ANightTimeoutTest::ANightTimeoutTest()
 {
-	TimeLimit = 65.0f;
+	TimeLimit = 185.0f;
 }
 
-void ASetupTimeoutTest::StartTest()
+void ANightTimeoutTest::StartTest()
 {
 	Super::StartTest();
 
@@ -23,6 +23,8 @@ void ASetupTimeoutTest::StartTest()
 	if (Button)
 	{
 		Button->Interact(); //ends Pre-Setup
+
+		Button->Interact(); //ends Setup
 	}
 	else
 	{
@@ -30,20 +32,20 @@ void ASetupTimeoutTest::StartTest()
 	}
 }
 
-void ASetupTimeoutTest::OnServerMatchStateChanged(FName State)
+void ANightTimeoutTest::OnServerMatchStateChanged(FName State)
 {
-	bServerPassed = (State == MatchState::Night);
+	bServerPassed = (State == MatchState::PostNight);
 	CheckResult();
 }
 
-void ASetupTimeoutTest::OnClient1MatchStateChanged(FName State)
+void ANightTimeoutTest::OnClient1MatchStateChanged(FName State)
 {
-	bClient1Passed = (State == MatchState::Night);
+	bClient1Passed = (State == MatchState::PostNight);
 	CheckResult();
 }
 
-void ASetupTimeoutTest::OnClient2MatchStateChanged(FName State)
+void ANightTimeoutTest::OnClient2MatchStateChanged(FName State)
 {
-	bClient2Passed = (State == MatchState::Night);
+	bClient2Passed = (State == MatchState::PostNight);
 	CheckResult();
 }
