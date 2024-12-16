@@ -1,17 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "EnterSetupTest.h"
+#include "EnterNightTest.h"
 #include "Evidence/Game/EvidenceGameMode.h"
 #include "Evidence/Items/Buttons/MatchStateButton.h"
 #include "Evidence/Tests/TestFunctionLibrary.h"
 
-AEnterSetupTest::AEnterSetupTest()
+AEnterNightTest::AEnterNightTest()
 {
 	TimeLimit = 5.0f;
 }
 
-void AEnterSetupTest::StartTest()
+void AEnterNightTest::StartTest()
 {
 	Super::StartTest();
 
@@ -23,6 +23,8 @@ void AEnterSetupTest::StartTest()
 	if (Button)
 	{
 		Button->Interact(); //ends Pre-Setup
+
+		Button->Interact(); //ends Setup
 	}
 	else
 	{
@@ -30,20 +32,20 @@ void AEnterSetupTest::StartTest()
 	}
 }
 
-void AEnterSetupTest::OnServerMatchStateChanged(FName State)
+void AEnterNightTest::OnServerMatchStateChanged(FName State)
 {
-	bServerPassed = (State == MatchState::Setup);
+	bServerPassed = (State == MatchState::Night);
 	CheckResult();
 }
 
-void AEnterSetupTest::OnClient1MatchStateChanged(FName State)
+void AEnterNightTest::OnClient1MatchStateChanged(FName State)
 {
-	bClient1Passed = (State == MatchState::Setup);
+	bClient1Passed = (State == MatchState::Night);
 	CheckResult();
 }
 
-void AEnterSetupTest::OnClient2MatchStateChanged(FName State)
+void AEnterNightTest::OnClient2MatchStateChanged(FName State)
 {
-	bClient2Passed = (State == MatchState::Setup);
+	bClient2Passed = (State == MatchState::Night);
 	CheckResult();
 }

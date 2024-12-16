@@ -3,12 +3,28 @@
 
 #include "TestFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
+#include "MPTestHelpersBPLibrary.h"
 #include "Evidence/Game/EvidenceGameMode.h"
+#include "Evidence/Items/Buttons/MatchStateButton.h"
 #include "AdvancedAbilityComponent.h"
 
 AEvidenceGameMode* UTestFunctionLibrary::GetEvidenceGameMode(UWorld* World)
 {
 	return Cast<AEvidenceGameMode>(UGameplayStatics::GetGameMode(World));
+}
+
+AMatchStateButton* UTestFunctionLibrary::GetMatchStateButton(UWorld* World)
+{
+	AMatchStateButton* Button = Cast<AMatchStateButton>(UGameplayStatics::GetActorOfClass(World, AMatchStateButton::StaticClass()));
+
+	return Button;
+}
+
+AMatchStateButton* UTestFunctionLibrary::GetMatchStateButton(const uint8 ClientIndex)
+{
+	AMatchStateButton* Button = Cast<AMatchStateButton>(UMPTestHelpersBPLibrary::GetClientActorOfClass(AMatchStateButton::StaticClass(), ClientIndex));
+
+	return Button;
 }
 
 void UTestFunctionLibrary::StartSetupPeriod(UWorld* World)

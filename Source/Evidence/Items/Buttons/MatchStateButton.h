@@ -14,12 +14,12 @@ class EVIDENCE_API AMatchStateButton : public APhysicalButton
 public:	
 	AMatchStateButton();
 
+	void Interact() override;
+
 protected:
 	void BeginPlay() override;
 
 	void OnMatchStateChanged(FName State);
-
-	void Interact() override;
 
 	FName MatchState;
 

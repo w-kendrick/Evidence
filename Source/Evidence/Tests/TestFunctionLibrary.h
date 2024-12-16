@@ -7,6 +7,7 @@
 #include "TestFunctionLibrary.generated.h"
 
 class AEvidenceGameMode;
+class AMatchStateButton;
 class UGameplayEffect;
 class AEquipment;
 
@@ -20,6 +21,8 @@ class EVIDENCE_API UTestFunctionLibrary : public UBlueprintFunctionLibrary
 
 public:
 	static AEvidenceGameMode* GetEvidenceGameMode(UWorld* World);
+	static AMatchStateButton* GetMatchStateButton(UWorld* World);
+	static AMatchStateButton* GetMatchStateButton(const uint8 ClientIndex);
 	static void StartSetupPeriod(UWorld* World);
 	static void KillPlayer(ACharacter* Character, const TSubclassOf<UGameplayEffect>& KillPlayerEffectClass);
 	static void ApplyGameplayEffect(ACharacter* Character, const TSubclassOf<UGameplayEffect>& EffectClass);

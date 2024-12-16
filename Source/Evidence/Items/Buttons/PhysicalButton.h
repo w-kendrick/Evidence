@@ -20,12 +20,12 @@ public:
 	float GetInteractionDuration_Implementation(UPrimitiveComponent* InteractionComponent) const;
 	FString GetInteractionString_Implementation() override;
 
+	virtual void Interact() {};
+
 protected:
 	void SetIsAvailable(const bool bNewValue);
 	void SetInteractString(const FString& NewString);
 	void SetInteractDuration(const float NewDuration);
-
-	virtual void Interact() {};
 
 private:
 	UPROPERTY(VisibleDefaultsOnly)

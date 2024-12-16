@@ -3,6 +3,7 @@
 
 #include "SetupTimeoutTest.h"
 #include "Evidence/Game/EvidenceGameMode.h"
+#include "Evidence/Items/Buttons/MatchStateButton.h"
 #include "Evidence/Tests/TestFunctionLibrary.h"
 
 ASetupTimeoutTest::ASetupTimeoutTest()
@@ -18,10 +19,10 @@ void ASetupTimeoutTest::StartTest()
 	Client1TestInfo.MyGameState->OnMatchStateChanged.AddUObject(this, &ThisClass::OnClient1MatchStateChanged);
 	Client2TestInfo.MyGameState->OnMatchStateChanged.AddUObject(this, &ThisClass::OnClient2MatchStateChanged);
 
-	AEvidenceGameMode* const EvidenceGameMode = UTestFunctionLibrary::GetEvidenceGameMode(GetWorld());
-	if (EvidenceGameMode)
+	AMatchStateButton* const Button = UTestFunctionLibrary::GetMatchStateButton(GetWorld());
+	if (Button)
 	{
-		EvidenceGameMode->EndPreSetup();
+		Button->Interact(); //ends Pre-Setup
 	}
 	else
 	{

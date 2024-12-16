@@ -9,9 +9,10 @@ with open(os.getcwd() + '\Saved\Automation\Reports\index.json', encoding='utf-8-
     failures = []
 
     for test in tests:
-        print(test["testDisplayName"])
-        print(test["state"])
-        print("\n")
+        if test["state"] != "Success":
+            print(test["testDisplayName"])
+            print(test["state"])
+            print("\n")
 
         if test["state"] == "Success":
             successes.append(test["testDisplayName"])
